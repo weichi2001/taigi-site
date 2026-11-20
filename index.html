@@ -130,7 +130,15 @@ footer{margin-top:30px;font-size:12px;color:var(--ink2);border-top:1px solid var
 .eps{margin-top:14px}.eps>b{display:block;margin-bottom:8px}
 .ess{display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap}.ess button{background:#2c2622;color:#f1e9dd;border:1px solid #3a322c;border-radius:14px;padding:3px 11px;font:inherit;font-size:13px;cursor:pointer}.ess button.on{background:#e24403;border-color:#e24403}
 .epg{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:6px;max-height:190px;overflow:auto}
-.epg button{background:#241f1b;color:#f1e9dd;border:1px solid #3a322c;border-radius:8px;padding:8px 0;font:inherit;cursor:pointer}.epg button.seen{color:#9c8e80;border-color:#2c2622}.epg button.last{background:#7a2a05;border-color:#e24403}.eps .cont{display:inline-block;margin-bottom:8px}
+.epg button{background:#241f1b;color:#f1e9dd;border:1px solid #3a322c;border-radius:8px;padding:8px 0;font:inherit;cursor:pointer}.eph{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}.eps small{color:#9c8e80;font-weight:400}
+.epl{display:flex;flex-direction:column;gap:6px;max-height:360px;overflow:auto}
+.er{display:grid;grid-template-columns:112px 1fr auto;grid-template-areas:"i t d";gap:4px 10px;align-items:center;text-align:left;background:#241f1b;color:#f1e9dd;border:1px solid #3a322c;border-radius:10px;padding:6px;font:inherit;cursor:pointer;position:relative}
+.er img{grid-area:i;width:112px;aspect-ratio:16/9;object-fit:cover;border-radius:6px;background:#14110f}
+.er .en{position:absolute;left:10px;top:10px;background:rgba(0,0,0,.65);border-radius:4px;padding:0 6px;font-size:12px}
+.er .et{grid-area:t;font-size:14px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.er .ed{grid-area:d;font-size:12px;color:#9c8e80;white-space:nowrap}
+.er:hover{border-color:#e24403}.er.seen{opacity:.6}.er.last{background:#3a1d0d;border-color:#e24403}
+.epg button.seen{color:#9c8e80;border-color:#2c2622}.epg button.last{background:#7a2a05;border-color:#e24403}.eps .cont{display:inline-block;margin-bottom:8px}
 .epg button:hover{background:#e24403;border-color:#e24403}
 body.anime{background:#14110f;color:#f1e9dd}
 body.anime .top{background:rgba(20,17,15,.92);border-color:#2c2622}
@@ -535,7 +543,7 @@ let aniSt={};try{aniSt=JSON.parse(localStorage.getItem('tgani')||'{}')||{}}catch
 let epSt={};try{epSt=JSON.parse(localStorage.getItem('tgep')||'{}')||{}}catch(e){epSt={}}
 const saveEp=()=>{try{localStorage.setItem('tgep',JSON.stringify(epSt))}catch(e){}};
 const saveAni=()=>{try{localStorage.setItem('tgani',JSON.stringify(aniSt))}catch(e){}};
-S.an={src:'all',sheet:null,view:null,ss:null};
+S.an={src:'all',sheet:null,view:null,ss:null,rev:false};
 const IMG='https://twbangga.moe.edu.tw/server/crop/coverImage/';
 const aniTile=(a,i)=>`<button class="pt" data-act="asheet" data-i="${i}" style="--h:${hue(a.t)}">
   ${a.img||a.pimg?`<img src="${a.pimg||IMG+a.img}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`:''}
@@ -586,7 +594,22 @@ function aniView(v){
    <iframe src="${v.u}" title="${esc(v.t)}" allow="fullscreen; autoplay; encrypted-media" allowfullscreen referrerpolicy="${v.l?'strict-origin-when-cross-origin':'no-referrer'}"></iframe>
    <p class="tip">${v.l?'YouTube 內嵌播放，不用登入。如果這裡沒有畫面，請按「新分頁開」。':sb?'目前是 claude.ai 預覽頁，瀏覽器會擋內嵌；放到獨立網頁（例如 GitHub Pages）才會顯示。':'公視+ 要登入才能播放。有「版本」選單的片請選「台語版」；如果這裡沒有畫面，請按「新分頁開」。'}</p></div></div>`;
 }
+// 節目逐集清單：由 GitHub Actions 抓 YouTube 播放清單產生 yt.json（影片編號、標題、片長）
+let YTE={};
+fetch('yt.json',{cache:'no-cache'}).then(r=>r.ok?r.json():Promise.reject()).then(d=>{YTE=d||{};if(location.hash==='#anime')render(true)}).catch(()=>{});
+const ytEmb=(id,pl)=>'https://www.youtube.com/embed/'+id+'?list='+pl+'&rel=0&cc_load_policy=1&cc_lang_pref=nan-TW&hl=zh-TW';
+function aniYtEps(a){
+  const L=YTE[a.yl];if(!L||!L.length)return '';
+  const rec=epSt[a.yl]||{w:[]},rv=S.an.rev;
+  const rows=L.map((e,i)=>({e,n:i+1}));if(rv)rows.reverse();
+  const at=(e,n)=>`data-act="aview" data-u="${ytEmb(e[0],a.yl)}" data-o="https://www.youtube.com/watch?v=${e[0]}&list=${a.yl}" data-l="YouTube" data-t="${esc(a.t+'・'+e[1].replace(/^【[^】]*】/,'').slice(0,40))}" data-p="${a.yl}" data-s="${a.yl}" data-e="${e[0]}" data-n="${n}"`;
+  const li=rows.find(r=>r.e[0]===rec.l);
+  return `<div class="eps yt"><b>選集數 <small>共 ${L.length} 集</small></b>
+   <div class="eph">${li?`<button class="abtn cont" ${at(li.e,li.n)}>▶ 接著看：第 ${li.n} 集</button>`:''}<button class="abtn gh" data-act="arev">${rv?'↑ 由舊到新':'↓ 由新到舊'}</button></div>
+   <div class="epl">${rows.map(({e,n})=>`<button class="er ${li&&li.e===e?'last':(rec.w||[]).includes(e[0])?'seen':''}" ${at(e,n)}><img loading="lazy" referrerpolicy="no-referrer" src="https://i.ytimg.com/vi/${e[0]}/mqdefault.jpg" alt=""><span class="en">${n}</span><span class="et">${esc(e[1].replace(/^【[^】]*】/,'').trim()||e[1])}</span><span class="ed">${e[2]}</span></button>`).join('')}</div></div>`;
+}
 function aniEps(a){
+  if(a.yl)return aniYtEps(a);
   if(!a.ss||!a.ss.length)return '';
   const rec=epSt[a.pid]||{w:[]};
   let k=S.an.ss;if(k==null){k=Math.max(0,a.ss.findIndex(x=>x.sid===rec.s));}
@@ -649,8 +672,9 @@ $('#app').addEventListener('click',e=>{
   const el=e.target.closest('[data-act]');if(!el)return;
   const a=el.dataset.act;
   if(a==='dict')return; // 由全站監聽處理
-  if(a==='asheet'){S.an.sheet=+el.dataset.i;S.an.ss=null;render(true);return}
+  if(a==='asheet'){S.an.sheet=+el.dataset.i;S.an.ss=null;S.an.rev=false;render(true);return}
   if(a==='aage'){if(el.dataset.v==='1')okAge[ANI[S.an.sheet].t]=1;else S.an.sheet=null;render(true);return}
+  if(a==='arev'){S.an.rev=!S.an.rev;render(true);return}
   if(a==='ass'){S.an.ss=+el.dataset.k;render(true);return}
   if(a==='aview'){const d=el.dataset;if(d.p){const r=epSt[d.p]||(epSt[d.p]={w:[]});r.s=d.s;r.l=d.e;r.n=+d.n;r.w=r.w||[];if(!r.w.includes(d.e))r.w.push(d.e);saveEp()}
   S.an.view={u:el.dataset.u,t:el.dataset.t,o:el.dataset.o,l:el.dataset.l};render(true);return}
