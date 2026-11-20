@@ -56,4 +56,8 @@ for pid in IDS:
     for v in vids: uniq.setdefault(v[0],v)
     res[pid]=list(uniq.values()); print(pid,len(res[pid])); time.sleep(.5)
 if len(res)<len(IDS)//2: print('too few'); sys.exit(1)
+EX=HERE.parent/'yt_extra.json'
+if EX.exists():  # 台灣限定、Actions 抓不到的清單（手動在台灣瀏覽器抓好），一律以此為準
+    for k,v in json.loads(EX.read_text(encoding='utf-8')).items():
+        if v: res[k]=v
 OUT.write_text(json.dumps(res,ensure_ascii=False,separators=(',',':')),encoding='utf-8')

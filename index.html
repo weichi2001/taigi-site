@@ -600,7 +600,7 @@ function aniView(v){
 }
 // 節目逐集清單：由 GitHub Actions 抓 YouTube 播放清單產生 yt.json（影片編號、標題、片長）
 let YTE={};
-fetch('yt.json',{cache:'no-cache'}).then(r=>r.ok?r.json():Promise.reject()).then(d=>{YTE=d||{};if(location.hash==='#anime')render(true)}).catch(()=>{});
+fetch('yt.json',{cache:'no-cache'}).then(r=>r.ok?r.json():Promise.reject()).then(d=>{YTE=d||{};return fetch('yt_extra.json',{cache:'no-cache'}).then(r=>r.ok?r.json():{}).catch(()=>({})).then(e=>{for(const k in e)if(e[k]&&e[k].length)YTE[k]=e[k]})}).then(()=>{if(location.hash==='#anime')render(true)}).catch(()=>{});
 const ytEmb=(id,pl)=>'https://www.youtube.com/embed/'+id+'?list='+pl+'&rel=0&cc_load_policy=1&cc_lang_pref=nan-TW&hl=zh-TW';
 // YouTube 標題常是「【節目】完整版S9｜這集的重點｜來賓｜…」：去掉節目名和太短的前綴，只留這集的重點
 const ytTitle=t=>{t=t.replace(/^【[^】]*】/,'').trim();const p=t.split('｜').map(x=>x.trim()).filter(Boolean);if(p.length>1&&p[0].length<=12)p.shift();return p[0]||t};
