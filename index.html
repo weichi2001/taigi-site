@@ -532,7 +532,11 @@ const SER=[
  ['成功路上','PLiYq51xu1TLVZ25_YMMw2TEHayreEpeev','YG1rtSPXJLM','穿越劇',37],
  ['HiHi導覽先生','PLiYq51xu1TLXAbPjWBmmEJPqlk3fOrpo4','zhFQH93PEW0','旅遊節目',115],
  ['來去恁兜洗魂舒','PLiYq51xu1TLWWvYyuuqnn2Cxm097QDqKo','GSbsE8loeG8','旅遊實境',13],
- ['話山話水話玲瓏','PLiYq51xu1TLWiC1nk8XgGze4XgQsNAQzb','lHyOhq6G7hU','節目',103]];
+ ['話山話水話玲瓏','PLiYq51xu1TLWiC1nk8XgGze4XgQsNAQzb','lHyOhq6G7hU','節目',103],
+ // 木棉花（Muse 闔家歡）頻道，標明【台語】的動畫
+ ['我們這一家','PLDfDiflGwSuUNXs_I1TaH3H4XwJ2-6TkJ','Eds-ySNJKI0','木棉花動畫',39],
+ ['新我們這一家','PLDfDiflGwSuWlkQvy6YkNU-3xyCk8-N_w','yJgkXDSssRM','木棉花動畫',31],
+ ['元氣媽媽','PLDfDiflGwSuVSiXHOBeCeG0BPbhy5E_6q','693QxAujuJ0','木棉花動畫',69]];
 SER.forEach(([t,yl,v,ty,n])=>ANI.push({t,yl,pimg:'https://i.ytimg.com/vi/'+v+'/hqdefault.jpg',tag:'台語節目・'+ty,sub:ty+'・'+n+' 部影片',s:['yt']}));
 const ptsUrl=a=>a.pid?'https://www.ptsplus.tv/zh/programs/'+a.pid+(a.sid?'/seasons/'+a.sid:''):PTS;
 const moeUrl=a=>a.id?'https://twbangga.moe.edu.tw/animation/'+a.id:MOE;
@@ -564,7 +568,7 @@ const aniRow=(title,sub,list)=>list.length?`<div class="rowh"><h3>${title}</h3><
 // 分類（不依片源）：動畫／電影／戲劇／短片／紀錄片／節目
 const CATS=['動畫','電影','戲劇','短片','紀錄片','節目'];
 const cat=a=>{const t=a.tag||'';
-  if(a.yl)return /戲劇|穿越劇/.test(t)?'戲劇':/紀實/.test(t)?'紀錄片':'節目';
+  if(a.yl)return /動畫/.test(t)?'動畫':/戲劇|穿越劇/.test(t)?'戲劇':/紀實/.test(t)?'紀錄片':'節目';
   if(a.yt)return /短片/.test(t)?'短片':/紀錄片/.test(t)?'紀錄片':/電視劇/.test(t)?'戲劇':'電影';
   return '動畫'};
 function pAnime(){
