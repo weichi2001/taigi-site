@@ -539,7 +539,7 @@ S.an={src:'all',sheet:null,view:null,ss:null};
 const IMG='https://twbangga.moe.edu.tw/server/crop/coverImage/';
 const aniTile=(a,i)=>`<button class="pt" data-act="asheet" data-i="${i}" style="--h:${hue(a.t)}">
   ${a.img||a.pimg?`<img src="${a.pimg||IMG+a.img}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`:''}
-  <span class="bd ${a.lv==='保護級'?'pro':''}">${a.s.length>1?'兩處可看':SRC[a.s[0]].n.replace('教育部臺灣台語動畫網','教育部')}</span>
+  ${a.lv==='保護級'?'<span class="bd pro">保護級</span>':a.age?`<span class="bd pro">輔${a.age}</span>`:''}
   <span class="st">${aniSt[a.t]==2?'✓':aniSt[a.t]==1?'♥':''}</span><b>${esc(a.t)}</b><small>${a.sub||a.lv||'台語配音'}</small></button>`;
 // 公視+ 片單由 GitHub Actions 每 8 小時更新 pts.json；載入失敗就用上面內建的備份片單
 fetch('pts.json',{cache:'no-cache'}).then(r=>r.ok?r.json():Promise.reject()).then(d=>{
@@ -553,27 +553,29 @@ fetch('pts.json',{cache:'no-cache'}).then(r=>r.ok?r.json():Promise.reject()).the
 }).catch(()=>{});
 const aniRow=(title,sub,list)=>list.length?`<div class="rowh"><h3>${title}</h3><small>${sub}</small><div class="arr"><button data-act="ascroll" data-d="-1" aria-label="往左">‹</button><button data-act="ascroll" data-d="1" aria-label="往右">›</button></div></div>
   <div class="rowx">${list.map(a=>aniTile(a,ANI.indexOf(a))).join('')}</div>`:'';
+// 分類（不依片源）：動畫／電影／戲劇／短片／紀錄片／節目
+const CATS=['動畫','電影','戲劇','短片','紀錄片','節目'];
+const cat=a=>{const t=a.tag||'';
+  if(a.yl)return /戲劇|穿越劇/.test(t)?'戲劇':/紀實/.test(t)?'紀錄片':'節目';
+  if(a.yt)return /短片/.test(t)?'短片':/紀錄片/.test(t)?'紀錄片':/電視劇/.test(t)?'戲劇':'電影';
+  return '動畫'};
 function pAnime(){
   const v=ANI.filter(a=>!a.hide),f=S.an.src;
-  const fil=a=>f==='all'||(f==='mine'?aniSt[a.t]:a.s.includes(f));
+  const fil=a=>f==='all'||(f==='mine'?aniSt[a.t]:cat(a)===f);
   const day=Math.floor(Date.now()/864e5),pool=v.filter(a=>a.pimg).length?v.filter(a=>a.pimg):v,pick=pool[day%pool.length],pi=ANI.indexOf(pick);
   const chip=(k,l)=>`<button class="ach ${f===k?'on':''}" data-act="asrc" data-f="${k}">${l}</button>`;
   const mine=v.filter(a=>aniSt[a.t]);
   let body='';
   if(f==='all'){
-    body=aniRow('我的片單',`♥ 想看　✓ 看過了`,mine)
-      +aniRow('教育部臺灣台語動畫網','國、高中階段',v.filter(a=>a.s.includes('moe')))
-      +aniRow('公視台語台 電影・紀錄片','完整版',v.filter(a=>a.yt))
-      +aniRow('公視台語台 節目・戲劇','整季完整版，播放器內可選集',v.filter(a=>a.yl))
-      +aniRow('公視+ 經典動畫','台語配音也好好看',v.filter(a=>a.s.includes('pts')));
+    body=aniRow('我的片單',`♥ 想看　✓ 看過了`,mine)+CATS.map(c=>aniRow(c,'',v.filter(a=>cat(a)===c))).join('');
   }else{
     const l=v.filter(fil);body=l.length?`<div class="rowx" style="flex-wrap:wrap;overflow:visible;margin-top:14px">${l.map(a=>aniTile(a,ANI.indexOf(a))).join('')}</div>`:'<p class="sub" style="margin-top:18px">還沒有。打開一部作品，按「♥ 想看」就會放進來。</p>';
   }
   return `<a class="back" href="#home">← 首頁</a><h2 class="hd">Khuànn-Tâi</h2>
    <div class="hero" style="--h:${hue(pick.t)}">${pick.img||pick.pimg?`<img class="himg" src="${pick.pimg||IMG+pick.img}" alt="" referrerpolicy="no-referrer" onerror="this.remove()">`:''}<span class="kick">今日推薦</span><h2 class="hd">${esc(pick.t)}</h2>
-     <p>${pick.lv?pick.lv+'・':''}${pick.s.map(k=>SRC[k].n).join('、')}</p>
+     <p>${pick.lv?pick.lv+'・':''}${cat(pick)}</p>
      <div class="acts"><button class="abtn" data-act="asheet" data-i="${pi}">看這部</button></div></div>
-   <div class="achips">${chip('all','全部')}${chip('moe','教育部台語動畫網')}${chip('pts','公視+')}${chip('yt','公視台語台')}${chip('mine',`我的片單${mine.length?' ('+mine.length+')':''}`)}</div>
+   <div class="achips">${chip('all','全部')}${CATS.map(c=>chip(c,c)).join('')}${chip('mine',`我的片單${mine.length?' ('+mine.length+')':''}`)}</div>
    ${body}${S.an.sheet!==null?aniSheet(ANI[S.an.sheet]):''}${S.an.view?aniView(S.an.view):''}`;
 }
 
