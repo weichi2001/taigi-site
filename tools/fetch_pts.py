@@ -33,6 +33,19 @@ for pid in progs:
         it['u']=1
     if s:
         it['sid']=s['id']; it['img']=s.get('cover') or it['img']
+    # 集數：每個台語季都抓（間諜家家酒有兩季）；沒標台語的片不抓
+    if not it.get('u'):
+        its=[x for x in (tw or ([s] if s else []))]
+        ss=[]
+        for x in its:
+            try:
+                eps=q('{ season(id:"%s"){ episodes{ id name number } } }'%x['id'])['season']['episodes']
+            except Exception as e:
+                print('eps fail',p['name'],e); eps=[]
+            eps=sorted(eps,key=lambda e:(e.get('number') or 0))
+            ss.append({'sid':x['id'],'n':x['name'],'eps':[[e['id'],e.get('number'),(e['name'] or '').rsplit(' ep',1)[0]] for e in eps]})
+            time.sleep(.3)
+        if ss: it['ss']=ss
     items.append(it); time.sleep(.3)
 if len(items)<10: print('too few items',len(items)); sys.exit(1)
 OUT.write_text(json.dumps({'updated':datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M'),'items':items},ensure_ascii=False,indent=1),encoding='utf-8')

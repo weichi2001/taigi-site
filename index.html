@@ -126,6 +126,10 @@ footer{margin-top:30px;font-size:12px;color:var(--ink2);border-top:1px solid var
 .mr .h{font-size:14px}.mr .mx{font-size:13px;margin-top:2px}
 
 /* ---- 動畫專區（深色劇場風，參考 YOKAR 的排版）---- */
+.eps{margin-top:14px}.eps>b{display:block;margin-bottom:8px}
+.ess{display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap}.ess button{background:#2c2622;color:#f1e9dd;border:1px solid #3a322c;border-radius:14px;padding:3px 11px;font:inherit;font-size:13px;cursor:pointer}.ess button.on{background:#e24403;border-color:#e24403}
+.epg{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:6px;max-height:190px;overflow:auto}
+.epg button{background:#241f1b;color:#f1e9dd;border:1px solid #3a322c;border-radius:8px;padding:8px 0;font:inherit;cursor:pointer}.epg button:hover{background:#e24403;border-color:#e24403}
 body.anime{background:#14110f;color:#f1e9dd}
 body.anime .top{background:rgba(20,17,15,.92);border-color:#2c2622}
 body.anime .logo{color:#f1e9dd}body.anime .tool{background:#241f1b;border-color:#3a322c;color:#f1e9dd}
@@ -474,7 +478,7 @@ const SRC={moe:{n:'教育部臺灣台語動畫網',u:MOE,tip:'教育部網站，
 const hue=s=>{let h=0;for(const c of s)h=(h*31+c.charCodeAt(0))%360;return h};
 let aniSt={};try{aniSt=JSON.parse(localStorage.getItem('tgani')||'{}')||{}}catch(e){aniSt={}}
 const saveAni=()=>{try{localStorage.setItem('tgani',JSON.stringify(aniSt))}catch(e){}};
-S.an={src:'all',sheet:null,view:null};
+S.an={src:'all',sheet:null,view:null,ss:0};
 const IMG='https://twbangga.moe.edu.tw/server/crop/coverImage/';
 const aniTile=(a,i)=>`<button class="pt" data-act="asheet" data-i="${i}" style="--h:${hue(a.t)}">
   ${a.img||a.pimg?`<img src="${a.pimg||IMG+a.img}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`:''}
@@ -487,7 +491,7 @@ fetch('pts.json',{cache:'no-cache'}).then(r=>r.ok?r.json():Promise.reject()).the
   ANI.length=0;keep.forEach(a=>ANI.push(a));
   // 沒有明確「台語版」標示的作品（u:1）預設不顯示；老師確認過有台語配音的，把 pid 加進 CONF 就會出現
   const CONF=new Set([]);
-  d.items.filter(o=>!o.u||CONF.has(o.pid)).forEach(o=>ANI.push({t:o.t.replace(/（雙語版）$/,''),pid:o.pid,sid:o.sid,pimg:o.img,u:o.u,s:['pts']}));
+  d.items.filter(o=>!o.u||CONF.has(o.pid)).forEach(o=>ANI.push({t:o.t.replace(/（雙語版）$/,''),pid:o.pid,sid:o.sid,ss:o.ss,pimg:o.img,u:o.u,s:['pts']}));
   S.an.sheet=null;if(location.hash==='#anime')render(true);
 }).catch(()=>{});
 const aniRow=(title,sub,list)=>list.length?`<div class="rowh"><h3>${title}</h3><small>${sub}</small><div class="arr"><button data-act="ascroll" data-d="-1" aria-label="往左">‹</button><button data-act="ascroll" data-d="1" aria-label="往右">›</button></div></div>
@@ -521,6 +525,13 @@ function aniView(v){
    <iframe src="${v.u}" title="${esc(v.t)}" allow="fullscreen; autoplay; encrypted-media" allowfullscreen referrerpolicy="no-referrer"></iframe>
    <p class="tip">${sb?'目前是 claude.ai 預覽頁，瀏覽器會擋內嵌；放到獨立網頁（例如 GitHub Pages）才會顯示。':'公視+ 要登入才能播放。有「版本」選單的片請選「台語版」；如果這裡沒有畫面，請按「新分頁開」。'}</p></div></div>`;
 }
+function aniEps(a){
+  if(!a.ss||!a.ss.length)return '';
+  const k=Math.min(S.an.ss,a.ss.length-1),se=a.ss[k];if(!se.eps.length)return '';
+  const base='https://www.ptsplus.tv/zh/programs/'+a.pid+'/seasons/'+se.sid+'?play=';
+  return `<div class="eps"><b>選集數</b>${a.ss.length>1?`<div class="ess">${a.ss.map((x,i)=>`<button class="${i===k?'on':''}" data-act="ass" data-k="${i}">${esc(x.n)}</button>`).join('')}</div>`:''}
+   <div class="epg">${se.eps.map(e=>`<button data-act="aview" data-u="${base+e[0]}" data-t="${esc(a.t+' '+(e[1]!=null?'第'+e[1]+'集':''))}" title="${esc(e[2])}">${e[1]!=null?e[1]:'•'}</button>`).join('')}</div></div>`;
+}
 function aniSheet(a){
   const st=aniSt[a.t]||0;
   return `<div class="sheetbg" data-act="aclose"><div class="sheet" role="dialog" aria-label="${esc(a.t)}">
@@ -528,6 +539,7 @@ function aniSheet(a){
    <div class="meta">${a.lv?`<span>${a.lv}</span>`:''}<span>${a.u?'台語配音（待確認）':'台語配音'}</span>${a.s.includes('moe')&&!a.free?'<span>限臺澎金馬及離島地區觀看</span>':''}</div>
    <div class="acts">${a.s.includes('pts')?`<button class="abtn" data-act="aview" data-u="${ptsUrl(a)}" data-t="${esc(a.t)}">▶ 在這裡看（公視+）</button>`:''}${a.s.includes('moe')?`<a class="abtn ${a.s.includes('pts')?'gh':''}" href="${moeUrl(a)}" target="_blank" rel="noopener">前往教育部動畫網 ↗</a>`:''}
      <button class="abtn gh ${st==1?'on':''}" data-act="aset" data-v="1">♥ 想看</button><button class="abtn gh ${st==2?'on':''}" data-act="aset" data-v="2">✓ 看過了</button></div>
+   ${aniEps(a)}
   </div></div>`;
 }
 
@@ -570,7 +582,8 @@ $('#app').addEventListener('click',e=>{
   const el=e.target.closest('[data-act]');if(!el)return;
   const a=el.dataset.act;
   if(a==='dict')return; // 由全站監聽處理
-  if(a==='asheet'){S.an.sheet=+el.dataset.i;render(true);return}
+  if(a==='asheet'){S.an.sheet=+el.dataset.i;S.an.ss=0;render(true);return}
+  if(a==='ass'){S.an.ss=+el.dataset.k;render(true);return}
   if(a==='aview'){S.an.view={u:el.dataset.u,t:el.dataset.t};render(true);return}
   if(a==='avclose'){S.an.view=null;render(true);return}
   if(a==='aclose'){if(el.classList.contains('sheetbg')&&e.target!==el)return;if(S.an.view){S.an.view=null;render(true);return}S.an.sheet=null;render(true);return}
