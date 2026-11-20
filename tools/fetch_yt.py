@@ -21,8 +21,14 @@ def walk(o,vids,toks):
         lv=o.get('lockupViewModel')
         if lv and lv.get('contentType')=='LOCKUP_CONTENT_TYPE_VIDEO':
             t=lv['metadata']['lockupMetadataViewModel']['title']['content']
-            m=re.search(r'"text":"(\d+:\d\d(?::\d\d)?)"',json.dumps(lv,ensure_ascii=False))
+            m=re.search(r'"text":\s*"(\d+:\d\d(?::\d\d)?)"',json.dumps(lv,ensure_ascii=False))
             vids.append([lv['contentId'],t,m.group(1) if m else ''])
+        sl=o.get('shortsLockupViewModel')
+        if sl:
+            try:
+                vid=sl['onTap']['innertubeCommand']['reelWatchEndpoint']['videoId']
+                vids.append([vid,sl['overlayMetadata']['primaryText']['content'],'短'])
+            except Exception: pass
         pv=o.get('playlistVideoRenderer')
         if pv:
             vids.append([pv['videoId'],''.join(r['text'] for r in pv['title'].get('runs',[])),(pv.get('lengthText') or {}).get('simpleText','')])
