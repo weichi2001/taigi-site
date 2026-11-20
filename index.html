@@ -472,7 +472,34 @@ const ANI=[
  {t:'白領羽球部',pid:'e479f53b-e749-413c-a7ed-dd032346d446',s:['pts']},{t:'凡爾賽玫瑰',pid:'99dff839-8a53-4b62-abda-7aed5c628407',s:['pts']},{t:'國王排名',pid:'f1c54b83-0406-41fd-989b-415872f363ef',s:['pts']},{t:'螢火之森',pid:'78e71e04-e248-4264-81e5-a9684d53d6e0',s:['pts']},
  {t:'工作細胞BLACK',pid:'5c4f0001-e0f2-49c9-97cd-5f9850b23ced',s:['pts']},{t:'派對咖孔明 劇場版',pid:'cd66f483-f9a0-405a-8a34-5dbc9dbbf581',s:['pts']},{t:'怪醫黑傑克 21',pid:'625b06dd-6a43-4c66-883b-9055ef81906f',s:['pts']},{t:'怪醫黑傑克',pid:'3cddeb5c-fdc0-44d4-a550-a2f921c2b138',s:['pts']}
 ];
-ANI.push({t:'聖誕夜奇蹟',yt:'4dhZ9XK1l3s',pimg:'https://i.ytimg.com/vi/4dhZ9XK1l3s/maxresdefault.jpg',tag:'台語電視電影',sub:'電視電影・約 90 分鐘',s:['yt']});
+// 公視台語台（DAY DAY 台語台）「台語有影」完整版，YouTube 內嵌。hide:1＝先不給學生看，老師確認後拿掉即可
+const YT=[
+ ['再見1987 特別版','4m9JsDfAGx8','電視劇特別版','87 分鐘'],
+ ['我的陽過阿公','WH03A6CBxkQ','電視電影','84 分鐘'],
+ ['吹海風','8J5NcpzwnJ8','短片・自由的向望','32 分鐘'],
+ ['家族無共識','Oft6wx0fw2I','短片・自由的向望','36 分鐘'],
+ ['回來就好','VJJjMIgGD-E','短片・自由的向望','26 分鐘'],
+ ['阿爸請你嘛嘛吼','IysaWA0s6h4','國片','87 分鐘'],
+ ['夾縫人生','CACZk3Cm1HE','電視電影','93 分鐘'],
+ ['飄撇討海人','aS9RfX8mMs8','紀錄片','48 分鐘'],
+ ['地下藝人','mhQSM_vldWs','紀錄片','49 分鐘'],
+ ['等待','nHrXKVGZaxc','電視電影','91 分鐘'],
+ ['夜盲','isp8PVUeaQ0','電視電影','90 分鐘'],
+ ['阿波羅男孩','JJlE0boOOvI','電視電影','90 分鐘'],
+ ['顧巢．抾箬仔','HbP6M1pkvxk','國片','90 分鐘'],
+ ['拳職人員','TRctBEGeT1o','電視電影','90 分鐘'],
+ ['聖誕夜奇蹟','4dhZ9XK1l3s','電視電影','90 分鐘'],
+ ['阿英羅曼史','hOXyCwMWiXE','短片','22 分鐘'],
+ ['啥人顧性命','ptk-bCiSRSo','國片・輔十二級','83 分鐘',1],
+ ['阿媽','UPgSmttZIfE','電視電影・同志題材','86 分鐘',1],
+ ['弓蕉園的秘密','NwrNtjnTgRE','電視電影・同志題材','86 分鐘',1],
+ ['殺手老不休','--lpItnGbq0','電視電影・動作喜劇','91 分鐘',1],
+ ['討債女王','HesipIYTWRg','國片','86 分鐘',1],
+ ['藍色假期','r0cg6CRg6a8','電視電影','81 分鐘',1],
+ ['天字第二號','bJTkAZjzzjc','電視電影・諷刺喜劇','89 分鐘',1],
+ ['尋找陳智雄','N1LXJo0wtmk','紀錄片','51 分鐘',1],
+ ['此岸彼岸','mWDqclO5JM0','短片','25 分鐘',1]];
+YT.forEach(([t,id,ty,d,h])=>ANI.push({t,yt:id,pimg:'https://i.ytimg.com/vi/'+id+'/hqdefault.jpg',tag:'台語電影・'+ty,sub:ty.split('・')[0]+'・'+d,s:['yt'],hide:h}));
 const ptsUrl=a=>a.pid?'https://www.ptsplus.tv/zh/programs/'+a.pid+(a.sid?'/seasons/'+a.sid:''):PTS;
 const moeUrl=a=>a.id?'https://twbangga.moe.edu.tw/animation/'+a.id:MOE;
 const SRC={yt:{n:'公視台語台'},moe:{n:'教育部臺灣台語動畫網',u:MOE,tip:'教育部網站，選「國、高中階段」，片名下標示限臺澎金馬及離島地區觀看。'},
