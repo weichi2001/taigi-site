@@ -493,7 +493,7 @@ const aniRow=(title,sub,list)=>list.length?`<div class="rowh"><h3>${title}</h3><
 function pAnime(){
   const v=ANI.filter(a=>!a.hide),f=S.an.src;
   const fil=a=>f==='all'||(f==='mine'?aniSt[a.t]:a.s.includes(f));
-  const day=Math.floor(Date.now()/864e5),pick=v[day%v.length],pi=ANI.indexOf(pick);
+  const day=Math.floor(Date.now()/864e5),pool=v.filter(a=>a.pimg).length?v.filter(a=>a.pimg):v,pick=pool[day%pool.length],pi=ANI.indexOf(pick);
   const chip=(k,l)=>`<button class="ach ${f===k?'on':''}" data-act="asrc" data-f="${k}">${l}</button>`;
   const mine=v.filter(a=>aniSt[a.t]);
   let body='';
@@ -506,7 +506,7 @@ function pAnime(){
   }
   return `<a class="back" href="#home">← 首頁</a><h2 class="hd">看動畫，學台語</h2>
    <p class="sub">用台語配音的動畫練聽力。點一部作品，看小任務，再前往官方平台觀看。</p>
-   <div class="hero" style="--h:${hue(pick.t)}">${pick.img?`<img class="himg" src="${IMG+pick.img}" alt="" referrerpolicy="no-referrer" onerror="this.remove()">`:''}<span class="kick">今日推薦</span><h2 class="hd">${esc(pick.t)}</h2>
+   <div class="hero" style="--h:${hue(pick.t)}">${pick.img||pick.pimg?`<img class="himg" src="${pick.pimg||IMG+pick.img}" alt="" referrerpolicy="no-referrer" onerror="this.remove()">`:''}<span class="kick">今日推薦</span><h2 class="hd">${esc(pick.t)}</h2>
      <p>${pick.lv?pick.lv+'・':''}${pick.s.map(k=>SRC[k].n).join('、')}</p>
      <div class="acts"><button class="abtn" data-act="asheet" data-i="${pi}">看介紹與小任務</button></div></div>
    <div class="achips">${chip('all','全部')}${chip('moe','教育部台語動畫網')}${chip('pts','公視+')}${chip('mine',`我的片單${mine.length?' ('+mine.length+')':''}`)}</div>
