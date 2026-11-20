@@ -598,15 +598,17 @@ function aniView(v){
 let YTE={};
 fetch('yt.json',{cache:'no-cache'}).then(r=>r.ok?r.json():Promise.reject()).then(d=>{YTE=d||{};if(location.hash==='#anime')render(true)}).catch(()=>{});
 const ytEmb=(id,pl)=>'https://www.youtube.com/embed/'+id+'?list='+pl+'&rel=0&cc_load_policy=1&cc_lang_pref=nan-TW&hl=zh-TW';
+// YouTube 標題常是「【節目】完整版S9｜這集的重點｜來賓｜…」：去掉節目名和太短的前綴，只留這集的重點
+const ytTitle=t=>{t=t.replace(/^【[^】]*】/,'').trim();const p=t.split('｜').map(x=>x.trim()).filter(Boolean);if(p.length>1&&p[0].length<=12)p.shift();return p[0]||t};
 function aniYtEps(a){
   const L=YTE[a.yl];if(!L||!L.length)return '';
   const rec=epSt[a.yl]||{w:[]},rv=S.an.rev;
   const rows=L.map((e,i)=>({e,n:i+1}));if(rv)rows.reverse();
-  const at=(e,n)=>`data-act="aview" data-u="${ytEmb(e[0],a.yl)}" data-o="https://www.youtube.com/watch?v=${e[0]}&list=${a.yl}" data-l="YouTube" data-t="${esc(a.t+'・'+e[1].replace(/^【[^】]*】/,'').slice(0,40))}" data-p="${a.yl}" data-s="${a.yl}" data-e="${e[0]}" data-n="${n}"`;
+  const at=(e,n)=>`data-act="aview" data-u="${ytEmb(e[0],a.yl)}" data-o="https://www.youtube.com/watch?v=${e[0]}&list=${a.yl}" data-l="YouTube" data-t="${esc(a.t+'・'+ytTitle(e[1]).slice(0,40))}" data-p="${a.yl}" data-s="${a.yl}" data-e="${e[0]}" data-n="${n}"`;
   const li=rows.find(r=>r.e[0]===rec.l);
   return `<div class="eps yt"><b>選集數 <small>共 ${L.length} 集</small></b>
    <div class="eph">${li?`<button class="abtn cont" ${at(li.e,li.n)}>▶ 接著看：第 ${li.n} 集</button>`:''}<button class="abtn gh" data-act="arev">${rv?'↑ 由舊到新':'↓ 由新到舊'}</button></div>
-   <div class="epl">${rows.map(({e,n})=>`<button class="er ${li&&li.e===e?'last':(rec.w||[]).includes(e[0])?'seen':''}" ${at(e,n)}><img loading="lazy" referrerpolicy="no-referrer" src="https://i.ytimg.com/vi/${e[0]}/mqdefault.jpg" alt=""><span class="en">${n}</span><span class="et">${esc(e[1].replace(/^【[^】]*】/,'').trim()||e[1])}</span><span class="ed">${e[2]}</span></button>`).join('')}</div></div>`;
+   <div class="epl">${rows.map(({e,n})=>`<button class="er ${li&&li.e===e?'last':(rec.w||[]).includes(e[0])?'seen':''}" ${at(e,n)}><img loading="lazy" referrerpolicy="no-referrer" src="https://i.ytimg.com/vi/${e[0]}/mqdefault.jpg" alt=""><span class="en">${n}</span><span class="et">${esc(ytTitle(e[1]))}</span><span class="ed">${e[2]}</span></button>`).join('')}</div></div>`;
 }
 function aniEps(a){
   if(a.yl)return aniYtEps(a);
