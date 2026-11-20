@@ -547,7 +547,7 @@ function aniSheet(a){
   return `<div class="sheetbg" data-act="aclose"><div class="sheet" role="dialog" aria-label="${esc(a.t)}">
    <button class="x" data-act="aclose" aria-label="關閉">×</button><h3 class="hd">${esc(a.t)}</h3>
    <div class="meta">${a.lv?`<span>${a.lv}</span>`:''}<span>${a.tag||(a.u?'台語配音（待確認）':'台語配音')}</span>${a.s.includes('moe')&&!a.free?'<span>限臺澎金馬及離島地區觀看</span>':''}</div>
-   <div class="acts">${a.yt?`<button class="abtn" data-act="aview" data-u="https://www.youtube.com/embed/${a.yt}?rel=0" data-o="https://www.youtube.com/watch?v=${a.yt}" data-l="YouTube" data-t="${esc(a.t)}">▶ 在這裡看</button>`:''}${a.s.includes('pts')?`<button class="abtn" data-act="aview" data-u="${ptsUrl(a)}" data-t="${esc(a.t)}">▶ 在這裡看（公視+）</button>`:''}${a.s.includes('moe')?`<a class="abtn ${a.s.includes('pts')?'gh':''}" href="${moeUrl(a)}" target="_blank" rel="noopener">前往教育部動畫網 ↗</a>`:''}
+   <div class="acts">${a.yt?`<button class="abtn" data-act="aview" data-u="https://www.youtube.com/embed/${a.yt}?rel=0&cc_load_policy=1&cc_lang_pref=nan-TW&hl=zh-TW" data-o="https://www.youtube.com/watch?v=${a.yt}" data-l="YouTube" data-t="${esc(a.t)}">▶ 在這裡看</button>`:''}${a.s.includes('pts')?`<button class="abtn" data-act="aview" data-u="${ptsUrl(a)}" data-t="${esc(a.t)}">▶ 在這裡看（公視+）</button>`:''}${a.s.includes('moe')?`<a class="abtn ${a.s.includes('pts')?'gh':''}" href="${moeUrl(a)}" target="_blank" rel="noopener">前往教育部動畫網 ↗</a>`:''}
      <button class="abtn gh ${st==1?'on':''}" data-act="aset" data-v="1">♥ 想看</button><button class="abtn gh ${st==2?'on':''}" data-act="aset" data-v="2">✓ 看過了</button></div>
    ${aniEps(a)}
   </div></div>`;
