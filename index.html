@@ -129,7 +129,8 @@ footer{margin-top:30px;font-size:12px;color:var(--ink2);border-top:1px solid var
 .eps{margin-top:14px}.eps>b{display:block;margin-bottom:8px}
 .ess{display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap}.ess button{background:#2c2622;color:#f1e9dd;border:1px solid #3a322c;border-radius:14px;padding:3px 11px;font:inherit;font-size:13px;cursor:pointer}.ess button.on{background:#e24403;border-color:#e24403}
 .epg{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:6px;max-height:190px;overflow:auto}
-.epg button{background:#241f1b;color:#f1e9dd;border:1px solid #3a322c;border-radius:8px;padding:8px 0;font:inherit;cursor:pointer}.epg button:hover{background:#e24403;border-color:#e24403}
+.epg button{background:#241f1b;color:#f1e9dd;border:1px solid #3a322c;border-radius:8px;padding:8px 0;font:inherit;cursor:pointer}.epg button.seen{color:#9c8e80;border-color:#2c2622}.epg button.last{background:#7a2a05;border-color:#e24403}.eps .cont{display:inline-block;margin-bottom:8px}
+.epg button:hover{background:#e24403;border-color:#e24403}
 body.anime{background:#14110f;color:#f1e9dd}
 body.anime .top{background:rgba(20,17,15,.92);border-color:#2c2622}
 body.anime .logo{color:#f1e9dd}body.anime .tool{background:#241f1b;border-color:#3a322c;color:#f1e9dd}
@@ -477,8 +478,10 @@ const SRC={moe:{n:'教育部臺灣台語動畫網',u:MOE,tip:'教育部網站，
            pts:{n:'公視+',u:PTS,tip:'公視+「經典動畫 台語配音也好好看」專題，部分作品需登入。'}};
 const hue=s=>{let h=0;for(const c of s)h=(h*31+c.charCodeAt(0))%360;return h};
 let aniSt={};try{aniSt=JSON.parse(localStorage.getItem('tgani')||'{}')||{}}catch(e){aniSt={}}
+let epSt={};try{epSt=JSON.parse(localStorage.getItem('tgep')||'{}')||{}}catch(e){epSt={}}
+const saveEp=()=>{try{localStorage.setItem('tgep',JSON.stringify(epSt))}catch(e){}};
 const saveAni=()=>{try{localStorage.setItem('tgani',JSON.stringify(aniSt))}catch(e){}};
-S.an={src:'all',sheet:null,view:null,ss:0};
+S.an={src:'all',sheet:null,view:null,ss:null};
 const IMG='https://twbangga.moe.edu.tw/server/crop/coverImage/';
 const aniTile=(a,i)=>`<button class="pt" data-act="asheet" data-i="${i}" style="--h:${hue(a.t)}">
   ${a.img||a.pimg?`<img src="${a.pimg||IMG+a.img}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`:''}
@@ -527,10 +530,15 @@ function aniView(v){
 }
 function aniEps(a){
   if(!a.ss||!a.ss.length)return '';
-  const k=Math.min(S.an.ss,a.ss.length-1),se=a.ss[k];if(!se.eps.length)return '';
+  const rec=epSt[a.pid]||{w:[]};
+  let k=S.an.ss;if(k==null){k=Math.max(0,a.ss.findIndex(x=>x.sid===rec.s));}
+  k=Math.min(k,a.ss.length-1);const se=a.ss[k];if(!se.eps.length)return '';
   const base='https://www.ptsplus.tv/zh/programs/'+a.pid+'/seasons/'+se.sid+'?play=';
-  return `<div class="eps"><b>選集數</b>${a.ss.length>1?`<div class="ess">${a.ss.map((x,i)=>`<button class="${i===k?'on':''}" data-act="ass" data-k="${i}">${esc(x.n)}</button>`).join('')}</div>`:''}
-   <div class="epg">${se.eps.map(e=>`<button data-act="aview" data-u="${base+e[0]}" data-t="${esc(a.t+' '+(e[1]!=null?'第'+e[1]+'集':''))}" title="${esc(e[2])}">${e[1]!=null?e[1]:'•'}</button>`).join('')}</div></div>`;
+  const li=rec.s===se.sid?se.eps.find(e=>e[0]===rec.l):null;
+  const btn=e=>`data-act="aview" data-u="${base+e[0]}" data-t="${esc(a.t+' '+(e[1]!=null?'第'+e[1]+'集':''))}" data-p="${a.pid}" data-s="${se.sid}" data-e="${e[0]}" data-n="${e[1]}"`;
+  return `<div class="eps"><b>選集數</b>${li?`<button class="abtn cont" ${btn(li)}>▶ 接著看：第 ${li[1]} 集</button>`:''}
+   ${a.ss.length>1?`<div class="ess">${a.ss.map((x,i)=>`<button class="${i===k?'on':''}" data-act="ass" data-k="${i}">${esc(x.n)}</button>`).join('')}</div>`:''}
+   <div class="epg">${se.eps.map(e=>`<button ${btn(e)} class="${e===li?'last':(rec.w||[]).includes(e[0])?'seen':''}" title="${esc(e[2])}">${e[1]!=null?e[1]:'•'}</button>`).join('')}</div></div>`;
 }
 function aniSheet(a){
   const st=aniSt[a.t]||0;
@@ -582,9 +590,10 @@ $('#app').addEventListener('click',e=>{
   const el=e.target.closest('[data-act]');if(!el)return;
   const a=el.dataset.act;
   if(a==='dict')return; // 由全站監聽處理
-  if(a==='asheet'){S.an.sheet=+el.dataset.i;S.an.ss=0;render(true);return}
+  if(a==='asheet'){S.an.sheet=+el.dataset.i;S.an.ss=null;render(true);return}
   if(a==='ass'){S.an.ss=+el.dataset.k;render(true);return}
-  if(a==='aview'){S.an.view={u:el.dataset.u,t:el.dataset.t};render(true);return}
+  if(a==='aview'){const d=el.dataset;if(d.p){const r=epSt[d.p]||(epSt[d.p]={w:[]});r.s=d.s;r.l=d.e;r.n=+d.n;r.w=r.w||[];if(!r.w.includes(d.e))r.w.push(d.e);saveEp()}
+  S.an.view={u:el.dataset.u,t:el.dataset.t};render(true);return}
   if(a==='avclose'){S.an.view=null;render(true);return}
   if(a==='aclose'){if(el.classList.contains('sheetbg')&&e.target!==el)return;if(S.an.view){S.an.view=null;render(true);return}S.an.sheet=null;render(true);return}
   if(a==='asrc'){S.an.src=el.dataset.f;render(true);return}
