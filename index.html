@@ -105,6 +105,7 @@ input[type=search]:focus{outline:2px solid var(--accent);outline-offset:1px}
 .app{padding:14px 16px}
 .app h3{margin:0}
 .app .desc{margin:2px 0 8px;color:var(--ink2);font-size:14px}
+.ime{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin:10px 0 18px}.ime-h p{margin:2px 0 0;color:var(--ink2);font-size:14px}.kick2{font-family:Huninn,"Noto Sans TC",sans-serif;font-size:19px;font-weight:700}.ime .tabs{margin:12px 0}.ime .dl{display:block;text-align:center}.steps{margin:14px 0 0;padding-left:22px;font-size:14.5px;line-height:1.7}.tip{margin:12px 0 0;padding:8px 10px;border-radius:10px;background:var(--badbg);font-size:13px}.sec{font-size:15px;color:var(--ink2);margin:6px 0 0}.ime .note{margin:14px 0 0}.res .plat{margin-top:6px}
 .plat{display:flex;gap:8px;flex-wrap:wrap}
 .plat .btn{flex:1 1 0;min-width:0;text-align:center;padding:8px 6px;white-space:nowrap}
 .note{font-size:13px;color:var(--ink2)}
@@ -372,7 +373,7 @@ function pStart(){
     <div class="step"><h3>學 700 字</h3><p class="sub">日常最常用的台語字，不用一次學完，一段一段來。</p>
       ${resCard(RES[0])}${resCard(RES[1])}</div>
     <div class="step"><h3>聽、唱、用出來</h3><p class="sub">學了就要用。聽歌、唱歌，或試著用輸入法打台語。</p>
-      ${resCard(RES[2])}<a class="res" href="#apps"><h3>輸入法・手機軟體</h3><p>裝好工具，隨時查字、打台語。</p></a></div>
+      ${resCard(RES[2])}<a class="res" href="#apps"><h3>輸入法・字典</h3><p>裝好工具，隨時查字、打台語。</p></a></div>
    </div>`;
 }
 function pLearn(){
@@ -387,37 +388,32 @@ function pPlay(){
   return `<a class="back" href="#home">← 首頁</a><h2 class="hd">想玩一下</h2><p class="sub">不用想著在學，玩著玩著就學會了。</p>
    ${RES.filter(r=>r.play).map(resCard).join('')}`;
 }
-function appCard(a){
-  const btn=(k,label,url)=>url?`<a class="btn ${plat===k?'pri':''}" href="${esc(url)}" target="_blank" rel="noopener"${url===DICT?' data-act="dict"':''}>${label}</a>`:`<span class="btn off">${label}　—</span>`;
-  return `<div class="card app"><h3>${esc(a.n)}</h3><p class="desc">${esc(a.d)}</p>
-   <div class="plat">${btn('ios','iPhone',a.ios)}${btn('android','Android',a.and)}${btn('desktop','網頁/電腦',a.web)}</div>
-   ${a.note?`<p class="note" style="margin:8px 0 0">${esc(a.note)}</p>`:''}${a.more||''}</div>`;
-}
-function deskCard(){
-  const M='https://language.moe.gov.tw/uploads/files/',pg='https://language.moe.gov.tw/material/info?m=a1c64194-23d9-433e-8782-8550080788d2';
-  const b=(on,l,u)=>`<a class="btn ${on&&plat==='desktop'?'pri':''}" href="${u}" target="_blank" rel="noopener">${l}</a>`;
-  return `<div class="card app"><h3>教育部臺灣台語輸入法（電腦版）</h3><p class="desc">用臺羅拼音打台語漢字，Windows 和 Mac 都有。你現在看起來是用 ${plat==='desktop'?(isMac?'Mac':'Windows'):'手機'}。</p>
-   <div class="plat">${b(!isMac,'下載 Windows 版（.zip）','https://language.moe.gov.tw/sujip/EduTaigi-v1.4.0.1.zip')}${b(isMac,'下載 Mac 版（.dmg）','https://language.moe.gov.tw/sujip/TaiwaneseTaigi-1.7.0.149.dmg')}</div>
-   <div class="plat">${b(!isMac,'Windows 操作手冊',M+'17908498871469.pdf')}${b(isMac,'Mac 操作手冊',M+'17908498871266.pdf')}${b(0,'官方說明頁',pg)}</div>
-   <p class="note" style="margin:8px 0 0">兩個系統要各下載自己的版本，操作手冊也是分開的。</p>
-   <details><summary>Windows 和 Mac 有什麼不一樣？</summary><ul><li>安裝檔、操作手冊都分開，請照自己的系統下載。</li><li>詞庫與打字核心是共用的，目前版本為 115.9.10。</li><li>Windows 另外修正了「芫荽」字型重複安裝，以及在 LINE 等程式長時間輸入後輸入法失效的問題。</li><li>Mac 版核心更新至 0x182。</li></ul></details>
-   <details><summary>更新前要注意</summary><p class="note">新版會自動升級使用者詞庫，升級後就不能裝回舊版。更新前先到「詞語管理」把自己的詞庫匯出備份。</p></details>
-   <details><summary>怎麼打？</summary><ol><li>照臺羅拼音輸入，例如打 tai，組字區會出現候選字。</li><li>用滑鼠、↑↓ 或空白鍵選字。</li><li>按 Enter 會把原始字母直接送出，不選字，可以用來打英文。</li><li>想打臺羅拼音而不是漢字：按 Esc 下方的「~」鍵切換到「臺羅模式」。</li></ol></details></div>`;
-}
+const IME={
+ ios:{n:'iPhone',url:'https://apps.apple.com/app/id6743423554',cta:'到 App Store 安裝',man:'17908498871370',
+  steps:['安裝後，打開「設定」→「一般」→「鍵盤」','點「鍵盤」→「新增鍵盤」，在第三方鍵盤裡選「臺灣台語輸入法」','點進去，打開「允許完整取用」','打字時按地球鍵切換到這個鍵盤，還可以直接用說的轉成文字']},
+ android:{n:'Android',url:'https://play.google.com/store/apps/details?id=tw.moe.taiwanese.taigi',cta:'到 Google Play 安裝',man:'17908498871854',
+  steps:['安裝後，依手冊啟用鍵盤','打字時切換到「臺灣台語輸入法」，還可以直接用說的轉成文字']},
+ win:{n:'Windows',url:'https://language.moe.gov.tw/sujip/EduTaigi-v1.4.0.1.zip',cta:'下載 Windows 版（.zip）',man:'17908498871469',
+  steps:['下載後解壓縮，照手冊安裝','輸入臺羅拼音，例如 tai，用滑鼠、↑↓ 或空白鍵選字','Enter 會直接送出原始字母，可以用來打英文','按 Esc 下方的「~」鍵，切換到只打拼音的「臺羅模式」'],
+  tip:'更新前，先到「詞語管理」匯出自己的詞庫。新版會自動升級詞庫，升級後就不能裝回舊版。'},
+ mac:{n:'Mac',url:'https://language.moe.gov.tw/sujip/TaiwaneseTaigi-1.7.0.149.dmg',cta:'下載 Mac 版（.dmg）',man:'17908498871266',
+  steps:['下載後打開 .dmg，照手冊安裝','輸入臺羅拼音，例如 tai，用滑鼠、↑↓ 或空白鍵選字','Enter 會直接送出原始字母，可以用來打英文','按 Esc 下方的「~」鍵，切換到只打拼音的「臺羅模式」'],
+  tip:'更新前，先到「詞語管理」匯出自己的詞庫。新版會自動升級詞庫，升級後就不能裝回舊版。'}
+};
+const imeDef=plat==='desktop'?(isMac?'mac':'win'):plat;
 function pApps(){
-  const who={ios:'iPhone / iPad',android:'Android',desktop:'電腦'}[plat];
-  const apps=[
-   {n:'教育部臺灣台語輸入法',d:'在手機上打台羅、打台語漢字，還可以用說的轉成文字。',ios:'https://apps.apple.com/app/id6743423554',
-    and:'https://play.google.com/store/search?q=%E8%87%BA%E7%81%A3%E5%8F%B0%E8%AA%9E%E8%BC%B8%E5%85%A5%E6%B3%95&c=apps',web:'',
-    note:'Android 連結會開 Google Play 搜尋頁，搜尋結果裡找教育部的那個。',
-    more:`<details><summary>iPhone 安裝後怎麼設定？</summary><ol><li>打開「設定」→「一般」→「鍵盤」</li><li>再點一次「鍵盤」→「新增鍵盤」</li><li>在第三方鍵盤裡選「臺灣台語輸入法」</li><li>點進去，打開「允許完整取用」</li></ol><p class="note">教育部也有 <a href="https://language.moe.gov.tw/uploads/files/17908498871370.pdf" target="_blank" rel="noopener">iOS 操作手冊（PDF）</a>。</p></details>
-    <details><summary>Android 怎麼設定？</summary><p class="note">教育部有提供 Android 操作手冊：<a href="https://language.moe.gov.tw/uploads/files/17908498871854.pdf" target="_blank" rel="noopener">下載手冊（PDF）</a></p></details>`},
-   {n:'芋圓字典 Oo Inn',d:'查詞、聽發音，還有複習遊戲，手機上最順手的台語字典。',ios:'https://apps.apple.com/tw/app/id6477933002',
-    and:'https://play.google.com/store/apps/developer?id=Oo+Inn',web:'',note:'基本查字免費，部分進階功能需要 App 內購買。Android 連結是開發者頁面。'},
-   {n:'教育部臺灣台語常用詞辭典',d:'教育部官方辭典，查字、聽發音、看例句。手機瀏覽器也能用。',ios:'',and:'',web:DICT}
-  ];
-  return `<a class="back" href="#home">← 首頁</a><h2 class="hd">輸入法・手機軟體</h2>
-   <p class="sub">你正在用 ${who}，亮橘色的按鈕是給你的。</p>${deskCard()}${apps.map(appCard).join('')}`;
+  const k=S.ime||imeDef,d=IME[k],M='https://language.moe.gov.tw/uploads/files/';
+  return `<a class="back" href="#home">← 首頁</a><h2 class="hd">輸入法・字典</h2>
+   <section class="ime"><div class="ime-h"><span class="kick2">教育部臺灣台語輸入法</span><p>用臺羅拼音打台語漢字。</p></div>
+    <div class="filters tabs">${Object.entries(IME).map(([id,v])=>`<button class="fb ${k===id?'on':''}" data-act="ime" data-k="${id}">${v.n}</button>`).join('')}</div>
+    <a class="btn pri big dl" href="${d.url}" target="_blank" rel="noopener">${d.cta}</a>
+    <ol class="steps">${d.steps.map(x=>`<li>${x}</li>`).join('')}</ol>
+    ${d.tip?`<p class="tip">${d.tip}</p>`:''}
+    <p class="note"><a href="${M}${d.man}.pdf" target="_blank" rel="noopener">${d.n} 操作手冊（PDF）</a>　·　<a href="https://language.moe.gov.tw/material/info?m=a1c64194-23d9-433e-8782-8550080788d2" target="_blank" rel="noopener">官方說明頁</a></p></section>
+   <h3 class="sec">查字典</h3>
+   <a class="res" href="${DICT}" target="_blank" rel="noopener" data-act="dict"><h3>教育部臺灣台語常用詞辭典</h3><p>官方辭典，查字、聽發音、看例句。手機瀏覽器就能用。</p></a>
+   <div class="res"><h3>芋圓字典 Oo Inn</h3><p>查詞、聽發音，還有複習遊戲。基本查字免費，進階功能要 App 內購買。</p>
+    <div class="plat"><a class="btn" href="https://apps.apple.com/tw/app/id6477933002" target="_blank" rel="noopener">iPhone</a><a class="btn" href="https://play.google.com/store/apps/developer?id=Oo+Inn" target="_blank" rel="noopener">Android</a></div></div>`;
 }
 
 // ---- 700 字 ----
@@ -701,6 +697,7 @@ $('#app').addEventListener('click',e=>{
   else if(a==='mark'){setSt(+el.dataset.n,+el.dataset.v);render(true)}
   else if(a==='filt'){S.f=el.dataset.f;S.more=60;render(true)}
   else if(a==='more'){S.more+=60;$('#body').innerHTML=bodyW700()}
+  else if(a==='ime'){S.ime=el.dataset.k;render(true)}
   else if(a==='skill'){S.skill=el.dataset.s;render(true)}
   else if(a==='mode'){
     S.mode=el.dataset.m;const s=segNow();
