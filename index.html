@@ -397,9 +397,9 @@ function deskCard(){
   const M='https://language.moe.gov.tw/uploads/files/',pg='https://language.moe.gov.tw/material/info?m=a1c64194-23d9-433e-8782-8550080788d2';
   const b=(on,l,u)=>`<a class="btn ${on&&plat==='desktop'?'pri':''}" href="${u}" target="_blank" rel="noopener">${l}</a>`;
   return `<div class="card app"><h3>教育部臺灣台語輸入法（電腦版）</h3><p class="desc">用臺羅拼音打台語漢字，Windows 和 Mac 都有。你現在看起來是用 ${plat==='desktop'?(isMac?'Mac':'Windows'):'手機'}。</p>
-   <div class="plat">${b(1,'下載載點（PDF，Windows／Mac 都在裡面）',M+'17908498871701.pdf')}</div>
+   <div class="plat">${b(!isMac,'下載 Windows 版（.zip）','https://language.moe.gov.tw/sujip/EduTaigi-v1.4.0.1.zip')}${b(isMac,'下載 Mac 版（.dmg）','https://language.moe.gov.tw/sujip/TaiwaneseTaigi-1.7.0.149.dmg')}</div>
    <div class="plat">${b(!isMac,'Windows 操作手冊',M+'17908498871469.pdf')}${b(isMac,'Mac 操作手冊',M+'17908498871266.pdf')}${b(0,'官方說明頁',pg)}</div>
-   <p class="note" style="margin:8px 0 0">兩個系統要各下載自己的版本，不能共用安裝檔，操作手冊也是分開的。</p>
+   <p class="note" style="margin:8px 0 0">兩個系統要各下載自己的版本，操作手冊也是分開的。</p>
    <details><summary>Windows 和 Mac 有什麼不一樣？</summary><ul><li>安裝檔、操作手冊都分開，請照自己的系統下載。</li><li>詞庫與打字核心是共用的，目前版本為 115.9.10。</li><li>Windows 另外修正了「芫荽」字型重複安裝，以及在 LINE 等程式長時間輸入後輸入法失效的問題。</li><li>Mac 版核心更新至 0x182。</li></ul></details>
    <details><summary>更新前要注意</summary><p class="note">新版會自動升級使用者詞庫，升級後就不能裝回舊版。更新前先到「詞語管理」把自己的詞庫匯出備份。</p></details>
    <details><summary>怎麼打？</summary><ol><li>照臺羅拼音輸入，例如打 tai，組字區會出現候選字。</li><li>用滑鼠、↑↓ 或空白鍵選字。</li><li>按 Enter 會把原始字母直接送出，不選字，可以用來打英文。</li><li>想打臺羅拼音而不是漢字：按 Esc 下方的「~」鍵切換到「臺羅模式」。</li></ol></details></div>`;
