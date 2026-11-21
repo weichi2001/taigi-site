@@ -105,7 +105,7 @@ input[type=search]:focus{outline:2px solid var(--accent);outline-offset:1px}
 .app{padding:14px 16px}
 .app h3{margin:0}
 .app .desc{margin:2px 0 8px;color:var(--ink2);font-size:14px}
-.ime{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin:10px 0 18px}.ime-h p{margin:2px 0 0;color:var(--ink2);font-size:14px}.kick2{font-family:Huninn,"Noto Sans TC",sans-serif;font-size:19px;font-weight:700}.ime .tabs{margin:12px 0;display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.ime .tabs .fb{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 2px;border-radius:12px;font-size:13px}.ime .tabs .ic{display:block}.ime .dl{display:block;text-align:center}.steps{margin:14px 0 0;padding-left:22px;font-size:14.5px;line-height:1.7}.tip{margin:12px 0 0;padding:8px 10px;border-radius:10px;background:var(--badbg);font-size:13px}.sec{font-size:15px;color:var(--ink2);margin:6px 0 0}.ime .note{margin:14px 0 0}.res .plat{margin-top:6px}
+.ime{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin:10px 0 18px}.ime-h,.res.ap{display:flex;gap:12px;align-items:center}.aic{width:52px;height:52px;border-radius:12px;flex:none;object-fit:cover;background:#efe4cf;display:flex;align-items:center;justify-content:center;font-size:26px}.res.ap>div{min-width:0}.res.ap{align-items:flex-start}.ime-h p{margin:2px 0 0;color:var(--ink2);font-size:14px}.kick2{font-family:Huninn,"Noto Sans TC",sans-serif;font-size:19px;font-weight:700}.ime .tabs{margin:12px 0;display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.ime .tabs .fb{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 2px;border-radius:12px;font-size:13px}.ime .tabs .ic{display:block}.ime .dl{display:block;text-align:center}.steps{margin:14px 0 0;padding-left:22px;font-size:14.5px;line-height:1.7}.tip{margin:12px 0 0;padding:8px 10px;border-radius:10px;background:var(--badbg);font-size:13px}.sec{font-size:15px;color:var(--ink2);margin:6px 0 0}.ime .note{margin:14px 0 0}.res .plat{margin-top:6px}
 .plat{display:flex;gap:8px;flex-wrap:wrap}
 .plat .btn{flex:1 1 0;min-width:0;text-align:center;padding:8px 6px;white-space:nowrap}
 .note{font-size:13px;color:var(--ink2)}
@@ -407,19 +407,20 @@ const IMEI={
  mac:'<rect x="5" y="5" width="14" height="10" rx="1.5"/><path d="M2.5 18.5h19l-1.2-3.5H3.7z"/>'};
 const imeIc=k=>`<svg class="ic" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IMEI[k]}</svg>`;
 const imeDef=plat==='desktop'?(isMac?'mac':'win'):plat;
+const aic=(u,f)=>`<img class="aic" src="${u}" alt="" referrerpolicy="no-referrer" onerror="this.outerHTML='<span class=&quot;aic&quot;>${f}</span>'">`;
 function pApps(){
   const k=S.ime||imeDef,d=IME[k],M='https://language.moe.gov.tw/uploads/files/';
   return `<a class="back" href="#home">← 首頁</a><h2 class="hd">輸入法・字典</h2>
-   <section class="ime"><div class="ime-h"><span class="kick2">教育部臺灣台語輸入法</span><p>用臺羅拼音打台語漢字。</p></div>
+   <section class="ime"><div class="ime-h">${aic('https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/19/c7/8a/19c78a71-3b44-644a-86a0-7b4357e17f30/AppIcon-0-0-1x_U007epad-0-1-85-220.jpeg/200x200bb.jpg','⌨️')}<div><span class="kick2">教育部臺灣台語輸入法</span><p>用臺羅拼音打台語漢字。</p></div></div>
     <div class="filters tabs">${Object.entries(IME).map(([id,v])=>`<button class="fb ${k===id?'on':''}" data-act="ime" data-k="${id}">${imeIc(id)}<span>${v.n}</span></button>`).join('')}</div>
     <a class="btn pri big dl" href="${d.url}" target="_blank" rel="noopener">${d.cta}</a>
     <ol class="steps">${d.steps.map(x=>`<li>${x}</li>`).join('')}</ol>
     ${d.tip?`<p class="tip">${d.tip}</p>`:''}
     <p class="note"><a href="${M}${d.man}.pdf" target="_blank" rel="noopener">${d.n} 操作手冊（PDF）</a>　·　<a href="https://language.moe.gov.tw/material/info?m=a1c64194-23d9-433e-8782-8550080788d2" target="_blank" rel="noopener">官方說明頁</a></p></section>
    <h3 class="sec">查字典</h3>
-   <a class="res" href="${DICT}" target="_blank" rel="noopener" data-act="dict"><h3>教育部臺灣台語常用詞辭典</h3><p>官方辭典，查字、聽發音、看例句。手機瀏覽器就能用。</p></a>
-   <div class="res"><h3>芋圓字典 Oo Inn</h3><p>查詞、聽發音，還有複習遊戲。基本查字免費，進階功能要 App 內購買。</p>
-    <div class="plat"><a class="btn" href="https://apps.apple.com/tw/app/id6477933002" target="_blank" rel="noopener">iPhone</a><a class="btn" href="https://play.google.com/store/apps/developer?id=Oo+Inn" target="_blank" rel="noopener">Android</a></div></div>`;
+   <a class="res ap" href="${DICT}" target="_blank" rel="noopener" data-act="dict">${aic('https://sutian.moe.edu.tw/static/image/favicon/apple-touch-icon.png','📖')}<div><h3>教育部臺灣台語常用詞辭典</h3><p>官方辭典，查字、聽發音、看例句。手機瀏覽器就能用。</p></div></a>
+   <div class="res ap">${aic('https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/b1/e5/f3/b1e5f3bb-9022-d6f7-a59c-67d8bcfafee6/AppIcon-0-0-1x_U007epad-0-1-0-sRGB-85-220.png/200x200bb.jpg','📚')}<div><h3>芋圓字典 Oo Inn</h3><p>查詞、聽發音，還有複習遊戲。基本查字免費，進階功能要 App 內購買。</p>
+    <div class="plat"><a class="btn" href="https://apps.apple.com/tw/app/id6477933002" target="_blank" rel="noopener">iPhone</a><a class="btn" href="https://play.google.com/store/apps/developer?id=Oo+Inn" target="_blank" rel="noopener">Android</a></div></div></div>`;
 }
 
 // ---- 700 字 ----
