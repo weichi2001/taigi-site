@@ -252,6 +252,18 @@ body:has(.vw):has(#mini:not([hidden])) .vw{align-items:flex-start;padding-top:8p
 body:has(.vw):has(#mini:not([hidden])) .vbox iframe{height:30vh}
 body:has(.vw):has(#mini:not([hidden])) #mini{height:56vh}
 @media(min-width:800px){body:has(.vw):has(#mini:not([hidden])) .vw{align-items:center;padding-top:0}body:has(.vw):has(#mini:not([hidden])) .vbox{margin-right:420px}body:has(.vw):has(#mini:not([hidden])) .vbox iframe{height:72vh}body:has(.vw):has(#mini:not([hidden])) #mini{height:min(680px,84vh)}}
+#fab{transition:transform .4s cubic-bezier(.34,1.56,.64,1),opacity .25s,box-shadow .2s}
+#fab:hover{transform:scale(1.07)}#fab:active{transform:scale(.94)}
+#fab.gone{transform:scale(.3) rotate(-120deg);opacity:0;pointer-events:none}
+#mini{transform-origin:calc(100% - 44px) calc(100% - 44px);transform:translateY(36px) scale(.9);opacity:0;pointer-events:none;
+ transition:transform .5s cubic-bezier(.22,1.15,.36,1),opacity .28s ease,filter .3s;filter:blur(6px)}
+#mini.show{transform:none;opacity:1;pointer-events:auto;filter:none}
+@media(min-width:800px){#mini{transform:translateY(20px) scale(.82)}#mini.show{transform:none}}
+#mini .mr{animation:mrIn .45s cubic-bezier(.22,1.1,.36,1) both}
+#mini .mr:nth-of-type(2){animation-delay:.04s}#mini .mr:nth-of-type(3){animation-delay:.08s}#mini .mr:nth-of-type(n+4){animation-delay:.12s}
+@keyframes mrIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+#mini .au{transition:transform .15s}
+@media(prefers-reduced-motion:reduce){#fab,#mini,#mini .mr{transition:none!important;animation:none!important}}
 </style>
 </head>
 <body>
@@ -866,14 +878,22 @@ mb.addEventListener('click',e=>{
   if(e.target.id==='mmore'){mlim+=30;miniDraw()}
 });
 document.addEventListener('click',e=>{const a=e.target.closest('[data-act=minidict]');if(a){e.preventDefault();miniOpen(true)}});
+let mt=0;
 function miniOpen(open){
-  mini.hidden=!open;fab.hidden=open;
-  if(open){dxLoad();miniDraw();setTimeout(()=>mq.focus(),50)}
+  clearTimeout(mt);
+  if(open){
+    mini.hidden=false;void mini.offsetWidth;            // 先顯示、強制排版，transition 才會跑
+    mini.classList.add('show');fab.classList.add('gone');
+    dxLoad();miniDraw();mt=setTimeout(()=>mq.focus({preventScroll:true}),380);
+  }else{
+    mq.blur();mini.classList.remove('show');fab.classList.remove('gone');
+    mt=setTimeout(()=>{mini.hidden=true},420);
+  }
 }
 fab.addEventListener('click',()=>miniOpen(true));
 $('#mclose').addEventListener('click',()=>miniOpen(false));
 mq.addEventListener('input',()=>{mlim=30;miniDraw()});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!mini.hidden)miniOpen(false)});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&mini.classList.contains('show'))miniOpen(false)});
 
 enter(cur());render(false);
 })();
