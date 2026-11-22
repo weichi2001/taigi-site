@@ -264,6 +264,15 @@ body.mini-on:has(.vw) #mini{height:56vh}
 @keyframes mrIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 #mini .au{transition:transform .15s}
 @media(prefers-reduced-motion:reduce){#fab,#mini,#mini .mr{transition:none!important;animation:none!important}}
+
+.mr .sns li{display:block;padding:3px 0}.mr .sl{display:flex;gap:8px;align-items:baseline;font-size:15px;line-height:1.7}
+.mr .sx{display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows .45s cubic-bezier(.22,1,.36,1),opacity .35s ease}
+.mr .sxi{overflow:hidden;min-height:0}
+.mr.open .sx{grid-template-rows:1fr;opacity:1}
+.mr .sx.empty,.mr.open .sx.empty{display:none}
+.mr .oth{margin-top:2px}
+.mr .sxi .ex{margin:5px 0 3px 0}
+@media(prefers-reduced-motion:reduce){.mr .sx{transition:none}}
 </style>
 </head>
 <body>
@@ -839,14 +848,14 @@ function dxFind(raw){
 }
 const inW700=new Set(D.map(o=>o.w));
 function dxRow(e){
-  const sn=e.s.map(([p,d])=>`<li>${p?`<span class="pos">${esc(p)}</span>`:''}<span>${esc(d)}</span></li>`);
+  const sn=e.s.map(([p,d,sid])=>`<li data-sid="${sid||''}"><div class="sl">${p?`<span class="pos">${esc(p)}</span>`:''}<span>${esc(d)}</span></div><div class="sx"><div class="sxi"></div></div></li>`);
   const w7=inW700.has(e.hc)||inW700.has(e.h);
   return `<article class="mr" data-id="${e.id}">
     <div class="mt"><div class="mw"><div class="w hd">${esc(e.hc||e.h)}${w7?'<span class="tag7">700 字</span>':''}</div><div class="r tl">${esc(e.r)}</div></div>
     ${e.a?`<button class="au" data-au="${e.id}" data-ap="${e.ap}" aria-label="聽發音"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 8.5a5 5 0 010 7M18.5 6a8.5 8.5 0 010 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>`:''}</div>
     ${e.v.length?`<div class="alt">又唸作　${e.v.map(x=>esc(x[0])+' <span class="tl">'+esc(x[1])+'</span>').join('、')}</div>`:''}
     <ol class="sns">${sn.join('')}</ol>
-    <div class="more" hidden><div class="exs"></div></div>
+    <div class="sx oth"><div class="sxi"></div></div>
     <div class="macts"><button class="ml tg" data-tg="${e.id}">看例句 ▾</button><a class="ml" href="${SU}zh-hant/su/${e.id}/" target="_blank" rel="noopener" data-act="dict">教育部原頁 ↗</a></div></article>`;
 }
 function miniDraw(){
@@ -868,12 +877,21 @@ mb.addEventListener('click',e=>{
   if(au){const id=+au.dataset.au;if(curAu){curAu.pause()}
     const ap=au.dataset.ap;curAu=new Audio(SU+'media/senn/mp3/imtong/'+(ap?ap+'/'+id+'1.mp3':'subak/'+Math.floor(id/1000)+'/'+id+'.mp3'));curAu.play().catch(()=>toast('這個詞的音檔播不出來'));return}
   const tg=e.target.closest('[data-tg]');
-  if(tg){const row=tg.closest('.mr'),more=row.querySelector('.more'),id=row.dataset.id;
-    if(!more.hidden){more.hidden=true;tg.textContent='看例句 ▾';return}
-    more.hidden=false;tg.textContent='收起 ▴';
-    const box=row.querySelector('.exs');
-    if(!box.dataset.done)exLoad(()=>{box.dataset.done=1;const L=(EXD&&EXD[id])||[];
-      box.innerHTML=L.length?L.slice(0,12).map(x=>`<div class="ex"><div class="hd">${esc(x[0])}</div><div class="tl">${esc(x[1])}</div><div class="h">${esc(x[2])}</div></div>`).join('')+'<p class="note">例句的真人發音，請到「教育部辭典原頁」聽。</p>':'<p class="note">這個詞目沒有例句。</p>'});
+  if(tg){const row=tg.closest('.mr'),id=row.dataset.id;
+    const open=!row.classList.contains('open');
+    const fill=()=>{
+      if(!row.dataset.done){row.dataset.done=1;const L=(EXD&&EXD[id])||[];
+        const html=x=>`<div class="ex"><div class="hd">${esc(x[0])}</div><div class="tl">${esc(x[1])}</div><div class="h">${esc(x[2])}</div></div>`;
+        const left=[];
+        L.forEach(x=>{const li=x[3]!=null?row.querySelector(`li[data-sid="${x[3]}"] .sxi`):null;if(li)li.insertAdjacentHTML('beforeend',html(x));else left.push(x)});
+        const o=row.querySelector('.oth .sxi');
+        if(left.length)o.innerHTML=(L.length>left.length?'<p class="note">其他例句</p>':'')+left.map(html).join('');
+        if(!L.length)o.innerHTML='<p class="note">這個詞目沒有例句。</p>';
+        row.querySelectorAll('.sx').forEach(x=>{if(!x.textContent.trim())x.classList.add('empty')});
+      }
+      void row.offsetHeight;row.classList.toggle('open',open);tg.textContent=open?'收起例句 ▴':'看例句 ▾';
+    };
+    if(open&&!row.dataset.done)exLoad(fill);else fill();
     return}
   if(e.target.id==='mmore'){mlim+=30;miniDraw()}
 });
