@@ -13,8 +13,8 @@ tmp.unlink()
 s=lambda v:'' if pd.isna(v) else str(v).strip()
 W=X['詞目'];S=X['義項'];E=X['例句'];V=X.get('又唸作')
 sen={};ex={};var={}
-for _,r in S.iterrows(): sen.setdefault(int(r['詞目id']),[]).append([s(r['詞性']),s(r['解說'])])
-for _,r in E.iterrows(): ex.setdefault(int(r['詞目id']),[]).append([s(r['漢字']),s(r['羅馬字']),s(r['華語'])])
+for _,r in S.iterrows(): sen.setdefault(int(r['詞目id']),[]).append([s(r['詞性']),s(r['解說']),int(r['義項id'])])
+for _,r in E.iterrows(): ex.setdefault(int(r['詞目id']),[]).append([s(r['漢字']),s(r['羅馬字']),s(r['華語']),int(r['義項id'])])
 if V is not None:
     for _,r in V.iterrows(): var.setdefault(int(r['詞目id']),[]).append([s(r['漢字']),s(r['羅馬字'])])
 out=[]
