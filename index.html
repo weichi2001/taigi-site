@@ -248,10 +248,10 @@ body.anime #mini{background:linear-gradient(160deg,rgba(255,255,255,.8),rgba(250
 #mini .tl,#mini .r{font-family:Huninn,Andika,"Noto Sans","Segoe UI",system-ui,"PingFang TC","Microsoft JhengHei",sans-serif}
 #toast{z-index:60}
 /* 看影片時開小辭典：影片縮小留在上方，辭典在下面，兩邊都能操作 */
-body:has(.vw):has(#mini:not([hidden])) .vw{align-items:flex-start;padding-top:8px}
-body:has(.vw):has(#mini:not([hidden])) .vbox iframe{height:30vh}
-body:has(.vw):has(#mini:not([hidden])) #mini{height:56vh}
-@media(min-width:800px){body:has(.vw):has(#mini:not([hidden])) .vw{align-items:center;padding-top:0}body:has(.vw):has(#mini:not([hidden])) .vbox{margin-right:420px}body:has(.vw):has(#mini:not([hidden])) .vbox iframe{height:72vh}body:has(.vw):has(#mini:not([hidden])) #mini{height:min(680px,84vh)}}
+body.mini-on:has(.vw) .vw{align-items:flex-start;padding-top:8px}
+body.mini-on:has(.vw) .vbox iframe{height:30vh}
+body.mini-on:has(.vw) #mini{height:56vh}
+@media(min-width:800px){body.mini-on:has(.vw) .vw{align-items:center;padding-top:0}body.mini-on:has(.vw) .vbox{margin-right:420px}body.mini-on:has(.vw) .vbox iframe{height:72vh}body.mini-on:has(.vw) #mini{height:min(680px,84vh)}}
 #fab{transition:transform .4s cubic-bezier(.34,1.56,.64,1),opacity .25s,box-shadow .2s}
 #fab:hover{transform:scale(1.07)}#fab:active{transform:scale(.94)}
 #fab.gone{transform:scale(.3) rotate(-120deg);opacity:0;pointer-events:none}
@@ -879,14 +879,32 @@ mb.addEventListener('click',e=>{
 });
 document.addEventListener('click',e=>{const a=e.target.closest('[data-act=minidict]');if(a){e.preventDefault();miniOpen(true)}});
 let mt=0;
+// 影片視窗跟著辭典移動：先量「前」「後」兩個位置，再用 FLIP 讓影片順順滑過去
+function flipVideo(change){
+  const vb=document.querySelector('.vbox'),fr=vb&&vb.querySelector('iframe');
+  if(!vb||!fr||matchMedia('(prefers-reduced-motion:reduce)').matches){change();return}
+  const f=vb.getBoundingClientRect(),fh=fr.offsetHeight;
+  change();
+  const l=vb.getBoundingClientRect(),lh=fr.offsetHeight;
+  if(Math.abs(f.left-l.left)<1&&Math.abs(f.top-l.top)<1&&Math.abs(fh-lh)<1)return;
+  fr.style.transition=vb.style.transition='none';
+  fr.style.height=fh+'px';vb.style.transform=`translate(${f.left-l.left}px,${f.top-l.top}px)`;
+  void vb.offsetWidth;
+  const ease='cubic-bezier(.45,.05,.2,1)';
+  fr.style.transition=`height .55s ${ease}`;vb.style.transition=`transform .55s ${ease}`;
+  fr.style.height=lh+'px';vb.style.transform='';
+  setTimeout(()=>{fr.style.transition=vb.style.transition=fr.style.height=vb.style.transform=''},620);
+}
 function miniOpen(open){
   clearTimeout(mt);
   if(open){
     mini.hidden=false;void mini.offsetWidth;            // 先顯示、強制排版，transition 才會跑
+    flipVideo(()=>document.body.classList.add('mini-on'));
     mini.classList.add('show');fab.classList.add('gone');
     dxLoad();miniDraw();mt=setTimeout(()=>mq.focus({preventScroll:true}),380);
   }else{
     mq.blur();mini.classList.remove('show');fab.classList.remove('gone');
+    flipVideo(()=>document.body.classList.remove('mini-on'));
     mt=setTimeout(()=>{mini.hidden=true},420);
   }
 }
