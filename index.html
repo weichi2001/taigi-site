@@ -125,6 +125,7 @@ footer{margin-top:30px;font-size:12px;color:var(--ink2);border-top:1px solid var
 .mb{overflow:auto;padding:6px 12px 16px;flex:1;-webkit-overflow-scrolling:touch}
 .mr{padding:9px 0;border-bottom:1px dashed var(--line)}
 .mr .w{font-size:24px;font-weight:700}.mr .r{font-size:16px;color:var(--ink2);margin-left:6px}
+.mt{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}.mr .au{padding:4px 10px;flex:none}.mr .sn{font-size:14px;margin-top:3px}.mr .sn .chip{margin-right:6px}.mr .ex{padding:6px 0;border-top:1px dotted var(--line);font-size:14px}.mr .ex .tl{color:var(--ink2);font-size:13px}.mr .more{margin-top:4px}.mr .chip.g{margin-left:6px}
 .mr .h{font-size:14px}.mr .mx{font-size:13px;margin-top:2px}
 
 /* ---- 動畫專區（深色劇場風，參考 YOKAR 的排版）---- */
@@ -217,13 +218,14 @@ body.anime .fb.on{background:linear-gradient(135deg,rgba(255,255,255,.92),rgba(2
 body.anime .hero{border:1px solid rgba(255,255,255,.22);box-shadow:0 20px 50px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.3);border-radius:24px}
 body.anime .hero .kick{background:rgba(226,68,3,.85);backdrop-filter:blur(10px)}
 .pt{border-radius:16px;box-shadow:0 10px 26px rgba(0,0,0,.4),inset 0 0 0 1px rgba(255,255,255,.2)}
+#mini{background:rgba(252,247,238,.96);backdrop-filter:blur(26px) saturate(1.6);-webkit-backdrop-filter:blur(26px) saturate(1.6);border-color:rgba(255,255,255,.8)!important}.mr .btn,.mh .btn,#mini .chip{background:rgba(255,255,255,.9);backdrop-filter:none}
 </style>
 </head>
 <body>
 <div class="top"><div class="in">
   <a class="logo hd" href="#home">台語<b>自學</b>站</a>
   <div class="tools">
-    <a class="tool" href="https://sutian.moe.edu.tw/zh-hant/" target="_blank" rel="noopener" data-act="dict">🔎 辭典</a>
+    <a class="tool" href="#" data-act="minidict">🔎 辭典</a>
     <a class="tool" href="#anime">🎬 Khuànn-Tâi</a>
     <a class="tool" href="#apps">⌨️ 輸入法</a>
     <a class="tool" href="https://taigilyrics.kiantiong.com/" target="_blank" rel="noopener">🎵 歌詞</a>
@@ -231,10 +233,10 @@ body.anime .hero .kick{background:rgba(226,68,3,.85);backdrop-filter:blur(10px)}
 </div></div>
 <main class="wrap" id="app"></main>
 <div id="toast"></div>
-<button id="fab" aria-label="打開小辭典" title="小辭典">🔎</button>
+<button id="fab" aria-label="查辭典" title="查辭典">🔎</button>
 <section id="mini" hidden aria-label="小辭典">
   <div class="mh">
-    <input type="search" id="mq" placeholder="查 700 字：漢字、台羅、華語" autocomplete="off">
+    <input type="search" id="mq" placeholder="查辭典：漢字、台羅、華語" autocomplete="off">
     <button class="btn" id="mclose" aria-label="關閉小辭典">✕</button>
   </div>
   <div class="mb" id="mb"></div>
@@ -761,29 +763,82 @@ document.addEventListener('click',e=>{
   if(el&&el.href&&openPop(el.href))e.preventDefault();
 });
 
-// ---- 浮動小辭典（站內查 700 字，不離開目前頁面）----
+// ---- 浮動小辭典：查教育部臺灣台語常用詞辭典全部詞目（資料由 GitHub Actions 每週下載），不離開目前頁面 ----
 const fab=$('#fab'),mini=$('#mini'),mq=$('#mq'),mb=$('#mb');
-function miniDraw(){
-  const raw=mq.value.trim(),k=norm(raw);
-  if(!k){mb.innerHTML=`<p class="note">輸入漢字、台羅或華語都可以，例如：舅媽、a-kim、阿母。<br>這裡查的是 700 字；查不到的字，可以到教育部辭典查。</p>`;return}
-  const score=o=>(o.w===raw||norm(o.r)===k)?0:(o.w.includes(raw)||norm(o.r).startsWith(k)||o.h.includes(raw))?1:2;
-  const r=D.filter(o=>o.k.includes(k)).sort((a,b)=>score(a)-score(b)||a.n-b.n).slice(0,20);
-  mb.innerHTML=(r.length?r.map(o=>`<div class="mr">
-    <div><span class="w">${esc(o.w)}</span><span class="tl r">${esc(o.r)}</span></div>
-    <div class="h">${esc(o.h)}</div>
-    ${o.e.length?`<div class="mx">用例：${o.e.slice(0,3).map(esc).join('、')}</div>`:''}
-    ${o.x.length?`<div class="mx">${o.x.map(x=>`<span class="chip x">✗ ${esc(x)}</span>`).join('')}<span class="chip g">✓ ${esc(o.w)}</span></div>`:''}
-    <div class="acts" style="margin-top:6px"><a class="btn" href="${dictUrl(o.w)}" target="_blank" rel="noopener" data-act="dict">🔊 聽發音</a></div></div>`).join('')
-    :`<p class="note">700 字裡沒有「${esc(raw)}」。</p>`)
-    +`<div class="acts"><a class="btn pri" href="${dictUrl(raw)}" target="_blank" rel="noopener" data-act="dict">到教育部辭典查「${esc(raw)}」</a></div>`;
+const SU='https://sutian.moe.edu.tw/';
+let DX=null,DXS='idle',EXD=null,mlim=30;
+const hasHan=s=>/\p{Script=Han}/u.test(s), clean=s=>s.replace(/【[^】]*】/g,'');
+function dxLoad(){
+  if(DXS!=='idle')return;DXS='load';
+  fetch('dict.json').then(r=>r.ok?r.json():Promise.reject()).then(a=>{
+    DX=a.map(e=>({id:e[0],h:e[1],hc:clean(e[1]),r:e[2],c:e[3],a:e[4],s:e[5],v:e[6],k:norm(e[2]+' '+e[6].map(x=>x[1]).join(' ')),ks:[norm(e[2])].concat(e[6].map(x=>norm(x[1]))),d:e[5].map(x=>x[1]).join('')}));
+    DXS='ok';miniDraw();
+  }).catch(()=>{DXS='err';miniDraw()});
 }
+function exLoad(cb){
+  if(EXD){cb();return}
+  fetch('ex.json').then(r=>r.json()).then(x=>{EXD=x;cb()}).catch(()=>{EXD={};cb()});
+}
+function dxFind(raw){
+  const k=norm(raw),han=hasHan(raw),out=[];
+  for(const e of DX){
+    let sc=9;
+    if(han){
+      if(e.hc===raw)sc=0;else if(e.hc.startsWith(raw))sc=1;else if(e.hc.includes(raw))sc=2;else if(e.v.some(x=>clean(x[0]).includes(raw)))sc=3;else if(e.d.includes(raw))sc=4;
+    }else if(k){
+      if(e.ks.includes(k))sc=0;else if(e.ks.some(x=>x.startsWith(k)))sc=1;else if(e.k.includes(k))sc=2;
+    }
+    if(sc<9)out.push([sc,e]);
+  }
+  return out.sort((x,y)=>x[0]-y[0]||x[1].id-y[1].id).map(x=>x[1]);
+}
+const inW700=new Set(D.map(o=>o.w));
+function dxRow(e){
+  const sn=e.s.map(([p,d])=>`<div class="sn">${p?`<span class="chip">${esc(p)}</span>`:''}${esc(d)}</div>`);
+  return `<div class="mr" data-id="${e.id}">
+    <div class="mt"><div><span class="w">${esc(e.hc||e.h)}</span><span class="tl r">${esc(e.r)}</span>${inW700.has(e.hc)||inW700.has(e.h)?'<span class="chip g">700 字</span>':''}</div>
+    ${e.a?`<button class="btn au" data-au="${e.id}" aria-label="聽發音">🔊</button>`:''}</div>
+    ${e.v.length?`<div class="mx">又唸作：${e.v.map(x=>esc(x[0])+' '+esc(x[1])).join('、')}</div>`:''}
+    <div class="sns">${sn.slice(0,2).join('')}</div>
+    <div class="more" hidden><div class="sns">${sn.slice(2).join('')}</div><div class="exs"></div></div>
+    <div class="acts" style="margin-top:6px"><button class="btn tg" data-tg="${e.id}">看例句</button><a class="btn" href="${SU}zh-hant/su/${e.id}/" target="_blank" rel="noopener" data-act="dict">教育部辭典原頁</a></div></div>`;
+}
+function miniDraw(){
+  const raw=mq.value.trim();
+  if(!raw){mb.innerHTML=`<p class="note">輸入漢字、台羅或華語都可以，例如：舅媽、a-kim、阿母、學校。<br>查的是教育部臺灣台語常用詞辭典，約 ${DX?DX.length.toLocaleString():'三萬'} 個詞目，點 🔊 聽發音。</p>`;return}
+  if(DXS==='load'||DXS==='idle'){mb.innerHTML=`<p class="note">辭典載入中…</p>`;return}
+  if(DXS==='err'){
+    const k=norm(raw);const r=D.filter(o=>o.k.includes(k)).slice(0,10);
+    mb.innerHTML=`<p class="note">完整辭典暫時載不進來，先用 700 字查：</p>`+r.map(o=>`<div class="mr"><span class="w">${esc(o.w)}</span><span class="tl r">${esc(o.r)}</span><div class="h">${esc(o.h)}</div></div>`).join('')
+      +`<div class="acts"><a class="btn pri" href="${dictUrl(raw)}" target="_blank" rel="noopener" data-act="dict">到教育部辭典查「${esc(raw)}」</a></div>`;return}
+  const r=dxFind(raw);
+  mb.innerHTML=(r.length?`<p class="note">找到 ${r.length} 筆</p>`+r.slice(0,mlim).map(dxRow).join('')+(r.length>mlim?`<div class="acts" style="justify-content:center"><button class="btn" id="mmore">再看更多</button></div>`:'')
+    :`<p class="note">辭典裡沒有「${esc(raw)}」。可以換個寫法，或華語換個說法再試。</p>`)
+    +`<div class="acts"><a class="btn" href="${dictUrl(raw)}" target="_blank" rel="noopener" data-act="dict">到教育部辭典查「${esc(raw)}」</a></div>`;
+}
+let curAu=null;
+mb.addEventListener('click',e=>{
+  const au=e.target.closest('[data-au]');
+  if(au){const id=+au.dataset.au;if(curAu){curAu.pause()}
+    curAu=new Audio(SU+'media/senn/mp3/imtong/subak/'+Math.floor(id/1000)+'/'+id+'.mp3');curAu.play().catch(()=>toast('這個詞的音檔播不出來'));return}
+  const tg=e.target.closest('[data-tg]');
+  if(tg){const row=tg.closest('.mr'),more=row.querySelector('.more'),id=row.dataset.id;
+    if(!more.hidden){more.hidden=true;tg.textContent='看例句';return}
+    more.hidden=false;tg.textContent='收起';
+    const box=row.querySelector('.exs');
+    if(!box.dataset.done)exLoad(()=>{box.dataset.done=1;const L=(EXD&&EXD[id])||[];
+      box.innerHTML=L.length?L.slice(0,12).map(x=>`<div class="ex"><div>${esc(x[0])}</div><div class="tl">${esc(x[1])}</div><div class="h">${esc(x[2])}</div></div>`).join('')+'<p class="note">例句的真人發音，請到「教育部辭典原頁」聽。</p>':'<p class="note">這個詞目沒有例句。</p>'});
+    return}
+  if(e.target.id==='mmore'){mlim+=30;miniDraw()}
+});
+document.addEventListener('click',e=>{const a=e.target.closest('[data-act=minidict]');if(a){e.preventDefault();miniOpen(true)}});
 function miniOpen(open){
   mini.hidden=!open;fab.hidden=open;
-  if(open){miniDraw();setTimeout(()=>mq.focus(),50)}
+  if(open){dxLoad();miniDraw();setTimeout(()=>mq.focus(),50)}
 }
 fab.addEventListener('click',()=>miniOpen(true));
 $('#mclose').addEventListener('click',()=>miniOpen(false));
-mq.addEventListener('input',miniDraw);
+mq.addEventListener('input',()=>{mlim=30;miniDraw()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!mini.hidden)miniOpen(false)});
 
 enter(cur());render(false);
