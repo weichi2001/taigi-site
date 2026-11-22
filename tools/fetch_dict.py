@@ -46,8 +46,8 @@ def check(i):
     return (i,m.group(1)) if m else (i,'none')
 todo=[e[0] for e in out if e[4] and e[0] not in done]
 print('待檢查音檔',len(todo))
-with ThreadPoolExecutor(12) as ex:
-    for i,v in ex.map(check,todo):
+with ThreadPoolExecutor(20) as pool:
+    for i,v in pool.map(check,todo):
         if v=='?':continue
         done.add(i)
         if v=='none':none.add(i)
