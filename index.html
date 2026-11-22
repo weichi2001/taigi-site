@@ -824,14 +824,14 @@ let DX=null,DXS='idle',EXD=null,mlim=30;
 const hasHan=s=>/\p{Script=Han}/u.test(s), clean=s=>s.replace(/【[^】]*】/g,'');
 function dxLoad(){
   if(DXS!=='idle')return;DXS='load';
-  fetch('dict.json').then(r=>r.ok?r.json():Promise.reject()).then(a=>{
+  fetch('dict.json',{cache:'no-cache'}).then(r=>r.ok?r.json():Promise.reject()).then(a=>{
     DX=a.map(e=>({id:e[0],h:e[1],hc:clean(e[1]),r:e[2],c:e[3],a:e[4],ap:e[7]||'',s:e[5],v:e[6],k:norm(e[2]+' '+e[6].map(x=>x[1]).join(' ')),ks:[norm(e[2])].concat(e[6].map(x=>norm(x[1]))),d:e[5].map(x=>x[1]).join('')}));
     DXS='ok';miniDraw();
   }).catch(()=>{DXS='err';miniDraw()});
 }
 function exLoad(cb){
   if(EXD){cb();return}
-  fetch('ex.json').then(r=>r.json()).then(x=>{EXD=x;cb()}).catch(()=>{EXD={};cb()});
+  fetch('ex.json',{cache:'no-cache'}).then(r=>r.json()).then(x=>{EXD=x;cb()}).catch(()=>{EXD={};cb()});
 }
 function dxFind(raw){
   const k=norm(raw),han=hasHan(raw),out=[];
