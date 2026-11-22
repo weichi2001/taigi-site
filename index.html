@@ -845,8 +845,8 @@ function dxRow(e){
     <div class="mt"><div class="mw"><div class="w hd">${esc(e.hc||e.h)}${w7?'<span class="tag7">700 字</span>':''}</div><div class="r tl">${esc(e.r)}</div></div>
     ${e.a?`<button class="au" data-au="${e.id}" data-ap="${e.ap}" aria-label="聽發音"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 8.5a5 5 0 010 7M18.5 6a8.5 8.5 0 010 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>`:''}</div>
     ${e.v.length?`<div class="alt">又唸作　${e.v.map(x=>esc(x[0])+' <span class="tl">'+esc(x[1])+'</span>').join('、')}</div>`:''}
-    <ol class="sns">${sn.slice(0,2).join('')}</ol>
-    <div class="more" hidden><ol class="sns">${sn.slice(2).join('')}</ol><div class="exs"></div></div>
+    <ol class="sns">${sn.join('')}</ol>
+    <div class="more" hidden><div class="exs"></div></div>
     <div class="macts"><button class="ml tg" data-tg="${e.id}">看例句 ▾</button><a class="ml" href="${SU}zh-hant/su/${e.id}/" target="_blank" rel="noopener" data-act="dict">教育部原頁 ↗</a></div></article>`;
 }
 function miniDraw(){
