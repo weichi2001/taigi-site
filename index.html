@@ -271,7 +271,7 @@ body.mini-on:has(.vw) #mini{height:56vh}
   <a class="logo hd" href="#home">台語<b>自學</b>站</a>
   <div class="tools">
     <a class="tool" href="#" data-act="minidict">🔎 辭典</a>
-    <a class="tool" href="#anime">🎬 Khuànn-Tâi</a>
+    <a class="tool" href="#anime">🎬 看台 Khuànn-Tâi</a>
     <a class="tool" href="#apps">⌨️ 輸入法</a>
     <a class="tool" href="https://taigilyrics.kiantiong.com/" target="_blank" rel="noopener">🎵 歌詞</a>
   </div>
@@ -437,7 +437,7 @@ function pHome(){
     <a class="ent" href="#learn"><div class="ic">🎯</div><h3>練某個能力</h3><p>聽、說、讀、寫，挑你想加強的。</p></a>
     <a class="ent" href="#play"><div class="ic">🎧</div><h3>想玩一下</h3><p>唱歌、聽歌、看短影片。</p></a>
    </div>
-   <a class="feat" href="#anime" style="background:#241f1b"><div class="ic">🎬</div><div><h3>Khuànn-Tâi</h3><p>台語動畫、電影、節目，邊看邊練聽力。</p></div></a>
+   <a class="feat" href="#anime" style="background:#241f1b"><div class="ic">🎬</div><div><h3>看台 <span class="tl" style="font-weight:500;font-size:.85em;opacity:.85">Khuànn-Tâi</span></h3><p>台語動畫、電影、節目，邊看邊練聽力。</p></div></a>
    <a class="feat" href="#w700"><div class="ic">📖</div><div><h3>700 字自學</h3><p>教育部推薦用字，一次一小段，邊看邊測驗。</p></div></a>
    <h3 style="margin-top:22px">今日一字</h3>${row(d)}`;
 }
@@ -673,7 +673,7 @@ function pAnime(){
   }else{
     const l=v.filter(fil);body=l.length?`<div class="rowx" style="flex-wrap:wrap;overflow:visible;margin-top:14px">${l.map(a=>aniTile(a,ANI.indexOf(a))).join('')}</div>`:'<p class="sub" style="margin-top:18px">還沒有。打開一部作品，按「♥ 想看」就會放進來。</p>';
   }
-  return `<a class="back" href="#home">← 首頁</a><h2 class="hd">Khuànn-Tâi</h2>
+  return `<a class="back" href="#home">← 首頁</a><h2 class="hd">看台 <span class="tl" style="font-size:.7em;font-weight:500;opacity:.85">Khuànn-Tâi</span></h2>
    <div class="hero" style="--h:${hue(pick.t)}">${pick.img||pick.pimg?`<img class="himg" src="${pick.pimg||IMG+pick.img}" alt="" referrerpolicy="no-referrer" onerror="this.remove()">`:''}<span class="kick">今日推薦</span><h2 class="hd">${esc(pick.t)}</h2>
      <p>${pick.lv?pick.lv+'・':''}${cat(pick)}</p>
      <div class="acts"><button class="abtn" data-act="asheet" data-i="${pi}">看這部</button></div></div>
@@ -816,7 +816,7 @@ const hasHan=s=>/\p{Script=Han}/u.test(s), clean=s=>s.replace(/【[^】]*】/g,'
 function dxLoad(){
   if(DXS!=='idle')return;DXS='load';
   fetch('dict.json').then(r=>r.ok?r.json():Promise.reject()).then(a=>{
-    DX=a.map(e=>({id:e[0],h:e[1],hc:clean(e[1]),r:e[2],c:e[3],a:e[4],s:e[5],v:e[6],k:norm(e[2]+' '+e[6].map(x=>x[1]).join(' ')),ks:[norm(e[2])].concat(e[6].map(x=>norm(x[1]))),d:e[5].map(x=>x[1]).join('')}));
+    DX=a.map(e=>({id:e[0],h:e[1],hc:clean(e[1]),r:e[2],c:e[3],a:e[4],ap:e[7]||'',s:e[5],v:e[6],k:norm(e[2]+' '+e[6].map(x=>x[1]).join(' ')),ks:[norm(e[2])].concat(e[6].map(x=>norm(x[1]))),d:e[5].map(x=>x[1]).join('')}));
     DXS='ok';miniDraw();
   }).catch(()=>{DXS='err';miniDraw()});
 }
@@ -843,7 +843,7 @@ function dxRow(e){
   const w7=inW700.has(e.hc)||inW700.has(e.h);
   return `<article class="mr" data-id="${e.id}">
     <div class="mt"><div class="mw"><div class="w hd">${esc(e.hc||e.h)}${w7?'<span class="tag7">700 字</span>':''}</div><div class="r tl">${esc(e.r)}</div></div>
-    ${e.a?`<button class="au" data-au="${e.id}" aria-label="聽發音"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 8.5a5 5 0 010 7M18.5 6a8.5 8.5 0 010 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>`:''}</div>
+    ${e.a?`<button class="au" data-au="${e.id}" data-ap="${e.ap}" aria-label="聽發音"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 8.5a5 5 0 010 7M18.5 6a8.5 8.5 0 010 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>`:''}</div>
     ${e.v.length?`<div class="alt">又唸作　${e.v.map(x=>esc(x[0])+' <span class="tl">'+esc(x[1])+'</span>').join('、')}</div>`:''}
     <ol class="sns">${sn.slice(0,2).join('')}</ol>
     <div class="more" hidden><ol class="sns">${sn.slice(2).join('')}</ol><div class="exs"></div></div>
@@ -866,7 +866,7 @@ let curAu=null;
 mb.addEventListener('click',e=>{
   const au=e.target.closest('[data-au]');
   if(au){const id=+au.dataset.au;if(curAu){curAu.pause()}
-    curAu=new Audio(SU+'media/senn/mp3/imtong/subak/'+Math.floor(id/1000)+'/'+id+'.mp3');curAu.play().catch(()=>toast('這個詞的音檔播不出來'));return}
+    const ap=au.dataset.ap;curAu=new Audio(SU+'media/senn/mp3/imtong/'+(ap?ap+'/'+id+'1.mp3':'subak/'+Math.floor(id/1000)+'/'+id+'.mp3'));curAu.play().catch(()=>toast('這個詞的音檔播不出來'));return}
   const tg=e.target.closest('[data-tg]');
   if(tg){const row=tg.closest('.mr'),more=row.querySelector('.more'),id=row.dataset.id;
     if(!more.hidden){more.hidden=true;tg.textContent='看例句 ▾';return}
