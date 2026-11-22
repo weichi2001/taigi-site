@@ -7,7 +7,7 @@ jobs:
       - uses: actions/checkout@v4
       - run: python3 tools/probe_dict.py
       - run: |
-          curl -sSL -m 120 -o k.ods -w "%{http_code} %{size_download}\n" https://sutian.moe.edu.tw/sujip/kautian.ods || true
+          curl -sSL -m 120 -o k.ods -w "%{http_code} %{size_download}\n" https://sutian.moe.edu.tw/media/senn/ods/kautian.ods || true
           ls -la k.ods; file k.ods
           pip install odfpy pandas >/dev/null 2>&1
           python3 - <<'PY'
