@@ -116,7 +116,7 @@ footer{margin-top:30px;font-size:12px;color:var(--ink2);border-top:1px solid var
 #toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:9px 16px;border-radius:99px;font-size:14px;opacity:0;pointer-events:none;transition:.25s;z-index:20;max-width:90vw}
 #toast.on{opacity:1;transform:translateX(-50%)}
 .empty{text-align:center;color:var(--ink2);padding:30px 0}
-#fab{position:fixed;right:16px;bottom:18px;z-index:12;width:54px;height:54px;border-radius:50%;border:0;background:var(--accent);color:#fff;font-size:22px;box-shadow:0 4px 14px rgba(0,0,0,.28);cursor:pointer}
+#fab{position:fixed;right:16px;bottom:18px;z-index:40;width:54px;height:54px;border-radius:50%;border:0;background:var(--accent);color:#fff;font-size:22px;box-shadow:0 4px 14px rgba(0,0,0,.28);cursor:pointer}
 #fab[hidden],#mini[hidden]{display:none}
 
 /* ---- 動畫專區（深色劇場風，參考 YOKAR 的排版）---- */
@@ -210,7 +210,7 @@ body.anime .hero{border:1px solid rgba(255,255,255,.22);box-shadow:0 20px 50px r
 body.anime .hero .kick{background:rgba(226,68,3,.85);backdrop-filter:blur(10px)}
 .pt{border-radius:16px;box-shadow:0 10px 26px rgba(0,0,0,.4),inset 0 0 0 1px rgba(255,255,255,.2)}
 
-#mini{position:fixed;z-index:13;left:0;right:0;bottom:0;height:78vh;display:flex;flex-direction:column;background:rgba(251,246,238,.97);backdrop-filter:blur(26px) saturate(1.6);-webkit-backdrop-filter:blur(26px) saturate(1.6);border-radius:24px 24px 0 0;box-shadow:0 -10px 40px rgba(60,40,25,.25),inset 0 1px 0 #fff;font-family:Huninn,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif}
+#mini{position:fixed;z-index:41;left:0;right:0;bottom:0;height:78vh;display:flex;flex-direction:column;background:rgba(251,246,238,.97);backdrop-filter:blur(26px) saturate(1.6);-webkit-backdrop-filter:blur(26px) saturate(1.6);border-radius:24px 24px 0 0;box-shadow:0 -10px 40px rgba(60,40,25,.25),inset 0 1px 0 #fff;font-family:Huninn,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif}
 @media(min-width:800px){#mini{left:auto;right:18px;bottom:18px;width:400px;height:min(680px,84vh);border-radius:24px;border:1px solid rgba(255,255,255,.9)}}
 #mini .mtop{display:flex;justify-content:space-between;align-items:center;padding:16px 18px 6px}
 #mini .mtt b{font-size:22px;display:block;line-height:1.2}#mini .mtt span{font-size:12px;color:var(--ink2)}
@@ -246,6 +246,12 @@ body.anime #mini{background:linear-gradient(160deg,rgba(255,255,255,.8),rgba(250
 .mr .ex{background:rgba(255,236,220,.5)}.mr .pos{background:rgba(255,255,255,.6)}
 .mr .ml,body.anime #mini .btn:not(.pri){background:rgba(255,255,255,.55)}
 #mini .tl,#mini .r{font-family:Huninn,Andika,"Noto Sans","Segoe UI",system-ui,"PingFang TC","Microsoft JhengHei",sans-serif}
+#toast{z-index:60}
+/* 看影片時開小辭典：影片縮小留在上方，辭典在下面，兩邊都能操作 */
+body:has(.vw):has(#mini:not([hidden])) .vw{align-items:flex-start;padding-top:8px}
+body:has(.vw):has(#mini:not([hidden])) .vbox iframe{height:30vh}
+body:has(.vw):has(#mini:not([hidden])) #mini{height:56vh}
+@media(min-width:800px){body:has(.vw):has(#mini:not([hidden])) .vw{align-items:center;padding-top:0}body:has(.vw):has(#mini:not([hidden])) .vbox{margin-right:420px}body:has(.vw):has(#mini:not([hidden])) .vbox iframe{height:72vh}body:has(.vw):has(#mini:not([hidden])) #mini{height:min(680px,84vh)}}
 </style>
 </head>
 <body>
