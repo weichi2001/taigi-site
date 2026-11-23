@@ -576,6 +576,7 @@ body:has(.bk-rd.ah){overflow:hidden}
 body:has(.bk-rd.ah) footer{display:none}
 body:has(.bk-rd.ah) .wrap{padding-bottom:0}
 .bkb{transition:transform .55s cubic-bezier(.45,.05,.2,1)}
+@media(min-width:800px){.bk-rd.is-txt{transition:transform .55s cubic-bezier(.45,.05,.2,1),max-width .55s cubic-bezier(.45,.05,.2,1)}body.mini-on .bk-rd.is-txt{transform:translateX(-210px);max-width:min(760px,calc(100vw - 460px))}}
 @media(min-width:800px){.bk-arr.r{transition:right .55s cubic-bezier(.45,.05,.2,1),opacity .2s}body.mini-on .bk-arr{opacity:0;pointer-events:none}}
 @media(prefers-reduced-motion:reduce){.bkb,.bk-arr.r,.bk-rd.ah .bk-bar,.bk-rd.ah .bk-foot{transition:none!important}}
 </style>
