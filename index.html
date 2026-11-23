@@ -512,8 +512,8 @@ body[data-r^=books]:has(.is-book) .wrap{max-width:1560px}
 .bkb{position:relative;width:calc(var(--pw,300px)*2);height:var(--ph,420px);perspective:none;flex:none}
 .bkb.single{width:var(--pw,300px)}
 .fb-p{position:absolute;top:0;width:var(--pw);height:var(--ph);background:#fbf8f3 center/100% 100% no-repeat;box-shadow:0 14px 34px rgba(0,0,0,.28)}
-.fb-l{left:0}.fb-r{left:var(--pw)}
-.bkb.single .fb-r{left:0}.bkb.single .fb-l{display:none}
+.fb-l{left:0;clip-path:inset(-80px 0 -80px -80px)}.fb-r{left:var(--pw);clip-path:inset(-80px -80px -80px 0)}
+.bkb.single .fb-r{left:0;clip-path:none}.bkb.single .fb-l{display:none}
 .fb-p.empty{visibility:hidden}
 .fb-l::after,.fb-r::after{content:"";position:absolute;top:0;bottom:0;width:9%;pointer-events:none}
 .fb-l::after{right:0;background:linear-gradient(90deg,transparent,rgba(0,0,0,.2))}.fb-r::after{left:0;background:linear-gradient(270deg,transparent,rgba(0,0,0,.2))}
