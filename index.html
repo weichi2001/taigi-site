@@ -353,6 +353,7 @@ html[data-theme=dark] .mr .r{color:#ff9a6b}
 .top .tool{display:inline-flex;align-items:center;justify-content:center;height:40px;padding:0 18px;font-size:15px;line-height:1;box-sizing:border-box}
 .top #themeBtn{width:40px;padding:0;border-radius:50%}
 .top #themeBtn .si{width:20px;height:20px;margin:0;vertical-align:baseline;display:block}
+body.anime .top{display:none!important}
 </style>
 </head>
 <body>
@@ -865,7 +866,7 @@ function pAnime(){
   }else{
     const l=v.filter(fil);body=l.length?`<div class="rowx" style="flex-wrap:wrap;overflow:visible;margin-top:14px">${l.map(a=>aniTile(a,ANI.indexOf(a))).join('')}</div>`:'<p class="sub" style="margin-top:18px">還沒有。打開一部作品，按「想看」就會放進來。</p>';
   }
-  return `<a class="back" href="#home">← 首頁</a><h2 class="hd">台語戲台 <span class="tl" style="font-size:.7em;font-weight:500;opacity:.85">Tâi-gí Hì-tâi</span></h2>
+  return `<a class="back" href="#home">← 台語自學站</a><h2 class="hd">台語戲台 <span class="tl" style="font-size:.7em;font-weight:500;opacity:.85">Tâi-gí Hì-tâi</span></h2>
    <div class="hero" style="--h:${hue(pick.t)}">${pick.img||pick.pimg?heroImg(pick):''}<span class="kick">今日推薦</span><h2 class="hd">${esc(pick.t)}</h2>
      <p>${pick.lv?pick.lv+'・':''}${cat(pick)}</p>
      <div class="acts"><button class="abtn" data-act="asheet" data-i="${pi}">看這部</button></div></div>
@@ -930,6 +931,9 @@ function aniSheet(a){
   btn.addEventListener('click',()=>set(root.dataset.theme==='dark'?'light':'dark',true));
   try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',e=>{let s=null;try{s=localStorage.getItem('tgtheme')}catch(x){}if(!s)set(e.matches?'dark':'light',false)})}catch(e){}
   paint();
+  // 台語戲台固定深色：進去時暫時切成深色，離開再還原使用者的選擇
+  let saved=null;
+  window.__tgForce=on=>{if(on){if(saved===null)saved=root.dataset.theme||'light';root.dataset.theme='dark'}else if(saved!==null){root.dataset.theme=saved;saved=null}paint()};
 })();
 // ---- 路由 ----
 const cur=()=>location.hash.slice(1)||'home';
@@ -956,6 +960,7 @@ function view(r){
 function render(keep){
   const y=window.scrollY,r=cur();
   document.body.classList.toggle('anime',r==='anime');
+  if(window.__tgForce)window.__tgForce(r==='anime');
   $('#app').innerHTML=view(r)+foot;
   window.scrollTo(0,keep?y:0);
 }
