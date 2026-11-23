@@ -373,6 +373,22 @@ body[data-r=home] .wrap{padding:0 12px 60px;margin-top:-70px;max-width:1160px}
 .pst small{font-size:13px;letter-spacing:.14em;opacity:.7}.pst b{font-family:GenRyu,"Noto Serif TC","Cactus Classical Serif",Huninn,serif;font-weight:700;font-size:32px;letter-spacing:.04em}.pst span{font-size:15px;opacity:.82}
 .pst.a{background:radial-gradient(70% 90% at 90% 10%,rgba(214,64,42,.45),transparent 65%),linear-gradient(150deg,#3a1630,#14080f)}
 .pst.b{background:radial-gradient(70% 90% at 90% 10%,rgba(120,110,230,.5),transparent 65%),linear-gradient(150deg,#1a1c3d,#0a0b16)}
+.pst.c{grid-column:1/-1;min-height:150px;background:radial-gradient(60% 120% at 88% 0%,rgba(58,150,128,.42),transparent 65%),linear-gradient(150deg,#12302b,#07120f)}
+.bkp{position:absolute;right:26px;top:50%;transform:translateY(-50%);display:flex;pointer-events:none}
+.bkp i{position:relative;display:block;width:clamp(60px,8vw,92px);aspect-ratio:5/7;margin-left:-22px;border-radius:2px 6px 6px 2px;overflow:hidden;background:linear-gradient(150deg,#2f4a44,#0f1c19);box-shadow:0 10px 24px rgba(0,0,0,.55)}
+.bkp i:nth-child(1){transform:rotate(-6deg) translateY(8px)}.bkp i:nth-child(2){transform:rotate(1deg) translateY(-6px);z-index:1}.bkp i:nth-child(3){transform:rotate(7deg) translateY(10px)}
+.bkp i em{position:absolute;left:7px;bottom:4px;font:700 26px/1 var(--serif);font-style:normal;color:rgba(255,255,255,.16)}
+.bkp img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.bkp img+em{display:none}
+.bk-pubs{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px;margin-top:18px}
+.pub{position:relative;overflow:hidden;display:flex;flex-direction:column;gap:6px;min-height:210px;padding:22px;border-radius:22px;color:#f1ece3;text-decoration:none;border:1px solid rgba(255,255,255,.08);background:radial-gradient(80% 90% at 100% 0%,rgba(58,150,128,.34),transparent 65%),linear-gradient(155deg,#14312c,#08130f);transition:transform .25s}
+a.pub:hover{transform:translateY(-2px)}.pub.ed{background:radial-gradient(80% 90% at 100% 0%,rgba(190,150,70,.3),transparent 65%),linear-gradient(155deg,#2a2412,#0f0c06)}.pub.rd{background:radial-gradient(80% 90% at 100% 0%,rgba(110,120,210,.34),transparent 65%),linear-gradient(155deg,#1a1d3a,#0a0b16)}
+.pub[hidden]{display:none}
+.pub small{font:12.5px "GenRyu Lat","Noto Sans TC",sans-serif;letter-spacing:.14em;opacity:.7}.pub b{font-family:GenRyu,"Noto Serif TC",serif;font-weight:700;font-size:26px;letter-spacing:.04em;line-height:1.25}
+.pub p{margin:2px 0 0;font-size:14.5px;line-height:1.7;opacity:.84;flex:1}
+.pub .tg{display:flex;gap:8px;align-items:center;font-size:12.5px;margin-top:8px}.pub .tg u{text-decoration:none;padding:2px 10px;border-radius:99px;border:1px solid rgba(255,255,255,.25)}.pub .tg span{opacity:.62}
+.pub .lk{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.pub .lk a{color:#f1ece3;font-size:14px;padding:5px 13px;border-radius:99px;border:1px solid rgba(255,255,255,.3);text-decoration:none}.pub .lk a:hover{background:rgba(255,255,255,.12)}
+.pub .cv{position:absolute;right:20px;top:20px;width:64px;aspect-ratio:5/7;border-radius:2px 6px 6px 2px;overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,.5);background:#1d3a34}.pub .cv img{width:100%;height:100%;object-fit:cover;display:block}
+.pub.has b,.pub.has small{padding-right:80px}.bk-ch .ach{background:#fff;color:var(--ink);border-color:var(--line)}.bk-ch .ach.on{background:#14312c;color:#f1ece3;border-color:#14312c}
 .more{display:flex;align-items:center;gap:6px;color:var(--ink2);text-decoration:none;font-size:15px;padding:2px 4px}.more:hover{color:var(--accent)}
 .hsec{display:grid;gap:14px;margin-top:14px}
 /* 深色 */
@@ -542,9 +558,9 @@ body[data-r^=books]:has(.is-book) .wrap{max-width:1560px}
 .bkb.single .shr{left:0}
 html.bk-fs-on .top,html.bk-fs-on footer{display:none}html.bk-fs-on .bk-rd.is-book .bk-bar{top:0}html.bk-fs-on body{background:var(--paper)}
 
-body[data-r^="books/"] .top{display:none}
-body[data-r^="books/"] .wrap{padding-top:0;margin-top:0}
-body[data-r^="books/"] .bk-bar{top:0}
+body[data-r^="books/"]:not([data-r="books/bong"]) .top{display:none}
+body[data-r^="books/"]:not([data-r="books/bong"]) .wrap{padding-top:0;margin-top:0}
+body[data-r^="books/"]:not([data-r="books/bong"]) .bk-bar{top:0}
 
 /* 冊房：電腦版介面自動隱藏 */
 .bk-rd.ah .bk-bar{position:fixed;top:0;left:0;right:0;z-index:30;padding:10px 40px;border-bottom:0;box-shadow:0 8px 24px rgba(40,25,10,.14);transition:transform .45s cubic-bezier(.45,.05,.2,1),opacity .3s}
@@ -744,9 +760,9 @@ function pHome(){
    <div class="hsec g2 grid g2d">
     <a class="pst a" href="#anime"><div class="pv">${prv}</div><small>Tâi-gí Hì-tâi</small><b>台語戲台</b><span>動畫、電影、戲劇、節目</span></a>
     <a class="pst b" href="https://weichi2001.github.io/taigi-ktv/?student"><div class="kv"><i class="on">${esc(pv1[0])}</i><em>${esc(pv1[1])}</em></div><small>Tâi-gí Ko-thiann</small><b>台語歌廳</b><span>跟著字幕唱，順便認字</span></a>
+    <a class="pst c" href="#books"><div class="bkp" id="bkp"><i><em>391</em></i><i><em>390</em></i><i><em>389</em></i></div><small>Tâi-gí Tsheh-pâng</small><b>台語冊房</b><span>報刊與讀本，放在同一個書架</span></a>
    </div>
    <div class="hsec"><a class="more" href="#play">還有聽歌、節目的資源 ${SI.link}</a>
-    <a class="ent sm" href="#books"><div class="ic">${SI.book}</div><div><h3>台語冊房</h3><p>台文通訊 BONG 報，一期一期線上讀。</p></div></a>
     <a class="ent sm" href="#links"><div class="ic">${SI.link}</div><div><h3>其他推薦網站</h3><p>教育部資源、老師的 IG 等等。</p></div></a></div>
    <h3 class="hd" style="margin-top:26px">用例與自測</h3>${row(d)}`;
 }
@@ -1251,7 +1267,7 @@ function bkBook(root,is,startPage){
   const n=is.n,P=bkPages(is),N=P.length;
   const secs=[];is.arts.forEach((a,k)=>{let s=secs.find(x=>x.s===a.s);if(!s){s={s:a.s,l:[]};secs.push(s)}s.l.push([k,a,P.findIndex(p=>p.a===k)])});
   root.className='bk-rd is-book';root.style.removeProperty('--bkfs');
-  root.innerHTML=`<div class="bk-bar"><a class="back" href="#books">← 書架</a><span class="bk-bt">第 ${n} 期</span>
+  root.innerHTML=`<div class="bk-bar"><a class="back" href="#books/bong">← 書架</a><span class="bk-bt">第 ${n} 期</span>
     <span class="bk-fs bk-tools"><span class="bk-mode"><button class="on" data-bk="m-img">電子書</button><button data-bk="m-txt">文字</button></span><button data-bk="toc">目錄</button><button data-bk="fs" aria-label="全螢幕">全螢幕</button></span></div>
    <div class="bk-stage"><button class="bk-arr l" data-bk="prev" aria-label="上一頁">‹</button>
      <div class="bk-zw"><div class="bkb"><div class="fb-p fb-l"></div><div class="fb-p fb-r"></div></div></div>
@@ -1389,12 +1405,26 @@ const bkFs=()=>{try{return +localStorage.getItem('tgbkfs')||18}catch(e){return 1
 const bkCredit=(n,u)=>`<p class="bk-cr">本文出自《台文通訊BONG報》第 ${n} 期，著作權屬李江却台語文教基金會與作者。${u?`<a href="${u}" target="_blank" rel="noopener">到原網站看這篇</a>`:''}　<a href="https://tsbp.tgb.org.tw/p/bong_31.html" target="_blank" rel="noopener">贊助刊物</a></p>`;
 function pBooks(r){
   const m=/^books\/(\d+)(?:\/(\d+|b))?$/.exec(r);
-  if(!m)return `<a class="back" href="#home">← 首頁</a>
-   <div class="bk-h"><h2 class="hd">台語冊房</h2><span class="sub tl">Tâi-gí Tsheh-pâng</span></div>
-   <p class="sub bk-sub">台文通訊 BONG 報，一期一期放在書架上，點開就能讀。</p>
+  if(r==='books/bong')return `<a class="back" href="#books">← 台語冊房</a>
+   <div class="bk-h"><h2 class="hd">台文通訊 BONG 報</h2><span class="sub tl">Tâi-bûn Thong-sùn BONG Pò</span></div>
+   <p class="sub bk-sub">一期一期放在書架上，點開就能讀。</p>
    <div id="bk-res"></div><div id="bk-shelf" class="bk-shelf"></div><div class="bk-more"><button class="btn" data-bk="more" hidden>看更早的期數</button></div>
    <p class="bk-note">內容是打開時才從 <a href="https://tsbp.tgb.org.tw/" target="_blank" rel="noopener">台文通訊 BONG 報網站</a> 即時讀取，這裡不複製也不存放。《台文通訊》由李江却台語文教基金會發行，著作權屬基金會與作者。</p>`;
-  return `<div id="bk-rd" data-n="${m[1]}" data-i="${m[2]===undefined?-1:m[2]}" class="bk-rd" style="--bkfs:${bkFs()}px"><a class="back" href="#books">← 書架</a><p class="sub">讀取中⋯⋯</p></div>`;
+  if(!m){
+   const ex=(h,t)=>`<a href="${h}" target="_blank" rel="noopener">${t}</a>`;
+   return `<a class="back" href="#home">← 街仔路</a>
+   <div class="bk-h"><h2 class="hd">台語冊房</h2><span class="sub tl">Tâi-gí Tsheh-pâng</span></div>
+   <p class="sub bk-sub">報刊、讀本放在同一個書架。能在這裡讀的就直接讀，其他的帶你到原本的網站。</p>
+   <div id="bk-res"></div>
+   <div class="achips bk-ch"><button class="ach on" data-bk="flt" data-f="all">全部</button><button class="ach" data-bk="flt" data-f="ed">報刊</button><button class="ach" data-bk="flt" data-f="rd">讀本</button></div>
+   <div class="bk-pubs">
+    <a class="pub has" data-k="ed" href="#books/bong"><div class="cv" id="bk-pc"></div><small>Tâi-bûn Thong-sùn BONG Pò</small><b>台文通訊<br>BONG 報</b><p>李江却台語文教基金會發行的刊物，全台文，一期一期有主題、有專欄。</p><div class="tg"><u>在這裡讀</u><span>電子書、文字版</span></div></a>
+    <div class="pub ed" data-k="ed"><small>Tâi-oân Kàu-hōe Kong-pò</small><b>台灣教會公報</b><p>1885 年創刊，是台灣第一份報紙，早年用白話字（Pe̍h-ōe-jī）出版，現在還是每週發行。</p><div class="tg"><u>原網站</u><span>台灣教會公報社</span></div><div class="lk">${ex('https://tcnn.org.tw/','到公報網站')}</div></div>
+    <div class="pub rd" data-k="rd"><small>Tha̍k Bûn-tsiong Kài Tshù-bī</small><b>讀文章蓋趣味</b><p>教育部「咱來學臺灣台語」的讀本，短文附詞彙與文法，點藍字還能聽音檔。</p><div class="tg"><u>PDF 手冊</u><span>教育部</span></div><div class="lk">${ex('https://language.moe.gov.tw/upload/download/jts/04%E6%96%87%E7%AB%A01.pdf','第一冊')}${ex('https://language.moe.gov.tw/upload/download/jts/04%E6%96%87%E7%AB%A02.pdf','第二冊')}</div></div>
+   </div>
+   <p class="bk-note">這裡只收能直接打開讀的刊物與讀本，點進去都是原發行單位的頁面，著作權屬各發行單位與作者。</p>`;
+  }
+  return `<div id="bk-rd" data-n="${m[1]}" data-i="${m[2]===undefined?-1:m[2]}" class="bk-rd" style="--bkfs:${bkFs()}px"><a class="back" href="#books/bong">← 書架</a><p class="sub">讀取中⋯⋯</p></div>`;
 }
 async function bkShelf(){
   const box=document.getElementById('bk-shelf');if(!box)return;
@@ -1413,9 +1443,9 @@ async function bkShelf(){
 async function bkReader(){
   const root=document.getElementById('bk-rd');if(!root)return;
   const n=+root.dataset.n,iraw=root.dataset.i,i=iraw==='b'?-3:+iraw;let is;
-  try{is=await bkIssue(n)}catch(e){root.innerHTML=`<a class="back" href="#books">← 書架</a><p class="sub">讀不到這一期。可能是網路問題，也可能是這一期不在網站上。<a href="https://tsbp.tgb.org.tw/" target="_blank" rel="noopener">到原網站看</a></p>`;return}
+  try{is=await bkIssue(n)}catch(e){root.innerHTML=`<a class="back" href="#books/bong">← 書架</a><p class="sub">讀不到這一期。可能是網路問題，也可能是這一期不在網站上。<a href="https://tsbp.tgb.org.tw/" target="_blank" rel="noopener">到原網站看</a></p>`;return}
   if(!document.getElementById('bk-rd'))return;
-  const A=is.arts,ctl=`<div class="bk-bar"><a class="back" href="#books">← 書架</a><span class="bk-bt">第 ${n} 期</span><span class="bk-fs"><button data-bk="fs-" aria-label="字小一點">A−</button><button data-bk="fs+" aria-label="字大一點">A+</button></span></div>`;
+  const A=is.arts,ctl=`<div class="bk-bar"><a class="back" href="#books/bong">← 書架</a><span class="bk-bt">第 ${n} 期</span><span class="bk-fs"><button data-bk="fs-" aria-label="字小一點">A−</button><button data-bk="fs+" aria-label="字大一點">A+</button></span></div>`;
   const P0=bkPages(is);
   if(i===-3||(i>=0&&A[i]&&bkMode()==='img'&&P0.length&&P0.some(p=>p.a===i))){bkBook(root,is,i===-3?0:Math.max(0,P0.findIndex(p=>p.a===i)));window.scrollTo(0,0);return}
   if(i<0||!A[i]){
@@ -1437,12 +1467,17 @@ async function bkReader(){
    <div class="bk-nav">${i>0?`<a class="btn" href="#books/${n}/${i-1}">← ${esc(A[i-1].t)}</a>`:`<a class="btn" href="#books/${n}">← 目錄</a>`}${i<A.length-1?`<a class="btn pri" href="#books/${n}/${i+1}">${esc(A[i+1].t)} →</a>`:`<a class="btn" href="#books/${n}">回目錄</a>`}</div>`;
   window.scrollTo(0,0);
 }
-function bkLoad(r){if(r==='books')bkShelf();else bkReader()}
+async function bkCovers(){
+  const last=await bkLatest(),pc=document.getElementById('bk-pc'),bp=document.getElementById('bkp');
+  [last,last-1,last-2].forEach((n,k)=>bkMeta(n).then(mt=>{if(!mt.cover)return;if(k===0&&pc&&document.contains(pc))pc.innerHTML=`<img src="${mt.cover}" alt="" referrerpolicy="no-referrer" onerror="this.remove()">`;const i=bp&&document.contains(bp)&&bp.children[k];if(i){i.querySelector('em').textContent=n;i.insertAdjacentHTML('afterbegin',`<img src="${mt.cover}" alt="" referrerpolicy="no-referrer" onerror="this.remove()">`)}}))
+}
+function bkLoad(r){if(r==='books')bkCovers();else if(r==='books/bong')bkShelf();else bkReader()}
 document.getElementById('app').addEventListener('click',e=>{
   const b=e.target.closest('[data-bk]');if(!b)return;const k=b.dataset.bk;
   if(k==='more'&&BK.add)BK.add();
   if(k==='m-img'||k==='m-txt'){try{localStorage.setItem('tgbkmode',k==='m-txt'?'txt':'img')}catch(x){}const bb=BK.book,inBook=bb&&document.contains(bb.el)&&document.getElementById('bk-rd')===bb.el;if(inBook&&k==='m-txt'){const a=bb.art(),h='#books/'+document.getElementById('bk-rd').dataset.n+'/'+(a>=0?a:0);if(location.hash===h)bkReader();else location.hash=h}else bkReader()}
   if(BK.book&&document.contains(BK.book.el)){const B=BK.book;if(k==='prev')B.flip(-1);if(k==='next')B.flip(1);if(k==='toc')B.toc();if(k==='fs')B.fs();if(k==='go')B.go(+b.dataset.p)}
+  if(k==='flt'){document.querySelectorAll('[data-bk=flt]').forEach(x=>x.classList.toggle('on',x===b));document.querySelectorAll('.bk-pubs .pub').forEach(x=>x.hidden=b.dataset.f!=='all'&&x.dataset.k!==b.dataset.f)}
   if(k==='fs+'||k==='fs-'){const v=Math.max(15,Math.min(30,bkFs()+(k==='fs+'?2:-2)));try{localStorage.setItem('tgbkfs',v)}catch(x){}const r=document.getElementById('bk-rd');if(r)r.style.setProperty('--bkfs',v+'px')}
 });
 let bkTx=0;
@@ -1483,6 +1518,7 @@ function render(keep){
   $('#app').innerHTML=view(r)+foot;
   window.scrollTo(0,keep?y:0);
   if(r==='books'||r.startsWith('books/'))bkLoad(r);
+  if(r==='home')bkCovers();
 }
 window.addEventListener('hashchange',()=>{enter(cur());render(false)});
 
