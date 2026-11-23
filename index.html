@@ -10,12 +10,13 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Huninn&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cactus+Classical+Serif&family=Chocolate+Classical+Sans&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Andika:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{--ink:#615045;--ink2:#7a6a5e;--paper:#f7f0e2;--card:#fffaf0;--line:#e4d8c3;--accent:#e24403;--ok:#4f8a3a;--okbg:#e9f2e1;--badbg:#fbe8de}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 "Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 "Noto Sans TC","Chocolate Classical Sans",Huninn,"PingFang TC","Microsoft JhengHei",system-ui,sans-serif;-webkit-text-size-adjust:100%}
 a{color:inherit}
 button,input,select,textarea{font-family:inherit}
 .tl{font-family:Huninn,Andika,"Noto Sans","Segoe UI",system-ui,"PingFang TC","Microsoft JhengHei",sans-serif;letter-spacing:.01em}
@@ -337,7 +338,7 @@ html[data-theme=dark] #toast{background:#3a322c}
 /* ===== v4：內容層安靜實心，玻璃只給導覽列與浮動控制 ===== */
 :root{--ink:#1c1b19;--ink2:#6b6860;--accent:#d6402a;--paper:#f5f4f1;--card:#ffffff;--line:#e6e3dc;--gl:none;--gsh:0 1px 2px rgba(28,27,25,.04)}
 html{background:#f5f4f1}body::before{background:#f5f4f1}
-h1.hd,h2.hd,h3.hd,.logo.hd,.serif{font-family:"Noto Serif TC","Songti TC",serif;font-weight:700;letter-spacing:.02em}
+h1.hd,h2.hd,h3.hd,.logo.hd,.serif{font-family:"Noto Serif TC","Cactus Classical Serif",Huninn,"Songti TC",serif;font-weight:700;letter-spacing:.02em}
 .card,.res,.seg,.ent,.ime,.step,.fc,.tool,.fb,.btn:not(.pri):not(.ok):not(.bad){background:var(--card);border:1px solid var(--line);backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:var(--gsh)}
 .card,.res,.seg,.ent,.ime,.step{border-radius:22px}
 .ent:hover,.res:hover,.seg:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(28,27,25,.08);border-color:#d6d2c8}
@@ -357,15 +358,16 @@ h1.hd,h2.hd,h3.hd,.logo.hd,.serif{font-family:"Noto Serif TC","Songti TC",serif;
 body[data-r=home] .wrap{padding:0 12px 60px;margin-top:-70px;max-width:1160px}
 .hh{position:relative;overflow:hidden;border-radius:30px;min-height:470px;margin-top:8px;padding:120px 22px 22px;display:flex;flex-direction:column;justify-content:space-between;gap:26px;color:#f6efe6;
  background:radial-gradient(55% 85% at 86% 28%,rgba(214,64,42,.62) 0,transparent 66%),radial-gradient(50% 60% at 8% 100%,rgba(110,140,130,.30) 0,transparent 70%),linear-gradient(160deg,#211d1a,#141210)}
-.hh .bgc{position:absolute;right:-20px;top:40px;font-family:"Noto Serif TC",serif;font-weight:900;font-size:min(var(--bs,300px),70vw);line-height:1;color:rgba(255,245,235,.16);pointer-events:none;white-space:nowrap}
+.hh .bgc{position:absolute;right:-20px;top:40px;font-family:"Cactus Classical Serif","Noto Serif TC",Huninn,serif;font-weight:400;font-synthesis:none;font-size:min(var(--bs,300px),70vw);line-height:1;color:rgba(255,245,235,.16);pointer-events:none;white-space:nowrap}
 .hh h1{position:relative;margin:0;font-size:36px;line-height:1.28;color:#f6efe6;letter-spacing:.03em}
 .dw{position:relative;display:flex;align-items:center;gap:16px;border-radius:26px;padding:16px 18px;background:rgba(255,255,255,.13);backdrop-filter:blur(26px) saturate(1.7);-webkit-backdrop-filter:blur(26px) saturate(1.7);border:1px solid rgba(255,255,255,.24);box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 14px 36px rgba(0,0,0,.28)}
-.dwc{font-family:"Noto Serif TC",serif;font-weight:900;font-size:var(--ds,52px);line-height:1;min-width:1ch}
+.dwc{font-family:"Cactus Classical Serif","Noto Serif TC",Huninn,serif;font-weight:400;font-synthesis:none;font-size:var(--ds,52px);line-height:1;flex:none;white-space:nowrap}
 .dwt{display:flex;flex-direction:column;flex:1;min-width:0}.dwt small{font-size:12px;letter-spacing:.2em;opacity:.7;white-space:nowrap}.dwt b{font-size:22px;font-weight:500;letter-spacing:.03em}.dwt span{font-size:15px;opacity:.85}
+.dw.long{flex-wrap:wrap;row-gap:10px}.dw.mid{flex-wrap:wrap;row-gap:12px}.dw.mid .dwb{margin-left:auto}.dw.long .dwc{flex:1 1 100%;font-size:30px;line-height:1.3;white-space:normal}.dwt{min-width:90px}.dw.mid .dwt,.dw.long .dwt{min-width:130px}.dwt b{overflow-wrap:break-word}.dwc{word-break:keep-all}
 .dwb{font:inherit;font-size:15px;font-weight:700;color:#fff;background:var(--accent);border:0;border-radius:99px;padding:10px 18px;cursor:pointer;white-space:nowrap;display:inline-flex;gap:6px;align-items:center}
 .pst{position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;gap:4px;min-height:170px;border-radius:26px;padding:22px;color:#f6efe6;text-decoration:none;border:1px solid rgba(255,255,255,.08);transition:transform .25s}
 .pst:hover{transform:translateY(-2px)}
-.pst small{font-size:13px;letter-spacing:.14em;opacity:.7}.pst b{font-family:"Noto Serif TC",serif;font-weight:900;font-size:32px;letter-spacing:.04em}.pst span{font-size:15px;opacity:.82}
+.pst small{font-size:13px;letter-spacing:.14em;opacity:.7}.pst b{font-family:"Noto Serif TC","Cactus Classical Serif",Huninn,serif;font-weight:900;font-size:32px;letter-spacing:.04em}.pst span{font-size:15px;opacity:.82}
 .pst.a{background:radial-gradient(70% 90% at 90% 10%,rgba(214,64,42,.45),transparent 65%),linear-gradient(150deg,#3a1630,#14080f)}
 .pst.b{background:radial-gradient(70% 90% at 90% 10%,rgba(120,110,230,.5),transparent 65%),linear-gradient(150deg,#1a1c3d,#0a0b16)}
 .more{display:flex;align-items:center;gap:6px;color:var(--ink2);text-decoration:none;font-size:15px;padding:2px 4px}.more:hover{color:var(--accent)}
@@ -390,7 +392,7 @@ html[data-theme=dark] .top .in{background:rgba(40,38,36,.82)}html[data-theme=dar
  body[data-r=home] .wrap{padding:0 0 80px;margin-top:-80px}
  .hh{min-height:520px;padding:150px 56px 44px;border-radius:34px;margin-top:0}
  .hh h1{font-size:60px}.hh .bgc{right:60px;top:40px;font-size:min(var(--bs,470px),40vw)}
- .dw{width:460px;padding:22px 26px;gap:22px}.dwc{font-size:var(--dsd,72px)}.dwt b{font-size:24px}
+ .dw{width:fit-content;min-width:400px;max-width:560px;padding:22px 26px;gap:22px}.dw.long{max-width:640px}.dw.mid{flex-wrap:nowrap;row-gap:0}.dw.mid .dwb{margin-left:0}.dwc{font-size:var(--dsd,72px)}.dwt b{font-size:24px}
  .pst{min-height:250px;padding:32px}.pst b{font-size:40px}
  .hsec.g2{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}.hsec.g3{grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
  body[data-r=quiz] .wrap,body[data-r=review] .wrap,body[data-r=about] .wrap{max-width:860px}
@@ -594,12 +596,12 @@ function quizHtml(){
 function pHome(){
   const d=D[Math.floor((Date.now()+288e5)/864e5)%D.length];
   S.open.add(d.n);
-  const L=[...d.w].length,bs=L<=1?470:L==2?300:L==3?210:150,dm=L<=1?52:L==2?40:L==3?32:26,dd=L<=1?72:L==2?52:L==3?40:32;
+  const L=[...d.w].length,bgw=[...d.w.split('/')[0].replace(/[（(][^）)]*[）)]/g,'')].slice(0,3).join(''),BL=[...bgw].length,bs=BL<=1?470:BL==2?300:210,dm=L<=1?52:L==2?40:L==3?32:26,dd=L<=1?72:L==2?52:L==3?40:32,lg=L>=4,md=L>=2&&L<4;
   const zone=(h,ic,t,x,items)=>`<a class="ent zone" href="${h}"><div class="ic">${ic}</div><h3>${t}</h3>${x?`<p>${x}</p>`:''}<div class="li">${items.map(i=>`<span>${i}</span>`).join('')}</div></a>`;
   return `<section class="hh" style="--bs:${bs}px;--ds:${dm}px;--dsd:${dd}px">
-    <span class="bgc" aria-hidden="true">${esc(d.w)}</span>
+    <span class="bgc" aria-hidden="true">${esc(bgw)}</span>
     <h1 class="hd">聽、說、讀、寫，<br>一個地方找得到</h1>
-    <div class="dw"><div class="dwc">${esc(d.w)}</div><div class="dwt"><small>每日一字 ${d.n}</small><b class="tl">${esc(d.r)}</b><span>${esc(d.h)}</span></div><button class="dwb" type="button" data-act="say" data-n="${d.n}">${SI.spk}聽發音</button></div>
+    <div class="dw${lg?' long':md?' mid':''}"><div class="dwc">${esc(d.w)}</div><div class="dwt"><small>每日一字 ${d.n}</small><b class="tl">${esc(d.r)}</b><span>${esc(d.h)}</span></div><button class="dwb" type="button" data-act="say" data-n="${d.n}">${SI.spk}聽發音</button></div>
    </section>
    <div class="hsec g3 grid g3">
     ${zone('#start',SI.sprout,'系統性學習','從台羅拼音開始，再一段一段學 700 字。',['台羅拼音','700 字自學'])}
