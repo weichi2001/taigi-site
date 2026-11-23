@@ -334,6 +334,29 @@ html[data-theme=dark] .chip.x{background:var(--badbg);border-color:rgba(226,68,3
 html[data-theme=dark] input[type=search]{background:rgba(255,255,255,.08)}
 html[data-theme=dark] .bar{background:rgba(255,255,255,.13)}
 html[data-theme=dark] #toast{background:#3a322c}
+/* ===== 液態玻璃 v2：背後有色彩，玻璃才透得出來 ===== */
+:root{--gl:radial-gradient(140% 100% at 0% 0%,rgba(255,255,255,.78) 0,rgba(255,255,255,.18) 46%,rgba(255,255,255,0) 70%),linear-gradient(150deg,rgba(255,255,255,.34),rgba(255,255,255,.1) 55%,rgba(255,255,255,.22));
+ --gsh:0 12px 34px rgba(150,90,50,.14),0 2px 6px rgba(150,90,50,.06),inset 0 1.5px 0 rgba(255,255,255,.95),inset 1.5px 0 0 rgba(255,255,255,.55),inset 0 -1.5px 1px rgba(255,255,255,.45),inset 0 0 26px rgba(255,255,255,.22)}
+body::before{background:
+ radial-gradient(34% 26% at 30% 16%,rgba(255,150,80,.75) 0,transparent 72%),
+ radial-gradient(30% 24% at 74% 24%,rgba(255,130,160,.6) 0,transparent 72%),
+ radial-gradient(32% 26% at 22% 56%,rgba(90,205,180,.62) 0,transparent 72%),
+ radial-gradient(34% 28% at 76% 62%,rgba(160,140,255,.58) 0,transparent 72%),
+ radial-gradient(40% 24% at 50% 96%,rgba(255,196,100,.65) 0,transparent 72%),
+ linear-gradient(180deg,#f9f0e3 0%,#f3e5d2 100%)}
+.card,.res,.seg,.ent,.ime,.step,.fc,.tool,.fb,.btn:not(.pri):not(.ok):not(.bad){border:1px solid rgba(255,255,255,.62);backdrop-filter:blur(20px) saturate(2) brightness(1.05);-webkit-backdrop-filter:blur(20px) saturate(2) brightness(1.05)}
+.top{background:linear-gradient(180deg,rgba(255,255,255,.62),rgba(255,255,255,.28));backdrop-filter:blur(26px) saturate(2);-webkit-backdrop-filter:blur(26px) saturate(2);box-shadow:0 6px 26px rgba(150,90,50,.1),inset 0 -1px 0 rgba(255,255,255,.7)}
+.ent:hover,.res:hover,.seg:hover{box-shadow:0 20px 46px rgba(150,90,50,.22),inset 0 1.5px 0 #fff,inset 1.5px 0 0 rgba(255,255,255,.7),inset 0 0 30px rgba(255,255,255,.3)}
+html[data-theme=dark] body::before{background:
+ radial-gradient(34% 26% at 30% 16%,rgba(240,90,20,.55) 0,transparent 72%),
+ radial-gradient(30% 24% at 74% 24%,rgba(210,60,130,.42) 0,transparent 72%),
+ radial-gradient(32% 26% at 22% 56%,rgba(30,170,150,.4) 0,transparent 72%),
+ radial-gradient(34% 28% at 76% 62%,rgba(120,90,240,.46) 0,transparent 72%),
+ linear-gradient(180deg,#1a1411 0%,#0c0a09 100%)}
+html[data-theme=dark]{--gl:radial-gradient(140% 100% at 0% 0%,rgba(255,255,255,.2) 0,rgba(255,255,255,.04) 46%,rgba(255,255,255,0) 70%),linear-gradient(150deg,rgba(255,255,255,.09),rgba(255,255,255,.03) 55%,rgba(255,255,255,.06));
+ --gsh:0 12px 34px rgba(0,0,0,.45),inset 0 1.5px 0 rgba(255,255,255,.28),inset 1.5px 0 0 rgba(255,255,255,.12),inset 0 -1px 1px rgba(255,255,255,.07),inset 0 0 26px rgba(255,255,255,.04)}
+html[data-theme=dark] .top{background:linear-gradient(180deg,rgba(40,32,28,.6),rgba(22,18,15,.4));box-shadow:0 6px 26px rgba(0,0,0,.5),inset 0 -1px 0 rgba(255,255,255,.08)}
+body.anime::before{display:none}
 html[data-theme=dark] .tip{background:rgba(226,68,3,.22)!important}
 html[data-theme=dark] .aic{box-shadow:0 6px 16px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.3)}
 html[data-theme=dark] .btn.ok{border-color:rgba(110,175,80,.5)}html[data-theme=dark] .btn.bad{border-color:rgba(226,68,3,.5)}
