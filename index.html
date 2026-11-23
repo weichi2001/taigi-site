@@ -276,6 +276,28 @@ body.mini-on:has(.vw) #mini{height:56vh}
 .mr .oth{margin-top:2px}
 .mr .sxi .ex{margin:5px 0 3px 0}
 @media(prefers-reduced-motion:reduce){.mr .sx{transition:none}}
+
+/* ---- 關於 ---- */
+.ab-hero{display:flex;gap:22px;align-items:center;padding:26px 26px;border-radius:26px;position:relative;overflow:hidden}
+.ab-hero::before{content:'';position:absolute;right:-60px;top:-70px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(255,150,90,.28),transparent 70%);pointer-events:none}
+.ab-ph{flex:none;width:128px;height:128px;border-radius:50%;padding:4px;background:linear-gradient(145deg,#fff,#f3c9a6 60%,#e8956b);box-shadow:0 10px 28px rgba(150,95,50,.3)}
+.ab-ph img{display:block;width:100%;height:100%;border-radius:50%;object-fit:cover;border:3px solid #fff8ee}
+.ab-hero h2{margin:0;font-size:30px;line-height:1.2;letter-spacing:.04em}
+.ab-role{margin:6px 0 10px;color:var(--ink2);font-size:15px}
+.ab-chips{display:flex;flex-wrap:wrap;gap:6px}
+.ab-chips span{font-size:12.5px;padding:3px 11px;border-radius:99px;background:rgba(255,255,255,.65);border:1px solid rgba(255,255,255,.85);color:var(--ink);box-shadow:inset 0 1px 0 #fff}
+.ab-sec{margin:34px 0 12px;display:flex;align-items:center;gap:12px;font-size:18px}
+.ab-sec::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,rgba(97,80,69,.28),transparent)}
+.ab-p{margin:0 0 10px;line-height:1.95;font-size:15.5px}
+.ab-list{display:grid;gap:10px;margin-top:14px}
+@media(min-width:620px){.ab-list{grid-template-columns:1fr 1fr}}
+.ab-it{display:flex;gap:12px;align-items:center;padding:13px 16px;border-radius:18px;text-decoration:none;color:var(--ink)}
+.ab-it .ic{font-size:26px;flex:none;width:36px;text-align:center}
+.ab-it b{display:block;font-size:15.5px;line-height:1.3}.ab-it small{display:block;color:var(--ink2);font-size:13px;line-height:1.45;margin-top:2px}
+.ab-src{margin:0;padding:0;list-style:none;font-size:14px;line-height:1.9;color:var(--ink2)}
+.ab-src li{padding-left:18px;position:relative}.ab-src li::before{content:'';position:absolute;left:4px;top:.85em;width:6px;height:6px;border-radius:50%;background:#e8956b}
+.ab-btn{display:inline-flex;align-items:center;gap:8px;margin-top:6px;padding:11px 20px;border-radius:99px;text-decoration:none;font-size:15px;color:#fff;background:linear-gradient(135deg,#7a675a,#4f4036);box-shadow:0 8px 20px rgba(79,64,54,.28),inset 0 1px 0 rgba(255,255,255,.3)}
+@media(max-width:520px){.ab-hero{flex-direction:column;text-align:center;padding:24px 18px}.ab-chips{justify-content:center}}
 </style>
 </head>
 <body>
@@ -457,6 +479,45 @@ function pHome(){
    <a class="feat" href="#w700"><div class="ic">📖</div><div><h3>700 字自學</h3><p>教育部推薦用字，一次一小段，邊看邊測驗。</p></div></a>
    <h3 style="margin-top:22px">今日一字</h3>${row(d)}`;
 }
+function pAbout(){
+  const it=(ic,t,d,h,ex)=>`<a class="ab-it card" href="${h}"${ex||''}><span class="ic">${ic}</span><span><b>${t}</b><small>${d}</small></span></a>`;
+  return `<a class="back" href="#home">← 首頁</a>
+  <section class="ab-hero card">
+    <div class="ab-ph"><img src="about-me.jpg" alt="陳威錡老師" width="128" height="128"></div>
+    <div>
+      <h2 class="hd">陳威錡</h2>
+      <p class="ab-role">光明國中・本土語文（閩南語）老師</p>
+      <div class="ab-chips"><span>師大台灣語文學系畢業</span><span>研究台灣文學</span><span>台語中高級認證</span></div>
+    </div>
+  </section>
+
+  <h3 class="ab-sec hd">關於老師</h3>
+  <p class="ab-p">我在國中教台語，也在研究所裡讀台灣文學。教過學生，也教過日本學員和外籍研究員，發現不管年紀、不管母語是什麼，大家學台語卡住的地方其實差不多：不知道從哪裡開始、字不知道怎麼寫、聽得懂但開不了口。</p>
+  <p class="ab-p">所以我想把這些年用得上的資源和自己做的小工具放在同一個地方。</p>
+
+  <h3 class="ab-sec hd">這個網站</h3>
+  <p class="ab-p">台語自學站是給學生自己練習用的。聽、說、讀、寫的資源都整理在這裡，點一下就能開始，不用到處找。進度和測驗紀錄只存在你自己的瀏覽器裡，不用註冊，也不會被收集。</p>
+  <div class="ab-list">
+    ${it('📖','700 字自學','教育部推薦用字，每字有台羅、華語、用例，可翻卡自測。','#w700')}
+    ${it('✍️','挑錯字挑戰','哪一個才是推薦用字？練習避開檢定不能用的寫法。','#quiz')}
+    ${it('🔎','辭典','輸入華語、漢字或台羅都查得到，還能聽發音。','#',' data-act="minidict"')}
+    ${it('🎬','台語戲台','動畫、電影、節目，邊看邊練聽力。','#anime')}
+    ${it('🎤','台語歌廳','跟著字幕唱歌，歌詞用正字，點字就能查辭典。','https://weichi2001.github.io/taigi-ktv/?student')}
+    ${it('⌨️','輸入法','電腦、手機怎麼打台語，一次整理好。','#apps')}
+  </div>
+
+  <h3 class="ab-sec hd">資料來源</h3>
+  <ul class="ab-src">
+    <li>辭典與例句：教育部《臺灣台語常用詞辭典》。</li>
+    <li>700 字：教育部《臺灣台語推薦用字 700 字表》。</li>
+    <li>歌詞用字：參考「臺語歌真正正字歌詞網」。</li>
+    <li>字體：粉圓體 Huninn（Open Font License）。</li>
+  </ul>
+
+  <h3 class="ab-sec hd">找老師</h3>
+  <p class="ab-p">教學紀錄和台語文小知識，我會放在 IG。網站哪裡怪怪的，也歡迎告訴我。</p>
+  <a class="ab-btn" href="https://www.instagram.com/taigi_lausu/" target="_blank" rel="noopener">📷 @taigi_lausu</a>`;
+}
 function pStart(){
   return `<a class="back" href="#home">← 首頁</a><h2 class="hd">從頭開始</h2><p class="sub">照這個順序，一步一步來。</p>
    <div class="steps">
@@ -568,7 +629,7 @@ function pQuiz(){
    <p class="sub">每題兩個寫法，選出教育部推薦用字。</p>${quizHtml()}`;
 }
 
-const foot=`<footer>資料來源：教育部《臺灣台語推薦用字 700 字表》（民國 98 年 10 月公布，113 年 8 月修正）。「檢定不可用的寫法」是提醒學生避免誤用。全華課本標記以課本漢字與台羅逐字對照而來。學習進度只存在你自己的瀏覽器裡。</footer>`;
+const foot=`<footer><p style="margin:0 0 8px"><a href="#about">關於這個網站與老師</a></p>資料來源：教育部《臺灣台語推薦用字 700 字表》（民國 98 年 10 月公布，113 年 8 月修正）。「檢定不可用的寫法」是提醒學生避免誤用。全華課本標記以課本漢字與台羅逐字對照而來。學習進度只存在你自己的瀏覽器裡。</footer>`;
 
 
 // ---- 動畫專區 ----
@@ -754,6 +815,7 @@ function enter(r){
   if(r==='quiz')S.qz=buildQuiz(D,10);
 }
 function view(r){
+  if(r==='about')return pAbout();
   if(r==='start')return pStart();
   if(r==='learn')return pLearn();
   if(r==='play')return pPlay();
