@@ -40,6 +40,7 @@ h1{font-size:28px} h2{font-size:22px} h3{font-size:18px}
 .ent .ic{font-size:30px}
 .ent h3{margin:6px 0 2px}
 .ent p{margin:0;color:var(--ink2);font-size:14px}
+.feats{display:grid;gap:0 12px}@media(min-width:620px){.feats{grid-template-columns:1fr 1fr}}
 .feat{display:flex;gap:14px;align-items:center;background:var(--ink);color:#fff6e8;border-radius:16px;padding:16px 18px;text-decoration:none;margin:10px 0}
 .feat .ic{font-size:34px}.feat p{margin:0;opacity:.85;font-size:14px}.feat h3{margin:0}
 .chip{display:inline-block;font-size:14px;padding:1px 9px;border-radius:99px;border:1px solid var(--line);background:#fff;margin:2px 4px 2px 0}
@@ -195,6 +196,7 @@ body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;
 .ent:hover,.res:hover,.seg:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(150,95,50,.2),inset 0 1px 0 rgba(255,255,255,1)}
 .feat{border:1px solid rgba(255,255,255,.35)!important;border-radius:22px;backdrop-filter:blur(22px) saturate(1.8);-webkit-backdrop-filter:blur(22px) saturate(1.8);box-shadow:0 14px 36px rgba(60,40,25,.25),inset 0 1px 0 rgba(255,255,255,.45)}
 .feat:nth-of-type(1),a.feat[href="#anime"]{background:linear-gradient(135deg,rgba(44,36,32,.94),rgba(78,58,46,.88))!important}
+a.feat[href*="taigi-ktv"]{background:linear-gradient(135deg,rgba(58,30,66,.94),rgba(112,52,84,.88))!important}
 a.feat[href="#w700"]{background:linear-gradient(135deg,rgba(122,103,90,.92),rgba(98,80,69,.9))!important}
 
 .aic{box-shadow:0 6px 16px rgba(150,95,50,.22),inset 0 1px 0 rgba(255,255,255,.8)}
@@ -280,7 +282,8 @@ body.mini-on:has(.vw) #mini{height:56vh}
   <a class="logo hd" href="#home">台語<b>自學</b>站</a>
   <div class="tools">
     <a class="tool" href="#" data-act="minidict">🔎 辭典</a>
-    <a class="tool" href="#anime">🎬 看台 Khuànn-Tâi</a>
+    <a class="tool" href="#anime">🎬 台語戲台 Tâi-gí Hì-tâi</a>
+    <a class="tool" href="https://weichi2001.github.io/taigi-ktv/?student">🎤 台語歌廳 Tâi-gí Kua-thiann</a>
     <a class="tool" href="#apps">⌨️ 輸入法</a>
     <a class="tool" href="https://taigilyrics.kiantiong.com/" target="_blank" rel="noopener">🎵 歌詞</a>
   </div>
@@ -338,7 +341,7 @@ const plat=(/iPhone|iPad|iPod/.test(ua)||(/Macintosh/.test(ua)&&navigator.maxTou
 const RES=[
  {t:'700 字自學',d:'教育部推薦用字，每字有台羅、華語、用例與常見錯寫，可翻卡自測。',tags:['讀','寫'],time:'每段約 10 分鐘',href:'#w700',inner:1},
  {t:'挑錯字挑戰',d:'哪一個才是推薦用字？練習避開檢定不能用的寫法。',tags:['讀','寫'],time:'5 分鐘',href:'#quiz',inner:1},
- {t:'臺語歌廳',d:'跟著字幕唱台語歌，歌詞用的都是正字。',tags:['聽','說','讀'],time:'一首歌',href:'https://weichi2001.github.io/taigi-ktv/?student',play:1},
+ {t:'台語歌廳 Tâi-gí Kua-thiann',d:'跟著字幕唱台語歌，歌詞用的都是正字。',tags:['聽','說','讀'],time:'一首歌',href:'https://weichi2001.github.io/taigi-ktv/?student',play:1},
  {t:'Spotify「台語歌」播放清單',d:'老師挑的台語歌，通勤、放學路上都能聽。',tags:['聽'],time:'隨時',href:'https://open.spotify.com/playlist/1FqTdaDvhYgQgENEJrQRix',play:1},
  {t:'臺語歌真正正字歌詞網',d:'查歌詞的正確用字，網路上很多歌詞都是錯字。',tags:['讀'],time:'查詢',href:'https://taigilyrics.kiantiong.com/',play:1},
  {t:'教學 IG @taigi_lausu',d:'老師的教學紀錄與台語文小知識。',tags:['聽','讀'],time:'滑一滑',href:'https://www.instagram.com/taigi_lausu/',play:1},
@@ -446,7 +449,10 @@ function pHome(){
     <a class="ent" href="#learn"><div class="ic">🎯</div><h3>練某個能力</h3><p>聽、說、讀、寫，挑你想加強的。</p></a>
     <a class="ent" href="#play"><div class="ic">🎧</div><h3>想玩一下</h3><p>唱歌、聽歌、看短影片。</p></a>
    </div>
-   <a class="feat" href="#anime" style="background:#241f1b"><div class="ic">🎬</div><div><h3>看台 <span class="tl" style="font-weight:500;font-size:.85em;opacity:.85">Khuànn-Tâi</span></h3><p>台語動畫、電影、節目，邊看邊練聽力。</p></div></a>
+   <div class="feats">
+   <a class="feat" href="#anime" style="background:#241f1b"><div class="ic">🎬</div><div><h3>台語戲台 <span class="tl" style="font-weight:500;font-size:.85em;opacity:.85">Tâi-gí Hì-tâi</span></h3><p>台語動畫、電影、節目，邊看邊練聽力。</p></div></a>
+   <a class="feat" href="https://weichi2001.github.io/taigi-ktv/?student"><div class="ic">🎤</div><div><h3>台語歌廳 <span class="tl" style="font-weight:500;font-size:.85em;opacity:.85">Tâi-gí Kua-thiann</span></h3><p>跟著字幕唱台語歌，歌詞都是正字，點字還能查辭典。</p></div></a>
+   </div>
    <a class="feat" href="#w700"><div class="ic">📖</div><div><h3>700 字自學</h3><p>教育部推薦用字，一次一小段，邊看邊測驗。</p></div></a>
    <h3 style="margin-top:22px">今日一字</h3>${row(d)}`;
 }
@@ -683,7 +689,7 @@ function pAnime(){
   }else{
     const l=v.filter(fil);body=l.length?`<div class="rowx" style="flex-wrap:wrap;overflow:visible;margin-top:14px">${l.map(a=>aniTile(a,ANI.indexOf(a))).join('')}</div>`:'<p class="sub" style="margin-top:18px">還沒有。打開一部作品，按「♥ 想看」就會放進來。</p>';
   }
-  return `<a class="back" href="#home">← 首頁</a><h2 class="hd">看台 <span class="tl" style="font-size:.7em;font-weight:500;opacity:.85">Khuànn-Tâi</span></h2>
+  return `<a class="back" href="#home">← 首頁</a><h2 class="hd">台語戲台 <span class="tl" style="font-size:.7em;font-weight:500;opacity:.85">Tâi-gí Hì-tâi</span></h2>
    <div class="hero" style="--h:${hue(pick.t)}">${pick.img||pick.pimg?`<img class="himg" src="${pick.pimg||IMG+pick.img}" alt="" referrerpolicy="no-referrer" onerror="this.remove()">`:''}<span class="kick">今日推薦</span><h2 class="hd">${esc(pick.t)}</h2>
      <p>${pick.lv?pick.lv+'・':''}${cat(pick)}</p>
      <div class="acts"><button class="abtn" data-act="asheet" data-i="${pi}">看這部</button></div></div>
