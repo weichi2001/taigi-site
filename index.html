@@ -869,6 +869,7 @@ function dxFind(raw){
     }else if(k){
       if(e.ks.includes(k))sc=0;else if(e.ks.some(x=>x.startsWith(k)))sc=1;else if(e.k.includes(k))sc=2;
     }
+    if(sc===9&&han&&EXD){const L=EXD[e.id];if(L&&L.some(x=>x[2].includes(raw)))sc=5}
     if(sc<3&&(e.hc.length>6||/[，。！？]/.test(e.hc)))sc+=2;
     if(sc<9)out.push([sc,e]);
   }
@@ -894,6 +895,7 @@ function miniDraw(){
     const k=norm(raw);const r=D.filter(o=>o.k.includes(k)).slice(0,10);
     mb.innerHTML=`<p class="note">完整辭典暫時載不進來，先用 700 字查：</p>`+r.map(o=>`<div class="mr"><span class="w">${esc(o.w)}</span><span class="tl r">${esc(o.r)}</span><div class="h">${esc(o.h)}</div></div>`).join('')
       +`<div class="acts"><a class="btn pri" href="${dictUrl(raw)}" target="_blank" rel="noopener" data-act="dict">到教育部辭典查「${esc(raw)}」</a></div>`;return}
+  if(hasHan(raw)&&!EXD&&!window.__exAsk){window.__exAsk=1;exLoad(()=>{if(mq.value.trim()===raw)miniDraw()})}
   const r=dxFind(raw);
   mb.innerHTML=(r.length?`<p class="cnt">找到 ${r.length} 筆</p>`+r.slice(0,mlim).map(dxRow).join('')+(r.length>mlim?`<div class="acts" style="justify-content:center"><button class="btn" id="mmore">再看更多</button></div>`:'')
     :`<p class="note">辭典裡沒有「${esc(raw)}」。可以換個寫法，或華語換個說法再試。</p>`)
@@ -903,7 +905,7 @@ let curAu=null;
 mb.addEventListener('click',e=>{
   const au=e.target.closest('[data-au]');
   if(au){const id=+au.dataset.au;if(curAu){curAu.pause()}
-    const ap=au.dataset.ap;curAu=new Audio(SU+'media/senn/mp3/imtong/'+(ap?ap+'/'+id+'1.mp3':'subak/'+Math.floor(id/1000)+'/'+id+'.mp3'));const me=curAu;me.play().catch(err=>{if(err&&err.name==='AbortError')return;if(curAu===me)toast('這個詞的音檔播不出來')});return}
+    const ap=au.dataset.ap;curAu=new Audio(SU+'media/senn/mp3/imtong/'+(ap?ap+'/'+id+'1.mp3':'subak/'+Math.floor(id/1000)+'/'+id+'.mp3'));const me=curAu;const src=me.src;me.play().catch(err=>{if(err&&err.name==='AbortError')return;if(curAu!==me)return;const a2=new Audio(src+'?r='+Date.now());curAu=a2;a2.play().catch(e2=>{if(e2&&e2.name==='AbortError')return;if(curAu===a2)toast('這個詞的音檔播不出來')})});return}
   const tg=e.target.closest('[data-tg]');
   if(tg){const row=tg.closest('.mr'),id=row.dataset.id;
     const open=!row.classList.contains('open');
