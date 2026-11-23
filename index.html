@@ -1340,12 +1340,11 @@ function bkBook(root,is,startPage){
   document.addEventListener('fullscreenchange',()=>{document.documentElement.classList.toggle('bk-fs-on',!!document.fullscreenElement);if(document.contains(root))setTimeout(layout,200)});
   let rt;window.addEventListener('resize',()=>{if(!document.contains(root))return;clearTimeout(rt);rt=setTimeout(layout,120)});
   const im=new Image();im.onload=()=>{if(im.naturalWidth&&im.naturalHeight){ratio=im.naturalWidth/im.naturalHeight;layout()}};
-  let uiT;const ui=on=>{clearTimeout(uiT);root.classList.toggle('ui-off',!on)};
+  let uiT=0;const ui=on=>{clearTimeout(uiT);uiT=0;root.classList.toggle('ui-off',!on)};
   const uiHold=()=>root.querySelector('.bk-drawer:not([hidden])')||!document.contains(root);
   document.addEventListener('mousemove',e=>{if(!document.contains(root)||!root.classList.contains('ah'))return;
     const near=e.clientY<72||e.clientY>innerHeight-110;
     if(near)ui(true);else if(!root.classList.contains('ui-off')&&!uiT)uiT=setTimeout(()=>{uiT=0;if(!uiHold())ui(false)},500)});
-  document.addEventListener('mouseleave',()=>{if(root.classList.contains('ah')&&!uiHold())ui(false)});
   const shift=()=>{if(!document.contains(root)){mo.disconnect();return}
     const on=document.body.classList.contains('mini-on')&&innerWidth>=800;let x=0;
     let sc=1;if(on){const w=fb.offsetWidth,bl=stage.getBoundingClientRect().left+fb.offsetLeft,L=96,R=innerWidth-440-50;sc=Math.min(1,Math.max(.5,(R-L)/w));x=bl+w/2-(L+w*sc/2);if(x<0)x=0}
