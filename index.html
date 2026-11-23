@@ -512,8 +512,8 @@ body[data-r^=books]:has(.is-book) .wrap{max-width:1560px}
 .bkb{position:relative;width:calc(var(--pw,300px)*2);height:var(--ph,420px);perspective:var(--pp,2400px);flex:none}
 .bkb.single{width:var(--pw,300px)}
 .fb-p{position:absolute;top:0;width:var(--pw);height:var(--ph);background:#fbf8f3 center/100% 100% no-repeat;box-shadow:0 14px 34px rgba(0,0,0,.28)}
-.fb-l{left:0;border-radius:4px 0 0 4px}.fb-r{left:var(--pw);border-radius:0 4px 4px 0}
-.bkb.single .fb-r{left:0;border-radius:4px}.bkb.single .fb-l{display:none}
+.fb-l{left:0}.fb-r{left:var(--pw)}
+.bkb.single .fb-r{left:0}.bkb.single .fb-l{display:none}
 .fb-p.empty{visibility:hidden}
 .fb-l::after,.fb-r::after{content:"";position:absolute;top:0;bottom:0;width:9%;pointer-events:none}
 .fb-l::after{right:0;background:linear-gradient(90deg,transparent,rgba(0,0,0,.2))}.fb-r::after{left:0;background:linear-gradient(270deg,transparent,rgba(0,0,0,.2))}
@@ -530,7 +530,7 @@ body[data-r^=books]:has(.is-book) .wrap{max-width:1560px}
 .bk-dw{width:min(380px,92vw);height:100%;overflow:auto;background:var(--paper,#fbf8f3);color:var(--ink);padding:18px 20px 40px}
 .bk-dw h3{font-size:17px;color:var(--accent);margin:22px 0 4px}.bk-dw button:not(.bk-x),.bk-dw a{display:block;width:100%;text-align:left;font:inherit;font-size:16px;padding:11px 0;border:0;border-bottom:1px solid var(--line);background:none;color:inherit;cursor:pointer;text-decoration:none}.bk-dw small{color:var(--ink2,#777);margin-left:6px}
 .bk-x{font:inherit;font-size:14px;padding:5px 14px;border-radius:99px;border:1px solid var(--line);background:var(--card,#fff);color:var(--ink);cursor:pointer}
-.bk-zoom{position:fixed;inset:0;z-index:70;background:#111;overflow:auto;display:flex;gap:10px;justify-content:center;align-items:flex-start;padding:16px;cursor:zoom-out}.bk-zoom img{width:min(900px,48%);height:auto;background:#fff;border-radius:4px}
+.bk-zoom{position:fixed;inset:0;z-index:70;background:#111;overflow:auto;display:flex;gap:10px;justify-content:center;align-items:flex-start;padding:16px;cursor:zoom-out}.bk-zoom img{width:min(900px,48%);height:auto;background:#fff}
 @media(max-width:899px){.bk-zoom{display:block}.bk-zoom img{width:100%;margin-bottom:10px}}
 
 .bkb .lf{position:absolute;top:0;width:0;height:var(--ph);transform-style:preserve-3d;z-index:5;pointer-events:none}
