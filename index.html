@@ -630,7 +630,7 @@ function pvHtml(){
 function pHome(){
   const d=D[Math.floor((Date.now()+288e5)/864e5)%D.length];
   S.open.add(d.n);
-  const dy=Math.floor((Date.now()+288e5)/864e5),yv=0,prv=pvHtml(),kp=D.filter(x=>[...x.w].length>=2&&[...x.w].length<=4&&!/[\/（(]/.test(x.w)),kw=[kp[(dy*5)%kp.length],kp[(dy*5+11)%kp.length]];
+  const dy=Math.floor((Date.now()+288e5)/864e5),yv=0,prv=pvHtml(),pv1=[['一枝草，一點露','tsi̍t ki tsháu, tsi̍t tiám lōo'],['食果子，拜樹頭','tsia̍h kué-tsí, pài tshiū-thâu'],['好天著存雨來糧','hó-thinn tio̍h tsûn hōo-lâi liông']][dy%3];
   const L=[...d.w].length,bgw=[...d.w.split('/')[0].replace(/[（(][^）)]*[）)]/g,'')].slice(0,3).join(''),BL=[...bgw].length,bs=BL<=1?470:BL==2?300:210,dm=L<=1?52:L==2?40:L==3?32:26,dd=L<=1?72:L==2?52:L==3?40:32,lg=L>=4,md=L>=2&&L<4;
   const zone=(h,ic,t,x,items)=>`<a class="ent zone" href="${h}"><div class="ic">${ic}</div><h3>${t}</h3>${x?`<p>${x}</p>`:''}<div class="li">${items.map(i=>`<span>${i}</span>`).join('')}</div></a>`;
   return `<section class="hh" style="--bs:${bs}px;--ds:${dm}px;--dsd:${dd}px">
@@ -645,7 +645,7 @@ function pHome(){
    </div>
    <div class="hsec g2 grid g2d">
     <a class="pst a" href="#anime"><div class="pv">${prv}</div><small>Tâi-gí Hì-tâi</small><b>台語戲台</b><span>動畫、電影、戲劇、節目</span></a>
-    <a class="pst b" href="https://weichi2001.github.io/taigi-ktv/?student"><div class="kv"><i class="on">${esc(kw[0].w)}</i><em>${esc(kw[0].r)}</em><i>${esc(kw[1].w)}</i><em>${esc(kw[1].r)}</em></div><small>Tâi-gí Ko-thiann</small><b>台語歌廳</b><span>跟著字幕唱，順便認字</span></a>
+    <a class="pst b" href="https://weichi2001.github.io/taigi-ktv/?student"><div class="kv"><i class="on">${esc(pv1[0])}</i><em>${esc(pv1[1])}</em></div><small>Tâi-gí Ko-thiann</small><b>台語歌廳</b><span>跟著字幕唱，順便認字</span></a>
    </div>
    <div class="hsec"><a class="more" href="#play">還有聽歌、節目的資源 ${SI.link}</a>
     <a class="ent sm" href="#links"><div class="ic">${SI.link}</div><div><h3>其他推薦網站</h3><p>教育部資源、老師的 IG 等等。</p></div></a></div>
