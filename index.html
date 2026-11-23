@@ -164,6 +164,7 @@ body.anime .back{color:#b9ab9b}body.anime .sub{color:#b9ab9b}
 .abtn.gh{background:rgba(255,255,255,.14);color:#f1e9dd;font-weight:500}.abtn.gh.on{background:#f1e9dd;color:#14110f}
 .achips{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 4px}
 .ach{font:inherit;font-size:14px;color:#d8cdbd;background:#241f1b;border:1px solid #3a322c;border-radius:99px;padding:5px 14px;cursor:pointer}
+.achips{align-items:center}.asr{margin-left:auto;display:flex;align-items:center;gap:6px;background:#241f1b;border:1px solid #3a322c;border-radius:99px;padding:0 12px;height:32px;color:#b9ab9b;min-width:150px}.asr svg{width:15px;height:15px;flex:none}.asr input{all:unset;font-size:14px;color:#f1e9dd;width:100%;min-width:0}.asr input::placeholder{color:#8d8073}.asr:focus-within{border-color:#f1e9dd}.asr input:focus,.asr input:focus-visible{outline:none!important;box-shadow:none!important}.asr input::-webkit-search-cancel-button{display:none}@media(max-width:600px){.asr{flex:1 1 100%;margin-left:0}}
 .ach.on{background:#f1e9dd;color:#14110f;border-color:#f1e9dd}
 .rowh{display:flex;align-items:center;gap:8px;margin:22px 0 8px}.rowh h3{margin:0;font-size:19px}.rowh small{color:#9c8e80}
 .rowh .arr{margin-left:auto;display:flex;gap:6px}
@@ -776,7 +777,7 @@ let aniSt={};try{aniSt=JSON.parse(localStorage.getItem('tgani')||'{}')||{}}catch
 let epSt={};try{epSt=JSON.parse(localStorage.getItem('tgep')||'{}')||{}}catch(e){epSt={}}
 const saveEp=()=>{try{localStorage.setItem('tgep',JSON.stringify(epSt))}catch(e){}};
 const saveAni=()=>{try{localStorage.setItem('tgani',JSON.stringify(aniSt))}catch(e){}};
-S.an={src:'all',sheet:null,view:null,ss:null,rev:false};
+S.an={src:'all',sheet:null,view:null,ss:null,rev:false,q:''};
 const IMG='https://twbangga.moe.edu.tw/server/crop/coverImage/';
 // 推薦區大圖：YouTube 縮圖改用最高畫質（沒有就退回一般畫質）
 function heroImg(p){
@@ -852,24 +853,32 @@ const cat=a=>{const t=a.tag||'';
   if(a.yl)return /動畫/.test(t)?'動畫':/戲劇|穿越劇/.test(t)?'戲劇':/紀實/.test(t)?'紀錄片':'節目';
   if(a.yt)return /短片/.test(t)?'短片':/紀錄片/.test(t)?'紀錄片':/電視劇/.test(t)?'戲劇':'電影';
   return '動畫'};
+function aniBody(){
+  const v=ANI.filter(a=>!a.hide),f=S.an.src,q=(S.an.q||'').trim().toLowerCase();
+  const mine=v.filter(a=>aniSt[a.t]);
+  const grid=l=>`<div class="rowx" style="flex-wrap:wrap;overflow:visible;margin-top:14px">${l.map(a=>aniTile(a,ANI.indexOf(a))).join('')}</div>`;
+  if(q){
+    const l=v.filter(a=>(a.t+' '+(a.tag||'')+' '+cat(a)).toLowerCase().includes(q));
+    return l.length?grid(l):'<p class="sub" style="margin-top:18px">找不到「'+esc(S.an.q.trim())+'」。換個字試試看。</p>';
+  }
+  const fil=a=>f==='all'||(f==='mine'?aniSt[a.t]:cat(a)===f);
+  if(f==='all')return aniRow('我的片單',`${SI.heart} 想看　${SI.check} 看過了`,mine)+CATS.map(c=>aniRow(c,'',v.filter(a=>cat(a)===c))).join('');
+  const l=v.filter(fil);
+  return l.length?grid(l):'<p class="sub" style="margin-top:18px">還沒有。打開一部作品，按「想看」就會放進來。</p>';
+}
 function pAnime(){
   const v=ANI.filter(a=>!a.hide),f=S.an.src;
   const fil=a=>f==='all'||(f==='mine'?aniSt[a.t]:cat(a)===f);
   const day=Math.floor(Date.now()/864e5),pool=v.filter(a=>a.pimg).length?v.filter(a=>a.pimg):v,pick=pool[day%pool.length],pi=ANI.indexOf(pick);
   const chip=(k,l)=>`<button class="ach ${f===k?'on':''}" data-act="asrc" data-f="${k}">${l}</button>`;
   const mine=v.filter(a=>aniSt[a.t]);
-  let body='';
-  if(f==='all'){
-    body=aniRow('我的片單',`${SI.heart} 想看　${SI.check} 看過了`,mine)+CATS.map(c=>aniRow(c,'',v.filter(a=>cat(a)===c))).join('');
-  }else{
-    const l=v.filter(fil);body=l.length?`<div class="rowx" style="flex-wrap:wrap;overflow:visible;margin-top:14px">${l.map(a=>aniTile(a,ANI.indexOf(a))).join('')}</div>`:'<p class="sub" style="margin-top:18px">還沒有。打開一部作品，按「想看」就會放進來。</p>';
-  }
+  const body=aniBody();
   return `<a class="back" href="#home">← 街仔路</a><h2 class="hd">台語戲台 <span class="tl" style="font-size:.7em;font-weight:500;opacity:.85">Tâi-gí Hì-tâi</span></h2>
    <div class="hero" style="--h:${hue(pick.t)}">${pick.img||pick.pimg?heroImg(pick):''}<span class="kick">今日推薦</span><h2 class="hd">${esc(pick.t)}</h2>
      <p>${pick.lv?pick.lv+'・':''}${cat(pick)}</p>
      <div class="acts"><button class="abtn" data-act="asheet" data-i="${pi}">看這部</button></div></div>
-   <div class="achips">${chip('all','全部')}${CATS.map(c=>chip(c,c)).join('')}${chip('mine',`我的片單${mine.length?' ('+mine.length+')':''}`)}</div>
-   ${body}${S.an.sheet!==null?aniSheet(ANI[S.an.sheet]):''}${S.an.view?aniView(S.an.view):''}${S.an.mv?mvView(S.an.mv):''}`;
+   <div class="achips">${chip('all','全部')}${CATS.map(c=>chip(c,c)).join('')}${chip('mine',`我的片單${mine.length?' ('+mine.length+')':''}`)}<label class="asr">${SI.search||''}<input id="aq" type="search" placeholder="搜尋作品" value="${esc(S.an.q||'')}" autocomplete="off" enterkeyhint="search"></label></div>
+   <div id="anibody">${body}</div>${S.an.sheet!==null?aniSheet(ANI[S.an.sheet]):''}${S.an.view?aniView(S.an.view):''}${S.an.mv?mvView(S.an.mv):''}`;
 }
 
 function aniView(v){
@@ -969,6 +978,7 @@ let tt;
 function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),2400)}
 const segNow=()=>{const m=/^seg(\d+)$/.exec(cur());return m?+m[1]:0};
 $('#app').addEventListener('input',e=>{
+  if(e.target.id==='aq'){S.an.q=e.target.value;$('#anibody').innerHTML=aniBody();return}
   if(e.target.id==='q'){S.q=e.target.value;S.more=60;$('#body').innerHTML=bodyW700()}
 });
 $('#app').addEventListener('click',e=>{
