@@ -546,6 +546,19 @@ html.bk-fs-on .top,html.bk-fs-on footer{display:none}html.bk-fs-on .bk-rd.is-boo
 body[data-r^="books/"] .top{display:none}
 body[data-r^="books/"] .wrap{padding-top:0;margin-top:0}
 body[data-r^="books/"] .bk-bar{top:0}
+
+/* 冊房：電腦版介面自動隱藏 */
+.bk-rd.ah .bk-bar{position:fixed;top:0;left:0;right:0;z-index:30;padding:10px 40px;border-bottom:0;box-shadow:0 8px 24px rgba(40,25,10,.14);transition:transform .45s cubic-bezier(.45,.05,.2,1),opacity .3s}
+.bk-rd.ah .bk-foot{position:fixed;left:50%;bottom:16px;z-index:30;width:min(560px,86vw);max-width:none;margin:0;padding:9px 20px;border-radius:99px;background:var(--paper,#fbf8f3);box-shadow:0 8px 26px rgba(40,25,10,.2),0 0 0 1px var(--line);transform:translate(-50%,0);transition:transform .45s cubic-bezier(.45,.05,.2,1),opacity .3s}
+.bk-rd.ah.ui-off .bk-bar{transform:translateY(-115%);opacity:0;pointer-events:none}
+.bk-rd.ah.ui-off .bk-foot{transform:translate(-50%,170%);opacity:0;pointer-events:none}
+.bk-rd.ah .bk-stage{height:100vh;min-height:0;padding:0}
+body:has(.bk-rd.ah){overflow:hidden}
+body:has(.bk-rd.ah) footer{display:none}
+body:has(.bk-rd.ah) .wrap{padding-bottom:0}
+.bkb{transition:transform .55s cubic-bezier(.45,.05,.2,1)}
+@media(min-width:800px){.bk-arr.r{transition:right .55s cubic-bezier(.45,.05,.2,1),opacity .2s}body.mini-on .bk-arr.r{right:424px}}
+@media(prefers-reduced-motion:reduce){.bkb,.bk-arr.r,.bk-rd.ah .bk-bar,.bk-rd.ah .bk-foot{transition:none!important}}
 </style>
 </head>
 <body>
@@ -1267,8 +1280,10 @@ function bkBook(root,is,startPage){
   }
   function layout(keepPage){
     const pageNow=wide?(cur?2*cur-1:0):cur;
-    const W=stage.clientWidth,H=Math.max(320,window.innerHeight-(stage.getBoundingClientRect().top+window.scrollY>0?stage.getBoundingClientRect().top+window.scrollY:200)-86);
+    const W=stage.clientWidth;let H=Math.max(320,window.innerHeight-(stage.getBoundingClientRect().top+window.scrollY>0?stage.getBoundingClientRect().top+window.scrollY:200)-86);
     wide=window.innerWidth>=900;
+    const ah=wide&&matchMedia('(hover:hover)').matches;root.classList.toggle('ah',ah);
+    if(ah)H=window.innerHeight-28;
     const h=wide?Math.min(H,(W-120)/2/ratio):Math.min(H,(W-8)/ratio),w=h*ratio;
     fb.style.setProperty('--pw',w+'px');fb.style.setProperty('--ph',h+'px');fb.classList.toggle('single',!wide);
     cur=wide?Math.ceil(pageNow/2):pageNow;if(cur>maxC())cur=maxC();
@@ -1325,7 +1340,19 @@ function bkBook(root,is,startPage){
   document.addEventListener('fullscreenchange',()=>{document.documentElement.classList.toggle('bk-fs-on',!!document.fullscreenElement);if(document.contains(root))setTimeout(layout,200)});
   let rt;window.addEventListener('resize',()=>{if(!document.contains(root))return;clearTimeout(rt);rt=setTimeout(layout,120)});
   const im=new Image();im.onload=()=>{if(im.naturalWidth&&im.naturalHeight){ratio=im.naturalWidth/im.naturalHeight;layout()}};
+  let uiT;const ui=on=>{clearTimeout(uiT);root.classList.toggle('ui-off',!on)};
+  const uiHold=()=>root.querySelector('.bk-drawer:not([hidden])')||!document.contains(root);
+  document.addEventListener('mousemove',e=>{if(!document.contains(root)||!root.classList.contains('ah'))return;
+    const near=e.clientY<72||e.clientY>innerHeight-110;
+    if(near)ui(true);else if(!root.classList.contains('ui-off')&&!uiT)uiT=setTimeout(()=>{uiT=0;if(!uiHold())ui(false)},500)});
+  document.addEventListener('mouseleave',()=>{if(root.classList.contains('ah')&&!uiHold())ui(false)});
+  const shift=()=>{if(!document.contains(root)){mo.disconnect();return}
+    const on=document.body.classList.contains('mini-on')&&innerWidth>=800;let x=0;
+    let sc=1;if(on){const w=fb.offsetWidth,bl=stage.getBoundingClientRect().left+fb.offsetLeft,L=96,R=innerWidth-440-50;sc=Math.min(1,Math.max(.5,(R-L)/w));x=bl+w/2-(L+w*sc/2);if(x<0)x=0}
+    fb.style.transform=on?`translateX(${-x}px) scale(${sc})`:''};
+  const mo=new MutationObserver(shift);mo.observe(document.body,{attributes:true,attributeFilter:['class']});
   layout();
+  if(root.classList.contains('ah')){ui(true);uiT=setTimeout(()=>{uiT=0;if(!uiHold())ui(false)},2200)}
   if(startPage>0){cur=wide?Math.ceil(startPage/2):startPage;show()}
   im.src=P[0]?P[0].s:'';
   if(!N){root.querySelector('.bk-stage').innerHTML='<p class="sub" style="padding:40px">這一期沒有電子書版面，請改看文字版。</p>'}
