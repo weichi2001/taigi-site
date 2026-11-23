@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f4e8d6">
+<script>(function(){try{var t=localStorage.getItem('tgtheme');if(t!=='dark'&&t!=='light')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.dataset.theme=t;document.querySelector('meta[name=theme-color]').content=t==='dark'?'#14110f':'#f4e8d6'}catch(e){}})()</script>
 <title>台語自學站（原型）</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -302,6 +304,35 @@ body.mini-on:has(.vw) #mini{height:56vh}
 @media(max-width:620px){.ab-hero{grid-template-columns:1fr;gap:20px;padding:22px 18px;text-align:center}.ab-ph{width:min(70%,260px);margin:0 auto}.ab-chips{justify-content:center}.ab-bio{text-align:left}}
 .grid+.grid{margin-top:12px}.ent.zone{padding:20px 18px}.ent .li{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}.ent .li span{font-size:12.5px;padding:2px 10px;border-radius:99px;background:rgba(255,255,255,.62);border:1px solid rgba(255,255,255,.85);color:var(--ink)}
 .ent.sm{display:flex;gap:14px;align-items:center;padding:14px 18px}.ent.sm .ic{font-size:28px}.ent.sm h3{margin:0}
+
+/* ===== 深色模式 ===== */
+html[data-theme=dark]{--ink:#f1e9dd;--ink2:#b9ab9b;--paper:#14110f;--card:rgba(255,255,255,.06);--line:rgba(255,255,255,.13);--okbg:rgba(110,175,80,.2);--badbg:rgba(226,68,3,.2);--ok:#8fcf72;--gl:linear-gradient(135deg,rgba(255,255,255,.095),rgba(255,255,255,.035));--gsh:0 8px 28px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.1),inset 0 -1px 0 rgba(255,255,255,.03);color-scheme:dark;background:#0d0b09}
+html[data-theme=dark] body::before{background:radial-gradient(70% 42% at 50% 0%,rgba(255,140,90,.11) 0,transparent 70%),linear-gradient(180deg,#1b1612 0%,#0d0b09 100%)}
+html[data-theme=dark] .top{background:rgba(22,18,15,.6);border-bottom-color:rgba(255,255,255,.1);box-shadow:0 4px 24px rgba(0,0,0,.45)}
+html[data-theme=dark] .card,html[data-theme=dark] .res,html[data-theme=dark] .seg,html[data-theme=dark] .ent,html[data-theme=dark] .ime,html[data-theme=dark] .step,html[data-theme=dark] .fc,html[data-theme=dark] .tool,html[data-theme=dark] .fb,html[data-theme=dark] .btn:not(.pri):not(.ok):not(.bad){border-color:rgba(255,255,255,.13)}
+html[data-theme=dark] .ent:hover,html[data-theme=dark] .res:hover,html[data-theme=dark] .seg:hover{box-shadow:0 16px 40px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.16)}
+html[data-theme=dark] .feat{background:#2a231e}
+html[data-theme=dark] .chip,html[data-theme=dark] .chip.tag,html[data-theme=dark] .chip.bk{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.14)}
+html[data-theme=dark] .chip.x{background:var(--badbg);border-color:rgba(226,68,3,.4)}html[data-theme=dark] .chip.g{background:var(--okbg);border-color:rgba(110,175,80,.4)}
+html[data-theme=dark] input[type=search]{background:rgba(255,255,255,.08)}
+html[data-theme=dark] .bar{background:rgba(255,255,255,.13)}
+html[data-theme=dark] #toast{background:#3a322c}
+html[data-theme=dark] .tip{background:rgba(226,68,3,.22)!important}
+html[data-theme=dark] .aic{box-shadow:0 6px 16px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.3)}
+html[data-theme=dark] .btn.ok{border-color:rgba(110,175,80,.5)}html[data-theme=dark] .btn.bad{border-color:rgba(226,68,3,.5)}
+html[data-theme=dark] .ab-chips span,html[data-theme=dark] .ent .li span{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.14);box-shadow:none}
+html[data-theme=dark] .ab-ph{border-color:rgba(255,255,255,.16)}html[data-theme=dark] .ab-bio{border-top-color:rgba(255,255,255,.12)}
+html[data-theme=dark] .ab-sec::after{background:linear-gradient(90deg,rgba(255,255,255,.22),transparent)}
+html[data-theme=dark] #mini{color:var(--ink);background:linear-gradient(160deg,rgba(44,36,31,.82),rgba(22,18,15,.76));border-color:rgba(255,255,255,.14);box-shadow:0 -12px 44px rgba(0,0,0,.55),inset 0 1.5px 0 rgba(255,255,255,.14)}
+html[data-theme=dark] #mini .mtt b{color:var(--ink)}
+html[data-theme=dark] #mini .msb{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.14);box-shadow:none;color:var(--ink2)}html[data-theme=dark] #mini .msb:focus-within{background:rgba(255,255,255,.13)}
+html[data-theme=dark] #mini .msb input,html[data-theme=dark] body.anime #mini .msb input{color:var(--ink)}
+html[data-theme=dark] #mini .mx-close{background:rgba(255,255,255,.1);box-shadow:none;color:var(--ink)}
+html[data-theme=dark] .mr,html[data-theme=dark] body.anime #mini .mr{color:var(--ink);background:linear-gradient(135deg,rgba(255,255,255,.09),rgba(255,255,255,.04));border-color:rgba(255,255,255,.12);box-shadow:0 6px 20px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.08)}
+html[data-theme=dark] .mr .ex{background:rgba(226,68,3,.13);border-left-color:#a3502c}html[data-theme=dark] .mr .pos{background:rgba(255,255,255,.1)}
+html[data-theme=dark] .mr .ml,html[data-theme=dark] body.anime #mini .btn:not(.pri),html[data-theme=dark] #mini .btn{background:rgba(255,255,255,.09);color:var(--ink);border-color:rgba(255,255,255,.14)}
+html[data-theme=dark] .mr .macts{border-top-color:rgba(255,255,255,.14)}
+html[data-theme=dark] .mr .r{color:#ff9a6b}
 </style>
 </head>
 <body>
@@ -315,6 +346,7 @@ body.mini-on:has(.vw) #mini{height:56vh}
     <a class="tool" href="#apps">⌨️ 輸入法與軟體</a>
     <a class="tool" href="#links">🔗 推薦網站</a>
   </div>
+  <button class="tool" id="themeBtn" type="button" aria-label="切換深色模式" title="切換深色／淺色" style="font:inherit;font-size:15px;cursor:pointer;flex:none"></button>
 </div></div>
 <main class="wrap" id="app"></main>
 <div id="toast"></div>
@@ -866,6 +898,15 @@ function aniSheet(a){
   </div></div>`;
 }
 
+// ---- 深色模式 ----
+(function(){
+  const root=document.documentElement,btn=document.getElementById('themeBtn'),mt=document.querySelector('meta[name=theme-color]');
+  const paint=()=>{const d=root.dataset.theme==='dark';btn.textContent=d?'☀️':'🌙';btn.title=d?'切換成淺色':'切換成深色';btn.setAttribute('aria-label',btn.title);if(mt)mt.content=d?'#14110f':'#f4e8d6'};
+  const set=(t,save)=>{root.dataset.theme=t;if(save){try{localStorage.setItem('tgtheme',t)}catch(e){}}paint()};
+  btn.addEventListener('click',()=>set(root.dataset.theme==='dark'?'light':'dark',true));
+  try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',e=>{let s=null;try{s=localStorage.getItem('tgtheme')}catch(x){}if(!s)set(e.matches?'dark':'light',false)})}catch(e){}
+  paint();
+})();
 // ---- 路由 ----
 const cur=()=>location.hash.slice(1)||'home';
 function enter(r){
