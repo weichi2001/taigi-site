@@ -433,10 +433,9 @@ function detail(o){
   return `<div class="dt">
    ${o.v.length?`<p><b>又音</b><span class="tl">${o.v.map(esc).join('　／　')}</span></p>`:''}
    ${o.e.length?`<p><b>用例</b>${o.e.map(x=>`<span class="chip">${esc(x)}</span>`).join('')}</p>`:''}
-   ${o.x.length?`<p><b>檢定不可用的寫法</b>${o.x.map(x=>`<span class="chip x">✗ ${esc(x)}</span>`).join('')}<br><b>推薦用字</b><span class="chip g">✓ ${esc(o.w)}</span></p>`:''}
-   ${o.b.length?`<p><b>全華課本</b>${o.b.map(b=>`<span class="chip bk">第${b}冊</span>`).join('')}</p>`:''}
+   ${o.x.length?`<p><b>檢定不可用的寫法</b>${o.x.map(x=>`<span class="chip x">✗ ${esc(x)}</span>`).join('')}</p>`:''}
    <div class="acts">
-    <a class="btn" href="${dictUrl(o.w)}" target="_blank" rel="noopener" data-act="dict">🔊 查辭典・聽發音</a>
+    <button class="btn" data-act="say" data-n="${o.n}">🔊 聽發音</button>
     <button class="btn ok ${st==1?'on':''}" data-act="mark" data-n="${o.n}" data-v="${st==1?0:1}">✓ 會了</button>
     <button class="btn bad ${st==2?'on':''}" data-act="mark" data-n="${o.n}" data-v="${st==2?0:2}">還不熟</button>
    </div></div>`;
@@ -471,7 +470,7 @@ function flipHtml(){
    ${f.side?`<div class="acts" style="justify-content:center">
       <button class="btn bad big" data-act="fmark" data-v="2">還不熟</button>
       <button class="btn ok big" data-act="fmark" data-v="1">✓ 會了</button></div>
-     <p class="note" style="text-align:center"><a href="${dictUrl(o.w)}" target="_blank" rel="noopener" data-act="dict">🔊 查辭典・聽發音</a></p>`
+     <p class="note" style="text-align:center"><button class="btn" data-act="say" data-n="${o.n}">🔊 聽發音</button></p>`
      :`<div class="acts" style="justify-content:center"><button class="btn pri big" data-act="flip">翻面</button></div>`}`;
 }
 
@@ -515,7 +514,7 @@ function pHome(){
     <a class="ent sm" href="#apps"><div class="ic">⌨️</div><div><h3>輸入法與軟體</h3><p>電腦、手機怎麼打台語，還有辭典 App。</p></div></a>
     <a class="ent sm" href="#links"><div class="ic">🔗</div><div><h3>其他推薦網站</h3><p>教育部資源、老師的 IG 等等。</p></div></a>
    </div>
-   <h3 style="margin-top:22px">今日一字</h3>${row(d)}`;
+   <h3 style="margin-top:22px">每日一字</h3>${row(d)}`;
 }
 function pAbout(){
   const it=(ic,t,d,h,ex)=>`<a class="ab-it card" href="${h}"${ex||''}><span class="ic">${ic}</span><span><b>${t}</b><small>${d}</small></span></a>`;
@@ -949,6 +948,7 @@ $('#app').addEventListener('click',e=>{
   const el=e.target.closest('[data-act]');if(!el)return;
   const a=el.dataset.act;
   if(a==='dict')return; // 由全站監聽處理
+  if(a==='say'){e.stopPropagation();sayWord(+el.dataset.n);return}
   if(a==='asheet'){S.an.sheet=+el.dataset.i;S.an.ss=null;S.an.rev=false;render(true);return}
   if(a==='aage'){if(el.dataset.v==='1')okAge[ANI[S.an.sheet].t]=1;else S.an.sheet=null;render(true);return}
   if(a==='arev'){S.an.rev=!S.an.rev;render(true);return}
@@ -1079,10 +1079,27 @@ function miniDraw(){
     +`<div class="acts"><a class="btn" href="${dictUrl(raw)}" target="_blank" rel="noopener" data-act="dict">到教育部辭典查「${esc(raw)}」</a></div>`;
 }
 let curAu=null;
+function playAu(id,ap){
+  if(curAu){curAu.pause()}
+  curAu=new Audio(SU+'media/senn/mp3/imtong/'+(ap?ap+'/'+id+'1.mp3':'subak/'+Math.floor(id/1000)+'/'+id+'.mp3'));const me=curAu;const src=me.src;
+  me.play().catch(err=>{if(err&&err.name==='AbortError')return;if(curAu!==me)return;const a2=new Audio(src+'?r='+Date.now());curAu=a2;a2.play().catch(e2=>{if(e2&&e2.name==='AbortError')return;if(curAu===a2)toast('這個詞的音檔播不出來')})});
+}
+// 700 字單字：用站內辭典資料找到對應詞目，直接播音檔
+function sayWord(n){
+  const o=D.find(x=>x.n===n);if(!o)return;
+  const go=()=>{
+    const c=DX.filter(e=>e.hc===o.w);
+    const e=c.find(e=>norm(clean(e.r))===norm(o.r)&&e.a)||c.find(e=>e.a);
+    if(!e){toast('這個字沒有音檔');return}
+    playAu(e.id,e.ap);
+  };
+  if(DXS==='ok'){go();return}
+  toast('載入發音中…');dxLoad();
+  let t=0;const iv=setInterval(()=>{t++;if(DXS==='ok'){clearInterval(iv);go()}else if(DXS==='err'||t>60){clearInterval(iv);toast('發音載入失敗，請稍後再試')}},150);
+}
 mb.addEventListener('click',e=>{
   const au=e.target.closest('[data-au]');
-  if(au){const id=+au.dataset.au;if(curAu){curAu.pause()}
-    const ap=au.dataset.ap;curAu=new Audio(SU+'media/senn/mp3/imtong/'+(ap?ap+'/'+id+'1.mp3':'subak/'+Math.floor(id/1000)+'/'+id+'.mp3'));const me=curAu;const src=me.src;me.play().catch(err=>{if(err&&err.name==='AbortError')return;if(curAu!==me)return;const a2=new Audio(src+'?r='+Date.now());curAu=a2;a2.play().catch(e2=>{if(e2&&e2.name==='AbortError')return;if(curAu===a2)toast('這個詞的音檔播不出來')})});return}
+  if(au){playAu(+au.dataset.au,au.dataset.ap);return}
   const tg=e.target.closest('[data-tg]');
   if(tg){const row=tg.closest('.mr'),id=row.dataset.id;
     const open=!row.classList.contains('open');
