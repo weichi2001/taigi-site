@@ -23,7 +23,7 @@ button,input,select,textarea{font-family:inherit}
 .hd{font-family:Huninn,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif}
 .top{position:sticky;top:0;z-index:5;background:rgba(247,240,226,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
 .top .in{max-width:760px;margin:0 auto;padding:8px 16px;display:flex;align-items:center;gap:10px;flex-wrap:nowrap}
-.logo{font-weight:700;font-size:17px;text-decoration:none;margin-right:auto;white-space:nowrap;flex:none}
+.logo{font-weight:700;font-size:26px;letter-spacing:.04em;text-decoration:none;margin-right:auto;white-space:nowrap;flex:none}
 .logo b{color:var(--accent)}
 .tools{display:flex;gap:6px;flex-wrap:nowrap;overflow:visible;margin-left:auto}
 .tools::-webkit-scrollbar{display:none}
@@ -520,13 +520,12 @@ function quizHtml(){
 function pHome(){
   const d=D[Math.floor((Date.now()+288e5)/864e5)%D.length];
   S.open.add(d.n);
-  const zone=(h,ic,t,d,items)=>`<a class="ent zone" href="${h}"><div class="ic">${ic}</div><h3>${t}</h3><p>${d}</p><div class="li">${items.map(x=>`<span>${x}</span>`).join('')}</div></a>`;
+  const zone=(h,ic,t,d,items)=>`<a class="ent zone" href="${h}"><div class="ic">${ic}</div><h3>${t}</h3>${d?`<p>${d}</p>`:''}<div class="li">${items.map(x=>`<span>${x}</span>`).join('')}</div></a>`;
   return `<h1 class="hd">聽、說、讀、寫，<br>一個地方找得到</h1>
-   <p class="sub">把學台語會用到的資源整理在這裡，點一下就能開始。</p>
    <div class="grid g3">
-    ${zone('#start',SI.sprout,'系統性學習','第一次學？照順序，一步一步來。',['台羅拼音','700 字自學'])}
-    ${zone('#learn',SI.target,'練習資源','學了就練，把會的變熟。',['挑錯字挑戰','練台羅','寫字練習','複習'])}
-    ${zone('#play',SI.phones,'娛樂學習','不用想著在學，玩著玩著就會了。',[SI.screen+' 台語戲台',SI.mic+' 台語歌廳','聽歌','節目'])}
+    ${zone('#start',SI.sprout,'系統性學習','',['台羅拼音','700 字自學'])}
+    ${zone('#learn',SI.target,'練習資源','',['挑錯字挑戰','練台羅','寫字練習','複習'])}
+    ${zone('#play',SI.phones,'娛樂學習','',[SI.screen+' 台語戲台',SI.mic+' 台語歌廳','聽歌','節目'])}
    </div>
    <div class="grid g2d">
     <a class="ent sm" href="#apps"><div class="ic">${SI.kbd}</div><div><h3>輸入法與軟體</h3><p>電腦、手機怎麼打台語，還有辭典 App。</p></div></a>
@@ -574,27 +573,26 @@ function pAbout(){
   <a class="ab-btn" href="https://www.instagram.com/taigi_lausu/" target="_blank" rel="noopener">${SI.cam}<span>@taigi_lausu</span></a>`;
 }
 function pStart(){
-  return `<a class="back" href="#home">← 首頁</a><h2 class="hd">系統性學習</h2><p class="sub">第一次學，照這個順序，一步一步來。</p>
+  return `<a class="back" href="#home">← 首頁</a><h2 class="hd">系統性學習</h2>
    <div class="steps">
-    <div class="step"><h3>認識台羅拼音</h3><p class="sub">先會看拼音，後面每個字都用得到。</p>
+    <div class="step"><h3>認識台羅拼音</h3>
       ${resCard({t:'教育部臺羅網站',d:'教育部的台語羅馬字資訊。',tags:['讀','寫'],time:'查詢',href:'https://tailo.moe.edu.tw/'})}
       ${resCard(RES.find(r=>r.t==='練台羅'))}
       <div class="dash">之後放：老師的台羅入門教材</div></div>
-    <div class="step"><h3>學 700 字</h3><p class="sub">日常最常用的台語字，不用一次學完，一段一段來。學完一段，可以到「練習資源」挑錯字。</p>
+    <div class="step"><h3>學 700 字</h3><p class="sub">每段 35 字，學完一段可以到「練習資源」挑錯字。</p>
       ${resCard(RES.find(r=>r.t==='700 字自學'))}</div>
-    <div class="step"><h3>聽、唱、用出來</h3><p class="sub">學了就要用。</p>
+    <div class="step"><h3>聽、唱、用出來</h3>
       <a class="res" href="#play"><h3>娛樂學習</h3><p>看動畫、唱歌、聽節目，把學到的用在真的台語裡。</p></a>
       <a class="res" href="#apps"><h3>輸入法與軟體</h3><p>裝好工具，隨時查字、打台語。</p></a></div>
    </div>`;
 }
 function pLearn(){
   return `<a class="back" href="#home">← 首頁</a><h2 class="hd">練習資源</h2>
-   <p class="sub">學了要練。語言要先輸入、再輸出：先<b>聽</b>與<b>讀</b>，再<b>說</b>與<b>寫</b>。</p>
    ${RES.filter(r=>r.c==='p').map(resCard).join('')}
    <a class="res" href="#review"><h3>700 字複習</h3><p>把標成「不熟」的字再翻一次。</p><div class="meta"><span class="chip tag">讀</span> 隨時</div></a>`;
 }
 function pPlay(){
-  return `<a class="back" href="#home">← 首頁</a><h2 class="hd">娛樂學習</h2><p class="sub">不用想著在學，玩著玩著就學會了。</p>
+  return `<a class="back" href="#home">← 首頁</a><h2 class="hd">娛樂學習</h2>
    <div class="feats">
    <a class="feat" href="#anime" style="background:#241f1b"><div class="ic">${SI.screen}</div><div><h3>台語戲台 <span class="tl" style="font-weight:500;font-size:.85em;opacity:.85">Tâi-gí Hì-tâi</span></h3><p>台語動畫、電影、節目，邊看邊練聽力。</p></div></a>
    <a class="feat" href="https://weichi2001.github.io/taigi-ktv/?student"><div class="ic">${SI.mic}</div><div><h3>台語歌廳 <span class="tl" style="font-weight:500;font-size:.85em;opacity:.85">Tâi-gí Kua-thiann</span></h3><p>跟著字幕唱台語歌，歌詞都是正字，點字還能查辭典。</p></div></a>
@@ -603,7 +601,7 @@ function pPlay(){
    ${RES.filter(r=>r.c==='e'&&!/歌廳/.test(r.t)).map(resCard).join('')}`;
 }
 function pLinks(){
-  return `<a class="back" href="#home">← 首頁</a><h2 class="hd">其他推薦網站</h2><p class="sub">老師覺得值得逛的資源。</p>
+  return `<a class="back" href="#home">← 首頁</a><h2 class="hd">其他推薦網站</h2>
    ${RES.filter(r=>r.c==='o').map(resCard).join('')}`;
 }
 const IME={
