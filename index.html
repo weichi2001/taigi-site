@@ -278,14 +278,16 @@ body.mini-on:has(.vw) #mini{height:56vh}
 @media(prefers-reduced-motion:reduce){.mr .sx{transition:none}}
 
 /* ---- 關於 ---- */
-.ab-hero{display:flex;gap:22px;align-items:center;padding:26px 26px;border-radius:26px;position:relative;overflow:hidden}
-.ab-hero::before{content:'';position:absolute;right:-60px;top:-70px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(255,150,90,.28),transparent 70%);pointer-events:none}
-.ab-ph{flex:none;width:128px;height:128px;border-radius:50%;padding:4px;background:linear-gradient(145deg,#fff,#f3c9a6 60%,#e8956b);box-shadow:0 10px 28px rgba(150,95,50,.3)}
-.ab-ph img{display:block;width:100%;height:100%;border-radius:50%;object-fit:cover;border:3px solid #fff8ee}
-.ab-hero h2{margin:0;font-size:30px;line-height:1.2;letter-spacing:.04em}
-.ab-role{margin:6px 0 10px;color:var(--ink2);font-size:15px}
+.ab-hero{display:grid;grid-template-columns:250px 1fr;gap:30px;align-items:center;padding:26px;border-radius:28px;position:relative;overflow:hidden}
+.ab-hero::before{content:'';position:absolute;right:-80px;top:-90px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(255,150,90,.26),transparent 70%);pointer-events:none}
+.ab-ph{position:relative;padding:7px;border-radius:26px;background:linear-gradient(150deg,#fff,#f5d3b6 55%,#e8956b);box-shadow:0 16px 38px rgba(150,95,50,.32)}
+.ab-ph img{display:block;width:100%;height:auto;border-radius:20px;border:2px solid #fff8ee}
+.ab-hero h2{margin:0;font-size:32px;line-height:1.2;letter-spacing:.05em}
+.ab-role{margin:8px 0 12px;color:var(--ink2);font-size:15.5px}
 .ab-chips{display:flex;flex-wrap:wrap;gap:6px}
 .ab-chips span{font-size:12.5px;padding:3px 11px;border-radius:99px;background:rgba(255,255,255,.65);border:1px solid rgba(255,255,255,.85);color:var(--ink);box-shadow:inset 0 1px 0 #fff}
+.ab-bio{margin-top:18px;padding-top:16px;border-top:1px solid rgba(97,80,69,.16)}
+.ab-bio .ab-p:last-child{margin-bottom:0}
 .ab-sec{margin:34px 0 12px;display:flex;align-items:center;gap:12px;font-size:18px}
 .ab-sec::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,rgba(97,80,69,.28),transparent)}
 .ab-p{margin:0 0 10px;line-height:1.95;font-size:15.5px}
@@ -297,7 +299,7 @@ body.mini-on:has(.vw) #mini{height:56vh}
 .ab-src{margin:0;padding:0;list-style:none;font-size:14px;line-height:1.9;color:var(--ink2)}
 .ab-src li{padding-left:18px;position:relative}.ab-src li::before{content:'';position:absolute;left:4px;top:.85em;width:6px;height:6px;border-radius:50%;background:#e8956b}
 .ab-btn{display:inline-flex;align-items:center;gap:8px;margin-top:6px;padding:11px 20px;border-radius:99px;text-decoration:none;font-size:15px;color:#fff;background:linear-gradient(135deg,#7a675a,#4f4036);box-shadow:0 8px 20px rgba(79,64,54,.28),inset 0 1px 0 rgba(255,255,255,.3)}
-@media(max-width:520px){.ab-hero{flex-direction:column;text-align:center;padding:24px 18px}.ab-chips{justify-content:center}}
+@media(max-width:620px){.ab-hero{grid-template-columns:1fr;gap:20px;padding:22px 18px;text-align:center}.ab-ph{width:min(70%,260px);margin:0 auto}.ab-chips{justify-content:center}.ab-bio{text-align:left}}
 </style>
 </head>
 <body>
@@ -483,17 +485,17 @@ function pAbout(){
   const it=(ic,t,d,h,ex)=>`<a class="ab-it card" href="${h}"${ex||''}><span class="ic">${ic}</span><span><b>${t}</b><small>${d}</small></span></a>`;
   return `<a class="back" href="#home">← 首頁</a>
   <section class="ab-hero card">
-    <div class="ab-ph"><img src="about-me.jpg" alt="陳威錡老師" width="128" height="128"></div>
+    <div class="ab-ph"><img src="about-me.jpg" alt="陳威錡老師"></div>
     <div>
       <h2 class="hd">陳威錡</h2>
       <p class="ab-role">光明國中・本土語文（閩南語）老師</p>
       <div class="ab-chips"><span>師大台灣語文學系畢業</span><span>研究台灣文學</span><span>台語中高級認證</span></div>
+      <div class="ab-bio">
+        <p class="ab-p">我在國中教台語，也在研究所裡讀台灣文學。教過學生，也教過日本學員和外籍研究員，發現不管年紀、不管母語是什麼，大家學台語卡住的地方其實差不多：不知道從哪裡開始、字不知道怎麼寫、聽得懂但開不了口。</p>
+        <p class="ab-p">所以我想把這些年用得上的資源和自己做的小工具放在同一個地方。</p>
+      </div>
     </div>
   </section>
-
-  <h3 class="ab-sec hd">關於老師</h3>
-  <p class="ab-p">我在國中教台語，也在研究所裡讀台灣文學。教過學生，也教過日本學員和外籍研究員，發現不管年紀、不管母語是什麼，大家學台語卡住的地方其實差不多：不知道從哪裡開始、字不知道怎麼寫、聽得懂但開不了口。</p>
-  <p class="ab-p">所以我想把這些年用得上的資源和自己做的小工具放在同一個地方。</p>
 
   <h3 class="ab-sec hd">這個網站</h3>
   <p class="ab-p">台語自學站是給學生自己練習用的。聽、說、讀、寫的資源都整理在這裡，點一下就能開始，不用到處找。進度和測驗紀錄只存在你自己的瀏覽器裡，不用註冊，也不會被收集。</p>
