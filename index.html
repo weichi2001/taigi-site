@@ -173,7 +173,8 @@ body.anime .back{color:#b9ab9b}body.anime .sub{color:#b9ab9b}
 .sheet .x{float:right;background:0;border:0;color:#b9ab9b;font-size:22px;cursor:pointer}
 .vw{z-index:30;align-items:center}.vbox{background:#1f1a17;width:min(1000px,96vw);border-radius:14px;overflow:hidden;color:#f1e9dd}
 .vh{display:flex;align-items:center;gap:10px;padding:10px 14px}.vh b{margin-right:auto}.vh span{font-size:12px;color:#b9ab9b}.vh .x{float:none}
-.vbox iframe{width:100%;height:72vh;border:0;background:#000;display:block}.vbox .tip{padding:8px 14px 12px;margin:0;font-size:13px;color:#b9ab9b}
+.vbox iframe,.vbox video{width:100%;height:72vh;border:0;background:#000;display:block}
+.mvbar{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:0 14px 10px}.mvnav{margin-left:auto;display:flex;gap:6px}.mvbar .ach[disabled]{opacity:.35;pointer-events:none}.mvload{height:40vh;display:grid;place-items:center;color:#b9ab9b;background:#000}.vbox .tip{padding:8px 14px 12px;margin:0;font-size:13px;color:#b9ab9b}
 
 .pt{width:220px!important;aspect-ratio:16/10!important}
 @media(min-width:700px){.pt{width:260px!important}}
@@ -252,9 +253,9 @@ body.anime #mini{background:linear-gradient(160deg,rgba(255,255,255,.8),rgba(250
 #toast{z-index:60}
 /* 看影片時開小辭典：影片縮小留在上方，辭典在下面，兩邊都能操作 */
 body.mini-on:has(.vw) .vw{align-items:flex-start;padding-top:8px}
-body.mini-on:has(.vw) .vbox iframe{height:30vh}
+body.mini-on:has(.vw) .vbox iframe,body.mini-on:has(.vw) .vbox video{height:30vh}
 body.mini-on:has(.vw) #mini{height:56vh}
-@media(min-width:800px){body.mini-on:has(.vw) .vw{align-items:center;padding-top:0}body.mini-on:has(.vw) .vbox{margin-right:420px}body.mini-on:has(.vw) .vbox iframe{height:72vh}body.mini-on:has(.vw) #mini{height:min(680px,84vh)}}
+@media(min-width:800px){body.mini-on:has(.vw) .vw{align-items:center;padding-top:0}body.mini-on:has(.vw) .vbox{margin-right:420px}body.mini-on:has(.vw) .vbox iframe,body.mini-on:has(.vw) .vbox video{height:72vh}body.mini-on:has(.vw) #mini{height:min(680px,84vh)}}
 #fab{transition:transform .4s cubic-bezier(.34,1.56,.64,1),opacity .25s,box-shadow .2s}
 #fab:hover{transform:scale(1.07)}#fab:active{transform:scale(.94)}
 #fab.gone{transform:scale(.3) rotate(-120deg);opacity:0;pointer-events:none}
@@ -730,8 +731,53 @@ fetch('pts.json',{cache:'no-cache'}).then(r=>r.ok?r.json():Promise.reject()).the
   // 沒有明確「台語版」標示的作品（u:1）預設不顯示；老師確認過有台語配音的，把 pid 加進 CONF 就會出現
   const CONF=new Set([]);
   d.items.filter(o=>!o.u||CONF.has(o.pid)).forEach(o=>ANI.push({t:o.t.replace(/（雙語版）$/,''),pid:o.pid,sid:o.sid,ss:o.ss,pimg:o.img,u:o.u,s:['pts']}));
-  S.an.sheet=null;if(location.hash==='#anime')render(true);
+  if(!S.an.mv&&!S.an.view){S.an.sheet=null;if(location.hash==='#anime')render(true)}
 }).catch(()=>{});
+// 教育部臺灣台語動畫網：片單、集數與影片檔都從它公開的 API 即時讀取（影片直接播放它的檔案，不複製、不存放）
+const MAPI='https://twbangga.moe.edu.tw/server/web/';
+const MV=[['videoTaigi','台語漢字字幕'],['video','華語字幕'],['videoRome','台語羅馬字字幕']];
+let MOEEP={},MOEVID={},mvPref='';try{mvPref=localStorage.getItem('tgmv')||''}catch(e){}
+fetch(MAPI+'category').then(r=>r.ok?r.json():Promise.reject()).then(cs=>Promise.all(cs.map(c=>fetch(MAPI+'animation/'+c.id).then(r=>r.json()).catch(()=>null)))).then(all=>{
+  const live=all.filter(a=>a&&a.content&&a.content.length).sort((x,y)=>x.sort-y.sort);
+  if(live.length<3)return;
+  for(let i=ANI.length-1;i>=0;i--)if(ANI[i].s&&ANI[i].s.includes('moe'))ANI.splice(i,1);
+  live.forEach(a=>{
+    const m=/（([^）]*級)）\s*$/.exec(a.title),lv=m?m[1]:'',eps=a.content.filter(e=>e.isPublish!==false).sort((x,y)=>x.sort-y.sort);
+    MOEEP[a.id]=eps;
+    ANI.push({t:a.title.replace(/（[^）]*級）\s*$/,'').trim(),id:a.id,mid:a.id,img:a.coverimage&&a.coverimage.fileId,lv,sub:(lv?lv+'・':'')+eps.length+' 集',s:['moe'],free:a.areaLimit?0:1});
+  });
+  if(location.hash==='#anime'&&!S.an.mv&&!S.an.view){S.an.sheet=null;render(true)}
+}).catch(()=>{});
+const moeVid=id=>MOEVID[id]?Promise.resolve(MOEVID[id]):fetch(MAPI+'animation/video/'+id).then(r=>r.json()).then(j=>MOEVID[id]=j);
+function aniMoeEps(a){
+  const L=MOEEP[a.mid];if(!L||!L.length)return '';
+  const rec=epSt[a.mid]||{w:[]},li=L.find(e=>e.contentId===rec.l);
+  const bt=e=>`data-act="mview" data-a="${a.mid}" data-e="${e.contentId}"`;
+  return `<div class="eps"><b>選集數 <small>共 ${L.length} 集・可切換字幕版本，邊看邊用放大鏡查</small></b>
+   ${li?`<button class="abtn cont" ${bt(li)}>▶ 接著看：${esc(li.contentTitle)}</button>`:`<button class="abtn cont" ${bt(L[0])}>▶ 從頭開始看</button>`}
+   <div class="epg">${L.map((e,i)=>`<button ${bt(e)} class="${li&&li===e?'last':(rec.w||[]).includes(e.contentId)?'seen':''}" title="${esc(e.contentTitle)}">${i+1}</button>`).join('')}</div></div>`;
+}
+function mvView(m){
+  const a=ANI.find(x=>x.mid===m.a),L=MOEEP[m.a]||[],i=L.findIndex(e=>e.contentId===m.e),e=L[i]||{};
+  const v=m.v,tabs=v?MV.filter(([k])=>v[k]&&v[k].url):[];
+  return `<div class="sheetbg vw" data-act="aclose"><div class="vbox">
+   <div class="vh"><b>${esc((a?a.t:'')+'・'+(e.contentTitle||''))}</b><span>教育部臺灣台語動畫網</span><a class="abtn gh" href="${a?moeUrl(a):MOE}" target="_blank" rel="noopener">在教育部網站開</a><button class="x" data-act="mvclose" aria-label="關閉">×</button></div>
+   <div class="mvbar">${tabs.map(([k,n])=>`<button class="ach ${k===m.k?'on':''}" data-act="mvver" data-k="${k}">${n}</button>`).join('')}<span class="mvnav"><button class="ach" data-act="mvgo" data-d="-1" ${i<=0?'disabled':''}>‹ 上一集</button><button class="ach" data-act="mvgo" data-d="1" ${i<0||i>=L.length-1?'disabled':''}>下一集 ›</button></span></div>
+   ${v?`<video id="mvv" controls autoplay playsinline preload="auto" src="${m.k&&v[m.k]?v[m.k].url:''}"></video>`:`<div class="mvload">${m.err?'影片資料讀不到，請按右上「在教育部網站開」。':'載入影片中…'}</div>`}
+   <p class="tip">${m.v?'字幕直接做在畫面裡，不能點字；看到不懂的詞，用右下角放大鏡手動查。':''}${a&&!a.free?'這部限臺澎金馬及離島地區觀看。':''}影片版權屬教育部，僅供瀏覽學習。</p>
+  </div></div>`;
+}
+function mvOpen(aid,eid,keepK){
+  const prev=S.an.mv,k0=keepK||(prev&&prev.k)||mvPref;
+  S.an.mv={a:aid,e:eid,v:null,k:null};render(true);
+  const r=epSt[aid]||(epSt[aid]={w:[]});r.l=eid;r.w=r.w||[];if(!r.w.includes(eid))r.w.push(eid);saveEp();
+  moeVid(eid).then(v=>{
+    if(!S.an.mv||S.an.mv.e!==eid)return;
+    const ks=MV.map(x=>x[0]).filter(k=>v[k]&&v[k].url);
+    S.an.mv.v=v;S.an.mv.k=ks.includes(k0)?k0:ks[0];render(true);
+    const el=document.getElementById('mvv');if(el)el.onended=()=>{const L=MOEEP[aid]||[],i=L.findIndex(x=>x.contentId===eid);if(L[i+1])mvOpen(aid,L[i+1].contentId,S.an.mv.k)};
+  }).catch(()=>{if(S.an.mv&&S.an.mv.e===eid){S.an.mv.err=1;render(true)}});
+}
 const aniRow=(title,sub,list)=>list.length?`<div class="rowh"><h3>${title}</h3><small>${sub}</small><div class="arr"><button data-act="ascroll" data-d="-1" aria-label="往左">‹</button><button data-act="ascroll" data-d="1" aria-label="往右">›</button></div></div>
   <div class="rowx">${list.map(a=>aniTile(a,ANI.indexOf(a))).join('')}</div>`:'';
 // 分類（不依片源）：動畫／電影／戲劇／短片／紀錄片／節目
@@ -757,7 +803,7 @@ function pAnime(){
      <p>${pick.lv?pick.lv+'・':''}${cat(pick)}</p>
      <div class="acts"><button class="abtn" data-act="asheet" data-i="${pi}">看這部</button></div></div>
    <div class="achips">${chip('all','全部')}${CATS.map(c=>chip(c,c)).join('')}${chip('mine',`我的片單${mine.length?' ('+mine.length+')':''}`)}</div>
-   ${body}${S.an.sheet!==null?aniSheet(ANI[S.an.sheet]):''}${S.an.view?aniView(S.an.view):''}`;
+   ${body}${S.an.sheet!==null?aniSheet(ANI[S.an.sheet]):''}${S.an.view?aniView(S.an.view):''}${S.an.mv?mvView(S.an.mv):''}`;
 }
 
 function aniView(v){
@@ -769,7 +815,7 @@ function aniView(v){
 }
 // 節目逐集清單：由 GitHub Actions 抓 YouTube 播放清單產生 yt.json（影片編號、標題、片長）
 let YTE={};
-fetch('yt.json',{cache:'no-cache'}).then(r=>r.ok?r.json():Promise.reject()).then(d=>{YTE=d||{};return fetch('yt_extra.json',{cache:'no-cache'}).then(r=>r.ok?r.json():{}).catch(()=>({})).then(e=>{for(const k in e)if(e[k]&&e[k].length)YTE[k]=e[k]})}).then(()=>{if(location.hash==='#anime')render(true)}).catch(()=>{});
+fetch('yt.json',{cache:'no-cache'}).then(r=>r.ok?r.json():Promise.reject()).then(d=>{YTE=d||{};return fetch('yt_extra.json',{cache:'no-cache'}).then(r=>r.ok?r.json():{}).catch(()=>({})).then(e=>{for(const k in e)if(e[k]&&e[k].length)YTE[k]=e[k]})}).then(()=>{if(location.hash==='#anime'&&!S.an.mv&&!S.an.view)render(true)}).catch(()=>{});
 const ytEmb=(id,pl)=>'https://www.youtube.com/embed/'+id+'?list='+pl+'&rel=0&cc_load_policy=1&cc_lang_pref=nan-TW&hl=zh-TW';
 // YouTube 標題常是「【節目】完整版S9｜這集的重點｜來賓｜…」：去掉節目名和太短的前綴，只留這集的重點
 const ytTitle=t=>{t=t.replace(/^【[^】]*】/,'').trim();const p=t.split('｜').map(x=>x.trim()).filter(Boolean);if(p.length>1&&p[0].length<=12)p.shift();return p[0]||t};
@@ -784,6 +830,7 @@ function aniYtEps(a){
    <div class="epl">${rows.map(({e,n})=>`<button class="er ${li&&li.e===e?'last':(rec.w||[]).includes(e[0])?'seen':''}" ${at(e,n)}><img loading="lazy" referrerpolicy="no-referrer" src="https://i.ytimg.com/vi/${e[0]}/mqdefault.jpg" alt=""><span class="en">${n}</span><span class="et">${esc(ytTitle(e[1]))}</span><span class="ed">${e[2]}</span></button>`).join('')}</div></div>`;
 }
 function aniEps(a){
+  if(a.mid)return aniMoeEps(a);
   if(a.yl)return aniYtEps(a);
   if(!a.ss||!a.ss.length)return '';
   const rec=epSt[a.pid]||{w:[]};
@@ -854,8 +901,14 @@ $('#app').addEventListener('click',e=>{
   if(a==='ass'){S.an.ss=+el.dataset.k;render(true);return}
   if(a==='aview'){const d=el.dataset;if(d.p){const r=epSt[d.p]||(epSt[d.p]={w:[]});r.s=d.s;r.l=d.e;r.n=+d.n;r.w=r.w||[];if(!r.w.includes(d.e))r.w.push(d.e);saveEp()}
   S.an.view={u:el.dataset.u,t:el.dataset.t,o:el.dataset.o,l:el.dataset.l};render(true);return}
+  if(a==='mview'){mvOpen(el.dataset.a,el.dataset.e);return}
+  if(a==='mvclose'){S.an.mv=null;render(true);return}
+  if(a==='mvver'){const m=S.an.mv,vd=document.getElementById('mvv');if(!m||!vd)return;const t=vd.currentTime,pl=!vd.paused;m.k=el.dataset.k;mvPref=m.k;try{localStorage.setItem('tgmv',mvPref)}catch(e){}
+    vd.src=m.v[m.k].url;vd.onloadedmetadata=()=>{try{vd.currentTime=t}catch(e){}if(pl||true)vd.play().catch(()=>{})};
+    document.querySelectorAll('.mvbar [data-act=mvver]').forEach(b=>b.classList.toggle('on',b.dataset.k===m.k));return}
+  if(a==='mvgo'){const m=S.an.mv,L=MOEEP[m.a]||[],i=L.findIndex(x=>x.contentId===m.e),n=L[i+ +el.dataset.d];if(n)mvOpen(m.a,n.contentId,m.k);return}
   if(a==='avclose'){S.an.view=null;render(true);return}
-  if(a==='aclose'){if(el.classList.contains('sheetbg')&&e.target!==el)return;if(S.an.view){S.an.view=null;render(true);return}S.an.sheet=null;render(true);return}
+  if(a==='aclose'){if(el.classList.contains('sheetbg')&&e.target!==el)return;if(S.an.mv){S.an.mv=null;render(true);return}if(S.an.view){S.an.view=null;render(true);return}S.an.sheet=null;render(true);return}
   if(a==='asrc'){S.an.src=el.dataset.f;render(true);return}
   if(a==='aset'){const k=ANI[S.an.sheet].t,v=+el.dataset.v;if(aniSt[k]===v)delete aniSt[k];else aniSt[k]=v;saveAni();render(true);return}
   if(a==='ascroll'){const r=el.closest('.rowh').nextElementSibling;r.scrollBy({left:+el.dataset.d*r.clientWidth*.8,behavior:'smooth'});return}
