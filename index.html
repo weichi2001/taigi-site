@@ -496,6 +496,13 @@ body[data-r^=books] .wrap{max-width:1080px}
 .bk-front{display:flex;gap:28px;align-items:flex-end;padding:30px 0 10px;flex-wrap:wrap}.bk-fc{width:min(240px,60vw);aspect-ratio:5/7;object-fit:cover;border-radius:3px 10px 10px 3px;box-shadow:0 18px 36px rgba(0,0,0,.3)}
 .bk-front h2{font-size:clamp(28px,4.5vw,40px);margin:0 0 6px}
 .bk-toc{padding:14px 0 0}.bk-toc h3{font-size:18px;margin:26px 0 6px;color:var(--accent)}.bk-toc a{display:block;padding:11px 0;border-bottom:1px solid var(--line);text-decoration:none;color:inherit;font-size:17px}
+
+.bk-mode{display:inline-flex;gap:0;margin:0 0 18px;border:1px solid var(--line);border-radius:99px;overflow:hidden;background:var(--card,#fff)}
+.bk-mode button{font:inherit;font-size:14px;padding:6px 18px;border:0;background:none;color:var(--ink2,#777);cursor:pointer}.bk-mode button.on{background:var(--accent);color:#fff}
+.bk-nt{font-size:13.5px;color:var(--ink2,#777);margin:0 0 14px}
+.bk-pages img{display:block;width:100%;height:auto;margin:0 0 14px;border-radius:6px;box-shadow:0 6px 18px rgba(0,0,0,.18);background:#fff}
+.bk-rd.is-img .bk-fs{visibility:hidden}.bk-rd.is-img{max-width:820px}
+.bk-bc{margin:34px 0 0;text-align:center}.bk-bc p{font-size:13px;color:var(--ink2,#777);margin:0 0 10px;letter-spacing:.2em}.bk-bc img{width:min(300px,70%);height:auto;border-radius:3px 10px 10px 3px;box-shadow:0 14px 30px rgba(0,0,0,.28)}
 </style>
 </head>
 <body>
@@ -1128,13 +1135,16 @@ async function bkIssue(n){
     const ix=u=>{const i=order.indexOf(bkPath(u));return i<0?999:i};
     arts.sort((a,b)=>ix(a.u)-ix(b.u));
     arts.forEach(a=>Object.assign(a,bkTitle(a.t)));
-    return {n,toc,arts,cover:toc?bkCover(toc.h):'',when:toc?bkWhen(toc.h,toc.t):''};
+    const back=(arts.map(a=>(a.h.match(/src="([^"]+)"/g)||[]).map(x=>x.slice(5,-1)).find(bkIsBack)).find(Boolean)||'').replace(/\/(s\d+|w\d+-h\d+)(-c)?\//,'/s1000/');
+    return {n,toc,arts,back:bkImg(back),cover:toc?bkCover(toc.h):'',when:toc?bkWhen(toc.h,toc.t):''};
   })();
 }
 const BKOK=new Set('P,BR,B,STRONG,I,EM,U,SPAN,DIV,H1,H2,H3,H4,BLOCKQUOTE,UL,OL,LI,IMG,A,FIGURE,FIGCAPTION,SUP,SUB,TABLE,TBODY,TR,TD,TH'.split(','));
 const BKDROP=new Set('SCRIPT,STYLE,IFRAME,OBJECT,EMBED,FORM,INPUT,BUTTON,SVG,LINK,META,NOSCRIPT,VIDEO,AUDIO'.split(','));
 const BKLAT=/([A-Za-zÀ-ɏ̀-ͯḀ-ỿⁿᴺ]+(?:[-‑][A-Za-zÀ-ɏ̀-ͯḀ-ỿⁿᴺ]+)*)/g;
 function bkClean(h){
+  const out=bkCleanEl(h);return out.innerHTML}
+function bkCleanEl(h){
   const d=bkDoc(h),w=document.createTreeWalker(d.body,NodeFilter.SHOW_TEXT);let n,cut=null;
   while(n=w.nextNode()){if(/#台文通訊BONG報|#李江却/.test(n.nodeValue)){cut=n;break}}
   if(cut){let x=cut;while(x&&x!==d.body){while(x.nextSibling)x.nextSibling.remove();x=x.parentNode}cut.remove()}
@@ -1156,8 +1166,21 @@ function bkClean(h){
   };
   walk(d.body,out);
   out.querySelectorAll('div,span:not(.tl),p').forEach(e=>{if(!e.children.length&&!e.textContent.trim())e.remove()});
-  return out.innerHTML;
+  return out;
 }
+const bkIsBack=src=>{try{return /騎馬釘/.test(decodeURIComponent(src))}catch(e){return /騎馬釘/.test(src)}};
+function bkSplit(a){
+  if(a._sp)return a._sp;
+  const out=bkCleanEl(a.h),imgs=[...out.querySelectorAll('img')];
+  let back='';
+  imgs.forEach(i=>{if(a.t!=='封面圖'&&bkIsBack(i.src)){back=back||i.src;i.remove()}});
+  const pages=[...out.querySelectorAll('img')].map(i=>i.outerHTML).join('');
+  out.querySelectorAll('img').forEach(i=>i.remove());
+  out.querySelectorAll('div,p,span:not(.tl)').forEach(e=>{if(!e.querySelector('.tl')&&!e.textContent.trim())e.remove()});
+  const txt=out.textContent.trim()?out.innerHTML:'';
+  return a._sp={pages,txt,back};
+}
+const bkMode=()=>{try{return localStorage.getItem('tgbkmode')==='txt'?'txt':'img'}catch(e){return'img'}};
 const bkSaved=()=>{try{return JSON.parse(localStorage.getItem('tgbk')||'null')}catch(e){return null}};
 const bkSave=o=>{try{localStorage.setItem('tgbk',JSON.stringify(o))}catch(e){}};
 const bkFs=()=>{try{return +localStorage.getItem('tgbkfs')||18}catch(e){return 18}};
@@ -1194,11 +1217,19 @@ async function bkReader(){
   if(i<0||!A[i]){
     const secs=[];A.forEach((a,k)=>{let s=secs.find(x=>x.s===a.s);if(!s){s={s:a.s,l:[]};secs.push(s)}s.l.push([k,a])});
     root.innerHTML=ctl+`<div class="bk-front">${is.cover?`<img class="bk-fc" src="${is.cover}" alt="" referrerpolicy="no-referrer" onerror="this.remove()">`:''}<div><h2 class="hd">台文通訊 BONG 報<br>第 ${n} 期</h2><p class="sub">${is.when||''}・共 ${A.length} 篇</p>${A.length?`<a class="btn pri" href="#books/${n}/0">從頭讀</a>`:''}</div></div>
-      <div class="bk-toc">${secs.map(s=>`<h3 class="hd">${esc(s.s||'本期')}</h3>${s.l.map(([k,a])=>`<a href="#books/${n}/${k}"><span>${esc(a.t)}</span></a>`).join('')}`).join('')}</div>${bkCredit(n,'')}`;
+      <div class="bk-toc">${secs.map(s=>`<h3 class="hd">${esc(s.s||'本期')}</h3>${s.l.map(([k,a])=>`<a href="#books/${n}/${k}"><span>${esc(a.t)}</span></a>`).join('')}`).join('')}</div>${is.back?`<div class="bk-bc"><p>封底</p><img src="${is.back}" alt="" referrerpolicy="no-referrer" onerror="this.parentNode.remove()"></div>`:''}${bkCredit(n,'')}`;
     return;
   }
   const a=A[i];bkSave({n,i,t:a.t});
-  root.innerHTML=ctl+`<article class="bk-art">${a.s?`<p class="bk-sec tl">${esc(a.s)}</p>`:''}<h2 class="hd">${esc(a.t)}</h2><div class="bk-body">${bkClean(a.h)}</div>${bkCredit(n,a.u)}</article>
+  const sp=bkSplit(a);let md=bkMode(),note='';
+  if(md==='img'&&!sp.pages){md='txt';note='這篇沒有電子書版面，先顯示文字版。'}
+  else if(md==='txt'&&!sp.txt){md='img';note='這篇只有電子書版面，沒有文字版。'}
+  const bodyH=md==='img'?`<div class="bk-pages">${sp.pages}</div>`:`<div class="bk-body">${sp.txt}</div>`;
+  const last=i===A.length-1,pref=bkMode();
+  root.className='bk-rd '+(md==='img'?'is-img':'is-txt');
+  root.innerHTML=ctl+`<article class="bk-art">${a.s?`<p class="bk-sec tl">${esc(a.s)}</p>`:''}<h2 class="hd">${esc(a.t)}</h2>
+   <div class="bk-mode"><button data-bk="m-img" class="${md==='img'?'on':''}">電子書</button><button data-bk="m-txt" class="${md==='txt'?'on':''}">文字</button></div>${note?`<p class="bk-nt">${note}</p>`:''}
+   ${bodyH}${last&&is.back?`<div class="bk-bc"><p>封底</p><img src="${is.back}" alt="" referrerpolicy="no-referrer" onerror="this.parentNode.remove()"></div>`:''}${bkCredit(n,a.u)}</article>
    <div class="bk-nav">${i>0?`<a class="btn" href="#books/${n}/${i-1}">← ${esc(A[i-1].t)}</a>`:`<a class="btn" href="#books/${n}">← 目錄</a>`}${i<A.length-1?`<a class="btn pri" href="#books/${n}/${i+1}">${esc(A[i+1].t)} →</a>`:`<a class="btn" href="#books/${n}">回目錄</a>`}</div>`;
   window.scrollTo(0,0);
 }
@@ -1206,6 +1237,7 @@ function bkLoad(r){if(r==='books')bkShelf();else bkReader()}
 document.getElementById('app').addEventListener('click',e=>{
   const b=e.target.closest('[data-bk]');if(!b)return;const k=b.dataset.bk;
   if(k==='more'&&BK.add)BK.add();
+  if(k==='m-img'||k==='m-txt'){try{localStorage.setItem('tgbkmode',k==='m-txt'?'txt':'img')}catch(x){}bkReader()}
   if(k==='fs+'||k==='fs-'){const v=Math.max(15,Math.min(30,bkFs()+(k==='fs+'?2:-2)));try{localStorage.setItem('tgbkfs',v)}catch(x){}const r=document.getElementById('bk-rd');if(r)r.style.setProperty('--bkfs',v+'px')}
 });
 let bkTx=0;
