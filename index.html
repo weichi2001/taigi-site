@@ -931,9 +931,9 @@ function aniSheet(a){
   btn.addEventListener('click',()=>set(root.dataset.theme==='dark'?'light':'dark',true));
   try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',e=>{let s=null;try{s=localStorage.getItem('tgtheme')}catch(x){}if(!s)set(e.matches?'dark':'light',false)})}catch(e){}
   paint();
-  // 台語戲台固定深色：進去時暫時切成深色，離開再還原使用者的選擇
+  // 台語戲台固定用原本的劇院深色版面（它是以淺色變數為底再疊深色樣式）：進去時暫時切成 light，離開再還原使用者的選擇
   let saved=null;
-  window.__tgForce=on=>{if(on){if(saved===null)saved=root.dataset.theme||'light';root.dataset.theme='dark'}else if(saved!==null){root.dataset.theme=saved;saved=null}paint()};
+  window.__tgForce=on=>{if(on){if(saved===null)saved=root.dataset.theme||'light';root.dataset.theme='light'}else if(saved!==null){root.dataset.theme=saved;saved=null}paint()};
 })();
 // ---- 路由 ----
 const cur=()=>location.hash.slice(1)||'home';
