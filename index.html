@@ -440,14 +440,21 @@ body.anime .top{display:none!important}
 .rh .w,.mr .w{font-weight:700}
 .pst small,.dwt small,.kick{font-family:"GenRyu Lat","Noto Sans TC",sans-serif}
 .pst .pv{position:absolute;right:20px;top:50%;transform:translateY(-50%);display:flex;pointer-events:none}
-.pst .pv img{width:clamp(84px,10.5vw,132px);aspect-ratio:16/10;object-fit:cover;border-radius:10px;border:1px solid rgba(255,255,255,.16);box-shadow:0 10px 28px rgba(0,0,0,.45);margin-left:-36px;background:#222}
+.pst .pv img{width:clamp(84px,10.5vw,132px);aspect-ratio:16/10;object-fit:cover;border-radius:8px;box-shadow:0 8px 22px rgba(0,0,0,.5);margin-left:-30px;background:#222}
 .pst .pv img:nth-child(1){transform:rotate(-5deg) translateY(10px)}.pst .pv img:nth-child(2){transform:rotate(1deg) translateY(-6px);z-index:1}.pst .pv img:nth-child(3){transform:rotate(6deg) translateY(12px)}
-.pst .kv{position:absolute;right:20px;top:50%;transform:translateY(-50%);width:clamp(150px,22vw,290px);padding:16px 18px 14px;border-radius:14px;background:rgba(10,11,22,.62);border:1px solid rgba(255,255,255,.16);box-shadow:0 10px 28px rgba(0,0,0,.45);pointer-events:none;text-align:center}
+.pst .kv{position:absolute;right:20px;top:50%;transform:translateY(-50%);width:clamp(150px,22vw,290px);padding:0;pointer-events:none;text-shadow:0 2px 14px rgba(0,0,0,.55);text-align:center}
 .pst .kv i{display:block;font-style:normal;font-family:var(--serif);font-weight:700;font-size:clamp(20px,3vw,30px);line-height:1.3;color:rgba(246,239,230,.34)}
 .pst .kv i.on{color:#f6efe6;background:linear-gradient(90deg,#ffd86b 58%,rgba(246,239,230,.34) 58%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 .pst .kv em{display:block;font-style:normal;font-family:"GenRyu Lat",sans-serif;font-size:12px;letter-spacing:.04em;color:rgba(246,239,230,.62);margin:2px 0 8px}
 .pst .kv u{display:block;height:3px;border-radius:2px;margin-top:12px;background:linear-gradient(90deg,#ffd86b 40%,rgba(255,255,255,.18) 40%)}
-@media(max-width:560px){.pst .pv img:nth-child(3){display:none}.pst .pv{right:10px}.pst .kv{width:132px;right:12px;padding:10px 10px 9px}.pst .kv i{font-size:18px}.pst .kv em{font-size:10px;margin-bottom:5px}}
+@media(max-width:560px){.pst .pv img:nth-child(3){display:none}.pst .pv{right:10px}.pst .kv{width:132px;right:12px}.pst .kv i{font-size:18px}.pst .kv em{font-size:10px;margin-bottom:5px}}
+
+.ent.zone .ic,.ent.sm .ic{display:grid;place-items:center;width:64px;height:64px;border-radius:20px;margin-bottom:14px;background:linear-gradient(145deg,#e4ddd2,#f8f5ef);box-shadow:inset 4px 4px 9px rgba(60,40,25,.26),inset -4px -4px 8px rgba(255,255,255,1),0 1px 0 rgba(255,255,255,.9)}
+.ent.sm .ic{width:52px;height:52px;border-radius:16px}
+.ent.zone .ic .si{width:30px;height:30px;filter:drop-shadow(0 1px 0 rgba(255,255,255,.8))}.ent.sm .ic .si{width:26px;height:26px}
+html[data-theme=dark] .ent.zone .ic,html[data-theme=dark] .ent.sm .ic{background:linear-gradient(145deg,#161616,#232323);box-shadow:inset 3px 3px 8px rgba(0,0,0,.65),inset -2px -2px 5px rgba(255,255,255,.06),0 1px 0 rgba(255,255,255,.05)}
+html[data-theme=dark] .ent.zone .ic .si{filter:drop-shadow(0 1px 0 rgba(0,0,0,.6))}
+@media(min-width:900px){.ent.zone .ic{width:76px;height:76px;border-radius:24px}.ent.zone .ic .si{width:36px;height:36px}}
 </style>
 </head>
 <body>
@@ -611,10 +618,14 @@ function quizHtml(){
 }
 
 // ---- 頁面 ----
+function pvHtml(){
+  const f=n=>ANI.find(a=>a.pimg&&a.t.startsWith(n)),u=[f('間諜家家酒'),f('葬送的芙莉蓮'),{pimg:'https://i.ytimg.com/vi/4m9JsDfAGx8/mqdefault.jpg'}].filter(Boolean);
+  return u.map(a=>`<img src="${a.pimg}" alt="" referrerpolicy="no-referrer" onerror="this.remove()">`).join('');
+}
 function pHome(){
   const d=D[Math.floor((Date.now()+288e5)/864e5)%D.length];
   S.open.add(d.n);
-  const dy=Math.floor((Date.now()+288e5)/864e5),yv=YT.filter(y=>y[1]),prv=[0,1,2].map(k=>yv[(dy*3+k*7)%yv.length]).map(y=>`<img src="https://i.ytimg.com/vi/${y[1]}/mqdefault.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`).join(''),kp=D.filter(x=>[...x.w].length>=2&&[...x.w].length<=4&&!/[\/（(]/.test(x.w)),kw=[kp[(dy*5)%kp.length],kp[(dy*5+11)%kp.length]];
+  const dy=Math.floor((Date.now()+288e5)/864e5),yv=0,prv=pvHtml(),kp=D.filter(x=>[...x.w].length>=2&&[...x.w].length<=4&&!/[\/（(]/.test(x.w)),kw=[kp[(dy*5)%kp.length],kp[(dy*5+11)%kp.length]];
   const L=[...d.w].length,bgw=[...d.w.split('/')[0].replace(/[（(][^）)]*[）)]/g,'')].slice(0,3).join(''),BL=[...bgw].length,bs=BL<=1?470:BL==2?300:210,dm=L<=1?52:L==2?40:L==3?32:26,dd=L<=1?72:L==2?52:L==3?40:32,lg=L>=4,md=L>=2&&L<4;
   const zone=(h,ic,t,x,items)=>`<a class="ent zone" href="${h}"><div class="ic">${ic}</div><h3>${t}</h3>${x?`<p>${x}</p>`:''}<div class="li">${items.map(i=>`<span>${i}</span>`).join('')}</div></a>`;
   return `<section class="hh" style="--bs:${bs}px;--ds:${dm}px;--dsd:${dd}px">
@@ -900,6 +911,7 @@ fetch('pts.json',{cache:'no-cache'}).then(r=>r.ok?r.json():Promise.reject()).the
   const CONF=new Set([]);
   d.items.filter(o=>!o.u||CONF.has(o.pid)).forEach(o=>ANI.push({t:o.t.replace(/（雙語版）$/,''),pid:o.pid,sid:o.sid,ss:o.ss,pimg:o.img,u:o.u,s:['pts']}));
   if(!S.an.mv&&!S.an.view){S.an.sheet=null;if(location.hash==='#anime')render(true)}
+  const pv=document.querySelector('.pst .pv');if(pv)pv.innerHTML=pvHtml();
 }).catch(()=>{});
 // 教育部臺灣台語動畫網：片單、集數與影片檔都從它公開的 API 即時讀取（影片直接播放它的檔案，不複製、不存放）
 const MAPI='https://twbangga.moe.edu.tw/server/web/';
