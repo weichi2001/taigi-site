@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#f4e8d6">
 <script>(function(){try{var t=localStorage.getItem('tgtheme');if(t!=='dark'&&t!=='light')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.dataset.theme=t;document.querySelector('meta[name=theme-color]').content=t==='dark'?'#14110f':'#f4e8d6'}catch(e){}})()</script>
-<title>台語自學站（原型）</title>
+<title>街仔路</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Huninn&display=swap" rel="stylesheet">
@@ -358,7 +358,7 @@ body.anime .top{display:none!important}
 </head>
 <body>
 <div class="top"><div class="in">
-  <a class="logo hd" href="#home">台語<b>自學</b>站</a>
+  <a class="logo hd" href="#home">街仔<b>路</b></a>
   <div class="tools">
     <a class="tool" href="#about">關於</a>
   </div>
@@ -551,7 +551,7 @@ function pAbout(){
   </section>
 
   <h3 class="ab-sec hd">這個網站</h3>
-  <p class="ab-p">台語自學站是給學生自己練習用的。聽、說、讀、寫的資源都整理在這裡，點一下就能開始，不用到處找。進度和測驗紀錄只存在你自己的瀏覽器裡，不用註冊，也不會被收集。</p>
+  <p class="ab-p">街仔路是給學生自己練習用的。聽、說、讀、寫的資源都整理在這裡，點一下就能開始，不用到處找。進度和測驗紀錄只存在你自己的瀏覽器裡，不用註冊，也不會被收集。</p>
   <div class="ab-list">
     ${it(SI.book,'700 字自學','教育部推薦用字，每字有台羅、華語、用例，可翻卡自測。','#w700')}
     ${it(SI.pen,'挑錯字挑戰','哪一個才是推薦用字？練習避開檢定不能用的寫法。','#quiz')}
@@ -866,7 +866,7 @@ function pAnime(){
   }else{
     const l=v.filter(fil);body=l.length?`<div class="rowx" style="flex-wrap:wrap;overflow:visible;margin-top:14px">${l.map(a=>aniTile(a,ANI.indexOf(a))).join('')}</div>`:'<p class="sub" style="margin-top:18px">還沒有。打開一部作品，按「想看」就會放進來。</p>';
   }
-  return `<a class="back" href="#home">← 台語自學站</a><h2 class="hd">台語戲台 <span class="tl" style="font-size:.7em;font-weight:500;opacity:.85">Tâi-gí Hì-tâi</span></h2>
+  return `<a class="back" href="#home">← 街仔路</a><h2 class="hd">台語戲台 <span class="tl" style="font-size:.7em;font-weight:500;opacity:.85">Tâi-gí Hì-tâi</span></h2>
    <div class="hero" style="--h:${hue(pick.t)}">${pick.img||pick.pimg?heroImg(pick):''}<span class="kick">今日推薦</span><h2 class="hd">${esc(pick.t)}</h2>
      <p>${pick.lv?pick.lv+'・':''}${cat(pick)}</p>
      <div class="acts"><button class="abtn" data-act="asheet" data-i="${pi}">看這部</button></div></div>
