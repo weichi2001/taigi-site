@@ -9,18 +9,18 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Huninn&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Andika:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{--ink:#615045;--ink2:#7a6a5e;--paper:#f7f0e2;--card:#fffaf0;--line:#e4d8c3;--accent:#e24403;--ok:#4f8a3a;--okbg:#e9f2e1;--badbg:#fbe8de}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 Huninn,"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 "Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;-webkit-text-size-adjust:100%}
 a{color:inherit}
 button,input,select,textarea{font-family:inherit}
 .tl{font-family:Huninn,Andika,"Noto Sans","Segoe UI",system-ui,"PingFang TC","Microsoft JhengHei",sans-serif;letter-spacing:.01em}
 .t8{position:relative;display:inline-block;line-height:1.3}.t8::after{content:'';position:absolute;left:50%;top:.2em;width:.07em;height:.2em;background:currentColor;transform:translateX(-50%) translateX(.02em);border-radius:.02em}
-.hd{font-family:Huninn,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif}
+.hd{font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif}
 .top{position:sticky;top:0;z-index:5;background:rgba(247,240,226,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
 .top .in{max-width:760px;margin:0 auto;padding:8px 16px;display:flex;align-items:center;gap:10px;flex-wrap:nowrap}
 .logo{font-weight:700;font-size:26px;letter-spacing:.04em;text-decoration:none;margin-right:auto;white-space:nowrap;flex:none}
@@ -334,40 +334,70 @@ html[data-theme=dark] .chip.x{background:var(--badbg);border-color:rgba(226,68,3
 html[data-theme=dark] input[type=search]{background:rgba(255,255,255,.08)}
 html[data-theme=dark] .bar{background:rgba(255,255,255,.13)}
 html[data-theme=dark] #toast{background:#3a322c}
-/* ===== 液態玻璃 v3：輕、薄、冷色調 ===== */
-:root{--ink:#1f2a35;--ink2:#58636f;--accent:#1a7f8e;--paper:#eef1f4;
- --gl:radial-gradient(140% 100% at 0% 0%,rgba(255,255,255,.6) 0,rgba(255,255,255,.12) 50%,rgba(255,255,255,0) 72%),linear-gradient(150deg,rgba(255,255,255,.3),rgba(255,255,255,.1));
- --gsh:0 6px 22px rgba(30,45,60,.08),inset 0 1px 0 rgba(255,255,255,.85)}
-body::before{background:
- radial-gradient(60% 42% at 10% 0%,rgba(80,160,165,.26) 0,transparent 72%),
- radial-gradient(56% 44% at 100% 100%,rgba(120,130,200,.24) 0,transparent 72%),
- linear-gradient(165deg,#f0f3f6 0%,#e3e8ee 50%,#d7dee7 100%)}
-.card,.res,.seg,.ent,.ime,.step,.fc,.tool,.fb,.btn:not(.pri):not(.ok):not(.bad){border:1px solid rgba(255,255,255,.5);backdrop-filter:blur(18px) saturate(1.8) brightness(1.04);-webkit-backdrop-filter:blur(18px) saturate(1.8) brightness(1.04)}
-.top{background:linear-gradient(180deg,rgba(255,255,255,.6),rgba(255,255,255,.3));backdrop-filter:blur(24px) saturate(1.8);-webkit-backdrop-filter:blur(24px) saturate(1.8);border-bottom:1px solid rgba(255,255,255,.55);box-shadow:0 4px 18px rgba(30,45,60,.06)}
-.ent:hover,.res:hover,.seg:hover{box-shadow:0 14px 34px rgba(30,45,60,.14),inset 0 1px 0 rgba(255,255,255,.95)}
+/* ===== v4：內容層安靜實心，玻璃只給導覽列與浮動控制 ===== */
+:root{--ink:#1c1b19;--ink2:#6b6860;--accent:#d6402a;--paper:#f5f4f1;--card:#ffffff;--line:#e6e3dc;--gl:none;--gsh:0 1px 2px rgba(28,27,25,.04)}
+html{background:#f5f4f1}body::before{background:#f5f4f1}
+h1.hd,h2.hd,h3.hd,.logo.hd,.serif{font-family:"Noto Serif TC","Songti TC",serif;font-weight:700;letter-spacing:.02em}
+.card,.res,.seg,.ent,.ime,.step,.fc,.tool,.fb,.btn:not(.pri):not(.ok):not(.bad){background:var(--card);border:1px solid var(--line);backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:var(--gsh)}
+.card,.res,.seg,.ent,.ime,.step{border-radius:22px}
+.ent:hover,.res:hover,.seg:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(28,27,25,.08);border-color:#d6d2c8}
 .fb.on{background:var(--ink);border-color:var(--ink);color:#fff}
-.btn.pri,.mr .au{background:linear-gradient(135deg,#34b0bd,#1a7f8e);box-shadow:0 5px 16px rgba(26,127,142,.32),inset 0 1px 0 rgba(255,255,255,.4)}
-#mini .msb:focus-within{box-shadow:0 0 0 3px rgba(26,127,142,.16)}.mr .ml:hover{background:rgba(26,127,142,.1)}
-body.anime{--accent:#e24403;--ink:#615045;--ink2:#7a6a5e}
-html[data-theme=dark]{--ink:#e8edf2;--ink2:#a3adb8;--accent:#4fc4d0;--paper:#0d1014;
- --gl:radial-gradient(140% 100% at 0% 0%,rgba(255,255,255,.16) 0,rgba(255,255,255,.03) 50%,rgba(255,255,255,0) 72%),linear-gradient(150deg,rgba(255,255,255,.07),rgba(255,255,255,.025));
- --gsh:0 8px 26px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.18)}
-html[data-theme=dark] body::before{background:
- radial-gradient(60% 42% at 10% 0%,rgba(30,140,150,.32) 0,transparent 72%),
- radial-gradient(56% 44% at 100% 100%,rgba(80,76,190,.30) 0,transparent 72%),
- linear-gradient(165deg,#10161c 0%,#0b0e12 55%,#08090c 100%)}
-html[data-theme=dark] .top{background:linear-gradient(180deg,rgba(30,38,46,.6),rgba(14,18,22,.4));box-shadow:0 4px 20px rgba(0,0,0,.45),inset 0 -1px 0 rgba(255,255,255,.07)}
-html[data-theme=dark] .fb.on{background:rgba(255,255,255,.88);color:#10161c;border-color:transparent}
-html[data-theme=dark] .btn.pri,html[data-theme=dark] .mr .au{background:linear-gradient(135deg,#3dbac7,#17727f)}
+.btn.pri,.mr .au{background:var(--accent);box-shadow:0 4px 14px rgba(214,64,42,.28);border-color:transparent;color:#fff}
+.btn.bad{color:var(--accent)}
+#mini .msb:focus-within{box-shadow:0 0 0 3px rgba(214,64,42,.16)}.mr .ml:hover{background:rgba(214,64,42,.08)}
+.ent .li span{background:transparent;border:1px solid var(--line);color:var(--ink2)}
+/* 浮動玻璃導覽列 */
+.top{position:sticky;top:0;z-index:5;background:none;border:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;padding:16px 10px 0}
+.top .in{max-width:1160px;margin:0 auto;height:54px;padding:0 20px;border-radius:99px;background:rgba(28,27,25,.62);backdrop-filter:blur(22px) saturate(1.6);-webkit-backdrop-filter:blur(22px) saturate(1.6);border:1px solid rgba(255,255,255,.2);box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 8px 24px rgba(0,0,0,.18)}
+.logo,.logo.hd{color:#f6efe6;font-size:24px;font-weight:900;letter-spacing:.08em}.logo b{color:#ff7a5c}
+.top .tool{background:transparent;border:1px solid rgba(255,255,255,.32);color:#f6efe6;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}
+.top .tool:hover{background:rgba(255,255,255,.12)}
+.top .in .tool svg{stroke:#f6efe6}
+/* 首頁：深色大畫面，玻璃卡浮在大字上 */
+body[data-r=home] .wrap{padding:0 12px 60px;margin-top:-70px;max-width:1160px}
+.hh{position:relative;overflow:hidden;border-radius:30px;min-height:470px;margin-top:8px;padding:120px 22px 22px;display:flex;flex-direction:column;justify-content:space-between;gap:26px;color:#f6efe6;
+ background:radial-gradient(55% 85% at 86% 28%,rgba(214,64,42,.62) 0,transparent 66%),radial-gradient(50% 60% at 8% 100%,rgba(110,140,130,.30) 0,transparent 70%),linear-gradient(160deg,#211d1a,#141210)}
+.hh .bgc{position:absolute;right:-20px;top:40px;font-family:"Noto Serif TC",serif;font-weight:900;font-size:min(var(--bs,300px),70vw);line-height:1;color:rgba(255,245,235,.16);pointer-events:none;white-space:nowrap}
+.hh h1{position:relative;margin:0;font-size:36px;line-height:1.28;color:#f6efe6;letter-spacing:.03em}
+.dw{position:relative;display:flex;align-items:center;gap:16px;border-radius:26px;padding:16px 18px;background:rgba(255,255,255,.13);backdrop-filter:blur(26px) saturate(1.7);-webkit-backdrop-filter:blur(26px) saturate(1.7);border:1px solid rgba(255,255,255,.24);box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 14px 36px rgba(0,0,0,.28)}
+.dwc{font-family:"Noto Serif TC",serif;font-weight:900;font-size:var(--ds,52px);line-height:1;min-width:1ch}
+.dwt{display:flex;flex-direction:column;flex:1;min-width:0}.dwt small{font-size:12px;letter-spacing:.2em;opacity:.7;white-space:nowrap}.dwt b{font-size:22px;font-weight:500;letter-spacing:.03em}.dwt span{font-size:15px;opacity:.85}
+.dwb{font:inherit;font-size:15px;font-weight:700;color:#fff;background:var(--accent);border:0;border-radius:99px;padding:10px 18px;cursor:pointer;white-space:nowrap;display:inline-flex;gap:6px;align-items:center}
+.pst{position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;gap:4px;min-height:170px;border-radius:26px;padding:22px;color:#f6efe6;text-decoration:none;border:1px solid rgba(255,255,255,.08);transition:transform .25s}
+.pst:hover{transform:translateY(-2px)}
+.pst small{font-size:13px;letter-spacing:.14em;opacity:.7}.pst b{font-family:"Noto Serif TC",serif;font-weight:900;font-size:32px;letter-spacing:.04em}.pst span{font-size:15px;opacity:.82}
+.pst.a{background:radial-gradient(70% 90% at 90% 10%,rgba(214,64,42,.45),transparent 65%),linear-gradient(150deg,#3a1630,#14080f)}
+.pst.b{background:radial-gradient(70% 90% at 90% 10%,rgba(120,110,230,.5),transparent 65%),linear-gradient(150deg,#1a1c3d,#0a0b16)}
+.more{display:flex;align-items:center;gap:6px;color:var(--ink2);text-decoration:none;font-size:15px;padding:2px 4px}.more:hover{color:var(--accent)}
+.hsec{display:grid;gap:14px;margin-top:14px}
+/* 深色 */
+html[data-theme=dark]{--ink:#f3f1ec;--ink2:rgba(243,241,236,.62);--accent:#ff7a5c;--paper:#121110;--card:rgba(255,255,255,.05);--line:rgba(255,255,255,.10);--gsh:none}
+html[data-theme=dark]{background:#121110}html[data-theme=dark] body::before{background:#121110}
+html[data-theme=dark] .ent:hover,html[data-theme=dark] .res:hover,html[data-theme=dark] .seg:hover{box-shadow:none;border-color:rgba(255,255,255,.22)}
+html[data-theme=dark] .fb.on{background:#f3f1ec;color:#121110;border-color:transparent}
+html[data-theme=dark] .btn.pri,html[data-theme=dark] .mr .au{background:#d6402a;box-shadow:none}
+html[data-theme=dark] .top .in{background:rgba(255,255,255,.10)}
+.top .in{background:rgba(28,27,25,.84)}body[data-r=home] .top .in{background:rgba(28,27,25,.5);max-width:1108px}
+.chip.tag,.chip.bk{background:#efede8;border-color:#e2dfd8}.chip{background:#fff}
+.bar{background:#e6e3dc}.bar i,.bar>div{background:var(--accent)}
+html[data-theme=dark] .top .in{background:rgba(40,38,36,.82)}html[data-theme=dark] body[data-r=home] .top .in{background:rgba(255,255,255,.10)}
+@media(max-width:899px){body[data-r=home] .top{padding-left:20px;padding-right:20px}body[data-r=home] .top .in{max-width:none}}
+
 @media(min-width:900px){
  body{font-size:18px}
- .top .in{max-width:1160px;padding:12px 40px}
+ .top{padding-top:20px}.top .in{max-width:1160px;height:60px;padding:0 28px}
  .wrap{max-width:1160px;padding:28px 40px 80px}
+ body[data-r=home] .wrap{padding:0 0 80px;margin-top:-80px}
+ .hh{min-height:520px;padding:150px 56px 44px;border-radius:34px;margin-top:0}
+ .hh h1{font-size:60px}.hh .bgc{right:60px;top:40px;font-size:min(var(--bs,470px),40vw)}
+ .dw{width:460px;padding:22px 26px;gap:22px}.dwc{font-size:var(--dsd,72px)}.dwt b{font-size:24px}
+ .pst{min-height:250px;padding:32px}.pst b{font-size:40px}
+ .hsec.g2{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}.hsec.g3{grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
  body[data-r=quiz] .wrap,body[data-r=review] .wrap,body[data-r=about] .wrap{max-width:860px}
  body[data-r^=seg] .wrap{max-width:900px}
  body[data-r=start] .wrap{max-width:980px}
- .logo{font-size:30px}
- .top .tool{height:44px;font-size:16px}.top #themeBtn{width:44px}
+ .logo,.logo.hd{font-size:28px}
+ .top .tool{height:40px;font-size:15px}.top #themeBtn{width:40px}
  .ent.zone{padding:30px 28px}.ent .ic .si{width:38px;height:38px}.ent h3{font-size:24px}.ent p{font-size:16px}.ent .li span{font-size:14px;padding:4px 12px}
  .card{padding:20px 24px}
  .g3,.grid{gap:18px}
@@ -564,18 +594,25 @@ function quizHtml(){
 function pHome(){
   const d=D[Math.floor((Date.now()+288e5)/864e5)%D.length];
   S.open.add(d.n);
-  const zone=(h,ic,t,d,items)=>`<a class="ent zone" href="${h}"><div class="ic">${ic}</div><h3>${t}</h3>${d?`<p>${d}</p>`:''}<div class="li">${items.map(x=>`<span>${x}</span>`).join('')}</div></a>`;
-  return `<h1 class="hd">聽、說、讀、寫，<br>一個地方找得到</h1>
-   <div class="grid g3">
-    ${zone('#start',SI.sprout,'系統性學習','',['台羅拼音','700 字自學'])}
-    ${zone('#learn',SI.target,'練習資源','',['挑錯字挑戰','練台羅','寫字練習','複習'])}
-    ${zone('#play',SI.phones,'娛樂學習','',[SI.screen+' 台語戲台',SI.mic+' 台語歌廳','聽歌','節目'])}
+  const L=[...d.w].length,bs=L<=1?470:L==2?300:L==3?210:150,dm=L<=1?52:L==2?40:L==3?32:26,dd=L<=1?72:L==2?52:L==3?40:32;
+  const zone=(h,ic,t,x,items)=>`<a class="ent zone" href="${h}"><div class="ic">${ic}</div><h3>${t}</h3>${x?`<p>${x}</p>`:''}<div class="li">${items.map(i=>`<span>${i}</span>`).join('')}</div></a>`;
+  return `<section class="hh" style="--bs:${bs}px;--ds:${dm}px;--dsd:${dd}px">
+    <span class="bgc" aria-hidden="true">${esc(d.w)}</span>
+    <h1 class="hd">聽、說、讀、寫，<br>一個地方找得到</h1>
+    <div class="dw"><div class="dwc">${esc(d.w)}</div><div class="dwt"><small>每日一字 ${d.n}</small><b class="tl">${esc(d.r)}</b><span>${esc(d.h)}</span></div><button class="dwb" type="button" data-act="say" data-n="${d.n}">${SI.spk}聽發音</button></div>
+   </section>
+   <div class="hsec g3 grid g3">
+    ${zone('#start',SI.sprout,'系統性學習','從台羅拼音開始，再一段一段學 700 字。',['台羅拼音','700 字自學'])}
+    ${zone('#learn',SI.target,'練習資源','挑錯字、練台羅、寫字、複習。',['挑錯字挑戰','練台羅','寫字練習','複習'])}
+    ${zone('#apps',SI.kbd,'輸入法與軟體','電腦、手機怎麼打台語，還有辭典 App。',['輸入法','辭典'])}
    </div>
-   <div class="grid g2d">
-    <a class="ent sm" href="#apps"><div class="ic">${SI.kbd}</div><div><h3>輸入法與軟體</h3><p>電腦、手機怎麼打台語，還有辭典 App。</p></div></a>
-    <a class="ent sm" href="#links"><div class="ic">${SI.link}</div><div><h3>其他推薦網站</h3><p>教育部資源、老師的 IG 等等。</p></div></a>
+   <div class="hsec g2 grid g2d">
+    <a class="pst a" href="#anime"><small>Tâi-gí Hì-tâi</small><b>台語戲台</b><span>動畫、電影、戲劇、節目</span></a>
+    <a class="pst b" href="https://weichi2001.github.io/taigi-ktv/?student"><small>Tâi-gí Ko-thiann</small><b>台語歌廳</b><span>跟著字幕唱，順便認字</span></a>
    </div>
-   <h3 style="margin-top:22px">每日一字</h3>${row(d)}`;
+   <div class="hsec"><a class="more" href="#play">還有聽歌、節目的資源 ${SI.link}</a>
+    <a class="ent sm" href="#links"><div class="ic">${SI.link}</div><div><h3>其他推薦網站</h3><p>教育部資源、老師的 IG 等等。</p></div></a></div>
+   <h3 class="hd" style="margin-top:26px">用例與自測</h3>${row(d)}`;
 }
 function pAbout(){
   const it=(ic,t,d,h,ex)=>`<a class="ab-it card" href="${h}"${ex||''}><span class="ic">${ic}</span><span><b>${t}</b><small>${d}</small></span></a>`;
