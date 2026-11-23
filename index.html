@@ -1172,6 +1172,15 @@ $('#mclose').addEventListener('click',()=>miniOpen(false));
 mini.addEventListener('click',e=>{if(!e.target.closest('.clr'))return;const q=mini.querySelector('#mq');q.value='';q.dispatchEvent(new Event('input',{bubbles:true}));q.focus()});
 mq.addEventListener('input',()=>{mlim=30;miniDraw()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&mini.classList.contains('show'))miniOpen(false)});
+// 台語戲台播放器：空白鍵暫停／播放（在輸入框裡打字、或焦點已在影片上時不介入）
+document.addEventListener('keydown',e=>{
+  if(e.code!=='Space'&&e.key!==' ')return;
+  if(e.ctrlKey||e.metaKey||e.altKey)return;
+  const v=document.getElementById('mvv');if(!v)return;
+  const t=e.target;if(t===v||(t.closest&&t.closest('input,textarea,select,[contenteditable]')))return;
+  e.preventDefault();
+  if(v.paused)v.play().catch(()=>{});else v.pause();
+});
 
 enter(cur());render(false);
 })();
