@@ -154,8 +154,8 @@ body.anime .top{background:rgba(20,17,15,.92);border-color:#2c2622}
 body.anime .logo{color:#f1e9dd}body.anime .tool{background:#241f1b;border-color:#3a322c;color:#f1e9dd}
 body.anime .wrap{max-width:1100px}body.anime footer{color:#9c8e80;border-color:#2c2622}
 body.anime .back{color:#b9ab9b}body.anime .sub{color:#b9ab9b}
-.hero{position:relative;border-radius:18px;overflow:hidden;padding:34px 26px 26px;min-height:250px;display:flex;flex-direction:column;justify-content:flex-end;gap:8px;background:linear-gradient(135deg,hsl(var(--h) 55% 32%),hsl(calc(var(--h) + 40) 50% 14%))}
-.hero::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,rgba(20,17,15,.75),transparent 70%);pointer-events:none}
+.hero{position:relative;border-radius:18px;overflow:hidden;padding:34px 26px 26px;min-height:250px;display:flex;flex-direction:column;justify-content:flex-end;gap:8px;background:#1c1814}
+.hero::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.72),rgba(0,0,0,.28) 45%,transparent 75%);pointer-events:none}
 .hero>*:not(.himg){position:relative;z-index:1}
 .hero .kick{font-size:12px;background:#e24403;color:#fff;align-self:flex-start;padding:2px 9px;border-radius:5px}
 .hero h2{font-size:clamp(26px,5vw,40px);margin:0}.hero p{margin:0;color:#e6dccd;max-width:560px;font-size:14px}
@@ -194,7 +194,7 @@ body.anime .back{color:#b9ab9b}body.anime .sub{color:#b9ab9b}
 .pt img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
 .pt::before{content:'';position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.82),rgba(0,0,0,.05) 62%);z-index:1}
 .pt>*:not(img){position:relative;z-index:2}.pt .bd,.pt .st{position:absolute!important}
-.hero .himg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:.55}
+.hero .himg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:1}
 
 /* ===== 液態玻璃 + 漸層（覆蓋層） ===== */
 :root{--card:rgba(255,255,255,.46);--line:rgba(255,255,255,.65);--gl:linear-gradient(135deg,rgba(255,255,255,.72),rgba(255,255,255,.26));--gsh:0 8px 28px rgba(97,80,69,.10),inset 0 1px 0 rgba(255,255,255,.95),inset 0 -1px 0 rgba(255,255,255,.3)}
@@ -779,6 +779,13 @@ const saveEp=()=>{try{localStorage.setItem('tgep',JSON.stringify(epSt))}catch(e)
 const saveAni=()=>{try{localStorage.setItem('tgani',JSON.stringify(aniSt))}catch(e){}};
 S.an={src:'all',sheet:null,view:null,ss:null,rev:false};
 const IMG='https://twbangga.moe.edu.tw/server/crop/coverImage/';
+// 推薦區大圖：YouTube 縮圖改用最高畫質（沒有就退回一般畫質）
+function heroImg(p){
+  const u=p.pimg||IMG+p.img,m=/^(https:\/\/i\.ytimg\.com\/vi\/[^\/]+\/)hqdefault\.jpg$/.exec(u);
+  if(!m)return `<img class="himg" src="${u}" alt="" referrerpolicy="no-referrer" onerror="this.remove()">`;
+  return `<img class="himg" src="${m[1]}maxresdefault.jpg" data-f="${u}" alt="" referrerpolicy="no-referrer" onload="if(this.naturalWidth<400)this.src=this.dataset.f" onerror="if(this.src!==this.dataset.f)this.src=this.dataset.f;else this.remove()">`;
+}
+
 const aniTile=(a,i)=>`<button class="pt" data-act="asheet" data-i="${i}" style="--h:${hue(a.t)}">
   ${a.img||a.pimg?`<img src="${a.pimg||IMG+a.img}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`:''}
   ${a.lv==='保護級'?'<span class="bd pro">保護級</span>':a.age?`<span class="bd pro">輔${a.age}</span>`:''}
@@ -859,7 +866,7 @@ function pAnime(){
     const l=v.filter(fil);body=l.length?`<div class="rowx" style="flex-wrap:wrap;overflow:visible;margin-top:14px">${l.map(a=>aniTile(a,ANI.indexOf(a))).join('')}</div>`:'<p class="sub" style="margin-top:18px">還沒有。打開一部作品，按「想看」就會放進來。</p>';
   }
   return `<a class="back" href="#home">← 首頁</a><h2 class="hd">台語戲台 <span class="tl" style="font-size:.7em;font-weight:500;opacity:.85">Tâi-gí Hì-tâi</span></h2>
-   <div class="hero" style="--h:${hue(pick.t)}">${pick.img||pick.pimg?`<img class="himg" src="${pick.pimg||IMG+pick.img}" alt="" referrerpolicy="no-referrer" onerror="this.remove()">`:''}<span class="kick">今日推薦</span><h2 class="hd">${esc(pick.t)}</h2>
+   <div class="hero" style="--h:${hue(pick.t)}">${pick.img||pick.pimg?heroImg(pick):''}<span class="kick">今日推薦</span><h2 class="hd">${esc(pick.t)}</h2>
      <p>${pick.lv?pick.lv+'・':''}${cat(pick)}</p>
      <div class="acts"><button class="abtn" data-act="asheet" data-i="${pi}">看這部</button></div></div>
    <div class="achips">${chip('all','全部')}${CATS.map(c=>chip(c,c)).join('')}${chip('mine',`我的片單${mine.length?' ('+mine.length+')':''}`)}</div>
