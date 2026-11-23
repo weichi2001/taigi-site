@@ -560,8 +560,8 @@ function pStart(){
   return `<a class="back" href="#home">← 首頁</a><h2 class="hd">系統性學習</h2><p class="sub">第一次學，照這個順序，一步一步來。</p>
    <div class="steps">
     <div class="step"><h3>認識台羅拼音</h3><p class="sub">先會看拼音，後面每個字都用得到。</p>
-      ${resCard(RES.find(r=>r.t==='練台羅'))}
       ${resCard({t:'教育部臺羅網站',d:'教育部的台語羅馬字資訊。',tags:['讀','寫'],time:'查詢',href:'https://tailo.moe.edu.tw/'})}
+      ${resCard(RES.find(r=>r.t==='練台羅'))}
       <div class="dash">之後放：老師的台羅入門教材</div></div>
     <div class="step"><h3>學 700 字</h3><p class="sub">日常最常用的台語字，不用一次學完，一段一段來。學完一段，可以到「練習資源」挑錯字。</p>
       ${resCard(RES.find(r=>r.t==='700 字自學'))}</div>
