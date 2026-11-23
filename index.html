@@ -11,6 +11,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Huninn&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Cactus+Classical+Serif&family=Chocolate+Classical+Sans&display=swap" rel="stylesheet">
+<style>@font-face{font-family:"GenWan";src:url(fonts/gw-disp.woff2) format("woff2");font-weight:100 900;font-display:swap}
+@font-face{font-family:"GenWan Lat";src:url(fonts/gw-lat.woff2) format("woff2");font-weight:100 500;font-display:swap}
+@font-face{font-family:"GenWan Lat";src:url(fonts/gw-lat-b.woff2) format("woff2");font-weight:600 900;font-display:swap}</style>
 <link href="https://fonts.googleapis.com/css2?family=Andika:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{--ink:#615045;--ink2:#7a6a5e;--paper:#f7f0e2;--card:#fffaf0;--line:#e4d8c3;--accent:#e24403;--ok:#4f8a3a;--okbg:#e9f2e1;--badbg:#fbe8de}
@@ -19,7 +22,7 @@ html{scroll-behavior:smooth}
 body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 "Noto Sans TC","Chocolate Classical Sans",Huninn,"PingFang TC","Microsoft JhengHei",system-ui,sans-serif;-webkit-text-size-adjust:100%}
 a{color:inherit}
 button,input,select,textarea{font-family:inherit}
-.tl{font-family:Huninn,Andika,"Noto Sans","Segoe UI",system-ui,"PingFang TC","Microsoft JhengHei",sans-serif;letter-spacing:.01em}
+.tl{font-family:"GenWan Lat",Huninn,Andika,"Noto Sans","Segoe UI",system-ui,"PingFang TC","Microsoft JhengHei",sans-serif;letter-spacing:.01em}
 .t8{position:relative;display:inline-block;line-height:1.3}.t8::after{content:'';position:absolute;left:50%;top:.2em;width:.07em;height:.2em;background:currentColor;transform:translateX(-50%) translateX(.02em);border-radius:.02em}
 .hd{font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif}
 .top{position:sticky;top:0;z-index:5;background:rgba(247,240,226,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
@@ -269,7 +272,7 @@ body.anime #mini{background:linear-gradient(160deg,rgba(255,255,255,.8),rgba(250
 #mini .mx-close{background:rgba(255,255,255,.5);box-shadow:inset 0 1px 0 rgba(255,255,255,.8)}
 .mr .ex{background:rgba(255,236,220,.5)}.mr .pos{background:rgba(255,255,255,.6)}
 .mr .ml,body.anime #mini .btn:not(.pri){background:rgba(255,255,255,.55)}
-#mini .tl,#mini .r{font-family:Huninn,Andika,"Noto Sans","Segoe UI",system-ui,"PingFang TC","Microsoft JhengHei",sans-serif}
+#mini .tl,#mini .r{font-family:"GenWan Lat",Huninn,Andika,"Noto Sans","Segoe UI",system-ui,"PingFang TC","Microsoft JhengHei",sans-serif}
 #toast{z-index:60}
 /* 看影片時開小辭典：影片縮小留在上方，辭典在下面，兩邊都能操作 */
 body.mini-on:has(.vw) .vw{align-items:flex-start;padding-top:8px}
@@ -338,7 +341,7 @@ html[data-theme=dark] #toast{background:#3a322c}
 /* ===== v4：內容層安靜實心，玻璃只給導覽列與浮動控制 ===== */
 :root{--ink:#1c1b19;--ink2:#6b6860;--accent:#d6402a;--paper:#f5f4f1;--card:#ffffff;--line:#e6e3dc;--gl:none;--gsh:0 1px 2px rgba(28,27,25,.04)}
 html{background:#f5f4f1}body::before{background:#f5f4f1}
-h1.hd,h2.hd,h3.hd,.logo.hd,.serif{font-family:"Noto Serif TC","Cactus Classical Serif",Huninn,"Songti TC",serif;font-weight:700;letter-spacing:.02em}
+h1.hd,h2.hd,h3.hd,.logo.hd,.serif{font-family:GenWan,"Noto Serif TC","Cactus Classical Serif",Huninn,"Songti TC",serif;font-weight:700;letter-spacing:.02em}
 .card,.res,.seg,.ent,.ime,.step,.fc,.tool,.fb,.btn:not(.pri):not(.ok):not(.bad){background:var(--card);border:1px solid var(--line);backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:var(--gsh)}
 .card,.res,.seg,.ent,.ime,.step{border-radius:22px}
 .ent:hover,.res:hover,.seg:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(28,27,25,.08);border-color:#d6d2c8}
@@ -358,16 +361,16 @@ h1.hd,h2.hd,h3.hd,.logo.hd,.serif{font-family:"Noto Serif TC","Cactus Classical 
 body[data-r=home] .wrap{padding:0 12px 60px;margin-top:-70px;max-width:1160px}
 .hh{position:relative;overflow:hidden;border-radius:30px;min-height:470px;margin-top:8px;padding:120px 22px 22px;display:flex;flex-direction:column;justify-content:space-between;gap:26px;color:#f6efe6;
  background:radial-gradient(55% 85% at 86% 28%,rgba(214,64,42,.62) 0,transparent 66%),radial-gradient(50% 60% at 8% 100%,rgba(110,140,130,.30) 0,transparent 70%),linear-gradient(160deg,#211d1a,#141210)}
-.hh .bgc{position:absolute;right:-20px;top:40px;font-family:"Cactus Classical Serif","Noto Serif TC",Huninn,serif;font-weight:400;font-synthesis:none;font-size:min(var(--bs,300px),70vw);line-height:1;color:rgba(255,245,235,.16);pointer-events:none;white-space:nowrap}
+.hh .bgc{position:absolute;right:-20px;top:40px;font-family:GenWan,"Cactus Classical Serif","Noto Serif TC",Huninn,serif;font-weight:600;font-synthesis:none;font-size:min(var(--bs,300px),70vw);line-height:1;color:rgba(255,245,235,.16);pointer-events:none;white-space:nowrap}
 .hh h1{position:relative;margin:0;font-size:36px;line-height:1.28;color:#f6efe6;letter-spacing:.03em}
 .dw{position:relative;display:flex;align-items:center;gap:16px;border-radius:26px;padding:16px 18px;background:rgba(255,255,255,.13);backdrop-filter:blur(26px) saturate(1.7);-webkit-backdrop-filter:blur(26px) saturate(1.7);border:1px solid rgba(255,255,255,.24);box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 14px 36px rgba(0,0,0,.28)}
-.dwc{font-family:"Cactus Classical Serif","Noto Serif TC",Huninn,serif;font-weight:400;font-synthesis:none;font-size:var(--ds,52px);line-height:1;flex:none;white-space:nowrap}
+.dwc{font-family:GenWan,"Cactus Classical Serif","Noto Serif TC",Huninn,serif;font-weight:600;font-synthesis:none;font-size:var(--ds,52px);line-height:1;flex:none;white-space:nowrap}
 .dwt{display:flex;flex-direction:column;flex:1;min-width:0}.dwt small{font-size:12px;letter-spacing:.2em;opacity:.7;white-space:nowrap}.dwt b{font-size:22px;font-weight:500;letter-spacing:.03em}.dwt span{font-size:15px;opacity:.85}
 .dw.long{flex-wrap:wrap;row-gap:10px}.dw.mid{flex-wrap:wrap;row-gap:12px}.dw.mid .dwb{margin-left:auto}.dw.long .dwc{flex:1 1 100%;font-size:30px;line-height:1.3;white-space:normal}.dwt{min-width:90px}.dw.mid .dwt,.dw.long .dwt{min-width:130px}.dwt b{overflow-wrap:break-word}.dwc{word-break:keep-all}
 .dwb{font:inherit;font-size:15px;font-weight:700;color:#fff;background:var(--accent);border:0;border-radius:99px;padding:10px 18px;cursor:pointer;white-space:nowrap;display:inline-flex;gap:6px;align-items:center}
 .pst{position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;gap:4px;min-height:170px;border-radius:26px;padding:22px;color:#f6efe6;text-decoration:none;border:1px solid rgba(255,255,255,.08);transition:transform .25s}
 .pst:hover{transform:translateY(-2px)}
-.pst small{font-size:13px;letter-spacing:.14em;opacity:.7}.pst b{font-family:"Noto Serif TC","Cactus Classical Serif",Huninn,serif;font-weight:900;font-size:32px;letter-spacing:.04em}.pst span{font-size:15px;opacity:.82}
+.pst small{font-size:13px;letter-spacing:.14em;opacity:.7}.pst b{font-family:GenWan,"Noto Serif TC","Cactus Classical Serif",Huninn,serif;font-weight:700;font-size:32px;letter-spacing:.04em}.pst span{font-size:15px;opacity:.82}
 .pst.a{background:radial-gradient(70% 90% at 90% 10%,rgba(214,64,42,.45),transparent 65%),linear-gradient(150deg,#3a1630,#14080f)}
 .pst.b{background:radial-gradient(70% 90% at 90% 10%,rgba(120,110,230,.5),transparent 65%),linear-gradient(150deg,#1a1c3d,#0a0b16)}
 .more{display:flex;align-items:center;gap:6px;color:var(--ink2);text-decoration:none;font-size:15px;padding:2px 4px}.more:hover{color:var(--accent)}
@@ -648,7 +651,7 @@ function pAbout(){
     <li>辭典與例句：教育部《臺灣台語常用詞辭典》。</li>
     <li>700 字：教育部《臺灣台語推薦用字 700 字表》。</li>
     <li>歌詞用字：參考「臺語歌真正正字歌詞網」。</li>
-    <li>字體：粉圓體 Huninn（Open Font License）。</li>
+    <li>字體：源雲明體 GenWan Serif、粉圓體 Huninn（皆為 Open Font License）。</li>
   </ul>
 
   <h3 class="ab-sec hd">找老師</h3>
