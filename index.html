@@ -1098,8 +1098,14 @@ function miniDraw(){
 let curAu=null;
 function playAu(id,ap){
   if(curAu){curAu.pause()}
-  curAu=new Audio(SU+'media/senn/mp3/imtong/'+(ap?ap+'/'+id+'1.mp3':'subak/'+Math.floor(id/1000)+'/'+id+'.mp3'));const me=curAu;const src=me.src;
-  me.play().catch(err=>{if(err&&err.name==='AbortError')return;if(curAu!==me)return;const a2=new Audio(src+'?r='+Date.now());curAu=a2;a2.play().catch(e2=>{if(e2&&e2.name==='AbortError')return;if(curAu===a2)toast('這個詞的音檔播不出來')})});
+  const src=SU+'media/senn/mp3/imtong/'+(ap?ap+'/'+id+'1.mp3':'subak/'+Math.floor(id/1000)+'/'+id+'.mp3');
+  let tries=0;
+  const attempt=u=>{const me=curAu=new Audio(u);me.preload='auto';
+    me.play().catch(err=>{if(err&&err.name==='AbortError')return;if(curAu!==me)return;
+      if(err&&err.name==='NotAllowedError'){toast('瀏覽器擋住了自動播放，請再按一次喇叭');return}
+      if(++tries<3)setTimeout(()=>{if(curAu===me)attempt(src+'?r='+Date.now()+tries)},350*tries);
+      else toast('這個詞的音檔暫時播不出來，請稍後再按一次')})};
+  attempt(src);
 }
 // 700 字單字：用站內辭典資料找到對應詞目，直接播音檔
 function sayWord(n){
