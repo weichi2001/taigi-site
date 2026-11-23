@@ -1349,7 +1349,7 @@ function bkBook(root,is,startPage){
    st.addEventListener('gesturestart',e=>{e.preventDefault();g0=Z.s});
    st.addEventListener('gesturechange',e=>{e.preventDefault();zSet(g0*e.scale,e.clientX||innerWidth/2,e.clientY||innerHeight/2)});
    st.addEventListener('gestureend',e=>e.preventDefault());
-   zw.addEventListener('pointerdown',e=>{pt.set(e.pointerId,[e.clientX,e.clientY]);mv=0;dragged=false;if(pt.size===2){const [a,b]=[...pt.values()];pd=Math.hypot(a[0]-b[0],a[1]-b[1]);dragged=true}try{zw.setPointerCapture(e.pointerId)}catch(_){}});
+   zw.addEventListener('pointerdown',e=>{pt.set(e.pointerId,[e.clientX,e.clientY]);mv=0;dragged=false;if(pt.size===2){const [a,b]=[...pt.values()];pd=Math.hypot(a[0]-b[0],a[1]-b[1]);dragged=true}if(Z.s>1||pt.size===2){try{zw.setPointerCapture(e.pointerId)}catch(_){}}});
    zw.addEventListener('pointermove',e=>{const o=pt.get(e.pointerId);if(!o)return;const n=[e.clientX,e.clientY];
      if(pt.size===1){const dx=n[0]-o[0],dy=n[1]-o[1];mv+=Math.abs(dx)+Math.abs(dy);if(mv>6)dragged=true;if(Z.s>1){Z.x+=dx;Z.y+=dy;zApply()}}
      else if(pt.size===2){pt.set(e.pointerId,n);const [a,b]=[...pt.values()],d=Math.hypot(a[0]-b[0],a[1]-b[1]);if(pd>0)zSet(Z.s*d/pd,(a[0]+b[0])/2,(a[1]+b[1])/2);pd=d;return}
