@@ -556,7 +556,7 @@ body:has(.bk-rd.ah){overflow:hidden}
 body:has(.bk-rd.ah) footer{display:none}
 body:has(.bk-rd.ah) .wrap{padding-bottom:0}
 .bkb{transition:transform .55s cubic-bezier(.45,.05,.2,1)}
-@media(min-width:800px){.bk-arr.r{transition:right .55s cubic-bezier(.45,.05,.2,1),opacity .2s}body.mini-on .bk-arr.r{right:424px}}
+@media(min-width:800px){.bk-arr.r{transition:right .55s cubic-bezier(.45,.05,.2,1),opacity .2s}body.mini-on .bk-arr{opacity:0;pointer-events:none}}
 @media(prefers-reduced-motion:reduce){.bkb,.bk-arr.r,.bk-rd.ah .bk-bar,.bk-rd.ah .bk-foot{transition:none!important}}
 </style>
 </head>
@@ -1372,7 +1372,7 @@ function bkBook(root,is,startPage){
     if(near)ui(true);else if(!root.classList.contains('ui-off')&&!uiT)uiT=setTimeout(()=>{uiT=0;if(!uiHold())ui(false)},500)});
   const shift=()=>{if(!document.contains(root)){mo.disconnect();return}
     const on=document.body.classList.contains('mini-on')&&innerWidth>=800;let x=0;
-    let sc=1;if(on){const w=fb.offsetWidth,bl=stage.getBoundingClientRect().left+fb.offsetLeft,L=96,R=innerWidth-440-50;sc=Math.min(1,Math.max(.5,(R-L)/w));x=bl+w/2-(L+w*sc/2);if(x<0)x=0}
+    let sc=1;if(on){const w=fb.offsetWidth,r=zw.getBoundingClientRect(),L=28,R=innerWidth-440;sc=Math.min(1,Math.max(.5,(R-L)/w));x=r.left+r.width/2-Z.x-(L+R)/2}
     fb.style.transform=on?`translateX(${-x}px) scale(${sc})`:''};
   const mo=new MutationObserver(shift);mo.observe(document.body,{attributes:true,attributeFilter:['class']});
   layout();
