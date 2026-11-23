@@ -455,6 +455,11 @@ body.anime .top{display:none!important}
 html[data-theme=dark] .ent.zone .ic,html[data-theme=dark] .ent.sm .ic{background:linear-gradient(145deg,#161616,#232323);box-shadow:inset 3px 3px 8px rgba(0,0,0,.65),inset -2px -2px 5px rgba(255,255,255,.06),0 1px 0 rgba(255,255,255,.05)}
 html[data-theme=dark] .ent.zone .ic .si{filter:drop-shadow(0 1px 0 rgba(0,0,0,.6))}
 @media(min-width:900px){.ent.zone .ic{width:76px;height:76px;border-radius:24px}.ent.zone .ic .si{width:36px;height:36px}}
+
+.pst .kv{width:clamp(180px,25vw,290px)!important;aspect-ratio:16/10;padding:0!important;border-radius:12px;overflow:hidden;background:#0b1620 url(mv.webp) center/cover;text-align:center;text-shadow:0 2px 10px rgba(0,0,0,.9);box-shadow:0 18px 34px rgba(0,0,0,.55),0 3px 8px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.28),inset 0 -2px 5px rgba(0,0,0,.45),inset 2px 0 3px rgba(255,255,255,.08);transform:translateY(-50%) perspective(900px) rotateY(-7deg) rotateZ(1deg)!important;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:12px!important}
+.pst .kv::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.72));z-index:0}
+.pst .kv>*{position:relative;z-index:1}.pst .kv i{font-size:clamp(16px,2.2vw,24px)!important}.pst .kv em{margin-bottom:0}.pst .kv i:not(.on),.pst .kv i:not(.on)+em{display:none}.pst .kv i.on{background:linear-gradient(90deg,#ffd86b 55%,#f6efe6 55%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-shadow:none;filter:drop-shadow(0 2px 6px rgba(0,0,0,.9))}
+@media(max-width:560px){.pst .kv{width:150px!important}.pst .kv i{font-size:15px!important}.pst .kv em{font-size:9px!important}}
 </style>
 </head>
 <body>
@@ -640,7 +645,7 @@ function pHome(){
    </div>
    <div class="hsec g2 grid g2d">
     <a class="pst a" href="#anime"><div class="pv">${prv}</div><small>Tâi-gí Hì-tâi</small><b>台語戲台</b><span>動畫、電影、戲劇、節目</span></a>
-    <a class="pst b" href="https://weichi2001.github.io/taigi-ktv/?student"><div class="kv"><i class="on">${esc(kw[0].w)}</i><em>${esc(kw[0].r)}</em><i>${esc(kw[1].w)}</i><em>${esc(kw[1].r)}</em><u></u></div><small>Tâi-gí Ko-thiann</small><b>台語歌廳</b><span>跟著字幕唱，順便認字</span></a>
+    <a class="pst b" href="https://weichi2001.github.io/taigi-ktv/?student"><div class="kv"><i class="on">${esc(kw[0].w)}</i><em>${esc(kw[0].r)}</em><i>${esc(kw[1].w)}</i><em>${esc(kw[1].r)}</em></div><small>Tâi-gí Ko-thiann</small><b>台語歌廳</b><span>跟著字幕唱，順便認字</span></a>
    </div>
    <div class="hsec"><a class="more" href="#play">還有聽歌、節目的資源 ${SI.link}</a>
     <a class="ent sm" href="#links"><div class="ic">${SI.link}</div><div><h3>其他推薦網站</h3><p>教育部資源、老師的 IG 等等。</p></div></a></div>
