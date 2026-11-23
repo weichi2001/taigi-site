@@ -526,22 +526,11 @@ body[data-r^=books]:has(.is-book) .wrap{max-width:1560px}
 .bk-arr.l{left:0}.bk-arr.r{right:0}.bk-arr:disabled{opacity:.25;cursor:default}
 @media(max-width:899px){.bk-arr{display:none}.is-book .bk-mode,.is-book .bk-tools>button[data-bk=fs]{display:none}}
 .bk-foot{display:flex;align-items:center;gap:14px;max-width:560px;margin:6px auto 30px}.bk-rg{flex:1;accent-color:var(--accent)}.bk-pg{font-size:14px;color:var(--ink2,#777);min-width:76px;text-align:right}
-.bk-drawer{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.45);display:flex;justify-content:flex-end}.bk-drawer[hidden],.bk-zoom[hidden]{display:none}
+.bk-drawer{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.45);display:flex;justify-content:flex-end}.bk-drawer[hidden]{display:none}
 .bk-dw{width:min(380px,92vw);height:100%;overflow:auto;background:var(--paper,#fbf8f3);color:var(--ink);padding:18px 20px 40px}
 .bk-dw h3{font-size:17px;color:var(--accent);margin:22px 0 4px}.bk-dw button:not(.bk-x),.bk-dw a{display:block;width:100%;text-align:left;font:inherit;font-size:16px;padding:11px 0;border:0;border-bottom:1px solid var(--line);background:none;color:inherit;cursor:pointer;text-decoration:none}.bk-dw small{color:var(--ink2,#777);margin-left:6px}
 .bk-x{font:inherit;font-size:14px;padding:5px 14px;border-radius:99px;border:1px solid var(--line);background:var(--card,#fff);color:var(--ink);cursor:pointer}
-.bk-zoom{position:fixed;inset:0;z-index:70;background:rgba(22,17,12,.95);display:flex;align-items:center;justify-content:center;overflow:hidden;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
-.bk-zoom:active{cursor:grabbing}
-.bk-zoom .zs{display:flex;align-items:center;justify-content:center;transform-origin:50% 50%;will-change:transform}
-.bk-zoom .zs img{display:block;max-height:94vh;max-width:49vw;width:auto;height:auto;background:#fbf8f3;box-shadow:0 10px 40px rgba(0,0,0,.5);-webkit-user-drag:none}
-.bk-zoom .zs.one img{max-width:96vw}
-.bk-zoom .zc{position:fixed;top:14px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:4px;padding:5px;border-radius:99px;background:rgba(48,40,32,.88);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);z-index:2;cursor:default;box-shadow:0 6px 22px rgba(0,0,0,.4);white-space:nowrap}
-.bk-zoom .zc button{font:inherit;font-size:15px;color:#f4efe6;background:rgba(255,255,255,.1);border:0;border-radius:99px;padding:6px 14px;cursor:pointer;min-width:38px}
-.bk-zoom .zc button:hover{background:rgba(255,255,255,.2)}
-.bk-zoom .zc i{width:1px;height:20px;background:rgba(255,255,255,.2);margin:0 4px}
-.bk-zoom .zc span{color:#f4efe6;font-size:14px;min-width:54px;text-align:center}
-.bk-zoom .zh{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);margin:0;color:rgba(244,239,230,.65);font-size:13px;pointer-events:none;transition:opacity .8s}
-@media(max-width:899px){.bk-zoom .zs img{max-width:96vw}.bk-zoom .zh{display:none}.bk-zoom .zc{top:10px;gap:2px;padding:4px}.bk-zoom .zc button{padding:6px 10px;font-size:14px}.bk-zoom .zc i{display:none}.bk-zoom .zc span{min-width:44px;font-size:13px}}
+.bk-zw{display:flex;transform-origin:50% 50%;will-change:transform;touch-action:none}
 
 .bkb .lf{position:absolute;top:0;width:0;height:var(--ph);transform-style:preserve-3d;z-index:5;pointer-events:none}
 .bkb .lf{transform-style:flat!important}.bkb .st{position:absolute;left:0;top:0;height:var(--ph);transform-origin:0 0}.bkb .st::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,var(--a0,0)),rgba(0,0,0,var(--a1,0)))}
@@ -1263,13 +1252,13 @@ function bkBook(root,is,startPage){
   const secs=[];is.arts.forEach((a,k)=>{let s=secs.find(x=>x.s===a.s);if(!s){s={s:a.s,l:[]};secs.push(s)}s.l.push([k,a,P.findIndex(p=>p.a===k)])});
   root.className='bk-rd is-book';root.style.removeProperty('--bkfs');
   root.innerHTML=`<div class="bk-bar"><a class="back" href="#books">← 書架</a><span class="bk-bt">第 ${n} 期</span>
-    <span class="bk-fs bk-tools"><span class="bk-mode"><button class="on" data-bk="m-img">電子書</button><button data-bk="m-txt">文字</button></span><button data-bk="toc">目錄</button><button data-bk="zoom">放大</button><button data-bk="fs" aria-label="全螢幕">全螢幕</button></span></div>
+    <span class="bk-fs bk-tools"><span class="bk-mode"><button class="on" data-bk="m-img">電子書</button><button data-bk="m-txt">文字</button></span><button data-bk="toc">目錄</button><button data-bk="fs" aria-label="全螢幕">全螢幕</button></span></div>
    <div class="bk-stage"><button class="bk-arr l" data-bk="prev" aria-label="上一頁">‹</button>
-     <div class="bkb"><div class="fb-p fb-l"></div><div class="fb-p fb-r"></div></div>
+     <div class="bk-zw"><div class="bkb"><div class="fb-p fb-l"></div><div class="fb-p fb-r"></div></div></div>
    <button class="bk-arr r" data-bk="next" aria-label="下一頁">›</button></div>
    <div class="bk-foot"><input type="range" class="bk-rg" min="0" value="0" aria-label="頁數"><span class="bk-pg"></span></div>
    <div class="bk-drawer" hidden><div class="bk-dw"><button class="bk-x" data-bk="toc">關閉</button>${secs.map(s=>`<h3 class="hd">${esc(s.s||'本期')}</h3>${s.l.map(([k,a,p])=>p>=0?`<button data-bk="go" data-p="${p}">${esc(a.t)}</button>`:`<a href="#books/${n}/${k}">${esc(a.t)}<small>（只有文字）</small></a>`).join('')}`).join('')}</div></div>
-   <div class="bk-zoom" hidden></div>`;
+   `;
   const $=s=>root.querySelector(s),fb=$('.bkb'),eL=$('.fb-l'),eR=$('.fb-r'),stage=$('.bk-stage'),rg=$('.bk-rg'),pg=$('.bk-pg');
   let ratio=.71,wide=true,cur=0,busy=false;
   const maxC=()=>wide?Math.floor(N/2):N-1;
@@ -1302,7 +1291,7 @@ function bkBook(root,is,startPage){
   const NS=30,ease=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2,cl=x=>Math.max(0,Math.min(1,x));
   const bg=(el,p,x)=>{el.style.background=p?`#fbf8f3 url("${p.s}") ${x}px 0/var(--pw) var(--ph) no-repeat`:'#fbf8f3'};
   function flip(dir){
-    const t=cur+dir;if(busy||t<0||t>maxC())return;busy=true;
+    const t=cur+dir;if(busy||t<0||t>maxC())return;zReset();busy=true;
     const lo=Math.min(cur,t),hi=Math.max(cur,t),A=pagesOf(lo),B=pagesOf(hi);
     if(matchMedia('(prefers-reduced-motion: reduce)').matches){cur=t;show();busy=false;return}
     const pw=fb.clientWidth/(wide?2:1);
@@ -1348,27 +1337,30 @@ function bkBook(root,is,startPage){
     requestAnimationFrame(fr);
   }
   const goPage=p=>{if(busy)return;cur=wide?Math.ceil(p/2):p;show()};
-  const zEl=$('.bk-zoom');let Z={s:1,x:0,y:0},zh;
-  const zApply=()=>{const st=zEl.querySelector('.zs');if(!st)return;const r=zEl.getBoundingClientRect(),mx=Math.max(0,(st.offsetWidth*Z.s-r.width)/2)+60,my=Math.max(0,(st.offsetHeight*Z.s-r.height)/2)+60;Z.x=Math.max(-mx,Math.min(mx,Z.x));Z.y=Math.max(-my,Math.min(my,Z.y));st.style.transform=`translate(${Z.x}px,${Z.y}px) scale(${Z.s})`;const pp=zEl.querySelector('.zp');if(pp)pp.textContent=Math.round(Z.s*100)+'%'};
-  const zSet=(ns,cx,cy)=>{ns=Math.max(1,Math.min(6,ns));const r=zEl.getBoundingClientRect(),px=cx-(r.left+r.width/2),py=cy-(r.top+r.height/2),k=ns/Z.s;Z.x=px-(px-Z.x)*k;Z.y=py-(py-Z.y)*k;Z.s=ns;if(ns<=1){Z.x=Z.y=0}zApply()};
-  const zFill=()=>{const st=zEl.querySelector('.zs');st.classList.toggle('one',!wide);st.innerHTML=pagesOf(cur).filter(Boolean).map(p=>`<img src="${p.z}" alt="" draggable="false">`).join('');Z={s:1,x:0,y:0};zApply();const pp=zEl.querySelector('.zl');if(pp){const ps=pagesOf(cur).map((p,i)=>p?(wide?2*cur-1+i:cur)+1:0).filter(Boolean);pp.textContent=(ps.length>1?ps[0]+'–'+ps[1]:ps[0])+' / '+N}};
-  const zstep=d=>{if(busy)return;const t=cur+d;if(t<0||t>maxC())return;cur=t;show();zFill()};
-  const zoom=()=>{if(zEl.hidden){zEl.innerHTML='<div class="zs"></div><div class="zc"><button data-z="prev" aria-label="上一頁">‹</button><span class="zl"></span><button data-z="next" aria-label="下一頁">›</button><i></i><button data-z="out" aria-label="縮小">−</button><span class="zp">100%</span><button data-z="in" aria-label="放大">+</button><button data-z="fit">適合</button><i></i><button data-z="x">關閉</button></div><p class="zh">滾輪縮放　拖曳移動　點兩下放大　← → 換頁　Esc 關閉</p>';zEl.hidden=false;zFill();clearTimeout(zh);zh=setTimeout(()=>{const h=zEl.querySelector('.zh');if(h)h.style.opacity=0},4500)}else{zEl.hidden=true;zEl.innerHTML=''}};
-  {const pt=new Map();let moved=0,lt=0,lx=0,ly=0,pd=0;
-   zEl.addEventListener('wheel',e=>{e.preventDefault();zSet(Z.s*Math.exp(-e.deltaY*(e.ctrlKey?.012:.0016)),e.clientX,e.clientY)},{passive:false});
-   zEl.addEventListener('pointerdown',e=>{if(e.target.closest('.zc'))return;zEl.setPointerCapture(e.pointerId);pt.set(e.pointerId,[e.clientX,e.clientY]);moved=0;if(pt.size===2){const [a,b]=[...pt.values()];pd=Math.hypot(a[0]-b[0],a[1]-b[1])}});
-   zEl.addEventListener('pointermove',e=>{const o=pt.get(e.pointerId);if(!o)return;const n=[e.clientX,e.clientY];
-     if(pt.size===1){const dx=n[0]-o[0],dy=n[1]-o[1];moved+=Math.abs(dx)+Math.abs(dy);if(Z.s>1){Z.x+=dx;Z.y+=dy;zApply()}}
-     else if(pt.size===2){pt.set(e.pointerId,n);const [a,b]=[...pt.values()],d=Math.hypot(a[0]-b[0],a[1]-b[1]);if(pd>0)zSet(Z.s*d/pd,(a[0]+b[0])/2,(a[1]+b[1])/2);pd=d;moved+=9;return}
+  const zw=$('.bk-zw');let Z={s:1,x:0,y:0},hiOn=false,dragged=false;
+  const zApply=()=>{const mx=Math.max(0,(zw.offsetWidth*Z.s-innerWidth)/2)+60,my=Math.max(0,(zw.offsetHeight*Z.s-innerHeight)/2)+60;Z.x=Math.max(-mx,Math.min(mx,Z.x));Z.y=Math.max(-my,Math.min(my,Z.y));zw.style.transform=Z.s===1&&!Z.x&&!Z.y?'':`translate(${Z.x.toFixed(1)}px,${Z.y.toFixed(1)}px) scale(${Z.s.toFixed(4)})`};
+  const hi=on=>{if(on===hiOn)return;hiOn=on;if(!on){show();return}
+    const c0=cur,ps=pagesOf(cur),els=[eL,eR];let n=0;ps.forEach((p,i)=>{if(!p)return;const im=new Image();im.onload=()=>{if(hiOn&&cur===c0)els[i].style.backgroundImage=`url("${p.z}")`};im.src=p.z})};
+  const zSet=(ns,cx,cy)=>{ns=Math.max(1,Math.min(5,ns));const r=zw.getBoundingClientRect(),px=cx-(r.left+r.width/2-Z.x),py=cy-(r.top+r.height/2-Z.y),k=ns/Z.s;Z.x=px-(px-Z.x)*k;Z.y=py-(py-Z.y)*k;Z.s=ns;if(ns<1.001){Z.s=1;Z.x=Z.y=0}zApply();hi(Z.s>1.25)};
+  const zReset=()=>{if(Z.s===1)return;Z={s:1,x:0,y:0};zApply();hi(false)};
+  const zoom=()=>{Z.s>1?zReset():zSet(2.2,innerWidth/2,innerHeight/2)};
+  {const st=$('.bk-stage'),pt=new Map();let pd=0,mv=0,g0=1;
+   st.addEventListener('wheel',e=>{if(e.ctrlKey||e.metaKey){e.preventDefault();zSet(Z.s*Math.exp(-e.deltaY*.01),e.clientX,e.clientY)}else if(Z.s>1){e.preventDefault();Z.x-=e.deltaX;Z.y-=e.deltaY;zApply()}},{passive:false});
+   st.addEventListener('gesturestart',e=>{e.preventDefault();g0=Z.s});
+   st.addEventListener('gesturechange',e=>{e.preventDefault();zSet(g0*e.scale,e.clientX||innerWidth/2,e.clientY||innerHeight/2)});
+   st.addEventListener('gestureend',e=>e.preventDefault());
+   zw.addEventListener('pointerdown',e=>{pt.set(e.pointerId,[e.clientX,e.clientY]);mv=0;dragged=false;if(pt.size===2){const [a,b]=[...pt.values()];pd=Math.hypot(a[0]-b[0],a[1]-b[1]);dragged=true}try{zw.setPointerCapture(e.pointerId)}catch(_){}});
+   zw.addEventListener('pointermove',e=>{const o=pt.get(e.pointerId);if(!o)return;const n=[e.clientX,e.clientY];
+     if(pt.size===1){const dx=n[0]-o[0],dy=n[1]-o[1];mv+=Math.abs(dx)+Math.abs(dy);if(mv>6)dragged=true;if(Z.s>1){Z.x+=dx;Z.y+=dy;zApply()}}
+     else if(pt.size===2){pt.set(e.pointerId,n);const [a,b]=[...pt.values()],d=Math.hypot(a[0]-b[0],a[1]-b[1]);if(pd>0)zSet(Z.s*d/pd,(a[0]+b[0])/2,(a[1]+b[1])/2);pd=d;return}
      pt.set(e.pointerId,n)});
-   const up=e=>{if(!pt.has(e.pointerId))return;const was=pt.size;pt.delete(e.pointerId);if(was===1&&moved<8){const now=performance.now();if(now-lt<320&&Math.hypot(e.clientX-lx,e.clientY-ly)<30){zSet(Z.s>1.05?1:2.6,e.clientX,e.clientY);lt=0}else{lt=now;lx=e.clientX;ly=e.clientY}}};
-   zEl.addEventListener('pointerup',up);zEl.addEventListener('pointercancel',up);
-   zEl.addEventListener('click',e=>{const b=e.target.closest('[data-z]');if(!b)return;const k=b.dataset.z,r=zEl.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
-     if(k==='x')zoom();else if(k==='in')zSet(Z.s*1.5,cx,cy);else if(k==='out')zSet(Z.s/1.5,cx,cy);else if(k==='fit')zSet(1,cx,cy);else if(k==='prev')zstep(-1);else if(k==='next')zstep(1)});}
-  BK.book={el:root,flip,zoom,zstep,zopen:()=>!zEl.hidden,go:p=>{goPage(p);$('.bk-drawer').hidden=true},toc:()=>{const d=$('.bk-drawer');d.hidden=!d.hidden},
+   const up=e=>{pt.delete(e.pointerId)};zw.addEventListener('pointerup',up);zw.addEventListener('pointercancel',up);
+   zw.addEventListener('click',e=>{if(dragged){e.stopPropagation();dragged=false}},true);}
+  const zstep=d=>{};
+  BK.book={el:root,flip,zoom,zzoom:()=>Z.s>1,zset:k=>zSet(Z.s*k,innerWidth/2,innerHeight/2),zreset:zReset,go:p=>{goPage(p);$('.bk-drawer').hidden=true},toc:()=>{const d=$('.bk-drawer');d.hidden=!d.hidden},
     fs:()=>{const e=document.fullscreenElement,d=document.documentElement;if(e)document.exitFullscreen();else if(d.requestFullscreen)d.requestFullscreen()},
     art,pageNow:()=>wide?(cur?2*cur-1:0):cur};
-  fb.addEventListener('click',e=>{const r=fb.getBoundingClientRect();if(wide){flip(e.clientX<r.left+r.width/2?-1:1)}else flip(e.clientX<r.left+r.width/3?-1:1)});
+  fb.addEventListener('click',e=>{if(Z.s>1.02)return;const r=fb.getBoundingClientRect();if(wide){flip(e.clientX<r.left+r.width/2?-1:1)}else flip(e.clientX<r.left+r.width/3?-1:1)});
   rg.addEventListener('input',()=>{cur=+rg.value;show()});
   document.addEventListener('fullscreenchange',()=>{document.documentElement.classList.toggle('bk-fs-on',!!document.fullscreenElement);if(document.contains(root))setTimeout(layout,200)});
   let rt;window.addEventListener('resize',()=>{if(!document.contains(root))return;clearTimeout(rt);rt=setTimeout(layout,120)});
@@ -1389,7 +1381,7 @@ function bkBook(root,is,startPage){
   im.src=P[0]?P[0].s:'';
   if(!N){root.querySelector('.bk-stage').innerHTML='<p class="sub" style="padding:40px">這一期沒有電子書版面，請改看文字版。</p>'}
 }
-document.addEventListener('keydown',e=>{const b=BK.book;if(!b||!document.contains(b.el))return;if(b.zopen()){if(e.key==='Escape')b.zoom();else if(e.key==='ArrowRight')b.zstep(1);else if(e.key==='ArrowLeft')b.zstep(-1);else if(e.key==='+'||e.key==='=')b.el.querySelector('[data-z=in]').click();else if(e.key==='-')b.el.querySelector('[data-z=out]').click();else if(e.key==='0')b.el.querySelector('[data-z=fit]').click();return}if(e.key==='ArrowRight')b.flip(1);else if(e.key==='ArrowLeft')b.flip(-1)});
+document.addEventListener('keydown',e=>{const b=BK.book;if(!b||!document.contains(b.el))return;if(e.key==='ArrowRight')b.flip(1);else if(e.key==='ArrowLeft')b.flip(-1);else if(e.key==='+'||e.key==='=')b.zset(1.4);else if(e.key==='-')b.zset(1/1.4);else if(e.key==='0'||e.key==='Escape')b.zreset()});
 
 const bkSaved=()=>{try{return JSON.parse(localStorage.getItem('tgbk')||'null')}catch(e){return null}};
 const bkSave=o=>{try{localStorage.setItem('tgbk',JSON.stringify(o))}catch(e){}};
@@ -1450,7 +1442,7 @@ document.getElementById('app').addEventListener('click',e=>{
   const b=e.target.closest('[data-bk]');if(!b)return;const k=b.dataset.bk;
   if(k==='more'&&BK.add)BK.add();
   if(k==='m-img'||k==='m-txt'){try{localStorage.setItem('tgbkmode',k==='m-txt'?'txt':'img')}catch(x){}const bb=BK.book,inBook=bb&&document.contains(bb.el)&&document.getElementById('bk-rd')===bb.el;if(inBook&&k==='m-txt'){const a=bb.art(),h='#books/'+document.getElementById('bk-rd').dataset.n+'/'+(a>=0?a:0);if(location.hash===h)bkReader();else location.hash=h}else bkReader()}
-  if(BK.book&&document.contains(BK.book.el)){const B=BK.book;if(k==='prev')B.flip(-1);if(k==='next')B.flip(1);if(k==='toc')B.toc();if(k==='zoom')B.zoom();if(k==='fs')B.fs();if(k==='go')B.go(+b.dataset.p)}
+  if(BK.book&&document.contains(BK.book.el)){const B=BK.book;if(k==='prev')B.flip(-1);if(k==='next')B.flip(1);if(k==='toc')B.toc();if(k==='fs')B.fs();if(k==='go')B.go(+b.dataset.p)}
   if(k==='fs+'||k==='fs-'){const v=Math.max(15,Math.min(30,bkFs()+(k==='fs+'?2:-2)));try{localStorage.setItem('tgbkfs',v)}catch(x){}const r=document.getElementById('bk-rd');if(r)r.style.setProperty('--bkfs',v+'px')}
 });
 let bkTx=0;
