@@ -834,12 +834,25 @@ function exLoad(cb){
   if(EXD){cb();return}
   fetch('ex.json',{cache:'no-cache'}).then(r=>r.json()).then(x=>{const k=Object.keys(x)[0];return (k&&x[k][0]&&x[k][0][3]===undefined)?fetch('ex.json',{cache:'reload'}).then(r=>r.json()):x}).then(x=>{EXD=x;cb()}).catch(()=>{EXD={};cb()});
 }
+// 華語查詢：解釋裡整段剛好等於查詢字（如「知道、懂得。」的「知道」）排最前，越前面的義項、義項越少越優先
+function gl(e,raw){
+  let best=4;
+  e.s.forEach(([p,d],i)=>{
+    d.split(/[、，；,;。]/).forEach((g,j)=>{
+      g=g.replace(/[（(].*?[）)]/g,'').trim();
+      if(!g.includes(raw))return;
+      const v=(g===raw?1.5:g.startsWith(raw)||g.endsWith(raw)?2.6:3.6)+i*0.04+j*0.02+e.s.length*0.01+(/^【文】/.test(e.r)?0.1:0);
+      if(v<best)best=v;
+    });
+  });
+  return best;
+}
 function dxFind(raw){
   const k=norm(raw),han=hasHan(raw),out=[];
   for(const e of DX){
     let sc=9;
     if(han){
-      if(e.hc===raw)sc=0;else if(e.hc.startsWith(raw))sc=1;else if(e.hc.includes(raw))sc=2;else if(e.v.some(x=>clean(x[0]).includes(raw)))sc=3;else if(e.d.includes(raw))sc=4;
+      if(e.hc===raw)sc=0;else if(e.hc.startsWith(raw))sc=1;else if(e.hc.includes(raw))sc=2;else if(e.v.some(x=>clean(x[0]).includes(raw)))sc=3;else if(e.d.includes(raw))sc=gl(e,raw);
     }else if(k){
       if(e.ks.includes(k))sc=0;else if(e.ks.some(x=>x.startsWith(k)))sc=1;else if(e.k.includes(k))sc=2;
     }
