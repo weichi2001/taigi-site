@@ -300,6 +300,8 @@ body.mini-on:has(.vw) #mini{height:56vh}
 .ab-src li{padding-left:18px;position:relative}.ab-src li::before{content:'';position:absolute;left:4px;top:.85em;width:6px;height:6px;border-radius:50%;background:#e8956b}
 .ab-btn{display:inline-flex;align-items:center;gap:8px;margin-top:6px;padding:11px 20px;border-radius:99px;text-decoration:none;font-size:15px;color:#fff;background:linear-gradient(135deg,#7a675a,#4f4036);box-shadow:0 8px 20px rgba(79,64,54,.28),inset 0 1px 0 rgba(255,255,255,.3)}
 @media(max-width:620px){.ab-hero{grid-template-columns:1fr;gap:20px;padding:22px 18px;text-align:center}.ab-ph{width:min(70%,260px);margin:0 auto}.ab-chips{justify-content:center}.ab-bio{text-align:left}}
+.grid+.grid{margin-top:12px}.ent.zone{padding:20px 18px}.ent .li{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}.ent .li span{font-size:12.5px;padding:2px 10px;border-radius:99px;background:rgba(255,255,255,.62);border:1px solid rgba(255,255,255,.85);color:var(--ink)}
+.ent.sm{display:flex;gap:14px;align-items:center;padding:14px 18px}.ent.sm .ic{font-size:28px}.ent.sm h3{margin:0}
 </style>
 </head>
 <body>
@@ -307,10 +309,11 @@ body.mini-on:has(.vw) #mini{height:56vh}
   <a class="logo hd" href="#home">台語<b>自學</b>站</a>
   <div class="tools">
     <a class="tool" href="#" data-act="minidict">🔎 辭典</a>
-    <a class="tool" href="#anime">🎬 台語戲台 Tâi-gí Hì-tâi</a>
-    <a class="tool" href="https://weichi2001.github.io/taigi-ktv/?student">🎤 台語歌廳 Tâi-gí Kua-thiann</a>
-    <a class="tool" href="#apps">⌨️ 輸入法</a>
-    <a class="tool" href="https://taigilyrics.kiantiong.com/" target="_blank" rel="noopener">🎵 歌詞</a>
+    <a class="tool" href="#start">🌱 系統性學習</a>
+    <a class="tool" href="#learn">🎯 練習資源</a>
+    <a class="tool" href="#play">🎧 娛樂學習</a>
+    <a class="tool" href="#apps">⌨️ 輸入法與軟體</a>
+    <a class="tool" href="#links">🔗 推薦網站</a>
   </div>
 </div></div>
 <main class="wrap" id="app"></main>
@@ -364,18 +367,18 @@ const plat=(/iPhone|iPad|iPod/.test(ua)||(/Macintosh/.test(ua)&&navigator.maxTou
 
 // ---- 資源清單 ----
 const RES=[
- {t:'700 字自學',d:'教育部推薦用字，每字有台羅、華語、用例與常見錯寫，可翻卡自測。',tags:['讀','寫'],time:'每段約 10 分鐘',href:'#w700',inner:1},
- {t:'挑錯字挑戰',d:'哪一個才是推薦用字？練習避開檢定不能用的寫法。',tags:['讀','寫'],time:'5 分鐘',href:'#quiz',inner:1},
- {t:'台語歌廳 Tâi-gí Kua-thiann',d:'跟著字幕唱台語歌，歌詞用的都是正字。',tags:['聽','說','讀'],time:'一首歌',href:'https://weichi2001.github.io/taigi-ktv/?student',play:1},
- {t:'Spotify「台語歌」播放清單',d:'老師挑的台語歌，通勤、放學路上都能聽。',tags:['聽'],time:'隨時',href:'https://open.spotify.com/playlist/1FqTdaDvhYgQgENEJrQRix',play:1},
- {t:'臺語歌真正正字歌詞網',d:'查歌詞的正確用字，網路上很多歌詞都是錯字。',tags:['讀'],time:'查詢',href:'https://taigilyrics.kiantiong.com/',play:1},
- {t:'教學 IG @taigi_lausu',d:'老師的教學紀錄與台語文小知識。',tags:['聽','讀'],time:'滑一滑',href:'https://www.instagram.com/taigi_lausu/',play:1},
- {t:'教育部臺灣台語常用詞辭典',d:'查詞、聽發音、看例句，最權威的線上辭典。',tags:['聽','讀','寫'],time:'查詢',href:DICT},
- {t:'國立教育廣播電臺 本土語言學習專區',d:'適合用來多聽的台語節目。',tags:['聽'],time:'隨時',href:'https://channelplus.ner.gov.tw/channel-language/85'},
- {t:'臺灣台語寫字練習簿',d:'教育部提供的台語寫字練習。',tags:['寫'],time:'10 分鐘',href:'https://tailo.moe.edu.tw/mkwriting/index.php'},
- {t:'練台羅',d:'聽音檔練拼寫、標聲調、打台羅，連變調也能練，還有錯題本。',tags:['聽','讀','寫'],time:'每回約 5 分鐘',href:'https://kiantiong.com/tailo_practice/'},
- {t:'TaigiTube 台語水管',d:'用鄉土劇、台語新聞的影片學台語，聽得多、學得快。',tags:['聽','讀'],time:'一支影片',href:'https://taigitube.com/',play:1},
- {t:'教育部本土語言資源網',d:'教育部整理的本土語言學習資源。',tags:['聽','讀'],time:'逛逛',href:'https://mhi.moe.edu.tw/'}
+ {c:'s',t:'700 字自學',d:'教育部推薦用字，每字有台羅、華語、用例與常見錯寫，可翻卡自測。',tags:['讀','寫'],time:'每段約 10 分鐘',href:'#w700',inner:1},
+ {c:'p',t:'挑錯字挑戰',d:'哪一個才是推薦用字？練習避開檢定不能用的寫法。',tags:['讀','寫'],time:'5 分鐘',href:'#quiz',inner:1},
+ {c:'e',t:'台語歌廳 Tâi-gí Kua-thiann',d:'跟著字幕唱台語歌，歌詞用的都是正字。',tags:['聽','說','讀'],time:'一首歌',href:'https://weichi2001.github.io/taigi-ktv/?student',play:1},
+ {c:'e',t:'Spotify「台語歌」播放清單',d:'老師挑的台語歌，通勤、放學路上都能聽。',tags:['聽'],time:'隨時',href:'https://open.spotify.com/playlist/1FqTdaDvhYgQgENEJrQRix',play:1},
+ {c:'e',t:'臺語歌真正正字歌詞網',d:'查歌詞的正確用字，網路上很多歌詞都是錯字。',tags:['讀'],time:'查詢',href:'https://taigilyrics.kiantiong.com/',play:1},
+ {c:'o',t:'教學 IG @taigi_lausu',d:'老師的教學紀錄與台語文小知識。',tags:['聽','讀'],time:'滑一滑',href:'https://www.instagram.com/taigi_lausu/',play:1},
+ {c:'o',t:'教育部臺灣台語常用詞辭典',d:'查詞、聽發音、看例句，最權威的線上辭典。',tags:['聽','讀','寫'],time:'查詢',href:DICT},
+ {c:'e',t:'國立教育廣播電臺 本土語言學習專區',d:'適合用來多聽的台語節目。',tags:['聽'],time:'隨時',href:'https://channelplus.ner.gov.tw/channel-language/85'},
+ {c:'p',t:'臺灣台語寫字練習簿',d:'教育部提供的台語寫字練習。',tags:['寫'],time:'10 分鐘',href:'https://tailo.moe.edu.tw/mkwriting/index.php'},
+ {c:'p',t:'練台羅',d:'聽音檔練拼寫、標聲調、打台羅，連變調也能練，還有錯題本。',tags:['聽','讀','寫'],time:'每回約 5 分鐘',href:'https://kiantiong.com/tailo_practice/'},
+ {c:'e',t:'TaigiTube 台語水管',d:'用鄉土劇、台語新聞的影片學台語，聽得多、學得快。',tags:['聽','讀'],time:'一支影片',href:'https://taigitube.com/',play:1},
+ {c:'o',t:'教育部本土語言資源網',d:'教育部整理的本土語言學習資源。',tags:['聽','讀'],time:'逛逛',href:'https://mhi.moe.edu.tw/'}
 ];
 function resCard(r){
   const ext=!r.inner;
@@ -467,18 +470,18 @@ function quizHtml(){
 function pHome(){
   const d=D[Math.floor(Date.now()/864e5)%D.length];
   S.open.add(d.n);
+  const zone=(h,ic,t,d,items)=>`<a class="ent zone" href="${h}"><div class="ic">${ic}</div><h3>${t}</h3><p>${d}</p><div class="li">${items.map(x=>`<span>${x}</span>`).join('')}</div></a>`;
   return `<h1 class="hd">聽、說、讀、寫，<br>一個地方找得到</h1>
    <p class="sub">把學台語會用到的資源整理在這裡，點一下就能開始。</p>
    <div class="grid g3">
-    <a class="ent" href="#start"><div class="ic">🌱</div><h3>從頭開始</h3><p>第一次學？照順序走就對了。</p></a>
-    <a class="ent" href="#learn"><div class="ic">🎯</div><h3>練某個能力</h3><p>聽、說、讀、寫，挑你想加強的。</p></a>
-    <a class="ent" href="#play"><div class="ic">🎧</div><h3>想玩一下</h3><p>唱歌、聽歌、看短影片。</p></a>
+    ${zone('#start','🌱','系統性學習','第一次學？照順序，一步一步來。',['台羅拼音','700 字自學'])}
+    ${zone('#learn','🎯','練習資源','學了就練，把會的變熟。',['挑錯字挑戰','練台羅','寫字練習','複習'])}
+    ${zone('#play','🎧','娛樂學習','不用想著在學，玩著玩著就會了。',['🎬 台語戲台','🎤 台語歌廳','聽歌','節目'])}
    </div>
-   <div class="feats">
-   <a class="feat" href="#anime" style="background:#241f1b"><div class="ic">🎬</div><div><h3>台語戲台 <span class="tl" style="font-weight:500;font-size:.85em;opacity:.85">Tâi-gí Hì-tâi</span></h3><p>台語動畫、電影、節目，邊看邊練聽力。</p></div></a>
-   <a class="feat" href="https://weichi2001.github.io/taigi-ktv/?student"><div class="ic">🎤</div><div><h3>台語歌廳 <span class="tl" style="font-weight:500;font-size:.85em;opacity:.85">Tâi-gí Kua-thiann</span></h3><p>跟著字幕唱台語歌，歌詞都是正字，點字還能查辭典。</p></div></a>
+   <div class="grid g2d">
+    <a class="ent sm" href="#apps"><div class="ic">⌨️</div><div><h3>輸入法與軟體</h3><p>電腦、手機怎麼打台語，還有辭典 App。</p></div></a>
+    <a class="ent sm" href="#links"><div class="ic">🔗</div><div><h3>其他推薦網站</h3><p>教育部資源、老師的 IG 等等。</p></div></a>
    </div>
-   <a class="feat" href="#w700"><div class="ic">📖</div><div><h3>700 字自學</h3><p>教育部推薦用字，一次一小段，邊看邊測驗。</p></div></a>
    <h3 style="margin-top:22px">今日一字</h3>${row(d)}`;
 }
 function pAbout(){
@@ -521,29 +524,37 @@ function pAbout(){
   <a class="ab-btn" href="https://www.instagram.com/taigi_lausu/" target="_blank" rel="noopener">📷 @taigi_lausu</a>`;
 }
 function pStart(){
-  return `<a class="back" href="#home">← 首頁</a><h2 class="hd">從頭開始</h2><p class="sub">照這個順序，一步一步來。</p>
+  return `<a class="back" href="#home">← 首頁</a><h2 class="hd">系統性學習</h2><p class="sub">第一次學，照這個順序，一步一步來。</p>
    <div class="steps">
     <div class="step"><h3>認識台羅拼音</h3><p class="sub">先會看拼音，後面每個字都用得到。</p>
       ${resCard(RES.find(r=>r.t==='練台羅'))}
       ${resCard({t:'教育部臺羅網站',d:'教育部的台語羅馬字資訊。',tags:['讀','寫'],time:'查詢',href:'https://tailo.moe.edu.tw/'})}
       <div class="dash">之後放：老師的台羅入門教材</div></div>
-    <div class="step"><h3>學 700 字</h3><p class="sub">日常最常用的台語字，不用一次學完，一段一段來。</p>
-      ${resCard(RES[0])}${resCard(RES[1])}</div>
-    <div class="step"><h3>聽、唱、用出來</h3><p class="sub">學了就要用。聽歌、唱歌，或試著用輸入法打台語。</p>
-      ${resCard(RES[2])}<a class="res" href="#apps"><h3>輸入法・字典</h3><p>裝好工具，隨時查字、打台語。</p></a></div>
+    <div class="step"><h3>學 700 字</h3><p class="sub">日常最常用的台語字，不用一次學完，一段一段來。學完一段，可以到「練習資源」挑錯字。</p>
+      ${resCard(RES.find(r=>r.t==='700 字自學'))}</div>
+    <div class="step"><h3>聽、唱、用出來</h3><p class="sub">學了就要用。</p>
+      <a class="res" href="#play"><h3>娛樂學習</h3><p>看動畫、唱歌、聽節目，把學到的用在真的台語裡。</p></a>
+      <a class="res" href="#apps"><h3>輸入法與軟體</h3><p>裝好工具，隨時查字、打台語。</p></a></div>
    </div>`;
 }
 function pLearn(){
-  const sk=['全部','聽','說','讀','寫'];
-  const list=RES.filter(r=>S.skill==='全部'||r.tags.includes(S.skill));
-  return `<a class="back" href="#home">← 首頁</a><h2 class="hd">練某個能力</h2>
-   <p class="sub">語言要先輸入、再輸出：先<b>聽</b>與<b>讀</b>，再<b>說</b>與<b>寫</b>。</p>
-   <div class="filters">${sk.map(s=>`<button class="fb ${S.skill===s?'on':''}" data-act="skill" data-s="${s}">${s}</button>`).join('')}</div>
-   ${list.map(resCard).join('')||'<div class="empty">這類還沒有資源</div>'}`;
+  return `<a class="back" href="#home">← 首頁</a><h2 class="hd">練習資源</h2>
+   <p class="sub">學了要練。語言要先輸入、再輸出：先<b>聽</b>與<b>讀</b>，再<b>說</b>與<b>寫</b>。</p>
+   ${RES.filter(r=>r.c==='p').map(resCard).join('')}
+   <a class="res" href="#review"><h3>700 字複習</h3><p>把標成「不熟」的字再翻一次。</p><div class="meta"><span class="chip tag">讀</span> 隨時</div></a>`;
 }
 function pPlay(){
-  return `<a class="back" href="#home">← 首頁</a><h2 class="hd">想玩一下</h2><p class="sub">不用想著在學，玩著玩著就學會了。</p>
-   ${RES.filter(r=>r.play).map(resCard).join('')}`;
+  return `<a class="back" href="#home">← 首頁</a><h2 class="hd">娛樂學習</h2><p class="sub">不用想著在學，玩著玩著就學會了。</p>
+   <div class="feats">
+   <a class="feat" href="#anime" style="background:#241f1b"><div class="ic">🎬</div><div><h3>台語戲台 <span class="tl" style="font-weight:500;font-size:.85em;opacity:.85">Tâi-gí Hì-tâi</span></h3><p>台語動畫、電影、節目，邊看邊練聽力。</p></div></a>
+   <a class="feat" href="https://weichi2001.github.io/taigi-ktv/?student"><div class="ic">🎤</div><div><h3>台語歌廳 <span class="tl" style="font-weight:500;font-size:.85em;opacity:.85">Tâi-gí Kua-thiann</span></h3><p>跟著字幕唱台語歌，歌詞都是正字，點字還能查辭典。</p></div></a>
+   </div>
+   <h3 class="sec">聽與讀</h3>
+   ${RES.filter(r=>r.c==='e'&&!/歌廳/.test(r.t)).map(resCard).join('')}`;
+}
+function pLinks(){
+  return `<a class="back" href="#home">← 首頁</a><h2 class="hd">其他推薦網站</h2><p class="sub">老師覺得值得逛的資源。</p>
+   ${RES.filter(r=>r.c==='o').map(resCard).join('')}`;
 }
 const IME={
  ios:{n:'iPhone',url:'https://apps.apple.com/app/id6743423554',cta:'到 App Store 安裝',man:'17908498871370',
@@ -567,7 +578,7 @@ const imeDef=plat==='desktop'?(isMac?'mac':'win'):plat;
 const aic=(u,f)=>`<img class="aic" src="${u}" alt="" referrerpolicy="no-referrer" onerror="this.outerHTML='<span class=&quot;aic&quot;>${f}</span>'">`;
 function pApps(){
   const k=S.ime||imeDef,d=IME[k],M='https://language.moe.gov.tw/uploads/files/';
-  return `<a class="back" href="#home">← 首頁</a><h2 class="hd">輸入法・字典</h2>
+  return `<a class="back" href="#home">← 首頁</a><h2 class="hd">輸入法與軟體</h2>
    <section class="ime"><details class="ab ime-h"><summary>${aic('https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/19/c7/8a/19c78a71-3b44-644a-86a0-7b4357e17f30/AppIcon-0-0-1x_U007epad-0-1-85-220.jpeg/200x200bb.jpg','⌨️')}<div><span class="kick2">教育部臺灣台語輸入法</span><p>用臺羅拼音打台語漢字</p></div></summary><div class="abb"><p>教育部出的台語輸入法。照臺羅拼音打，像打注音一樣，會跳出漢字給你選。</p><h4>特色</h4><ul><li>用字照教育部的推薦用字和辭典</li><li>常用詞排前面，也能一次連打一整串</li><li>會看前後文，猜你要打哪個字</li><li>可以匯出、匯入自己的詞庫</li><li>手機版可以用講的轉成文字</li></ul></div></details>
     <div class="filters tabs">${Object.entries(IME).map(([id,v])=>`<button class="fb ${k===id?'on':''}" data-act="ime" data-k="${id}">${imeIc(id)}<span>${v.n}</span></button>`).join('')}</div>
     <a class="btn pri big dl" href="${d.url}" target="_blank" rel="noopener">${d.cta}</a>
@@ -869,6 +880,7 @@ function view(r){
   if(r==='play')return pPlay();
   if(r==='anime')return pAnime();
   if(r==='apps')return pApps();
+  if(r==='links')return pLinks();
   if(r==='w700')return pW700();
   if(r==='review')return pReview();
   if(r==='quiz')return pQuiz();
