@@ -503,6 +503,35 @@ body[data-r^=books] .wrap{max-width:1080px}
 .bk-pages img{display:block;width:100%;height:auto;margin:0 0 14px;border-radius:6px;box-shadow:0 6px 18px rgba(0,0,0,.18);background:#fff}
 .bk-rd.is-img .bk-fs{visibility:hidden}.bk-rd.is-img{max-width:820px}
 .bk-bc{margin:34px 0 0;text-align:center}.bk-bc p{font-size:13px;color:var(--ink2,#777);margin:0 0 10px;letter-spacing:.2em}.bk-bc img{width:min(300px,70%);height:auto;border-radius:3px 10px 10px 3px;box-shadow:0 14px 30px rgba(0,0,0,.28)}
+body[data-r^=books]:has(.is-book) .wrap{max-width:1560px}
+.bk-rd.is-book{max-width:none}
+.is-book .bk-tools{display:flex;gap:6px;align-items:center;visibility:visible}.is-book .bk-tools>button,.is-book .bk-mode button{font:inherit;font-size:14px}
+.is-book .bk-tools>button{padding:5px 12px;border-radius:99px;border:1px solid var(--line);background:var(--card,#fff);color:var(--ink);cursor:pointer;margin:0}
+.is-book .bk-mode{margin:0 6px 0 0}.is-book .bk-mode button{padding:5px 14px}
+.bk-stage{position:relative;display:flex;justify-content:center;align-items:center;padding:14px 0 6px;min-height:300px}
+.bkb{position:relative;width:calc(var(--pw,300px)*2);height:var(--ph,420px);perspective:2600px;flex:none}
+.bkb.single{width:var(--pw,300px)}
+.fb-p{position:absolute;top:0;width:var(--pw);height:var(--ph);background:#fbf8f3 center/100% 100% no-repeat;box-shadow:0 14px 34px rgba(0,0,0,.28)}
+.fb-l{left:0;border-radius:4px 0 0 4px}.fb-r{left:var(--pw);border-radius:0 4px 4px 0}
+.bkb.single .fb-r{left:0;border-radius:4px}.bkb.single .fb-l{display:none}
+.fb-p.empty{visibility:hidden}
+.fb-l::after,.fb-r::after{content:"";position:absolute;top:0;bottom:0;width:9%;pointer-events:none}
+.fb-l::after{right:0;background:linear-gradient(90deg,transparent,rgba(0,0,0,.2))}.fb-r::after{left:0;background:linear-gradient(270deg,transparent,rgba(0,0,0,.2))}
+.bkb.single .fb-r::after{display:none}
+.fb-leaf{position:absolute;top:0;width:var(--pw);height:var(--ph);transform-style:preserve-3d;will-change:transform;z-index:3}
+.fb-leaf .f,.fb-leaf .b{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#fbf8f3 center/100% 100% no-repeat}
+.fb-leaf .b{transform:rotateY(180deg)}
+.bkb{cursor:pointer}
+.bk-arr{position:absolute;top:50%;transform:translateY(-50%);z-index:4;width:44px;height:64px;border:0;border-radius:12px;background:rgba(0,0,0,.35);color:#fff;font-size:34px;line-height:1;cursor:pointer;backdrop-filter:blur(6px)}
+.bk-arr.l{left:0}.bk-arr.r{right:0}.bk-arr:disabled{opacity:.25;cursor:default}
+@media(max-width:899px){.bk-arr{display:none}.is-book .bk-mode,.is-book .bk-tools>button[data-bk=fs]{display:none}}
+.bk-foot{display:flex;align-items:center;gap:14px;max-width:560px;margin:6px auto 30px}.bk-rg{flex:1;accent-color:var(--accent)}.bk-pg{font-size:14px;color:var(--ink2,#777);min-width:76px;text-align:right}
+.bk-drawer{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.45);display:flex;justify-content:flex-end}.bk-drawer[hidden],.bk-zoom[hidden]{display:none}
+.bk-dw{width:min(380px,92vw);height:100%;overflow:auto;background:var(--paper,#fbf8f3);color:var(--ink);padding:18px 20px 40px}
+.bk-dw h3{font-size:17px;color:var(--accent);margin:22px 0 4px}.bk-dw button:not(.bk-x),.bk-dw a{display:block;width:100%;text-align:left;font:inherit;font-size:16px;padding:11px 0;border:0;border-bottom:1px solid var(--line);background:none;color:inherit;cursor:pointer;text-decoration:none}.bk-dw small{color:var(--ink2,#777);margin-left:6px}
+.bk-x{font:inherit;font-size:14px;padding:5px 14px;border-radius:99px;border:1px solid var(--line);background:var(--card,#fff);color:var(--ink);cursor:pointer}
+.bk-zoom{position:fixed;inset:0;z-index:70;background:#111;overflow:auto;display:flex;gap:10px;justify-content:center;align-items:flex-start;padding:16px;cursor:zoom-out}.bk-zoom img{width:min(900px,48%);height:auto;background:#fff;border-radius:4px}
+@media(max-width:899px){.bk-zoom{display:block}.bk-zoom img{width:100%;margin-bottom:10px}}
 </style>
 </head>
 <body>
@@ -1181,12 +1210,100 @@ function bkSplit(a){
   return a._sp={pages,txt,back};
 }
 const bkMode=()=>{try{return localStorage.getItem('tgbkmode')==='txt'?'txt':'img'}catch(e){return'img'}};
+// ---- 翻書 ----
+const bkSz=(u,n)=>u.replace(/\/(s\d+|w\d+(-h\d+)?)(-c)?\//,'/s'+n+'/');
+const bkKey=u=>{try{return decodeURIComponent(u.split('?')[0].split('/').pop())}catch(e){return u}};
+function bkPages(is){
+  if(is._pg)return is._pg;
+  const P=[],seen=new Set(),add=(s,a)=>{const k=bkKey(s);if(!s||seen.has(k))return;seen.add(k);P.push({s:bkSz(s,1400),z:bkSz(s,2400),a})};
+  if(is.cover)add(is.cover,-1);
+  is.arts.forEach((a,k)=>{[...bkSplit(a).pages.matchAll(/src="([^"]+)"/g)].forEach(m=>add(m[1].replace(/&amp;/g,'&'),k))});
+  if(is.back)add(is.back,-2);
+  return is._pg=P;
+}
+function bkBook(root,is,startPage){
+  const n=is.n,P=bkPages(is),N=P.length;
+  const secs=[];is.arts.forEach((a,k)=>{let s=secs.find(x=>x.s===a.s);if(!s){s={s:a.s,l:[]};secs.push(s)}s.l.push([k,a,P.findIndex(p=>p.a===k)])});
+  root.className='bk-rd is-book';root.style.removeProperty('--bkfs');
+  root.innerHTML=`<div class="bk-bar"><a class="back" href="#books">← 書架</a><span class="bk-bt">第 ${n} 期</span>
+    <span class="bk-fs bk-tools"><span class="bk-mode"><button class="on" data-bk="m-img">電子書</button><button data-bk="m-txt">文字</button></span><button data-bk="toc">目錄</button><button data-bk="zoom">放大</button><button data-bk="fs" aria-label="全螢幕">全螢幕</button></span></div>
+   <div class="bk-stage"><button class="bk-arr l" data-bk="prev" aria-label="上一頁">‹</button>
+     <div class="bkb"><div class="fb-p fb-l"></div><div class="fb-p fb-r"></div></div>
+   <button class="bk-arr r" data-bk="next" aria-label="下一頁">›</button></div>
+   <div class="bk-foot"><input type="range" class="bk-rg" min="0" value="0" aria-label="頁數"><span class="bk-pg"></span></div>
+   <div class="bk-drawer" hidden><div class="bk-dw"><button class="bk-x" data-bk="toc">關閉</button>${secs.map(s=>`<h3 class="hd">${esc(s.s||'本期')}</h3>${s.l.map(([k,a,p])=>p>=0?`<button data-bk="go" data-p="${p}">${esc(a.t)}</button>`:`<a href="#books/${n}/${k}">${esc(a.t)}<small>（只有文字）</small></a>`).join('')}`).join('')}</div></div>
+   <div class="bk-zoom" hidden data-bk="zoom"></div>`;
+  const $=s=>root.querySelector(s),fb=$('.bkb'),eL=$('.fb-l'),eR=$('.fb-r'),stage=$('.bk-stage'),rg=$('.bk-rg'),pg=$('.bk-pg');
+  let ratio=.71,wide=true,cur=0,busy=false;
+  const maxC=()=>wide?Math.floor(N/2):N-1;
+  const pgAt=i=>i>=0&&i<N?P[i]:null;
+  const face=(el,p)=>{el.style.backgroundImage=p?`url("${p.s}")`:'none';el.classList.toggle('empty',!p)};
+  const pagesOf=c=>wide?[pgAt(2*c-1),pgAt(2*c)]:[null,pgAt(c)];
+  const pre=c=>{[c-1,c+1,c+2].forEach(x=>{if(x<0||x>maxC())return;pagesOf(x).forEach(p=>{if(p&&!p._l){p._l=new Image();p._l.src=p.s}})})};
+  const art=()=>{const ps=pagesOf(cur).filter(Boolean);const p=ps.find(x=>x.a>=0)||ps[0];return p?p.a:-1};
+  function show(){
+    const [l,r]=pagesOf(cur);face(eL,l);face(eR,r);
+    if(!wide)eL.classList.add('empty');
+    rg.max=maxC();rg.value=cur;
+    const ps=pagesOf(cur).map((p,i)=>p?(wide?2*cur-1+i:cur)+1:0).filter(Boolean);
+    pg.textContent=(ps.length>1?ps[0]+'–'+ps[1]:ps[0])+' / '+N;
+    const a=art();if(a>=0){const x=is.arts[a];bkSave({n,i:a,t:x.t,p:wide?2*cur-1:cur})}
+    $('[data-bk=prev]').disabled=cur<=0;$('[data-bk=next]').disabled=cur>=maxC();
+    pre(cur);
+  }
+  function layout(keepPage){
+    const pageNow=wide?(cur?2*cur-1:0):cur;
+    const W=stage.clientWidth,H=Math.max(320,window.innerHeight-(stage.getBoundingClientRect().top+window.scrollY>0?stage.getBoundingClientRect().top+window.scrollY:200)-86);
+    wide=window.innerWidth>=900;
+    const h=wide?Math.min(H,(W-120)/2/ratio):Math.min(H,(W-8)/ratio),w=h*ratio;
+    fb.style.setProperty('--pw',w+'px');fb.style.setProperty('--ph',h+'px');fb.classList.toggle('single',!wide);
+    cur=wide?Math.ceil(pageNow/2):pageNow;if(cur>maxC())cur=maxC();
+    show();
+  }
+  function leaf(o){const e=document.createElement('div');e.className='fb-leaf';e.style.left=o.left;e.style.transformOrigin=o.origin;e.innerHTML='<div class="f"></div><div class="b"></div>';
+    const f=e.firstChild,b=e.lastChild;if(o.front)f.style.backgroundImage=`url("${o.front.s}")`;else f.style.background='#fbf8f3';if(o.back)b.style.backgroundImage=`url("${o.back.s}")`;else b.style.background='#fbf8f3';fb.append(e);return e}
+  function anim(e,to,done,fade){
+    void e.offsetWidth;e.style.transition='transform .85s cubic-bezier(.45,.05,.25,1),opacity .85s ease-in';
+    requestAnimationFrame(()=>{e.style.transform=to;if(fade)e.style.opacity=fade});
+    let d=false;const fin=()=>{if(d)return;d=true;done();e.remove();busy=false};
+    e.addEventListener('transitionend',ev=>{if(ev.propertyName==='transform')fin()});setTimeout(fin,1100);
+  }
+  function flip(dir){
+    const t=cur+dir;if(busy||t<0||t>maxC())return;busy=true;
+    const mv=matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const [oL,oR]=pagesOf(cur),[nL,nR]=pagesOf(t);
+    const end=()=>{cur=t;show()};
+    if(mv){end();busy=false;return}
+    if(wide){
+      if(dir>0){face(eR,nR);const e=leaf({left:'var(--pw)',origin:'left center',front:oR,back:nL});anim(e,'rotateY(-180deg)',()=>{face(eL,nL);end()})}
+      else{face(eL,nL);const e=leaf({left:'0',origin:'right center',front:oL,back:nR});anim(e,'rotateY(180deg)',()=>{face(eR,nR);end()})}
+    }else{
+      if(dir>0){face(eR,nR);const e=leaf({left:'0',origin:'left center',front:oR,back:null});anim(e,'rotateY(-100deg)',end,'0')}
+      else{const e=leaf({left:'0',origin:'left center',front:nR,back:null});e.style.transform='rotateY(-100deg)';e.style.opacity='0';anim(e,'rotateY(0deg)',()=>{face(eR,nR);end()},'1')}
+    }
+  }
+  const goPage=p=>{if(busy)return;cur=wide?Math.ceil(p/2):p;show()};
+  const zoom=()=>{const z=$('.bk-zoom');if(z.hidden){z.innerHTML=pagesOf(cur).filter(Boolean).map(p=>`<img src="${p.z}" alt="">`).join('');z.hidden=false;z.scrollTop=0}else{z.hidden=true;z.innerHTML=''}};
+  BK.book={el:root,flip,zoom,go:p=>{goPage(p);$('.bk-drawer').hidden=true},toc:()=>{const d=$('.bk-drawer');d.hidden=!d.hidden},
+    fs:()=>{const e=document.fullscreenElement;if(e)document.exitFullscreen();else if(root.requestFullscreen)root.requestFullscreen()},
+    art,pageNow:()=>wide?(cur?2*cur-1:0):cur};
+  fb.addEventListener('click',e=>{const r=fb.getBoundingClientRect();if(wide){flip(e.clientX<r.left+r.width/2?-1:1)}else flip(e.clientX<r.left+r.width/3?-1:1)});
+  rg.addEventListener('input',()=>{cur=+rg.value;show()});
+  let rt;window.addEventListener('resize',()=>{if(!document.contains(root))return;clearTimeout(rt);rt=setTimeout(layout,120)});
+  const im=new Image();im.onload=()=>{if(im.naturalWidth&&im.naturalHeight){ratio=im.naturalWidth/im.naturalHeight;layout()}};
+  layout();
+  if(startPage>0){cur=wide?Math.ceil(startPage/2):startPage;show()}
+  im.src=P[0]?P[0].s:'';
+  if(!N){root.querySelector('.bk-stage').innerHTML='<p class="sub" style="padding:40px">這一期沒有電子書版面，請改看文字版。</p>'}
+}
+document.addEventListener('keydown',e=>{const b=BK.book;if(!b||!document.contains(b.el))return;if(e.key==='ArrowRight')b.flip(1);else if(e.key==='ArrowLeft')b.flip(-1);else if(e.key==='Escape'){const z=b.el.querySelector('.bk-zoom');if(z&&!z.hidden)b.zoom()}});
+
 const bkSaved=()=>{try{return JSON.parse(localStorage.getItem('tgbk')||'null')}catch(e){return null}};
 const bkSave=o=>{try{localStorage.setItem('tgbk',JSON.stringify(o))}catch(e){}};
 const bkFs=()=>{try{return +localStorage.getItem('tgbkfs')||18}catch(e){return 18}};
 const bkCredit=(n,u)=>`<p class="bk-cr">本文出自《台文通訊BONG報》第 ${n} 期，著作權屬李江却台語文教基金會與作者。${u?`<a href="${u}" target="_blank" rel="noopener">到原網站看這篇</a>`:''}　<a href="https://tsbp.tgb.org.tw/p/bong_31.html" target="_blank" rel="noopener">贊助刊物</a></p>`;
 function pBooks(r){
-  const m=/^books\/(\d+)(?:\/(\d+))?$/.exec(r);
+  const m=/^books\/(\d+)(?:\/(\d+|b))?$/.exec(r);
   if(!m)return `<a class="back" href="#home">← 首頁</a>
    <div class="bk-h"><h2 class="hd">台語冊房</h2><span class="sub tl">Tâi-gí Tsheh-pâng</span></div>
    <p class="sub bk-sub">台文通訊 BONG 報，一期一期放在書架上，點開就能讀。</p>
@@ -1210,13 +1327,15 @@ async function bkShelf(){
 }
 async function bkReader(){
   const root=document.getElementById('bk-rd');if(!root)return;
-  const n=+root.dataset.n,i=+root.dataset.i;let is;
+  const n=+root.dataset.n,iraw=root.dataset.i,i=iraw==='b'?-3:+iraw;let is;
   try{is=await bkIssue(n)}catch(e){root.innerHTML=`<a class="back" href="#books">← 書架</a><p class="sub">讀不到這一期。可能是網路問題，也可能是這一期不在網站上。<a href="https://tsbp.tgb.org.tw/" target="_blank" rel="noopener">到原網站看</a></p>`;return}
   if(!document.getElementById('bk-rd'))return;
   const A=is.arts,ctl=`<div class="bk-bar"><a class="back" href="#books">← 書架</a><span class="bk-bt">第 ${n} 期</span><span class="bk-fs"><button data-bk="fs-" aria-label="字小一點">A−</button><button data-bk="fs+" aria-label="字大一點">A+</button></span></div>`;
+  const P0=bkPages(is);
+  if(i===-3||(i>=0&&A[i]&&bkMode()==='img'&&P0.length&&P0.some(p=>p.a===i))){bkBook(root,is,i===-3?0:Math.max(0,P0.findIndex(p=>p.a===i)));window.scrollTo(0,0);return}
   if(i<0||!A[i]){
     const secs=[];A.forEach((a,k)=>{let s=secs.find(x=>x.s===a.s);if(!s){s={s:a.s,l:[]};secs.push(s)}s.l.push([k,a])});
-    root.innerHTML=ctl+`<div class="bk-front">${is.cover?`<img class="bk-fc" src="${is.cover}" alt="" referrerpolicy="no-referrer" onerror="this.remove()">`:''}<div><h2 class="hd">台文通訊 BONG 報<br>第 ${n} 期</h2><p class="sub">${is.when||''}・共 ${A.length} 篇</p>${A.length?`<a class="btn pri" href="#books/${n}/0">從頭讀</a>`:''}</div></div>
+    root.innerHTML=ctl+`<div class="bk-front">${is.cover?`<img class="bk-fc" src="${is.cover}" alt="" referrerpolicy="no-referrer" onerror="this.remove()">`:''}<div><h2 class="hd">台文通訊 BONG 報<br>第 ${n} 期</h2><p class="sub">${is.when||''}・共 ${A.length} 篇</p>${P0.length?`<a class="btn pri" href="#books/${n}/b">翻開電子書</a> `:''}${A.length?`<a class="btn" href="#books/${n}/0">${bkMode()==='img'?'從第一篇讀':'從頭讀文字版'}</a>`:''}</div></div>
       <div class="bk-toc">${secs.map(s=>`<h3 class="hd">${esc(s.s||'本期')}</h3>${s.l.map(([k,a])=>`<a href="#books/${n}/${k}"><span>${esc(a.t)}</span></a>`).join('')}`).join('')}</div>${is.back?`<div class="bk-bc"><p>封底</p><img src="${is.back}" alt="" referrerpolicy="no-referrer" onerror="this.parentNode.remove()"></div>`:''}${bkCredit(n,'')}`;
     return;
   }
@@ -1237,7 +1356,8 @@ function bkLoad(r){if(r==='books')bkShelf();else bkReader()}
 document.getElementById('app').addEventListener('click',e=>{
   const b=e.target.closest('[data-bk]');if(!b)return;const k=b.dataset.bk;
   if(k==='more'&&BK.add)BK.add();
-  if(k==='m-img'||k==='m-txt'){try{localStorage.setItem('tgbkmode',k==='m-txt'?'txt':'img')}catch(x){}bkReader()}
+  if(k==='m-img'||k==='m-txt'){try{localStorage.setItem('tgbkmode',k==='m-txt'?'txt':'img')}catch(x){}const bb=BK.book,inBook=bb&&document.contains(bb.el)&&document.getElementById('bk-rd')===bb.el;if(inBook&&k==='m-txt'){const a=bb.art(),h='#books/'+document.getElementById('bk-rd').dataset.n+'/'+(a>=0?a:0);if(location.hash===h)bkReader();else location.hash=h}else bkReader()}
+  if(BK.book&&document.contains(BK.book.el)){const B=BK.book;if(k==='prev')B.flip(-1);if(k==='next')B.flip(1);if(k==='toc')B.toc();if(k==='zoom')B.zoom();if(k==='fs')B.fs();if(k==='go')B.go(+b.dataset.p)}
   if(k==='fs+'||k==='fs-'){const v=Math.max(15,Math.min(30,bkFs()+(k==='fs+'?2:-2)));try{localStorage.setItem('tgbkfs',v)}catch(x){}const r=document.getElementById('bk-rd');if(r)r.style.setProperty('--bkfs',v+'px')}
 });
 let bkTx=0;
