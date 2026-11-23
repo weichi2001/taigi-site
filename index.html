@@ -509,7 +509,7 @@ body[data-r^=books]:has(.is-book) .wrap{max-width:1560px}
 .is-book .bk-tools>button{padding:5px 12px;border-radius:99px;border:1px solid var(--line);background:var(--card,#fff);color:var(--ink);cursor:pointer;margin:0}
 .is-book .bk-mode{margin:0 6px 0 0}.is-book .bk-mode button{padding:5px 14px}
 .bk-stage{position:relative;display:flex;justify-content:center;align-items:center;padding:14px 0 6px;min-height:300px}
-.bkb{position:relative;width:calc(var(--pw,300px)*2);height:var(--ph,420px);perspective:2600px;flex:none}
+.bkb{position:relative;width:calc(var(--pw,300px)*2);height:var(--ph,420px);perspective:6500px;flex:none}
 .bkb.single{width:var(--pw,300px)}
 .fb-p{position:absolute;top:0;width:var(--pw);height:var(--ph);background:#fbf8f3 center/100% 100% no-repeat;box-shadow:0 14px 34px rgba(0,0,0,.28)}
 .fb-l{left:0;border-radius:4px 0 0 4px}.fb-r{left:var(--pw);border-radius:0 4px 4px 0}
@@ -537,7 +537,7 @@ body[data-r^=books]:has(.is-book) .wrap{max-width:1560px}
 .bkb .st{position:absolute;top:0;height:100%;transform-style:preserve-3d;transform-origin:0 50%}
 .bkb .sf,.bkb .sb{position:absolute;left:0;top:0;height:100%;backface-visibility:hidden;-webkit-backface-visibility:hidden}
 .bkb .sb{transform:rotateY(180deg)}
-.bkb .sf::after,.bkb .sb::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,var(--sh,0))}
+.bkb .sf::after,.bkb .sb::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,var(--a0,0)),rgba(0,0,0,var(--a1,0)))}
 .bkb .shr,.bkb .shl{position:absolute;top:0;height:var(--ph);width:var(--pw);pointer-events:none;z-index:2}
 .bkb .shr{left:var(--pw);background:linear-gradient(90deg,rgba(0,0,0,.38),transparent 55%)}.bkb .shl{left:0;background:linear-gradient(270deg,rgba(0,0,0,.34),transparent 55%)}
 .bkb.single .shr{left:0}
@@ -1295,12 +1295,17 @@ function bkBook(root,is,startPage){
     const shR=document.createElement('div'),shL=document.createElement('div');shR.className='shr';shL.className='shl';
     fb.append(shR,shL,root2);
     const set=p=>{
-      const th=(wide?-180:-120)*p;let prev=0;
+      const th=(wide?-180:-120)*p;let prev=0;const sv=[];
       for(let i=0;i<NS;i++){
-        const u=i/(NS-1),ph=th+(wide?1:.7)*(46*Math.pow(u,1.7)*Math.sin(2*Math.PI*p)+14*Math.pow(u,2)*Math.sin(Math.PI*p));
+        const u=i/(NS-1),ph=th+(wide?1:.7)*(30*Math.pow(u,1.7)*Math.sin(2*Math.PI*p)+9*Math.pow(u,2)*Math.sin(Math.PI*p));
         strips[i].st.style.transform=`rotateY(${ph-prev}deg)`;prev=ph;
-        const c=Math.cos(ph*Math.PI/180),kk=NS*.09,sp=wide&&i<kk?.2*(1-i/kk):0,sh=(.28*(1-Math.abs(c))+.12*(1-u)*Math.sin(Math.PI*p)+sp).toFixed(3);
-        strips[i].f.style.setProperty('--sh',sh);strips[i].b.style.setProperty('--sh',sh);
+        const c=Math.cos(ph*Math.PI/180),sp=wide?.2*cl(1-i/(NS*.09)):0;
+        sv.push(.28*(1-Math.abs(c))+.12*(1-u)*Math.sin(Math.PI*p)+sp);
+      }
+      for(let i=0;i<NS;i++){
+        const a0=sv[i].toFixed(3),a1=(sv[i+1]===undefined?sv[i]:sv[i+1]).toFixed(3);
+        strips[i].f.style.setProperty('--a0',a0);strips[i].f.style.setProperty('--a1',a1);
+        strips[i].b.style.setProperty('--a0',a1);strips[i].b.style.setProperty('--a1',a0);
       }
       if(!wide)root2.style.opacity=1-cl((p-.55)/.45);
       shR.style.opacity=cl(1-p*1.15)*.9;shL.style.opacity=wide?cl(p*1.3-.3)*.9:0;
