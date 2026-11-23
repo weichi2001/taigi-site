@@ -841,21 +841,35 @@ function gl(e,raw){
     d.split(/[、，；,;。]/).forEach((g,j)=>{
       g=g.replace(/[（(].*?[）)]/g,'').trim();
       if(!g.includes(raw))return;
-      const v=(g===raw?1.5:g.startsWith(raw)||g.endsWith(raw)?2.6:3.6)+i*0.04+j*0.02+e.s.length*0.01+(/^【文】/.test(e.r)?0.1:0);
+      const v=(g===raw?1.5:g.startsWith(raw)||g.endsWith(raw)?2.6:3.6)+i*0.04+j*0.05+e.s.length*0.005+(/^【文】/.test(e.r)?0.1:0)-(inW700.has(e.hc)?0.03:0);
       if(v<best)best=v;
     });
   });
   return best;
 }
+// 華語單字 → 台語常用字（吃→食）：用「解釋剛好是這個字」的單字詞目，取最前面的義項
+const CM={};
+function cmap(c){
+  if(c in CM)return CM[c];
+  if(DX.some(e=>e.hc===c))return CM[c]=c;
+  let best=null,bs=9;
+  for(const e of DX){if(e.hc.length!==1||e.hc===c)continue;
+    e.s.forEach(([p,d],i)=>d.split(/[、，；,;。]/).forEach((g,j)=>{if(g.trim()!==c)return;
+      const v=i*0.04+j*0.02+(/^【文】/.test(e.r)?0.1:0)-(inW700.has(e.hc)?0.1:0);if(v<bs){bs=v;best=e.hc}}))}
+  return CM[c]=best||c;
+}
 function dxFind(raw){
   const k=norm(raw),han=hasHan(raw),out=[];
+  const tr=han&&raw.length>=2?[...raw].map(cmap).join(''):raw;
   for(const e of DX){
     let sc=9;
     if(han){
       if(e.hc===raw)sc=0;else if(e.hc.startsWith(raw))sc=1;else if(e.hc.includes(raw))sc=2;else if(e.v.some(x=>clean(x[0]).includes(raw)))sc=3;else if(e.d.includes(raw))sc=gl(e,raw);
+      if(tr!==raw&&sc>2){if(e.hc===tr)sc=1.6;else if(e.hc.startsWith(tr))sc=1.7;else if(e.hc.includes(tr))sc=1.9}
     }else if(k){
       if(e.ks.includes(k))sc=0;else if(e.ks.some(x=>x.startsWith(k)))sc=1;else if(e.k.includes(k))sc=2;
     }
+    if(sc<3&&(e.hc.length>6||/[，。！？]/.test(e.hc)))sc+=2;
     if(sc<9)out.push([sc,e]);
   }
   return out.sort((x,y)=>x[0]-y[0]||x[1].id-y[1].id).map(x=>x[1]);
@@ -889,7 +903,7 @@ let curAu=null;
 mb.addEventListener('click',e=>{
   const au=e.target.closest('[data-au]');
   if(au){const id=+au.dataset.au;if(curAu){curAu.pause()}
-    const ap=au.dataset.ap;curAu=new Audio(SU+'media/senn/mp3/imtong/'+(ap?ap+'/'+id+'1.mp3':'subak/'+Math.floor(id/1000)+'/'+id+'.mp3'));curAu.play().catch(()=>toast('這個詞的音檔播不出來'));return}
+    const ap=au.dataset.ap;curAu=new Audio(SU+'media/senn/mp3/imtong/'+(ap?ap+'/'+id+'1.mp3':'subak/'+Math.floor(id/1000)+'/'+id+'.mp3'));const me=curAu;me.play().catch(err=>{if(err&&err.name==='AbortError')return;if(curAu===me)toast('這個詞的音檔播不出來')});return}
   const tg=e.target.closest('[data-tg]');
   if(tg){const row=tg.closest('.mr'),id=row.dataset.id;
     const open=!row.classList.contains('open');
