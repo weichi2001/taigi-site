@@ -532,6 +532,16 @@ body[data-r^=books]:has(.is-book) .wrap{max-width:1560px}
 .bk-x{font:inherit;font-size:14px;padding:5px 14px;border-radius:99px;border:1px solid var(--line);background:var(--card,#fff);color:var(--ink);cursor:pointer}
 .bk-zoom{position:fixed;inset:0;z-index:70;background:#111;overflow:auto;display:flex;gap:10px;justify-content:center;align-items:flex-start;padding:16px;cursor:zoom-out}.bk-zoom img{width:min(900px,48%);height:auto;background:#fff;border-radius:4px}
 @media(max-width:899px){.bk-zoom{display:block}.bk-zoom img{width:100%;margin-bottom:10px}}
+
+.bkb .lf{position:absolute;top:0;width:0;height:var(--ph);transform-style:preserve-3d;z-index:5;pointer-events:none}
+.bkb .st{position:absolute;top:0;height:100%;transform-style:preserve-3d;transform-origin:0 50%}
+.bkb .sf,.bkb .sb{position:absolute;left:0;top:0;height:100%;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.bkb .sb{transform:rotateY(180deg)}
+.bkb .sf::after,.bkb .sb::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,var(--sh,0))}
+.bkb .shr,.bkb .shl{position:absolute;top:0;height:var(--ph);width:var(--pw);pointer-events:none;z-index:2}
+.bkb .shr{left:var(--pw);background:linear-gradient(90deg,rgba(0,0,0,.38),transparent 55%)}.bkb .shl{left:0;background:linear-gradient(270deg,rgba(0,0,0,.34),transparent 55%)}
+.bkb.single .shr{left:0}
+html.bk-fs-on .top,html.bk-fs-on footer{display:none}html.bk-fs-on .bk-rd.is-book .bk-bar{top:0}html.bk-fs-on body{background:var(--paper)}
 </style>
 </head>
 <body>
@@ -1260,35 +1270,50 @@ function bkBook(root,is,startPage){
     cur=wide?Math.ceil(pageNow/2):pageNow;if(cur>maxC())cur=maxC();
     show();
   }
-  function leaf(o){const e=document.createElement('div');e.className='fb-leaf';e.style.left=o.left;e.style.transformOrigin=o.origin;e.innerHTML='<div class="f"></div><div class="b"></div>';
-    const f=e.firstChild,b=e.lastChild;if(o.front)f.style.backgroundImage=`url("${o.front.s}")`;else f.style.background='#fbf8f3';if(o.back)b.style.backgroundImage=`url("${o.back.s}")`;else b.style.background='#fbf8f3';fb.append(e);return e}
-  function anim(e,to,done,fade){
-    void e.offsetWidth;e.style.transition='transform .85s cubic-bezier(.45,.05,.25,1),opacity .85s ease-in';
-    requestAnimationFrame(()=>{e.style.transform=to;if(fade)e.style.opacity=fade});
-    let d=false;const fin=()=>{if(d)return;d=true;done();e.remove();busy=false};
-    e.addEventListener('transitionend',ev=>{if(ev.propertyName==='transform')fin()});setTimeout(fin,1100);
-  }
+  const NS=30,ease=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2,cl=x=>Math.max(0,Math.min(1,x));
+  const bg=(el,p,x)=>{el.style.background=p?`#fbf8f3 url("${p.s}") ${x}px 0/var(--pw) var(--ph) no-repeat`:'#fbf8f3'};
   function flip(dir){
     const t=cur+dir;if(busy||t<0||t>maxC())return;busy=true;
-    const mv=matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const [oL,oR]=pagesOf(cur),[nL,nR]=pagesOf(t);
-    const end=()=>{cur=t;show()};
-    if(mv){end();busy=false;return}
-    if(wide){
-      if(dir>0){face(eR,nR);const e=leaf({left:'var(--pw)',origin:'left center',front:oR,back:nL});anim(e,'rotateY(-180deg)',()=>{face(eL,nL);end()})}
-      else{face(eL,nL);const e=leaf({left:'0',origin:'right center',front:oL,back:nR});anim(e,'rotateY(180deg)',()=>{face(eR,nR);end()})}
-    }else{
-      if(dir>0){face(eR,nR);const e=leaf({left:'0',origin:'left center',front:oR,back:null});anim(e,'rotateY(-100deg)',end,'0')}
-      else{const e=leaf({left:'0',origin:'left center',front:nR,back:null});e.style.transform='rotateY(-100deg)';e.style.opacity='0';anim(e,'rotateY(0deg)',()=>{face(eR,nR);end()},'1')}
+    const lo=Math.min(cur,t),hi=Math.max(cur,t),A=pagesOf(lo),B=pagesOf(hi);
+    if(matchMedia('(prefers-reduced-motion: reduce)').matches){cur=t;show();busy=false;return}
+    const pw=fb.clientWidth/(wide?2:1);
+    const front=wide?A[1]:A[1],back=wide?B[0]:null;
+    face(eL,A[0]);face(eR,B[1]);
+    const root2=document.createElement('div');root2.className='lf';root2.style.left=wide?'var(--pw)':'0';
+    const w0=pw/NS,strips=[];let par=root2;
+    for(let i=0;i<NS;i++){
+      const st=document.createElement('div');st.className='st';st.style.left=(i?w0:0)+'px';st.style.width=w0+'px';
+      const f=document.createElement('div'),b=document.createElement('div');f.className='sf';b.className='sb';
+      f.style.width=b.style.width=(w0+.6)+'px';
+      bg(f,front,-i*w0);if(back)bg(b,back,-(pw-(i+1)*w0));else b.style.background='#fbf8f3';
+      st.append(f,b);par.append(st);strips.push({st,f,b});par=st;
     }
+    const shR=document.createElement('div'),shL=document.createElement('div');shR.className='shr';shL.className='shl';
+    fb.append(shR,shL,root2);
+    const set=p=>{
+      const th=(wide?-180:-120)*p;let prev=0;
+      for(let i=0;i<NS;i++){
+        const u=i/(NS-1),ph=th+(wide?1:.7)*(46*Math.pow(u,1.7)*Math.sin(2*Math.PI*p)+14*Math.pow(u,2)*Math.sin(Math.PI*p));
+        strips[i].st.style.transform=`rotateY(${ph-prev}deg)`;prev=ph;
+        const c=Math.cos(ph*Math.PI/180),sh=(.28*(1-Math.abs(c))+.12*(1-u)*Math.sin(Math.PI*p)).toFixed(3);
+        strips[i].f.style.setProperty('--sh',sh);strips[i].b.style.setProperty('--sh',sh);
+      }
+      if(!wide)root2.style.opacity=1-cl((p-.55)/.45);
+      shR.style.opacity=cl(1-p*1.15)*.9;shL.style.opacity=wide?cl(p*1.3-.3)*.9:0;
+    };
+    const dur=1000,t0=performance.now();set(dir>0?0:1);
+    const fr=now=>{const x=cl((now-t0)/dur),e=ease(x);set(dir>0?e:1-e);if(x<1)requestAnimationFrame(fr);else{
+      cur=t;show();root2.remove();shR.remove();shL.remove();busy=false}};
+    requestAnimationFrame(fr);
   }
   const goPage=p=>{if(busy)return;cur=wide?Math.ceil(p/2):p;show()};
   const zoom=()=>{const z=$('.bk-zoom');if(z.hidden){z.innerHTML=pagesOf(cur).filter(Boolean).map(p=>`<img src="${p.z}" alt="">`).join('');z.hidden=false;z.scrollTop=0}else{z.hidden=true;z.innerHTML=''}};
   BK.book={el:root,flip,zoom,go:p=>{goPage(p);$('.bk-drawer').hidden=true},toc:()=>{const d=$('.bk-drawer');d.hidden=!d.hidden},
-    fs:()=>{const e=document.fullscreenElement;if(e)document.exitFullscreen();else if(root.requestFullscreen)root.requestFullscreen()},
+    fs:()=>{const e=document.fullscreenElement,d=document.documentElement;if(e)document.exitFullscreen();else if(d.requestFullscreen)d.requestFullscreen()},
     art,pageNow:()=>wide?(cur?2*cur-1:0):cur};
   fb.addEventListener('click',e=>{const r=fb.getBoundingClientRect();if(wide){flip(e.clientX<r.left+r.width/2?-1:1)}else flip(e.clientX<r.left+r.width/3?-1:1)});
   rg.addEventListener('input',()=>{cur=+rg.value;show()});
+  document.addEventListener('fullscreenchange',()=>{document.documentElement.classList.toggle('bk-fs-on',!!document.fullscreenElement);if(document.contains(root))setTimeout(layout,200)});
   let rt;window.addEventListener('resize',()=>{if(!document.contains(root))return;clearTimeout(rt);rt=setTimeout(layout,120)});
   const im=new Image();im.onload=()=>{if(im.naturalWidth&&im.naturalHeight){ratio=im.naturalWidth/im.naturalHeight;layout()}};
   layout();
