@@ -396,11 +396,12 @@ html[data-theme=dark] .lg{background:linear-gradient(180deg,#3a3632,#0e0c0a 70%)
 .dc .v{font-family:GenRyu,"Noto Serif TC",serif;font-weight:700;font-size:clamp(19px,2.1vw,23px);line-height:1.45;letter-spacing:.12em;position:relative;text-indent:.12em}
 .dc .r{font:10px/1.3 "GenRyu Lat","Noto Sans TC",sans-serif;letter-spacing:.04em;opacity:.7;position:relative}
 .bk-c.mo .bk-cv{background:none;border:1.5px dashed var(--line);box-shadow:none;display:grid;place-items:center;font-size:15px;color:var(--ink2)}
-.lib-rd{position:fixed;inset:0;z-index:30;display:flex;flex-direction:column;background:var(--paper,#fbf8f3);color:var(--ink)}
-.lib-bar{display:flex;align-items:center;gap:12px;padding:10px 20px;border-bottom:1px solid var(--line)}.lib-bar b{flex:1;min-width:0;font-family:var(--serif);font-size:18px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.lib-bar b small{margin-left:10px;font-size:13px;font-weight:400;color:var(--ink2)}.lib-bar span{display:flex;gap:8px}.lib-bar .btn{font-size:14px;padding:6px 14px;text-decoration:none}
-.lib-fr{flex:1;min-height:0;position:relative}.lib-fr iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#fff}
-.lib-tip{margin:0;padding:8px 20px;font-size:13px;color:var(--ink2);border-top:1px solid var(--line)}
-@media(min-width:800px){.lib-fr{transition:margin-right .5s cubic-bezier(.45,.05,.2,1)}body.mini-on .lib-fr{margin-right:420px}}
+.lib-pg{display:grid;grid-template-columns:minmax(130px,170px) 1fr;gap:28px;margin-top:22px;align-items:start}@media(max-width:620px){.lib-pg{grid-template-columns:1fr}.lib-pg .bk-c{width:150px}}
+.lib-act{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 6px}.lib-act .btn{text-decoration:none}.lib-msg{min-height:1.4em;font-size:14px;color:var(--accent);margin:4px 0}
+.lib-st{margin:14px 0;padding-left:1.3em;line-height:1.9;color:var(--ink)}.lib-why{font-size:13px;color:var(--ink2);line-height:1.8}
+body[data-r=dictwin] .top,body[data-r=dictwin] #app,body[data-r=dictwin] #fab,body[data-r=dictwin] #mclose{display:none!important}
+body[data-r=dictwin]{background:#f7f2ea}
+body[data-r=dictwin] #mini{left:0!important;right:0!important;top:0!important;bottom:0!important;width:auto!important;height:auto!important;border-radius:0!important;border:0!important;transform:none!important;opacity:1!important;pointer-events:auto!important}
 .pub[hidden]{display:none}
 .pub small{font:12.5px "GenRyu Lat","Noto Sans TC",sans-serif;letter-spacing:.14em;opacity:.7}.pub b{font-family:GenRyu,"Noto Serif TC",serif;font-weight:700;font-size:26px;letter-spacing:.04em;line-height:1.25}
 .pub p{margin:2px 0 0;font-size:14.5px;line-height:1.7;opacity:.84;flex:1}
@@ -1284,10 +1285,22 @@ const LB={
  tg2:{t:'讀文章蓋趣味 二',n:72,fs:'第二冊',pdf:2,secs:[['臺灣好',[['燦光寮山',6],['基隆的中元祭',8],['臺北草山的坪頂古圳',10],['新埔紅柿若出頭',12],['磺溪書院建築的古早味',14],['臺中縣白冷圳的本土味',16],['雙十吊橋搖啊搖',18],['嘉義交趾仔',20],['鹽水放蜂仔炮——世界獨一無二',22],['半屏山，真好看',24],['屏東九如的三山國王廟',26],['宜蘭頭城搶孤',28],['新的舊厝——澎湖二崁村的故事',30]]],['臺灣人情味',[['豬公無相請，嫁查某囝貺大餅',34],['阿母的老款',36],['掠蝦仔',38],['罣礙',40],['麥片摻咖啡',42]]],['臺灣文史古',[['阿姑轉外家',46],['語言內底的鱟',48],['貓仔話',50],['對牛墟到籃仔籗會',52],['澎湖臺灣味',54],['寒人會當變啥',56],['鹼仔水佮鹼仔粿',58]]],['臺灣心適代',[['怪縒的蟲豸',62],['做生理',64],['糞埽',66],['狗蟻怨的哀怨古',68]]]]}};
 LB.tg1.n=76;
 const LIBB=[{id:'196959',t:'日子',sub:'台語曆日仔詩',a:'陳胤',p:'前衛出版社',bg:'linear-gradient(155deg,#2c5f6b,#0b1d22)'}];
-const libView=id=>{const b=LIBB.find(x=>x.id===id)||{id,t:'圖書館電子書',sub:''};
-  return `<div id="lib-rd" class="lib-rd"><div class="lib-bar"><a class="back" href="#books">← 書架</a><b>${esc(b.t)}${b.sub?'<small>'+esc(b.sub)+'</small>':''}</b><span><a class="btn" href="https://reading.udn.com/udnlib/taich/B/${id}" target="_blank" rel="noopener">借閱頁</a><a class="btn" href="https://reading.udn.com/onlineViewer/2BpdfViewer/${id}" target="_blank" rel="noopener">新分頁開</a></span></div>
-   <div class="lib-fr"><iframe src="https://reading.udn.com/onlineViewer/2BpdfViewer/${id}" title="${esc(b.t)}" allow="fullscreen" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
-   <p class="lib-tip">要先在 udn 讀書館用自己的臺中市立圖書館帳號借閱這本書。如果這裡是空白或要求登入，請按「新分頁開」，登入後再回來。右下角的放大鏡可以查辭典。</p></div>`};
+const libUrl=id=>'https://reading.udn.com/onlineViewer/2BpdfViewer/'+id;
+function libOpen(id,side){
+  const sw=screen.availWidth||innerWidth,sh=screen.availHeight||innerHeight,ox=screen.availLeft||0,oy=screen.availTop||0,dw=Math.min(440,Math.round(sw*.3));
+  if(!side){window.open(libUrl(id),'_blank','noopener');return 1}
+  const v=window.open(libUrl(id),'udnviewer',`popup=yes,left=${ox},top=${oy},width=${sw-dw},height=${sh}`);
+  const d=window.open(location.href.split('#')[0]+'#dictwin','taigidict',`popup=yes,left=${ox+sw-dw},top=${oy},width=${dw},height=${sh}`);
+  return v&&d?2:v?1:0;
+}
+const libView=id=>{const b=LIBB.find(x=>x.id===id)||{id,t:'圖書館電子書',sub:'',a:'',p:'',bg:'#233'};
+  return `<a class="back" href="#books">← 書架</a>
+  <div class="lib-pg"><div class="bk-c"><div class="bk-cv dc" style="background:${b.bg}"><span class="y">圖書館</span><span class="v">${esc(b.t)}</span><span class="r">${esc(b.sub)}</span></div></div>
+   <div><h2 class="hd">${esc(b.t)}${b.sub?' <span class="tl" style="font-size:.6em;font-weight:500">'+esc(b.sub)+'</span>':''}</h2><p class="sub">${esc(b.a)}${b.p?'・'+esc(b.p):''}</p>
+   <div class="lib-act"><button class="btn pri" data-lib="side" data-id="${b.id}">並排開啟：閱讀器＋辭典</button><button class="btn" data-lib="one" data-id="${b.id}">只開閱讀器</button><a class="btn" href="https://reading.udn.com/udnlib/taich/B/${b.id}" target="_blank" rel="noopener">借閱頁</a></div>
+   <p class="lib-msg" id="lib-msg"></p>
+   <ol class="lib-st"><li>先到「借閱頁」，用自己的臺中市立圖書館帳號借閱這本書。</li><li>借到之後，按「並排開啟」。左邊是 udn 的閱讀器，右邊是辭典小視窗，看到不會的字就打進去查。</li><li>如果瀏覽器擋住彈出視窗，請在網址列允許這個網站的彈出視窗，再按一次。</li></ol>
+   <p class="lib-why">為什麼不直接嵌在這個頁面裡？我試過，udn 的閱讀器放進別的網站就讀不到你登入後的書，畫面會是空白，所以只能開在它自己的視窗。</p></div></div>`};
 const bkSvL=sv=>LB[sv.n]?esc(LB[sv.n].t)+(sv.t?'・'+esc(sv.t):''):`第 ${sv.n} 期${sv.t?'・'+esc(sv.t):''}`;
 function lbIssue(id){
   const B=LB[id];if(B._is)return B._is;
@@ -1522,6 +1535,7 @@ async function bkCovers(){
 const bkIn=()=>{BK.fade=0;const r=document.getElementById('bk-rd');if(r){delete r.dataset.out;r.dataset.in=1;setTimeout(()=>{delete r.dataset.in},900)}};
 function bkLoad(r){if(BK.fade)bkIn();if(r==='books')bkCovers();else if(r==='books/bong')bkShelf();else bkReader()}
 document.getElementById('app').addEventListener('click',e=>{
+  const lbtn=e.target.closest('[data-lib]');if(lbtn){const r=libOpen(lbtn.dataset.id,lbtn.dataset.lib==='side'),m=document.getElementById('lib-msg');if(m)m.textContent=r===0?'視窗被擋住了。請允許彈出視窗後再按一次。':r===1&&lbtn.dataset.lib==='side'?'辭典視窗被擋住了，請允許彈出視窗。':'';return}
   const b=e.target.closest('[data-bk]');if(!b)return;const k=b.dataset.bk;
   if(k==='more'&&BK.add)BK.add();
   if(k==='m-img'||k==='m-txt'){const md=b.closest('.bk-mode'),rt=document.getElementById('bk-rd');if(md){md.dataset.m=k==='m-txt'?'txt':'img';md.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b))}
@@ -1547,6 +1561,7 @@ function enter(r){
   if(r==='quiz')S.qz=buildQuiz(D,10);
 }
 function view(r){
+  if(r==='dictwin')return '';
   if(r==='books'||r.startsWith('books/'))return pBooks(r);
   if(r==='about')return pAbout();
   if(r==='start')return pStart();
@@ -1570,6 +1585,7 @@ function render(keep){
   window.scrollTo(0,keep?y:0);
   if(r==='books'||r.startsWith('books/'))bkLoad(r);
   if(r==='home')bkCovers();
+  if(r==='dictwin'){mini.hidden=false;mini.classList.add('show');dxLoad();miniDraw();setTimeout(()=>mq.focus({preventScroll:true}),200);document.title='查辭典・街仔路'}
 }
 window.addEventListener('hashchange',()=>{enter(cur());render(false)});
 
