@@ -965,8 +965,8 @@ function pHome(){
     <a class="pst b" href="https://weichi2001.github.io/taigi-ktv/?student"><div class="kv"><i class="on">${esc(pv1[0])}</i><em>${esc(pv1[1])}</em></div><small>Tâi-gí Ko-thiann</small><b>台語歌廳</b><span>正港台文正字的卡啦OK</span></a>
     <a class="pst c" href="#books"><div class="bkp" id="bkp"><i><em></em></i><i><em></em></i><i><em></em></i><i><em></em></i><i><em></em></i><i><em></em></i><i><em></em></i></div><small>Tâi-gí Tsheh-pâng</small><b>台語冊房</b><span>繪本、小說、漫畫、雜誌等應有盡有</span></a>
    </div>
-   <div class="hsec"><a class="more" href="#play">還有聽歌、節目的資源 ${SI.link}</a>
-    <a class="ent sm" href="#links"><div class="ic">${SI.link}</div><div><h3>其他推薦網站</h3><p>查台語歌詞正確用字的網站。</p></div></a></div>`;
+   <div class="hsec">
+    <a class="ent sm" href="#links"><div class="ic">${SI.link}</div><div><h3>其他推薦網站</h3></div></a></div>`;
 }
 function pAbout(){
   const it=(ic,t,d,h,ex)=>`<a class="ab-it card" href="${h}"${ex||''}><span class="ic">${ic}</span><span><b>${t}</b><small>${d}</small></span></a>`;
@@ -1037,7 +1037,7 @@ function pPlay(){
 }
 function pLinks(){
   return `<a class="back" href="#home">← 首頁</a><h2 class="hd">其他推薦網站</h2>
-   ${RES.filter(r=>r.c==='o').map(resCard).join('')}`;
+   ${RES.filter((r,i,a)=>(r.c==='o'||(r.c==='e'&&!/歌廳/.test(r.t)))&&a.findIndex(x=>x.t===r.t)===i).map(resCard).join('')}`;
 }
 const IME={
  ios:{n:'iPhone',url:'https://apps.apple.com/app/id6743423554',cta:'到 App Store 安裝',man:'17908498871370',
