@@ -387,6 +387,43 @@ a.pub:hover{transform:translateY(-2px)}.pub.ed{background:radial-gradient(80% 90
 .eb-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:30px 24px;margin-top:20px}
 .eb-bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:6px 0 4px}.eb-tab{border:1px solid var(--line);background:none;color:var(--ink);padding:7px 16px;border-radius:99px;font:inherit;font-size:14px;cursor:pointer}.eb-tab.on{background:var(--accent);border-color:var(--accent);color:#fff}
 .eb-q{flex:1;min-width:150px;max-width:300px;padding:8px 14px;border:1px solid var(--line);border-radius:99px;background:none;color:var(--ink);font:inherit;font-size:14px}
+.eb-lbtn{margin-left:auto}
+.eb-lp{display:grid;grid-template-rows:0fr;margin:0;transition:grid-template-rows .5s cubic-bezier(.2,.8,.2,1),margin .5s cubic-bezier(.2,.8,.2,1)}.eb-lp.open{grid-template-rows:1fr;margin:16px 0 6px}.eb-lp>div{overflow:hidden;min-height:0}
+.eb-lpi{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(250px,1fr);gap:24px;padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--card)}
+.eb-fr{height:560px;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}.eb-fr iframe{width:100%;height:100%;border:0;display:block}
+.eb-sd h4{margin:2px 0 10px;font-size:18px;font-family:var(--serif)}.eb-sd ol{margin:0 0 14px;padding-left:1.3em;line-height:1.85;font-size:14.5px}.eb-sd ol li{margin-bottom:8px}.eb-sd p{font-size:13px;color:var(--ink2);line-height:1.75;margin:0 0 12px}.eb-sd .eb-rw{display:flex;gap:10px;flex-wrap:wrap}
+@media(max-width:860px){.eb-lpi{grid-template-columns:1fr}.eb-fr{height:480px}}
+.gd{position:fixed;inset:0;z-index:300;display:grid;place-items:center;background:rgba(10,8,6,.62);opacity:0;pointer-events:none;transition:opacity .28s}.gd.on{opacity:1;pointer-events:auto}
+.gd-c{width:min(660px,92vw);max-height:92vh;overflow:auto;background:var(--paper);color:var(--ink);border:1px solid var(--line);border-radius:18px;padding:22px;transform:translateY(16px) scale(.98);transition:transform .35s cubic-bezier(.2,.8,.2,1)}.gd.on .gd-c{transform:none}
+.gd-c h3{margin:0 0 4px;font-size:20px;font-family:var(--serif)}.gd-c .gd-bk{margin:0 0 14px;font-size:13.5px;color:var(--ink2)}
+.gd-st{position:relative;aspect-ratio:16/9;border-radius:10px;background:#1b1714;overflow:hidden;border:1px solid rgba(255,255,255,.1)}
+.gd-tb{position:absolute;left:0;right:0;top:0;height:15%;background:#2a2420;display:flex;gap:6px;padding:1.4% 3% 0;align-items:flex-end}
+.gd-tab{height:100%;min-width:17%;padding:0 4%;display:flex;align-items:center;font-size:clamp(9px,1.6vw,12px);color:#e9dfd2;background:#3a322c;border-radius:6px 6px 0 0;white-space:nowrap}.gd-tab.a{background:#4a4038}
+.gd-tab.b{animation:gdtab 9s infinite}
+.gd-bd{position:absolute;left:0;right:0;top:15%;bottom:0}
+.gd-p{position:absolute;top:0;bottom:0;padding:3% 4%;font-size:clamp(8px,1.4vw,11px);color:#d8ccbd;line-height:1.9;overflow:hidden}
+.gd-p1{left:0;background:#2f2823;animation:gdp1 9s infinite}.gd-p2{right:0;background:#3a2f27;width:0;opacity:0;animation:gdp2 9s infinite}
+.gd-p i{display:block;height:6px;border-radius:3px;background:rgba(255,255,255,.16);margin:7px 0}.gd-p b{display:block;color:#fff;font-weight:600;margin-bottom:6px}
+.gd-dv{position:absolute;left:49.6%;top:0;bottom:0;width:1.2%;background:var(--accent);opacity:0;animation:gddv 9s infinite}
+.gd-mn{position:absolute;left:21%;top:15%;width:34%;background:#463c34;border-radius:8px;padding:5px;box-shadow:0 8px 20px rgba(0,0,0,.5);opacity:0;animation:gdmn 9s infinite;font-size:clamp(8px,1.5vw,11.5px);color:#efe6da;z-index:3}
+.gd-mn span{display:block;padding:4px 8px;border-radius:5px;white-space:nowrap;opacity:.55}.gd-mn span.h{animation:gdmh 9s infinite}
+.gd-cu{position:absolute;width:3.4%;aspect-ratio:1;z-index:4;left:72%;top:62%;opacity:0;animation:gdcu 9s infinite}
+.gd-cu svg{width:100%;height:100%;filter:drop-shadow(0 1px 2px rgba(0,0,0,.6))}
+.gd-cu::after{content:"";position:absolute;left:-30%;top:-30%;width:160%;height:160%;border-radius:50%;border:2px solid var(--accent);opacity:0;animation:gdrp 9s infinite}
+.gd-cap{list-style:none;margin:14px 0 4px;padding:0;display:grid;gap:8px}.gd-cap li{display:flex;gap:10px;font-size:14px;line-height:1.7;opacity:.4}.gd-cap li em{flex:none;width:22px;height:22px;border-radius:50%;background:var(--ink);color:var(--paper);font:600 12px/22px var(--sans,inherit);text-align:center;font-style:normal;margin-top:2px}
+.gd-cap li:nth-child(1){animation:gdc1 9s infinite}.gd-cap li:nth-child(2){animation:gdc2 9s infinite}.gd-cap li:nth-child(3){animation:gdc3 9s infinite}
+.gd-nt{font-size:12.5px;color:var(--ink2);margin:6px 0 12px;line-height:1.7}
+.gd-ft{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.gd-ft label{margin-left:auto;font-size:13px;color:var(--ink2);display:flex;gap:6px;align-items:center;cursor:pointer}
+@keyframes gdp1{0%,60%{width:100%}72%,96%{width:49.6%}100%{width:100%}}
+@keyframes gdp2{0%,60%{width:0;opacity:0}72%,96%{width:49.6%;opacity:1}99%,100%{width:0;opacity:0}}
+@keyframes gddv{0%,70%{opacity:0}74%,96%{opacity:1}99%,100%{opacity:0}}
+@keyframes gdtab{0%,70%{box-shadow:none}76%,96%{box-shadow:inset 0 0 0 2px var(--accent)}100%{box-shadow:none}}
+@keyframes gdmn{0%,36%{opacity:0;transform:scale(.94)}40%,58%{opacity:1;transform:none}62%,100%{opacity:0}}
+@keyframes gdmh{0%,47%{background:none;opacity:.55}50%,58%{background:var(--accent);opacity:1;color:#fff}62%,100%{background:none;opacity:.55}}
+@keyframes gdcu{0%{left:74%;top:66%;opacity:0}6%{opacity:1}28%,36%{left:27%;top:6%;opacity:1}46%,56%{left:30%;top:23%;opacity:1}64%{left:34%;top:26%;opacity:0}100%{left:74%;top:66%;opacity:0}}
+@keyframes gdrp{0%,34%{opacity:0;transform:scale(.4)}37%{opacity:.9;transform:scale(.8)}44%{opacity:0;transform:scale(1.5)}53%{opacity:0;transform:scale(.4)}55%{opacity:.9;transform:scale(.8)}62%,100%{opacity:0;transform:scale(1.5)}}
+@keyframes gdc1{0%,31%{opacity:1}34%,100%{opacity:.4}}@keyframes gdc2{0%,31%{opacity:.4}34%,63%{opacity:1}66%,100%{opacity:.4}}@keyframes gdc3{0%,63%{opacity:.4}66%,96%{opacity:1}100%{opacity:.4}}
+@media(prefers-reduced-motion:reduce){.gd-st *,.gd-cap li{animation:none!important}.gd-p1{width:49.6%}.gd-p2{width:49.6%;opacity:1}.gd-cap li{opacity:1}}
 .eb-n{font-size:13px;color:var(--ink2,#777);margin:8px 0 0}
 .eb-f{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:10px;text-align:center;font:600 14px/1.5 var(--serif);color:rgba(255,255,255,.85)}
 .bk-c.eb .bk-cv img{z-index:1}.bk-c.eb b{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:15px;line-height:1.45}
@@ -1293,10 +1330,26 @@ LB.tg1.n=76;
 const EBS={d:null,tab:'all',q:''},EBC={B:'書籍',P:'繪本',C:'漫畫'};
 const ebsCover=id=>'https://tclwebdata.s3-ap-southeast-1.amazonaws.com/EBSRepos/EBSRepos/Images/cover450/'+id+'.jpg',ebsUrl=id=>'https://www.ebookservice.tw/tc/book/'+id;
 async function ebsLoad(){if(!EBS.d){try{const r=await fetch('ebs.json');EBS.d=r.ok?await r.json():[]}catch(e){EBS.d=[]}EBS.d.sort((a,b)=>'PCB'.indexOf(a[0])-'PCB'.indexOf(b[0]))}return EBS.d}
-const ebsCard=(b,lg)=>`<a class="bk-c eb" href="${ebsUrl(b[1])}" target="_blank" rel="noopener"><div class="bk-cv"><span class="eb-f">${esc(b[2])}</span><img loading="lazy" decoding="async" referrerpolicy="no-referrer" src="${ebsCover(b[1])}" alt="" onerror="this.remove()"></div>${lg?'<i class="lg"></i>':''}<b>${esc(b[2])}</b><small>${esc(b[3])}${b[3]?'・':''}${EBC[b[0]]}</small></a>`;
+const ebsCard=(b,lg)=>`<a class="bk-c eb" href="${ebsUrl(b[1])}" data-id="${b[1]}" data-t="${esc(b[2])}" target="_blank" rel="noopener"><div class="bk-cv"><span class="eb-f">${esc(b[2])}</span><img loading="lazy" decoding="async" referrerpolicy="no-referrer" src="${ebsCover(b[1])}" alt="" onerror="this.remove()"></div>${lg?'<i class="lg"></i>':''}<b>${esc(b[2])}</b><small>${esc(b[3])}${b[3]?'・':''}${EBC[b[0]]}</small></a>`;
 async function ebsFill(){const el=document.getElementById('eb-shelf');if(!el)return;const d=await ebsLoad();if(!d.length)return;const pick=[...d.filter(x=>x[0]==='P'),...d.filter(x=>x[0]==='C'),...d.filter(x=>x[0]==='B').slice(0,9)];el.innerHTML=pick.map(b=>ebsCard(b,1)).join('')+`<a class="bk-c mo" href="#books/ebs"><div class="bk-cv">全部 ${d.length} 本</div></a>`}
 async function ebsPage(){const el=document.getElementById('eb-grid');if(!el)return;const d=await ebsLoad();ebsDraw()}
 function ebsDraw(){const el=document.getElementById('eb-grid');if(!el||!EBS.d)return;const q=EBS.q.trim().toLowerCase(),l=EBS.d.filter(b=>(EBS.tab==='all'||b[0]===EBS.tab)&&(!q||(b[2]+' '+b[3]).toLowerCase().includes(q)));el.innerHTML=l.map(ebsCard).join('');const n=document.getElementById('eb-n');if(n)n.textContent=l.length?`共 ${l.length} 本`:'找不到符合的書';document.querySelectorAll('.eb-tab').forEach(t=>t.classList.toggle('on',t.dataset.eb===EBS.tab))}
+
+function ebLogin(open){const p=document.getElementById('eb-lp'),b=document.querySelector('[data-ebl=t]');if(!p)return;if(open===undefined)open=!p.classList.contains('open');if(open){const f=document.getElementById('eb-fr');if(f&&!f.firstChild)f.innerHTML='<iframe title="台灣雲端書庫登入" src="https://www.ebookservice.tw/tc/account/sign-in" referrerpolicy="no-referrer"></iframe>';p.classList.add('open');setTimeout(()=>p.scrollIntoView({behavior:'smooth',block:'nearest'}),120)}else p.classList.remove('open');if(b){b.setAttribute('aria-expanded',open);b.textContent=open?'收合登入':'登入帳號'}}
+function ebOpen(id,both){if(both)window.open(location.href.split('#')[0]+'#dictwin','taigidict');window.open(ebsUrl(id),'_blank','noopener,noreferrer')}
+function ebGuide(id,t){let skip=0;try{skip=localStorage.getItem('gdSkip')}catch(e){}if(skip){ebOpen(id,1);return}let g=document.getElementById('eb-gd');if(!g){g=document.createElement('div');g.id='eb-gd';g.className='gd';g.setAttribute('role','dialog');g.setAttribute('aria-modal','true');document.body.appendChild(g)}
+ g.innerHTML=`<div class="gd-c"><h3>開書之前，先看怎麼分割畫面</h3><p class="gd-bk">${esc(t)}</p>
+ <div class="gd-st" aria-hidden="true"><div class="gd-tb"><div class="gd-tab">街仔路</div><div class="gd-tab b">辭典</div><div class="gd-tab a">書</div></div>
+  <div class="gd-bd"><div class="gd-p gd-p1"><b>書</b><i style="width:90%"></i><i style="width:76%"></i><i style="width:84%"></i><i style="width:60%"></i></div><div class="gd-p gd-p2"><b>辭典</b><i style="width:70%"></i><i style="width:88%"></i><i style="width:52%"></i></div><div class="gd-dv"></div></div>
+  <div class="gd-mn"><span>在新分頁開啟</span><span class="h">新增分割畫面</span><span>關閉分頁</span></div>
+  <div class="gd-cu"><svg viewBox="0 0 24 24"><path d="M4 2l15 9-6.5 1.5L9 19z" fill="#fff" stroke="#111" stroke-width="1.2" stroke-linejoin="round"/></svg></div></div>
+ <ol class="gd-cap"><li><em>1</em><span>按下「開啟」，會跳出辭典和書兩個新分頁，排在街仔路旁邊。</span></li><li><em>2</em><span>在分頁列對其中一個分頁按右鍵，選「新增分割畫面」，再選另一個分頁。</span></li><li><em>3</em><span>兩個分頁併成同一個畫面，左邊讀書，右邊查辭典。中間的線可以拖曳，調整兩邊的寬度。</span></li></ol>
+ <p class="gd-nt">需要電腦版 Chrome，而且要是比較新的版本。選項名稱可能和這裡略有不同，找「分割畫面」(split view) 就對了。手機或平板請直接分開兩個分頁切換。</p>
+ <div class="gd-ft"><button class="btn pri" data-gd="both">開啟書和辭典</button><button class="btn" data-gd="one">只開書</button><button class="btn" data-gd="x">取消</button><label><input type="checkbox" id="gd-skip"> 之後不再顯示</label></div></div>`;g.dataset.id=id;requestAnimationFrame(()=>g.classList.add('on'))}
+function ebGuideClose(){const g=document.getElementById('eb-gd');if(g)g.classList.remove('on')}
+document.addEventListener('click',e=>{const gdb=e.target.closest('[data-gd]');if(gdb){const g=document.getElementById('eb-gd'),id=g.dataset.id,k=gdb.dataset.gd;if(k!=='x'){try{if(document.getElementById('gd-skip').checked)localStorage.setItem('gdSkip','1')}catch(_){}ebOpen(id,k==='both')}ebGuideClose();return}
+  if(e.target.id==='eb-gd'){ebGuideClose();return}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')ebGuideClose()});
 document.addEventListener('input',e=>{if(e.target.id==='eb-q'){EBS.q=e.target.value;ebsDraw()}});
 const LIBB=[{id:'196959',t:'日子',sub:'台語曆日仔詩',a:'陳胤',p:'前衛出版社',bg:'linear-gradient(155deg,#2c5f6b,#0b1d22)'}];
 const libUrl=id=>'https://reading.udn.com/onlineViewer/2BpdfViewer/'+id;
@@ -1469,7 +1522,8 @@ function pBooks(r){
   if(r==='books/ebs')return `<a class="back" href="#books">← 台語冊房</a>
    <div class="bk-h"><h2 class="hd">台灣雲端書庫</h2><span class="sub tl">臺中市・台語相關電子書</span></div>
    <p class="sub bk-sub">點封面會開啟台灣雲端書庫的書頁，用臺中市立圖書館借書證登入借閱。</p>
-   <div class="eb-bar"><button class="eb-tab on" data-eb="all">全部</button><button class="eb-tab" data-eb="B">書籍</button><button class="eb-tab" data-eb="P">繪本</button><button class="eb-tab" data-eb="C">漫畫</button><input id="eb-q" class="eb-q" type="search" placeholder="找書名或作者" autocomplete="off"></div>
+   <div class="eb-bar"><button class="eb-tab on" data-eb="all">全部</button><button class="eb-tab" data-eb="B">書籍</button><button class="eb-tab" data-eb="P">繪本</button><button class="eb-tab" data-eb="C">漫畫</button><input id="eb-q" class="eb-q" type="search" placeholder="找書名或作者" autocomplete="off"><button class="btn eb-lbtn" data-ebl="t" aria-expanded="false">登入帳號</button></div>
+   <div class="eb-lp" id="eb-lp"><div><div class="eb-lpi"><div class="eb-fr" id="eb-fr"></div><div class="eb-sd"><h4>登入步驟</h4><ol><li>在左邊畫面按 Google 圖示，用 Gmail 帳號登入。換電腦或手機時用同一個帳號，借閱的書才找得到。</li><li>登入後，把你用的圖書館綁定到這個帳號。我們的學校在臺中，至少要綁臺中市立圖書館；其他縣市有借書證的話也可以一併綁定。</li><li>登入好了，按下面的「收合」，再到下面點書。</li></ol><p>如果左邊登入不了，或登入後點書還是要你重新登入，請改用「在新分頁登入」，在那個分頁登入並綁定好，再回來點書。</p><div class="eb-rw"><button class="btn pri" data-ebl="c">登入好了，收合</button><a class="btn" href="https://www.ebookservice.tw/tc/account/sign-in" target="_blank" rel="noopener">在新分頁登入</a></div></div></div></div></div>
    <p class="eb-n" id="eb-n"></p><div class="eb-g" id="eb-grid"></div>
    <p class="bk-note">書單是用「台語」搜尋台灣雲端書庫（臺中市）後，逐本看簡介，只留下書裡有台語文書寫的（台語詩文、小說、台華雙語、學台語的書）。只是談台語、台語片或夾幾句台語的書沒有收。封面與書頁連結都來自台灣雲端書庫，這裡不複製書的內容，著作權屬出版社與作者。</p>`;
   const lm=/^books\/lib\/(\d+)$/.exec(r);if(lm)return libView(lm[1]);
@@ -1552,6 +1606,8 @@ async function bkCovers(){ebsFill();
 const bkIn=()=>{BK.fade=0;const r=document.getElementById('bk-rd');if(r){delete r.dataset.out;r.dataset.in=1;setTimeout(()=>{delete r.dataset.in},900)}};
 function bkLoad(r){if(BK.fade)bkIn();if(r==='books')bkCovers();else if(r==='books/ebs')ebsPage();else if(r==='books/bong')bkShelf();else bkReader()}
 document.getElementById('app').addEventListener('click',e=>{
+    const ebl=e.target.closest('[data-ebl]');if(ebl){ebLogin(ebl.dataset.ebl==='t'?undefined:false);return}
+  const ebc=e.target.closest('a.bk-c.eb');if(ebc&&!e.metaKey&&!e.ctrlKey&&!e.shiftKey){e.preventDefault();ebGuide(ebc.dataset.id,ebc.dataset.t);return}
   const ebt=e.target.closest('[data-eb]');if(ebt){EBS.tab=ebt.dataset.eb;ebsDraw();return}const lbtn=e.target.closest('[data-lib]');if(lbtn){const sd=lbtn.dataset.lib==='side',r=libOpen(lbtn.dataset.id,sd),m=document.getElementById('lib-msg');if(m)m.textContent=r?'':'視窗被瀏覽器擋住了，請允許彈出視窗後再按一次。';return}
   const b=e.target.closest('[data-bk]');if(!b)return;const k=b.dataset.bk;
   if(k==='more'&&BK.add)BK.add();
