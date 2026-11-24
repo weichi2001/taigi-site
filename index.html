@@ -1471,7 +1471,7 @@ function pBooks(r){
    <p class="sub bk-sub">點封面會開啟台灣雲端書庫的書頁，用臺中市立圖書館借書證登入借閱。</p>
    <div class="eb-bar"><button class="eb-tab on" data-eb="all">全部</button><button class="eb-tab" data-eb="B">書籍</button><button class="eb-tab" data-eb="P">繪本</button><button class="eb-tab" data-eb="C">漫畫</button><input id="eb-q" class="eb-q" type="search" placeholder="找書名或作者" autocomplete="off"></div>
    <p class="eb-n" id="eb-n"></p><div class="eb-g" id="eb-grid"></div>
-   <p class="bk-note">書單是用「台語」搜尋台灣雲端書庫（臺中市）的結果，有些書只是內文提到台語，不一定是台語書。封面與書頁連結都來自台灣雲端書庫，這裡不複製書的內容，著作權屬出版社與作者。</p>`;
+   <p class="bk-note">書單是用「台語」搜尋台灣雲端書庫（臺中市）後，逐本看簡介，只留下書裡有台語文書寫的（台語詩文、小說、台華雙語、學台語的書）。只是談台語、台語片或夾幾句台語的書沒有收。封面與書頁連結都來自台灣雲端書庫，這裡不複製書的內容，著作權屬出版社與作者。</p>`;
   const lm=/^books\/lib\/(\d+)$/.exec(r);if(lm)return libView(lm[1]);
   const m=/^books\/(\d+|tg\d+)(?:\/(\d+|b))?$/.exec(r);
   if(r==='books/bong')return `<a class="back" href="#books">← 台語冊房</a>
