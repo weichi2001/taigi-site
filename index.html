@@ -1653,14 +1653,14 @@ function pBooks(r){
    <div class="eb-bar"><button class="eb-tab on" data-eb="all">全部</button><button class="eb-tab" data-eb="B">書籍</button><button class="eb-tab" data-eb="P">繪本</button><button class="eb-tab" data-eb="C">漫畫</button><input id="eb-q" class="eb-q" type="search" placeholder="找書名或作者" autocomplete="off"><button class="btn eb-lbtn" data-ebl="t" aria-expanded="false">登入帳號</button></div>
    ${EBLP}
    <p class="eb-n" id="eb-n"></p><div class="eb-g" id="eb-grid"></div>
-   <p class="bk-note">書單是用「台語」搜尋台灣雲端書庫（臺中市）後，逐本看簡介，只留下書裡有台語文書寫的（台語詩文、小說、台華雙語、學台語的書）。只是談台語、台語片或夾幾句台語的書沒有收。封面與書頁連結都來自台灣雲端書庫，這裡不複製書的內容，著作權屬出版社與作者。</p>`;
+   <p class="bk-note">書籍封面與書頁連結來自臺中市立圖書館「台灣雲端書庫」，著作權屬出版社與作者。</p>`;
   const lm=/^books\/lib\/(\d+)$/.exec(r);if(lm)return libView(lm[1]);
   const m=/^books\/(\d+|tg\d+)(?:\/(\d+|b))?$/.exec(r);
   if(r==='books/bong')return `<a class="back" href="#books">← 台語冊房</a>
    <div class="bk-h"><h2 class="hd">台文通訊 BONG 報</h2><span class="sub tl">Tâi-bûn Thong-sùn BONG Pò</span></div>
    <p class="sub bk-sub">一期一期放在書架上，點開就能讀。</p>
    <div id="bk-res"></div><div id="bk-shelf" class="bk-shelf"></div><div class="bk-more"><button class="btn" data-bk="more" hidden>看更早的期數</button></div>
-   <p class="bk-note">內容是打開時才從 <a href="https://tsbp.tgb.org.tw/" target="_blank" rel="noopener">台文通訊 BONG 報網站</a> 即時讀取，這裡不複製也不存放。《台文通訊》由李江却台語文教基金會發行，著作權屬基金會與作者。</p>`;
+   <p class="bk-note">《台文通訊》由李江却台語文教基金會發行，內容連結自 <a href="https://tsbp.tgb.org.tw/" target="_blank" rel="noopener">BONG 報網站</a>，著作權屬基金會與作者。</p>`;
   if(!m){
    return `<a class="back" href="#home">← 街仔路</a>
    <header class="bkt"><small>Tâi-gí Tsheh-pâng</small><h2 class="hd">台語冊房</h2></header>
@@ -1675,7 +1675,7 @@ function pBooks(r){
    <section class="lib"><div class="lib-h"><h3 class="hd">讀文章蓋趣味</h3></div>
     <p class="lib-s">教育部「咱來學臺灣台語」系列的讀本，短文附詞彙與文法。</p>
     <div class="shelf">${['tg1','tg2'].map(k=>`<a class="bk-c" href="#books/${k}"><div class="bk-cv"><img src="books/${k}/th.webp" alt="" loading="lazy"></div><i class="lg"></i><b>${LB[k].t}</b><small>教育部・${LB[k].fs}</small></a>`).join('')}</div></section>
-   <p class="bk-note">BONG 報是打開時才從原網站即時讀取，這裡不複製也不存放，著作權屬李江却台語文教基金會與作者。《讀文章蓋趣味》是教育部公開提供的教材，這裡把原本的 PDF（<a href="https://language.moe.gov.tw/upload/download/jts/04%E6%96%87%E7%AB%A01.pdf" target="_blank" rel="noopener">第一冊</a>、<a href="https://language.moe.gov.tw/upload/download/jts/04%E6%96%87%E7%AB%A02.pdf" target="_blank" rel="noopener">第二冊</a>）拆成單頁方便翻閱，著作權屬教育部與作者；課文的音檔請到原 PDF 點藍字聆聽。</p>`;
+   <p class="bk-note">《台文通訊》著作權屬李江却台語文教基金會與作者。《讀文章蓋趣味》著作權屬教育部與作者，原檔：<a href="https://language.moe.gov.tw/upload/download/jts/04%E6%96%87%E7%AB%A01.pdf" target="_blank" rel="noopener">第一冊</a>、<a href="https://language.moe.gov.tw/upload/download/jts/04%E6%96%87%E7%AB%A02.pdf" target="_blank" rel="noopener">第二冊</a>。</p>`;
   }
   return `<div id="bk-rd" data-n="${m[1]}" data-i="${m[2]===undefined?-1:m[2]}" class="bk-rd" style="--bkfs:${bkFs()}px"><a class="back" href="#books/bong">← 書架</a><p class="sub">讀取中⋯⋯</p></div>`;
 }
