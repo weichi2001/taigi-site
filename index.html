@@ -575,7 +575,7 @@ html[data-theme=dark] .top .in{background:rgba(40,38,36,.82)}html[data-theme=dar
  .hh{min-height:520px;padding:150px 56px 44px;border-radius:34px;margin-top:0}
  .hh h1{font-size:60px}.hh .bgc{right:60px;top:40px;font-size:min(var(--bs,470px),40vw)}
  .dw{width:fit-content;min-width:400px;max-width:560px;padding:22px 26px;gap:22px}.dw.long{max-width:640px}.dw.mid{flex-wrap:nowrap;row-gap:0}.dw.mid .dwb{margin-left:0}.dwc{font-size:var(--dsd,72px)}.dwt b{font-size:24px}
- .pst{min-height:250px;padding:32px}.pst b{font-size:40px}
+ .pst,.pst.c{min-height:250px;padding:32px}.pst b{font-size:40px}
  .hsec.g2{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}.hsec.g3{grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
  body[data-r=quiz] .wrap,body[data-r=review] .wrap,body[data-r=about] .wrap{max-width:860px}
  body[data-r^=seg] .wrap{max-width:900px}
@@ -1436,7 +1436,7 @@ const ebsDay=()=>Math.floor((Date.now()+288e5)/864e5);
 const ebsPick=d=>d[(ebsDay()*37)%d.length];
 function ebsHero(d){const r=document.getElementById('bkh-r'),n=document.getElementById('bkh-n');if(n)n.textContent=`電子書 ${d.length} 本、BONG 報、教育部讀本`;if(!r)return;const b=ebsPick(d),t=new Date(Date.now()+288e5);
  r.innerHTML=`<a class="bkd eb" href="${ebsUrl(b[1])}" data-id="${b[1]}" data-t="${esc(b[2])}" target="_blank" rel="noopener"><div class="bkd-c"><span class="eb-f">${esc(b[2])}</span><img referrerpolicy="no-referrer" src="${ebsCover(b[1])}" alt="" onerror="this.remove()"></div><div class="bkd-t"><small>本日推薦・${t.getUTCMonth()+1} 月 ${t.getUTCDate()} 日</small><b>${esc(b[2])}</b><em>${esc(b[3])}${b[3]?'・':''}${EBC[b[0]]}</em><i class="bkd-b">翻開這本</i></div></a>`}
-function ebsTile(d){const bp=document.getElementById('bkp');if(!bp)return;const k=(ebsDay()*37)%d.length;[0,1,2].forEach(j=>{const b=d[(k+j*17)%d.length],i=bp.children[j];if(!i)return;i.innerHTML=`<img referrerpolicy="no-referrer" src="${ebsCover(b[1])}" alt="" onerror="this.remove()"><em>${esc([...b[2]].slice(0,2).join(''))}</em>`})}
+function ebsTile(d){const bp=document.getElementById('bkp');if(!bp)return;['67012785-8915-4115-a184-626597369db7','198a9cf0-9f43-4d5b-9660-597b3569471b','9afe9ff8-710f-4ece-ac3c-c45d5e70f55c'].forEach((id,j)=>{const b=d.find(x=>x[1]===id),i=bp.children[j];if(!b||!i)return;i.innerHTML=`<img referrerpolicy="no-referrer" src="${ebsCover(b[1])}" alt="" onerror="this.remove()"><em>${esc([...b[2]].slice(0,2).join(''))}</em>`})}
 
 async function ebsPage(){const el=document.getElementById('eb-grid');if(!el)return;const d=await ebsLoad();ebsDraw()}
 function ebsDraw(){const el=document.getElementById('eb-grid');if(!el||!EBS.d)return;const q=EBS.q.trim().toLowerCase(),l=EBS.d.filter(b=>(EBS.tab==='all'||b[0]===EBS.tab)&&(!q||(b[2]+' '+b[3]).toLowerCase().includes(q)));el.innerHTML=l.map(b=>ebsCard(b,1)).join('');const n=document.getElementById('eb-n');if(n)n.textContent=l.length?`共 ${l.length} 本`:'找不到符合的書';document.querySelectorAll('.eb-tab').forEach(t=>t.classList.toggle('on',t.dataset.eb===EBS.tab))}
