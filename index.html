@@ -648,6 +648,20 @@ body[data-r=books] .wrap{padding:0 12px 60px;margin-top:-70px}
 body[data-r=books] .back{display:none}
 body[data-r=books] .bkt{margin:8px 0 0;padding:120px 26px 34px;border-radius:30px;color:#f6efe6;background:radial-gradient(55% 85% at 86% 28%,rgba(214,64,42,.55) 0,transparent 66%),radial-gradient(50% 60% at 8% 100%,rgba(110,140,130,.30) 0,transparent 70%),linear-gradient(160deg,#211d1a,#141210)}
 body[data-r=books] .bkt .hd{color:#f6efe6}body[data-r=books] .bkt small{color:#e8c872}body[data-r=books] .bkt::after{background:#e8c872}
+.ebh{margin:16px 0 8px;padding:26px 24px 26px;border-radius:30px;color:#f6efe6;background:radial-gradient(55% 90% at 88% 20%,rgba(214,64,42,.5) 0,transparent 66%),radial-gradient(50% 60% at 6% 100%,rgba(110,140,130,.28) 0,transparent 70%),linear-gradient(160deg,#211d1a,#141210)}
+.ebh-back{display:inline-block;font-size:15px;color:#f6efe6;text-decoration:none;padding:8px 18px;border-radius:99px;background:rgba(255,255,255,.12);box-shadow:inset 0 0 0 1px rgba(255,255,255,.24)}
+.ebh-back:hover{background:rgba(255,255,255,.2)}
+.ebh .hd{margin:26px 0 26px;font-family:var(--serif);font-weight:700;font-size:clamp(40px,6vw,76px);letter-spacing:.08em;line-height:1.15;color:#f6efe6}
+.ebh .eb-bar{margin:0;gap:12px}
+.ebh .eb-tab{background:rgba(255,255,255,.1);border:0;color:#f6efe6;padding:10px 20px;font-size:15px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.22)}
+.ebh .eb-tab:hover{background:rgba(255,255,255,.18)}
+.ebh .eb-tab.on{background:var(--accent);box-shadow:none;color:#fff}
+.ebh .eb-q{background:rgba(255,255,255,.1);border:0;color:#f6efe6;padding:11px 20px;font-size:15px;max-width:340px;min-width:200px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.22);outline:none}
+.ebh .eb-q::placeholder{color:rgba(246,239,230,.55)}.ebh .eb-q:focus{box-shadow:inset 0 0 0 1px #e8c872}
+.ebh .eb-lbtn{margin:0 0 0 auto;padding:10px 22px;font-size:15px;font-weight:700;border:0!important;border-radius:99px;background:#f2e9d8!important;color:#1b1814!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+.ebh .eb-lbtn:hover{background:#fff!important}
+@media(min-width:900px){.ebh{margin-top:20px;padding:34px 48px 40px;border-radius:34px}}
+
 @media(min-width:900px){body[data-r=books] .wrap{padding:0 0 80px;margin-top:-80px}body[data-r=books] .bkt{padding:150px 56px 48px;border-radius:34px}}
 
 .bk-h{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}.bk-h h2{margin:0}.bk-h .sub{color:var(--ink)}.bk-sub{margin:6px 0 20px}
@@ -1649,13 +1663,10 @@ const bkSave=o=>{try{localStorage.setItem('tgbk',JSON.stringify(o))}catch(e){}};
 const bkFs=()=>{try{return +localStorage.getItem('tgbkfs')||18}catch(e){return 18}};
 const bkCredit=(n,u)=>`<p class="bk-cr">本文出自《台文通訊BONG報》第 ${n} 期，著作權屬李江却台語文教基金會與作者。${u?`<a href="${u}" target="_blank" rel="noopener">到原網站看這篇</a>`:''}　<a href="https://tsbp.tgb.org.tw/p/bong_31.html" target="_blank" rel="noopener">贊助刊物</a></p>`;
 function pBooks(r){
-  if(r==='books/ebs')return `<a class="back" href="#books">← 台語冊房</a>
-   <div class="bk-h"><h2 class="hd">台灣雲端書庫</h2><span class="sub tl">臺中市・台語相關電子書</span></div>
-   <p class="sub bk-sub">點封面會開啟台灣雲端書庫的書頁，用臺中市立圖書館借書證登入借閱。</p>
-   <div class="eb-bar"><button class="eb-tab on" data-eb="all">全部</button><button class="eb-tab" data-eb="B">書籍</button><button class="eb-tab" data-eb="P">繪本</button><button class="eb-tab" data-eb="C">漫畫</button><input id="eb-q" class="eb-q" type="search" placeholder="找書名或作者" autocomplete="off"><button class="btn eb-lbtn" data-ebl="t" aria-expanded="false">登入帳號</button></div>
+  if(r==='books/ebs')return `<header class="ebh"><a class="ebh-back" href="#books">← 台語冊房</a><h2 class="hd">台灣雲端書庫</h2>
+   <div class="eb-bar"><button class="eb-tab on" data-eb="all">全部</button><button class="eb-tab" data-eb="B">書籍</button><button class="eb-tab" data-eb="P">繪本</button><button class="eb-tab" data-eb="C">漫畫</button><input id="eb-q" class="eb-q" type="search" placeholder="找書名或作者" autocomplete="off"><button class="btn eb-lbtn" data-ebl="t" aria-expanded="false">登入帳號</button></div></header>
    ${EBLP}
-   <p class="eb-n" id="eb-n"></p><div class="eb-g" id="eb-grid"></div>
-   <p class="bk-note">書籍封面與書頁連結來自臺中市立圖書館「台灣雲端書庫」，著作權屬出版社與作者。</p>`;
+   <p class="eb-n" id="eb-n"></p><div class="eb-g" id="eb-grid"></div>`;
   const lm=/^books\/lib\/(\d+)$/.exec(r);if(lm)return libView(lm[1]);
   const m=/^books\/(\d+|tg\d+)(?:\/(\d+|b))?$/.exec(r);
   if(r==='books/bong')return `<a class="back" href="#books">← 台語冊房</a>
