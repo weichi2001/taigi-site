@@ -1286,23 +1286,15 @@ const LB={
 LB.tg1.n=76;
 const LIBB=[{id:'196959',t:'日子',sub:'台語曆日仔詩',a:'陳胤',p:'前衛出版社',bg:'linear-gradient(155deg,#2c5f6b,#0b1d22)'}];
 const libUrl=id=>'https://reading.udn.com/onlineViewer/2BpdfViewer/'+id;
-function libOpen(id,side){
-  const sw=screen.availWidth||innerWidth,sh=screen.availHeight||innerHeight,ox=screen.availLeft||0,oy=screen.availTop||0,dw=Math.min(440,Math.round(sw*.3));
-  if(!side){window.open(libUrl(id),'_blank','noopener');return 1}
-  const v=window.open(libUrl(id),'udnviewer',`popup=yes,left=${ox},top=${oy},width=${sw-dw},height=${sh}`);
-  const d=window.open(location.href.split('#')[0]+'#dictwin','taigidict',`popup=yes,left=${ox+sw-dw},top=${oy},width=${dw},height=${sh}`);
-  const place=()=>{try{if(v){v.resizeTo(sw-dw,sh);v.moveTo(ox,oy)}}catch(e){}try{if(d){d.resizeTo(dw,sh);d.moveTo(ox+sw-dw,oy)}}catch(e){}};
-  place();setTimeout(place,350);setTimeout(place,1200);
-  return v&&d?2:v?1:0;
-}
+function libOpen(id,side){return window.open(side?location.href.split('#')[0]+'#dictwin':libUrl(id),'_blank')?1:0}
 const libView=id=>{const b=LIBB.find(x=>x.id===id)||{id,t:'圖書館電子書',sub:'',a:'',p:'',bg:'#233'};
   return `<a class="back" href="#books">← 書架</a>
   <div class="lib-pg"><div class="bk-c"><div class="bk-cv dc" style="background:${b.bg}"><span class="y">圖書館</span><span class="v">${esc(b.t)}</span><span class="r">${esc(b.sub)}</span></div></div>
    <div><h2 class="hd">${esc(b.t)}${b.sub?' <span class="tl" style="font-size:.6em;font-weight:500">'+esc(b.sub)+'</span>':''}</h2><p class="sub">${esc(b.a)}${b.p?'・'+esc(b.p):''}</p>
-   <div class="lib-act"><button class="btn pri" data-lib="side" data-id="${b.id}">並排開啟：閱讀器＋辭典</button><button class="btn" data-lib="one" data-id="${b.id}">只開閱讀器</button><a class="btn" href="https://reading.udn.com/udnlib/taich/B/${b.id}" target="_blank" rel="noopener">借閱頁</a></div>
+   <div class="lib-act"><button class="btn pri" data-lib="one" data-id="${b.id}">開啟閱讀器</button><button class="btn" data-lib="side" data-id="${b.id}">另開辭典</button><a class="btn" href="https://reading.udn.com/udnlib/taich/B/${b.id}" target="_blank" rel="noopener">借閱頁</a></div>
    <p class="lib-msg" id="lib-msg"></p>
-   <ol class="lib-st"><li>先到「借閱頁」，用自己的臺中市立圖書館帳號借閱這本書。</li><li>借到之後，按「並排開啟」。左邊是 udn 的閱讀器，右邊是辭典小視窗，看到不會的字就打進去查。</li><li>如果瀏覽器擋住彈出視窗，請在網址列允許這個網站的彈出視窗，再按一次。</li></ol>
-   <p class="lib-why">為什麼不直接嵌在這個頁面裡？我試過，udn 的閱讀器放進別的網站就讀不到你登入後的書，畫面會是空白，所以只能開在它自己的視窗。</p></div></div>`};
+   <ol class="lib-st"><li>先到「借閱頁」，用自己的臺中市立圖書館帳號借閱這本書。</li><li>借到之後按「開啟閱讀器」，書會開在新分頁。</li><li>看到不會的字，回到這個網站，按右下角的放大鏡查辭典；或按「另開辭典」，把辭典開在另一個分頁。</li></ol>
+   <p class="lib-why">為什麼不直接嵌在這個頁面裡？我試過，udn 的閱讀器放進別的網站就讀不到你登入後的書，畫面會是空白，所以只能開在它自己的分頁。</p></div></div></div>`};
 const bkSvL=sv=>LB[sv.n]?esc(LB[sv.n].t)+(sv.t?'・'+esc(sv.t):''):`第 ${sv.n} 期${sv.t?'・'+esc(sv.t):''}`;
 function lbIssue(id){
   const B=LB[id];if(B._is)return B._is;
@@ -1537,7 +1529,7 @@ async function bkCovers(){
 const bkIn=()=>{BK.fade=0;const r=document.getElementById('bk-rd');if(r){delete r.dataset.out;r.dataset.in=1;setTimeout(()=>{delete r.dataset.in},900)}};
 function bkLoad(r){if(BK.fade)bkIn();if(r==='books')bkCovers();else if(r==='books/bong')bkShelf();else bkReader()}
 document.getElementById('app').addEventListener('click',e=>{
-  const lbtn=e.target.closest('[data-lib]');if(lbtn){const r=libOpen(lbtn.dataset.id,lbtn.dataset.lib==='side'),m=document.getElementById('lib-msg');if(m)m.textContent=r===0?'視窗被擋住了。請允許彈出視窗後再按一次。':r===1&&lbtn.dataset.lib==='side'?'辭典視窗被擋住了，請允許彈出視窗。':'';return}
+  const lbtn=e.target.closest('[data-lib]');if(lbtn){const r=libOpen(lbtn.dataset.id,lbtn.dataset.lib==='side'),m=document.getElementById('lib-msg');if(m)m.textContent=r?'':'分頁被瀏覽器擋住了，請允許彈出視窗後再按一次。';return}
   const b=e.target.closest('[data-bk]');if(!b)return;const k=b.dataset.bk;
   if(k==='more'&&BK.add)BK.add();
   if(k==='m-img'||k==='m-txt'){const md=b.closest('.bk-mode'),rt=document.getElementById('bk-rd');if(md){md.dataset.m=k==='m-txt'?'txt':'img';md.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b))}
