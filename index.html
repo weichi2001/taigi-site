@@ -521,6 +521,7 @@ a.pub:hover{transform:translateY(-2px)}.pub.ed{background:radial-gradient(80% 90
 .eb-n{font-size:13px;color:var(--ink2,#777);margin:8px 0 0}
 .eb-f{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:10px;text-align:center;font:600 14px/1.5 var(--serif);color:rgba(255,255,255,.85)}
 .bk-c.eb .bk-cv img{z-index:1}.bk-c.eb b{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:15px;line-height:1.45}
+.lib-t{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.lib-tag{font-style:normal;font-size:12px;letter-spacing:.08em;line-height:1;padding:5px 10px;border-radius:99px;color:var(--gd);box-shadow:inset 0 0 0 1px currentColor}
 .lib-s{margin:4px 0 18px;font-size:14px;color:var(--ink2,#777)}
 .shelf{display:grid;grid-auto-flow:column;grid-auto-columns:clamp(140px,16vw,200px);gap:26px;overflow-x:auto;padding:26px 30px 36px;margin:-18px -30px -14px;scrollbar-width:none}.shelf::-webkit-scrollbar{display:none}
 .shelf .bk-c{position:relative}.shelf .bk-cv{border-radius:3px 7px 7px 3px;box-shadow:0 4px 8px -3px rgba(40,30,20,.30),0 0 0 1px rgba(0,0,0,.05)}
@@ -1668,13 +1669,13 @@ function pBooks(r){
    <section class="bkf" id="bkh-r"></section>
    <div id="bk-res"></div>
    <section class="lib"><div class="lib-h"><h3 class="hd">台灣雲端書庫</h3><span class="eb-hr"><button class="btn eb-lbtn" data-ebl="t" aria-expanded="false">登入帳號</button><a href="#books/ebs">全部 →</a></span></div>
-    <p class="lib-s">各縣市圖書館的電子書，需用借書證註冊登入，但種類多、免費借，值得一試。</p>
+    <p class="lib-s">結合各縣市圖書館的電子書資源，需註冊借閱證並登入，但書籍種類多樣，非常值得一試！</p>
     ${EBLP}<div class="shelf" id="eb-shelf"></div></section>
-   <section class="lib"><div class="lib-h"><h3 class="hd">台文通訊 BONG 報</h3><a href="#books/bong">全部期數 →</a></div>
-    <p class="lib-s">李江却台語文教基金會發行的全台文月刊，不用登入，直接讀。</p>
+   <section class="lib"><div class="lib-h"><span class="lib-t"><h3 class="hd">台文通訊 BONG 報</h3><em class="lib-tag">提供站內閱讀</em></span><a href="#books/bong">全部期數 →</a></div>
+    <p class="lib-s">由李江却台語文教基金會發行的全台文月刊，閱讀難度較高，但相對文藝性質也高，適合想嘗試寫作的人。</p>
     <div class="shelf" id="bk-lib"></div></section>
-   <section class="lib"><div class="lib-h"><h3 class="hd">讀文章蓋趣味</h3></div>
-    <p class="lib-s">教育部「咱來學臺灣台語」系列的讀本，一課一篇短文，附詞彙和文法，免費公開。</p>
+   <section class="lib"><div class="lib-h"><span class="lib-t"><h3 class="hd">讀文章蓋趣味</h3><em class="lib-tag">提供站內閱讀</em></span></div>
+    <p class="lib-s">教育部「咱來學臺灣台語」系列的讀本，是很適合初學練習閱讀的短文，皆有附詞彙和文法。</p>
     <div class="shelf">${['tg1','tg2'].map(k=>`<a class="bk-c" href="#books/${k}"><div class="bk-cv"><img src="books/${k}/th.webp" alt="" loading="lazy"></div><i class="lg"></i><b>${LB[k].t}</b><small>教育部・${LB[k].fs}</small></a>`).join('')}</div></section>`;
   }
   return `<div id="bk-rd" data-n="${m[1]}" data-i="${m[2]===undefined?-1:m[2]}" class="bk-rd" style="--bkfs:${bkFs()}px"><a class="back" href="#books/bong">← 書架</a><p class="sub">讀取中⋯⋯</p></div>`;
