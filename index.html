@@ -1018,7 +1018,7 @@ function pStart(){
     <div class="step"><h3>認識台羅拼音</h3>
       ${resCard({t:'教育部臺羅網站',d:'教育部的台語羅馬字資訊。',tags:['讀','寫'],time:'查詢',href:'https://tailo.moe.edu.tw/'})}
       ${resCard(RES.find(r=>r.t==='練台羅'))}
-      <div class="dash">之後放：老師的台羅入門教材</div></div>
+    </div>
     <div class="step"><h3>學 700 字</h3><p class="sub">每段 35 字，學完一段可以到「練習資源」挑錯字。</p>
       ${resCard(RES.find(r=>r.t==='700 字自學'))}</div>
     <div class="step"><h3>聽、唱、用出來</h3>
@@ -1077,7 +1077,9 @@ function pApps(){
    <details class="ab res ap"><summary>${aic('https://sutian.moe.edu.tw/static/image/favicon/apple-touch-icon.png',SI.book)}<div><h3>教育部臺灣台語常用詞辭典</h3><p>教育部編的官方辭典</p></div></summary><div class="abb"><p>教育部編的台語辭典，收了兩萬多個詞。手機瀏覽器就能用。</p><h4>特色</h4><ul><li>可以用台語查，也可以用華語查</li><li>有詞義、例句、同義詞、反義詞</li><li>詞目和例句都能聽真人發音</li><li>還有分類、部首、筆畫的索引</li></ul><div class="plat"><a class="btn pri" href="${DICT}" target="_blank" rel="noopener" data-act="dict">開啟辭典</a></div></div></details>
    <details class="ab res ap"><summary>${aic('https://chhoe.taigi.info/images/apple-touch-icon.png',SI.search)}<div><h3>揣台語 ChhoeTaigi</h3><p>很多本辭典一起查</p></div></summary><div class="abb"><p>民間團隊做的辭典網站，把很多本辭典放在同一個搜尋框，一次查完。</p><h4>特色</h4><ul><li>詞量很大，查得到比較冷門的詞</li><li>白話字、臺羅、漢字都能打</li><li>可以用英文、日文、華語反過來找台文</li><li>各本辭典的寫法放在一起比</li></ul><div class="plat"><a class="btn pri" href="https://chhoe.taigi.info/" target="_blank" rel="noopener">開啟揣台語</a></div></div></details>
    <details class="ab res ap"><summary>${aic('https://itaigi.tw/static/tsiantuan/apple-touch-icon.png',SI.chat)}<div><h3>iTaigi 愛台語</h3><p>大家一起編的辭典</p></div></summary><div class="abb"><p>大家一起編的辭典。輸入華語詞，就看到民間各種台語講法，日常用語、新詞特別好查。</p><h4>特色</h4><ul><li>同一個詞常有好幾種講法，會一起列出來</li><li>有發音可以聽</li><li>大家投票：「按呢講好」或「按呢怪怪」，票多的排前面</li><li>查不到的詞可以自己補</li></ul><div class="plat"><a class="btn pri" href="https://itaigi.tw/k" target="_blank" rel="noopener">開啟 iTaigi</a></div></div></details>
-   <details class="ab res ap"><summary>${aic('https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/b1/e5/f3/b1e5f3bb-9022-d6f7-a59c-67d8bcfafee6/AppIcon-0-0-1x_U007epad-0-1-0-sRGB-85-220.png/200x200bb.jpg',SI.books)}<div><h3>芋圓字典 Oo Inn</h3><p>台語、客語查詞 App</p></div></summary><div class="abb"><p>台語、客語的辭典 App，詞庫用教育部的。基本查字免費，進階功能要 App 內購買。</p><h4>特色</h4><ul><li>漢字、華語、台羅、注音都能查，不會標聲調也行</li><li>有真人發音</li><li>整篇文章貼上去，會幫你逐詞標上讀音</li><li>生詞可以收進詞單複習，也有複習遊戲</li></ul><div class="plat"><a class="btn pri" href="https://apps.apple.com/tw/app/id6477933002" target="_blank" rel="noopener">iPhone</a><a class="btn pri" href="https://play.google.com/store/apps/developer?id=Oo+Inn" target="_blank" rel="noopener">Android</a></div></div></details>`;
+   <details class="ab res ap"><summary>${aic('https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/b1/e5/f3/b1e5f3bb-9022-d6f7-a59c-67d8bcfafee6/AppIcon-0-0-1x_U007epad-0-1-0-sRGB-85-220.png/200x200bb.jpg',SI.books)}<div><h3>芋圓字典 Oo Inn</h3><p>台語、客語查詞 App</p></div></summary><div class="abb"><p>台語、客語的辭典 App，詞庫用教育部的。基本查字免費，進階功能要 App 內購買。</p><h4>特色</h4><ul><li>漢字、華語、台羅、注音都能查，不會標聲調也行</li><li>有真人發音</li><li>整篇文章貼上去，會幫你逐詞標上讀音</li><li>生詞可以收進詞單複習，也有複習遊戲</li></ul><div class="plat"><a class="btn pri" href="https://apps.apple.com/tw/app/id6477933002" target="_blank" rel="noopener">iPhone</a><a class="btn pri" href="https://play.google.com/store/apps/developer?id=Oo+Inn" target="_blank" rel="noopener">Android</a></div></div></details>
+   <h3 class="sec">學台語 App</h3>
+   <details class="ab res ap"><summary><span class="aic">${SI.mic}</span><div><h3>台語嘛會通</h3><p>用遊戲練聽說讀寫</p></div></summary><div class="abb"><p>跟著「烏狗兄」用遊戲練習台語，適合初學者、家長和老師。基本功能免費，進階功能要 App 內購買。</p><h4>特色</h4><ul><li>聽、說、讀、寫四種題型都有</li><li>內容貼近生活情境，附真人錄音</li><li>有錯題本，答錯的題目可以回頭再練</li><li>可以跟朋友對戰</li></ul><div class="plat"><a class="btn pri" href="https://apps.apple.com/tw/app/id6751629581" target="_blank" rel="noopener">iPhone</a></div><p class="note">目前只有 iPhone 版。</p></div></details>`;
 }
 
 // ---- 700 字 ----
