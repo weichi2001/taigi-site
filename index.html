@@ -849,13 +849,10 @@ const RES=[
  {c:'e',t:'Spotify「台語歌」播放清單',d:'老師挑的台語歌，通勤、放學路上都能聽。',tags:['聽'],time:'隨時',href:'https://open.spotify.com/playlist/1FqTdaDvhYgQgENEJrQRix',play:1},
  {c:'e',t:'臺語歌真正正字歌詞網',d:'查歌詞的正確用字，網路上很多歌詞都是錯字。',tags:['讀'],time:'查詢',href:'https://taigilyrics.kiantiong.com/',play:1},
  {c:'o',t:'臺語歌真正正字歌詞網',d:'查歌詞的正確用字，網路上很多歌詞都是錯字。',tags:['讀'],time:'查詢',href:'https://taigilyrics.kiantiong.com/'},
- {c:'o',t:'教學 IG @taigi_lausu',d:'老師的教學紀錄與台語文小知識。',tags:['聽','讀'],time:'滑一滑',href:'https://www.instagram.com/taigi_lausu/',play:1},
- {c:'o',t:'教育部臺灣台語常用詞辭典',d:'查詞、聽發音、看例句，最權威的線上辭典。',tags:['聽','讀','寫'],time:'查詢',href:DICT},
  {c:'e',t:'國立教育廣播電臺 本土語言學習專區',d:'適合用來多聽的台語節目。',tags:['聽'],time:'隨時',href:'https://channelplus.ner.gov.tw/channel-language/85'},
  {c:'p',t:'臺灣台語寫字練習簿',d:'線上台語寫字練習簿。',tags:['寫'],time:'10 分鐘',href:'https://kiantiong.com/taigi_writing/'},
  {c:'p',t:'練台羅',d:'聽音檔練拼寫、標聲調、打台羅，連變調也能練，還有錯題本。',tags:['聽','讀','寫'],time:'每回約 5 分鐘',href:'https://kiantiong.com/tailo_practice/'},
  {c:'e',t:'TaigiTube 台語水管',d:'用鄉土劇、台語新聞的影片學台語，聽得多、學得快。',tags:['聽','讀'],time:'一支影片',href:'https://taigitube.com/',play:1},
- {c:'o',t:'教育部本土語言資源網',d:'教育部整理的本土語言學習資源。',tags:['聽','讀'],time:'逛逛',href:'https://mhi.moe.edu.tw/'}
 ];
 function resCard(r){
   const ext=!r.inner;
@@ -969,7 +966,7 @@ function pHome(){
     <a class="pst c" href="#books"><div class="bkp" id="bkp"><i><em></em></i><i><em></em></i><i><em></em></i><i><em></em></i><i><em></em></i><i><em></em></i><i><em></em></i></div><small>Tâi-gí Tsheh-pâng</small><b>台語冊房</b><span>電子書，繪本、小說、漫畫、雜誌等應有盡有</span></a>
    </div>
    <div class="hsec"><a class="more" href="#play">還有聽歌、節目的資源 ${SI.link}</a>
-    <a class="ent sm" href="#links"><div class="ic">${SI.link}</div><div><h3>其他推薦網站</h3><p>教育部資源、老師的 IG 等等。</p></div></a></div>`;
+    <a class="ent sm" href="#links"><div class="ic">${SI.link}</div><div><h3>其他推薦網站</h3><p>查台語歌詞正確用字的網站。</p></div></a></div>`;
 }
 function pAbout(){
   const it=(ic,t,d,h,ex)=>`<a class="ab-it card" href="${h}"${ex||''}><span class="ic">${ic}</span><span><b>${t}</b><small>${d}</small></span></a>`;
