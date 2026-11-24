@@ -1627,18 +1627,15 @@ function pBooks(r){
    <div class="bk-h"><h2 class="hd">台語冊房</h2><span class="sub tl">Tâi-gí Tsheh-pâng</span></div>
    <p class="sub bk-sub">一排一排的書架。BONG 報可以直接在這裡讀，其他的點下去會到原本的網站。</p>
    <div id="bk-res"></div>
+   <section class="lib"><div class="lib-h"><h3 class="hd">台灣雲端書庫</h3><a href="#books/ebs">全部 →</a></div>
+    <p class="lib-s">臺中市立圖書館提供的台語相關電子書，有書籍、繪本、漫畫。點封面到書頁，用借書證借閱。</p>
+    <div class="shelf" id="eb-shelf"></div></section>
    <section class="lib"><div class="lib-h"><h3 class="hd">台文通訊 BONG 報</h3><a href="#books/bong">全部期數 →</a></div>
     <p class="lib-s">李江却台語文教基金會發行，全台文。電子書、文字版都能讀。</p>
     <div class="shelf" id="bk-lib"></div></section>
    <section class="lib"><div class="lib-h"><h3 class="hd">讀文章蓋趣味</h3></div>
     <p class="lib-s">教育部「咱來學臺灣台語」系列的讀本，短文附詞彙與文法。</p>
     <div class="shelf">${['tg1','tg2'].map(k=>`<a class="bk-c" href="#books/${k}"><div class="bk-cv"><img src="books/${k}/th.webp" alt="" loading="lazy"></div><i class="lg"></i><b>${LB[k].t}</b><small>教育部・${LB[k].fs}</small></a>`).join('')}</div></section>
-   <section class="lib"><div class="lib-h"><h3 class="hd">台灣雲端書庫</h3><a href="#books/ebs">全部 →</a></div>
-    <p class="lib-s">臺中市立圖書館提供的台語相關電子書，有書籍、繪本、漫畫。點封面到書頁，用借書證借閱。</p>
-    <div class="shelf" id="eb-shelf"></div></section>
-   <section class="lib"><div class="lib-h"><h3 class="hd">臺中市立圖書館電子書</h3></div>
-    <p class="lib-s">要用自己的借書證先借閱。借到之後，點封面就能在這裡讀，也能用放大鏡查辭典。</p>
-    <div class="shelf">${LIBB.map(b=>`<a class="bk-c" href="#books/lib/${b.id}"><div class="bk-cv dc" style="background:${b.bg}"><span class="y">圖書館</span><span class="v">${esc(b.t)}</span><span class="r">${esc(b.sub)}</span></div><i class="lg"></i><b>${esc(b.t)}・${esc(b.sub)}</b><small>${esc(b.a)}・${esc(b.p)}</small></a>`).join('')}</div></section>
    <p class="bk-note">BONG 報是打開時才從原網站即時讀取，這裡不複製也不存放，著作權屬李江却台語文教基金會與作者。《讀文章蓋趣味》是教育部公開提供的教材，這裡把原本的 PDF（<a href="https://language.moe.gov.tw/upload/download/jts/04%E6%96%87%E7%AB%A01.pdf" target="_blank" rel="noopener">第一冊</a>、<a href="https://language.moe.gov.tw/upload/download/jts/04%E6%96%87%E7%AB%A02.pdf" target="_blank" rel="noopener">第二冊</a>）拆成單頁方便翻閱，著作權屬教育部與作者；課文的音檔請到原 PDF 點藍字聆聽。</p>`;
   }
   return `<div id="bk-rd" data-n="${m[1]}" data-i="${m[2]===undefined?-1:m[2]}" class="bk-rd" style="--bkfs:${bkFs()}px"><a class="back" href="#books/bong">← 書架</a><p class="sub">讀取中⋯⋯</p></div>`;
