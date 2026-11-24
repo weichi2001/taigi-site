@@ -1668,15 +1668,14 @@ function pBooks(r){
    <section class="bkf" id="bkh-r"></section>
    <div id="bk-res"></div>
    <section class="lib"><div class="lib-h"><h3 class="hd">台灣雲端書庫</h3><span class="eb-hr"><button class="btn eb-lbtn" data-ebl="t" aria-expanded="false">登入帳號</button><a href="#books/ebs">全部 →</a></span></div>
-    <p class="lib-s">臺中市立圖書館提供的台語相關電子書，有書籍、繪本、漫畫。點封面到書頁，用借書證借閱。</p>
+    <p class="lib-s">各縣市圖書館的電子書，需用借書證註冊登入，但種類多、免費借，值得一試。</p>
     ${EBLP}<div class="shelf" id="eb-shelf"></div></section>
    <section class="lib"><div class="lib-h"><h3 class="hd">台文通訊 BONG 報</h3><a href="#books/bong">全部期數 →</a></div>
-    <p class="lib-s">李江却台語文教基金會發行，全台文。電子書、文字版都能讀。</p>
+    <p class="lib-s">李江却台語文教基金會發行的全台文月刊，不用登入，直接讀。</p>
     <div class="shelf" id="bk-lib"></div></section>
    <section class="lib"><div class="lib-h"><h3 class="hd">讀文章蓋趣味</h3></div>
-    <p class="lib-s">教育部「咱來學臺灣台語」系列的讀本，短文附詞彙與文法。</p>
-    <div class="shelf">${['tg1','tg2'].map(k=>`<a class="bk-c" href="#books/${k}"><div class="bk-cv"><img src="books/${k}/th.webp" alt="" loading="lazy"></div><i class="lg"></i><b>${LB[k].t}</b><small>教育部・${LB[k].fs}</small></a>`).join('')}</div></section>
-   <p class="bk-note">《台文通訊》著作權屬李江却台語文教基金會與作者。《讀文章蓋趣味》著作權屬教育部與作者，原檔：<a href="https://language.moe.gov.tw/upload/download/jts/04%E6%96%87%E7%AB%A01.pdf" target="_blank" rel="noopener">第一冊</a>、<a href="https://language.moe.gov.tw/upload/download/jts/04%E6%96%87%E7%AB%A02.pdf" target="_blank" rel="noopener">第二冊</a>。</p>`;
+    <p class="lib-s">教育部「咱來學臺灣台語」系列的讀本，一課一篇短文，附詞彙和文法，免費公開。</p>
+    <div class="shelf">${['tg1','tg2'].map(k=>`<a class="bk-c" href="#books/${k}"><div class="bk-cv"><img src="books/${k}/th.webp" alt="" loading="lazy"></div><i class="lg"></i><b>${LB[k].t}</b><small>教育部・${LB[k].fs}</small></a>`).join('')}</div></section>`;
   }
   return `<div id="bk-rd" data-n="${m[1]}" data-i="${m[2]===undefined?-1:m[2]}" class="bk-rd" style="--bkfs:${bkFs()}px"><a class="back" href="#books/bong">← 書架</a><p class="sub">讀取中⋯⋯</p></div>`;
 }
