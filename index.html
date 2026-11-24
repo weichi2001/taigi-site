@@ -387,6 +387,8 @@ body[data-r=home] .wrap{padding:0 12px 60px;margin-top:-70px;max-width:1160px}
 .bk-pubs{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px;margin-top:18px}
 .pub{position:relative;overflow:hidden;display:flex;flex-direction:column;gap:6px;min-height:210px;padding:22px;border-radius:22px;color:#f1ece3;text-decoration:none;border:1px solid rgba(255,255,255,.08);background:radial-gradient(80% 90% at 100% 0%,rgba(58,150,128,.34),transparent 65%),linear-gradient(155deg,#14312c,#08130f);transition:transform .25s}
 a.pub:hover{transform:translateY(-2px)}.pub.ed{background:radial-gradient(80% 90% at 100% 0%,rgba(190,150,70,.3),transparent 65%),linear-gradient(155deg,#2a2412,#0f0c06)}.pub.rd{background:radial-gradient(80% 90% at 100% 0%,rgba(110,120,210,.34),transparent 65%),linear-gradient(155deg,#1a1d3a,#0a0b16)}
+html.theming *,html.theming *::before,html.theming *::after{transition:background-color .45s ease,color .45s ease,border-color .45s ease,box-shadow .45s ease,fill .45s ease,stroke .45s ease!important}
+::view-transition-old(root),::view-transition-new(root){animation-duration:.5s;animation-timing-function:ease}
 .lib{margin-top:34px}.lib-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px}.lib-h h3{margin:0;font-size:22px}.lib-h a{font-size:14px;color:var(--accent);text-decoration:none}
 .eb-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:30px 24px;margin-top:20px}
 .eb-bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:6px 0 4px}.eb-tab{border:1px solid var(--line);background:none;color:var(--ink);padding:7px 16px;border-radius:99px;font:inherit;font-size:14px;cursor:pointer}.eb-tab.on{background:var(--accent);border-color:var(--accent);color:#fff}
@@ -1370,7 +1372,11 @@ function aniSheet(a){
   const root=document.documentElement,btn=document.getElementById('themeBtn'),mt=document.querySelector('meta[name=theme-color]');
   const paint=()=>{const d=root.dataset.theme==='dark';btn.innerHTML=d?SI.sun:SI.moon;btn.title=d?'切換成淺色':'切換成深色';btn.setAttribute('aria-label',btn.title);if(mt)mt.content=d?'#14110f':'#f4e8d6'};
   const set=(t,save)=>{root.dataset.theme=t;if(save){try{localStorage.setItem('tgtheme',t)}catch(e){}}paint()};
-  btn.addEventListener('click',()=>set(root.dataset.theme==='dark'?'light':'dark',true));
+  btn.addEventListener('click',()=>{const go=()=>set(root.dataset.theme==='dark'?'light':'dark',true);
+    let rm=false;try{rm=matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){}
+    if(rm){go();return}
+    if(document.startViewTransition){try{document.startViewTransition(go);return}catch(e){}}
+    root.classList.add('theming');go();setTimeout(()=>root.classList.remove('theming'),600)});
   try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',e=>{let s=null;try{s=localStorage.getItem('tgtheme')}catch(x){}if(!s)set(e.matches?'dark':'light',false)})}catch(e){}
   paint();
   // 台語戲台固定用原本的劇院深色版面（它是以淺色變數為底再疊深色樣式）：進去時暫時切成 light，離開再還原使用者的選擇
