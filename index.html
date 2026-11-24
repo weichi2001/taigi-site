@@ -1666,7 +1666,7 @@ const bkSave=o=>{try{localStorage.setItem('tgbk',JSON.stringify(o))}catch(e){}};
 const bkFs=()=>{try{return +localStorage.getItem('tgbkfs')||18}catch(e){return 18}};
 const bkCredit=(n,u)=>`<p class="bk-cr">本文出自《台文通訊BONG報》第 ${n} 期，著作權屬李江却台語文教基金會與作者。${u?`<a href="${u}" target="_blank" rel="noopener">到原網站看這篇</a>`:''}　<a href="https://tsbp.tgb.org.tw/p/bong_31.html" target="_blank" rel="noopener">贊助刊物</a></p>`;
 function pBooks(r){
-  if(r==='books/ebs')return `<header class="ebh"><a class="ebh-back" href="#books">← 台語冊房</a><small>Tâi-uân Hûn-tuann Tsheh-khòo</small><h2 class="hd">台灣雲端書庫</h2>
+  if(r==='books/ebs')return `<header class="ebh"><a class="ebh-back" href="#books">← 台語冊房</a><small>Tâi-uân Hûn-tuan Tsheh-khòo</small><h2 class="hd">台灣雲端書庫</h2>
    <div class="eb-bar"><button class="eb-tab on" data-eb="all">全部</button><button class="eb-tab" data-eb="B">書籍</button><button class="eb-tab" data-eb="P">繪本</button><button class="eb-tab" data-eb="C">漫畫</button><input id="eb-q" class="eb-q" type="search" placeholder="找書名或作者" autocomplete="off"><button class="btn eb-lbtn" data-ebl="t" aria-expanded="false">登入帳號</button></div></header>
    ${EBLP}
    <p class="eb-n" id="eb-n"></p><div class="eb-g" id="eb-grid"></div>`;
