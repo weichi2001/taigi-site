@@ -1286,7 +1286,7 @@ const LB={
 LB.tg1.n=76;
 const LIBB=[{id:'196959',t:'日子',sub:'台語曆日仔詩',a:'陳胤',p:'前衛出版社',bg:'linear-gradient(155deg,#2c5f6b,#0b1d22)'}];
 const libUrl=id=>'https://reading.udn.com/onlineViewer/2BpdfViewer/'+id;
-function libOpen(id,side){return window.open(side?location.href.split('#')[0]+'#dictwin':libUrl(id),side?'taigidict':'udnviewer')?1:0}
+function libOpen(id,side){if(side)return window.open(location.href.split('#')[0]+'#dictwin','taigidict')?1:0;window.open(libUrl(id),'_blank','noopener,noreferrer');return 1}
 const libView=id=>{const b=LIBB.find(x=>x.id===id)||{id,t:'圖書館電子書',sub:'',a:'',p:'',bg:'#233'};
   return `<a class="back" href="#books">← 書架</a>
   <div class="lib-pg"><div class="bk-c"><div class="bk-cv dc" style="background:${b.bg}"><span class="y">圖書館</span><span class="v">${esc(b.t)}</span><span class="r">${esc(b.sub)}</span></div></div>
