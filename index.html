@@ -389,7 +389,8 @@ body[data-r=home] .wrap{padding:0 12px 60px;margin-top:-70px;max-width:1160px}
 a.pub:hover{transform:translateY(-2px)}.pub.ed{background:radial-gradient(80% 90% at 100% 0%,rgba(190,150,70,.3),transparent 65%),linear-gradient(155deg,#2a2412,#0f0c06)}.pub.rd{background:radial-gradient(80% 90% at 100% 0%,rgba(110,120,210,.34),transparent 65%),linear-gradient(155deg,#1a1d3a,#0a0b16)}
 html.theming *,html.theming *::before,html.theming *::after{transition:background-color .45s ease,color .45s ease,border-color .45s ease,box-shadow .45s ease,fill .45s ease,stroke .45s ease!important}
 ::view-transition-old(root),::view-transition-new(root){animation-duration:.5s;animation-timing-function:ease}
-.pst span{text-wrap:balance}
+.pst span{word-break:keep-all;text-wrap:balance}
+.pst span u{text-decoration:none;display:inline-block}
 .hmore{display:flex;align-items:center;justify-content:space-between;margin-top:6px;padding:20px 6px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);color:var(--ink);text-decoration:none;font-family:var(--serif);font-weight:700;font-size:18px;letter-spacing:.08em}
 .hmore i{font-style:normal;font-family:inherit;font-weight:400;color:var(--ink2);transition:transform .2s,color .2s}
 .hmore:hover i{transform:translateX(6px);color:var(--accent)}
@@ -555,7 +556,8 @@ body[data-r=dictwin] #mini{left:0!important;right:0!important;top:0!important;bo
 .pub .cv{position:absolute;right:20px;top:20px;width:64px;aspect-ratio:5/7;border-radius:2px 6px 6px 2px;overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,.5);background:#1d3a34}.pub .cv img{width:100%;height:100%;object-fit:cover;display:block}
 .pub.has b,.pub.has small{padding-right:80px}.bk-ch .ach{background:#fff;color:var(--ink);border-color:var(--line)}.bk-ch .ach.on{background:#14312c;color:#f1ece3;border-color:#14312c}
 .more{display:flex;align-items:center;gap:6px;color:var(--ink2);text-decoration:none;font-size:15px;padding:2px 4px}.more:hover{color:var(--accent)}
-.hsec{display:grid;gap:14px;margin-top:14px}
+.hsec{display:grid;gap:16px;margin-top:22px}
+.hsec.grid+.hsec.grid{margin-top:22px}
 /* 深色 */
 html[data-theme=dark]{--ink:#f3f1ec;--ink2:rgba(243,241,236,.62);--accent:#ff7a5c;--paper:#121110;--card:rgba(255,255,255,.05);--line:rgba(255,255,255,.10);--gsh:none}
 html[data-theme=dark]{background:#121110}html[data-theme=dark] body::before{background:#121110}
@@ -578,7 +580,7 @@ html[data-theme=dark] .top .in{background:rgba(40,38,36,.82)}html[data-theme=dar
  .hh h1{font-size:60px}.hh .bgc{right:60px;top:40px;font-size:min(var(--bs,470px),40vw)}
  .dw{width:fit-content;min-width:400px;max-width:560px;padding:22px 26px;gap:22px}.dw.long{max-width:640px}.dw.mid{flex-wrap:nowrap;row-gap:0}.dw.mid .dwb{margin-left:0}.dwc{font-size:var(--dsd,72px)}.dwt b{font-size:24px}
  .pst,.pst.c{min-height:250px;padding:32px}.pst b{font-size:40px}
- .hsec.g2{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}.hsec.g3{grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+ .hsec,.hsec.grid+.hsec.grid{margin-top:30px}.hsec.g2{grid-template-columns:repeat(2,minmax(0,1fr));gap:26px}.hsec.g3{grid-template-columns:repeat(3,minmax(0,1fr));gap:26px}
  body[data-r=quiz] .wrap,body[data-r=review] .wrap,body[data-r=about] .wrap{max-width:860px}
  body[data-r^=seg] .wrap{max-width:900px}
  body[data-r=start] .wrap{max-width:980px}
@@ -965,7 +967,7 @@ function pHome(){
     ${zone('#apps',SI.kbd,'輸入法與軟體','電腦、手機怎麼打台語，還有辭典 App。',['輸入法','辭典'])}
    </div>
    <div class="hsec g2 grid g2d">
-    <a class="pst a" href="#anime"><div class="pv">${prv}</div><small>Tâi-gí Hì-tâi</small><b>台語戲台</b><span>動畫、電影、戲劇、節目，邊看影片邊學習！</span></a>
+    <a class="pst a" href="#anime"><div class="pv">${prv}</div><small>Tâi-gí Hì-tâi</small><b>台語戲台</b><span><u>動畫、電影、戲劇、節目，</u><u>邊看影片邊學習！</u></span></a>
     <a class="pst b" href="https://weichi2001.github.io/taigi-ktv/?student"><div class="kv"><i class="on">${esc(pv1[0])}</i><em>${esc(pv1[1])}</em></div><small>Tâi-gí Ko-thiann</small><b>台語歌廳</b><span>正港台文正字的卡啦OK</span></a>
     <a class="pst c" href="#books"><div class="bkp" id="bkp"><i><em></em></i><i><em></em></i><i><em></em></i><i><em></em></i><i><em></em></i><i><em></em></i><i><em></em></i></div><small>Tâi-gí Tsheh-pâng</small><b>台語冊房</b><span>繪本、小說、漫畫、雜誌等應有盡有</span></a>
    </div>
