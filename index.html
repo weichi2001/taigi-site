@@ -1947,7 +1947,7 @@ function dxRow(e){
 }
 function miniDraw(){
   const raw=mq.value.trim();
-  if(!raw){mb.innerHTML=`<p class="note">輸入漢字、台羅或華語都可以，例如：舅媽、a-kim、阿母、學校。<br>查的是教育部臺灣台語常用詞辭典，約 ${DX?DX.length.toLocaleString():'三萬'} 個詞目，點喇叭鈕聽發音。</p>`;return}
+  if(!raw){mb.innerHTML=`<p class="note">輸入漢字、台羅或華語進行搜尋，例如：讀冊、<span style="white-space:nowrap">tha̍k-tsheh</span>、讀書。</p>`;return}
   if(DXS==='load'||DXS==='idle'){mb.innerHTML=`<p class="note">辭典載入中…</p>`;return}
   if(DXS==='err'){
     const k=norm(raw);const r=D.filter(o=>o.k.includes(k)).slice(0,10);
