@@ -376,6 +376,19 @@ body[data-r=home] .wrap{padding:0 12px 60px;margin-top:-70px;max-width:1160px}
 .pst.a{background:radial-gradient(70% 90% at 90% 10%,rgba(214,64,42,.45),transparent 65%),linear-gradient(150deg,#3a1630,#14080f)}
 .pst.b{background:radial-gradient(70% 90% at 90% 10%,rgba(120,110,230,.5),transparent 65%),linear-gradient(150deg,#1a1c3d,#0a0b16)}
 .pst.c{grid-column:1/-1;min-height:150px;background:radial-gradient(60% 120% at 88% 0%,rgba(58,150,128,.42),transparent 65%),linear-gradient(150deg,#12302b,#07120f)}
+.bkh{position:relative;overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:28px;margin:14px 0 26px;padding:40px 38px;min-height:250px;border-radius:26px;color:#f6efe6;border:1px solid rgba(255,255,255,.08);background:radial-gradient(60% 130% at 92% 0%,rgba(58,150,128,.46),transparent 65%),radial-gradient(40% 80% at 0% 100%,rgba(214,170,90,.14),transparent 70%),linear-gradient(150deg,#12302b,#07120f)}
+.bkh-bg{position:absolute;left:26%;top:-46px;font:700 340px/1 var(--serif);color:rgba(255,255,255,.045);pointer-events:none;user-select:none}
+.bkh-l{position:relative}.bkh-l small{display:block;font-family:"GenRyu Lat",Huninn,sans-serif;font-size:14px;letter-spacing:.2em;opacity:.7}
+.bkh .hd{margin:6px 0 12px;font-family:var(--serif);font-weight:700;font-size:clamp(42px,6.4vw,64px);letter-spacing:.08em;color:#f6efe6;line-height:1.15}
+.bkh-l p{margin:0;font-size:14.5px;opacity:.72;letter-spacing:.04em}
+.bkd{position:relative;display:flex;gap:20px;align-items:center;width:min(420px,100%);padding:18px 22px 18px 18px;border-radius:20px;color:#f6efe6;text-decoration:none;background:linear-gradient(135deg,rgba(255,255,255,.14),rgba(255,255,255,.05));border:1px solid rgba(255,255,255,.16);box-shadow:0 18px 40px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.22);backdrop-filter:blur(8px);transition:transform .25s}
+.bkd:hover{transform:translateY(-3px)}
+.bkd-c{position:relative;flex:none;width:clamp(96px,10vw,120px);aspect-ratio:5/7;border-radius:3px 8px 8px 3px;overflow:hidden;background:linear-gradient(150deg,#2f4a44,#0f1c19);box-shadow:0 14px 28px rgba(0,0,0,.55),inset 5px 0 0 rgba(255,255,255,.14)}
+.bkd-c .eb-f{position:absolute;inset:0;display:grid;place-items:center;padding:8px;text-align:center;font:700 14px/1.4 var(--serif);color:#f1e9dd}.bkd-c img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.bkd-t{min-width:0;display:flex;flex-direction:column;gap:5px}.bkd-t small{font-size:12.5px;letter-spacing:.14em;color:#e8c872}
+.bkd-t b{font-family:var(--serif);font-size:20px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}.bkd-t em{font-style:normal;font-size:13px;opacity:.7}
+.bkd-b{align-self:flex-start;margin-top:8px;padding:7px 16px;border-radius:99px;background:var(--accent);color:#fff;font-size:13.5px;font-style:normal}
+@media(max-width:760px){.bkh{grid-template-columns:1fr;padding:28px 22px;min-height:0}.bkh-bg{left:auto;right:-30px;font-size:240px}.bkd{width:100%}}
 .bkp{position:absolute;right:26px;top:50%;transform:translateY(-50%);display:flex;pointer-events:none}
 .bkp i{position:relative;display:block;width:clamp(60px,8vw,92px);aspect-ratio:5/7;margin-left:-22px;border-radius:2px 6px 6px 2px;overflow:hidden;background:linear-gradient(150deg,#2f4a44,#0f1c19);box-shadow:0 10px 24px rgba(0,0,0,.55)}
 .bkp i:nth-child(1){transform:rotate(-6deg) translateY(8px)}.bkp i:nth-child(2){transform:rotate(1deg) translateY(-6px);z-index:1}.bkp i:nth-child(3){transform:rotate(7deg) translateY(10px)}
@@ -915,7 +928,7 @@ function pHome(){
    <div class="hsec g2 grid g2d">
     <a class="pst a" href="#anime"><div class="pv">${prv}</div><small>Tâi-gí Hì-tâi</small><b>台語戲台</b><span>動畫、電影、戲劇、節目</span></a>
     <a class="pst b" href="https://weichi2001.github.io/taigi-ktv/?student"><div class="kv"><i class="on">${esc(pv1[0])}</i><em>${esc(pv1[1])}</em></div><small>Tâi-gí Ko-thiann</small><b>台語歌廳</b><span>跟著字幕唱，順便認字</span></a>
-    <a class="pst c" href="#books"><div class="bkp" id="bkp"><i><em>391</em></i><i><em>390</em></i><i><em>389</em></i></div><small>Tâi-gí Tsheh-pâng</small><b>台語冊房</b><span>報刊與讀本，放在同一個書架</span></a>
+    <a class="pst c" href="#books"><div class="bkp" id="bkp"><i><em></em></i><i><em></em></i><i><em></em></i></div><small>Tâi-gí Tsheh-pâng</small><b>台語冊房</b><span>電子書、繪本、漫畫，還有 BONG 報</span></a>
    </div>
    <div class="hsec"><a class="more" href="#play">還有聽歌、節目的資源 ${SI.link}</a>
     <a class="ent sm" href="#links"><div class="ic">${SI.link}</div><div><h3>其他推薦網站</h3><p>教育部資源、老師的 IG 等等。</p></div></a></div>
@@ -1418,7 +1431,13 @@ const EBS={d:null,tab:'all',q:''},EBC={B:'書籍',P:'繪本',C:'漫畫'};
 const ebsCover=id=>'https://tclwebdata.s3-ap-southeast-1.amazonaws.com/EBSRepos/EBSRepos/Images/cover450/'+id+'.jpg',ebsUrl=id=>'https://www.ebookservice.tw/tc/book/'+id;
 async function ebsLoad(){if(!EBS.d){try{const r=await fetch('ebs.json');EBS.d=r.ok?await r.json():[]}catch(e){EBS.d=[]}EBS.d.sort((a,b)=>'PCB'.indexOf(a[0])-'PCB'.indexOf(b[0]))}return EBS.d}
 const ebsCard=(b,lg)=>`<a class="bk-c eb" href="${ebsUrl(b[1])}" data-id="${b[1]}" data-t="${esc(b[2])}" target="_blank" rel="noopener"><div class="bk-cv"><span class="eb-f">${esc(b[2])}</span><img loading="lazy" decoding="async" referrerpolicy="no-referrer" src="${ebsCover(b[1])}" alt="" onerror="this.remove()"></div>${lg?'<i class="lg"></i>':''}<b>${esc(b[2])}</b><small>${esc(b[3])}${b[3]?'・':''}${EBC[b[0]]}</small></a>`;
-async function ebsFill(){const el=document.getElementById('eb-shelf');if(!el)return;const d=await ebsLoad();if(!d.length)return;const pick=[...d.filter(x=>x[0]==='P'),...d.filter(x=>x[0]==='C'),...d.filter(x=>x[0]==='B').slice(0,9)];el.innerHTML=pick.map(b=>ebsCard(b,1)).join('')+`<a class="bk-c mo" href="#books/ebs"><div class="bk-cv">全部 ${d.length} 本</div></a>`}
+async function ebsFill(){const el=document.getElementById('eb-shelf');if(!el&&!document.getElementById('bkp')&&!document.getElementById('bkh-r'))return;const d=await ebsLoad();if(!d.length)return;ebsHero(d);ebsTile(d);const pick=[...d.filter(x=>x[0]==='P'),...d.filter(x=>x[0]==='C'),...d.filter(x=>x[0]==='B').slice(0,9)];if(el)el.innerHTML=pick.map(b=>ebsCard(b,1)).join('')+`<a class="bk-c mo" href="#books/ebs"><div class="bk-cv">全部 ${d.length} 本</div></a>`}
+const ebsDay=()=>Math.floor((Date.now()+288e5)/864e5);
+const ebsPick=d=>d[(ebsDay()*37)%d.length];
+function ebsHero(d){const r=document.getElementById('bkh-r'),n=document.getElementById('bkh-n');if(n)n.textContent=`電子書 ${d.length} 本、BONG 報、教育部讀本`;if(!r)return;const b=ebsPick(d),t=new Date(Date.now()+288e5);
+ r.innerHTML=`<a class="bkd eb" href="${ebsUrl(b[1])}" data-id="${b[1]}" data-t="${esc(b[2])}" target="_blank" rel="noopener"><div class="bkd-c"><span class="eb-f">${esc(b[2])}</span><img referrerpolicy="no-referrer" src="${ebsCover(b[1])}" alt="" onerror="this.remove()"></div><div class="bkd-t"><small>本日推薦・${t.getUTCMonth()+1} 月 ${t.getUTCDate()} 日</small><b>${esc(b[2])}</b><em>${esc(b[3])}${b[3]?'・':''}${EBC[b[0]]}</em><i class="bkd-b">翻開這本</i></div></a>`}
+function ebsTile(d){const bp=document.getElementById('bkp');if(!bp)return;const k=(ebsDay()*37)%d.length;[0,1,2].forEach(j=>{const b=d[(k+j*17)%d.length],i=bp.children[j];if(!i)return;i.innerHTML=`<img referrerpolicy="no-referrer" src="${ebsCover(b[1])}" alt="" onerror="this.remove()"><em>${esc([...b[2]].slice(0,2).join(''))}</em>`})}
+
 async function ebsPage(){const el=document.getElementById('eb-grid');if(!el)return;const d=await ebsLoad();ebsDraw()}
 function ebsDraw(){const el=document.getElementById('eb-grid');if(!el||!EBS.d)return;const q=EBS.q.trim().toLowerCase(),l=EBS.d.filter(b=>(EBS.tab==='all'||b[0]===EBS.tab)&&(!q||(b[2]+' '+b[3]).toLowerCase().includes(q)));el.innerHTML=l.map(b=>ebsCard(b,1)).join('');const n=document.getElementById('eb-n');if(n)n.textContent=l.length?`共 ${l.length} 本`:'找不到符合的書';document.querySelectorAll('.eb-tab').forEach(t=>t.classList.toggle('on',t.dataset.eb===EBS.tab))}
 
@@ -1627,7 +1646,7 @@ function pBooks(r){
    <p class="bk-note">內容是打開時才從 <a href="https://tsbp.tgb.org.tw/" target="_blank" rel="noopener">台文通訊 BONG 報網站</a> 即時讀取，這裡不複製也不存放。《台文通訊》由李江却台語文教基金會發行，著作權屬基金會與作者。</p>`;
   if(!m){
    return `<a class="back" href="#home">← 街仔路</a>
-   <div class="bk-h"><h2 class="hd">台語冊房</h2><span class="sub tl">Tâi-gí Tsheh-pâng</span></div>
+   <section class="bkh"><span class="bkh-bg" aria-hidden="true">冊</span><div class="bkh-l"><small>Tâi-gí Tsheh-pâng</small><h2 class="hd">台語冊房</h2><p id="bkh-n">電子書、BONG 報、教育部讀本</p></div><div class="bkh-r" id="bkh-r"></div></section>
    <div id="bk-res"></div>
    <section class="lib"><div class="lib-h"><h3 class="hd">台灣雲端書庫</h3><span class="eb-hr"><button class="btn eb-lbtn" data-ebl="t" aria-expanded="false">登入帳號</button><a href="#books/ebs">全部 →</a></span></div>
     <p class="lib-s">臺中市立圖書館提供的台語相關電子書，有書籍、繪本、漫畫。點封面到書頁，用借書證借閱。</p>
@@ -1689,7 +1708,6 @@ async function bkCovers(){ebsFill();
   if(res&&sv)res.innerHTML=bkCont(sv);
   if(lib){lib.innerHTML=[0,1,2,3,4,5].map(k=>{const n=last-k;return `<a class="bk-c" href="#books/${n}" data-n="${n}"><div class="bk-cv"><i>${n}</i></div><i class="lg"></i><b>第 ${n} 期</b><small>&nbsp;</small></a>`}).join('')+`<a class="bk-c mo" href="#books/bong"><div class="bk-cv">全部期數</div><i class="lg"></i><b>看更早的</b><small>&nbsp;</small></a>`;
    [0,1,2,3,4,5].forEach(k=>bkMeta(last-k).then(mt=>{const a=lib.querySelector(`[data-n="${last-k}"]`);if(!a)return;if(mt.cover)a.querySelector('.bk-cv').innerHTML=`<img src="${mt.cover}" alt="" referrerpolicy="no-referrer" onerror="this.remove()"><i>${last-k}</i>`;a.querySelector('small').textContent=mt.when||''}))}
-  [last,last-1,last-2].forEach((n,k)=>bkMeta(n).then(mt=>{if(!mt.cover)return;if(k===0&&pc&&document.contains(pc))pc.innerHTML=`<img src="${mt.cover}" alt="" referrerpolicy="no-referrer" onerror="this.remove()">`;const i=bp&&document.contains(bp)&&bp.children[k];if(i){i.querySelector('em').textContent=n;i.insertAdjacentHTML('afterbegin',`<img src="${mt.cover}" alt="" referrerpolicy="no-referrer" onerror="this.remove()">`)}}))
 }
 const bkIn=()=>{BK.fade=0;const r=document.getElementById('bk-rd');if(r){delete r.dataset.out;r.dataset.in=1;setTimeout(()=>{delete r.dataset.in},900)}};
 function bkLoad(r){if(BK.fade)bkIn();if(r==='books')bkCovers();else if(r==='books/ebs')ebsPage();else if(r==='books/bong')bkShelf();else bkReader()}
