@@ -1274,6 +1274,18 @@ const bkMode=()=>{try{return localStorage.getItem('tgbkmode')==='txt'?'txt':'img
 // ---- 翻書 ----
 const bkSz=(u,n)=>u.replace(/\/(s\d+|w\d+(-h\d+)?)(-c)?\//,'/s'+n+'/');
 const bkKey=u=>{try{return decodeURIComponent(u.split('?')[0].split('/').pop())}catch(e){return u}};
+const LB={
+ tg1:{t:'讀文章蓋趣味 一',n:38*2,fs:'第一冊',pdf:1,secs:[['臺灣好',[['平溪放天燈',6],['矮靈祭——苗栗縣賽夏族重要的祭典',8],['鹿港八郊',10],['臺南縣北門鄉南鯤鯓的王爺祭',12],['臺灣第一个現代化的糖廠——橋仔頭糖廠',14],['茂林的Rukai 族佮烏秫米祭',16],['Truku（太魯閣）——花蓮的美景佮原住民族群',18]]],['臺灣好食物',[['新竹風佮新竹米粉',22],['佮竹仔無關係的竹塹餅',24],['覆菜——苗栗的名產',26],['新港飴按怎來',28],['臺南的度小月擔仔麵',30],['萬巒豬跤行遍全臺灣',32],['臺東池上便當——深深數念的古早味',34],['金門貢糖——予你袂假得',36]]],['臺灣人情味',[['千算萬算，毋值天一劃',40],['踢銅管仔',42],['遠足',44]]],['臺灣文史古',[['雲林口湖牽水',48],['馬偕牧師來臺灣宣教',50],['馬偕牧師的醫療傳教',52],['嘉南大圳之父——八田與一',54]]],['臺灣心適代',[['生查埔佮生查某',58],['世界一的臺灣Hinoki',60],['新族群',62],['魚仔話之一',64],['山球',66],['澎湖的大自然',68],['竹仔開花',70],['咱的大自然環境',72]]]]},
+ tg2:{t:'讀文章蓋趣味 二',n:72,fs:'第二冊',pdf:2,secs:[['臺灣好',[['燦光寮山',6],['基隆的中元祭',8],['臺北草山的坪頂古圳',10],['新埔紅柿若出頭',12],['磺溪書院建築的古早味',14],['臺中縣白冷圳的本土味',16],['雙十吊橋搖啊搖',18],['嘉義交趾仔',20],['鹽水放蜂仔炮——世界獨一無二',22],['半屏山，真好看',24],['屏東九如的三山國王廟',26],['宜蘭頭城搶孤',28],['新的舊厝——澎湖二崁村的故事',30]]],['臺灣人情味',[['豬公無相請，嫁查某囝貺大餅',34],['阿母的老款',36],['掠蝦仔',38],['罣礙',40],['麥片摻咖啡',42]]],['臺灣文史古',[['阿姑轉外家',46],['語言內底的鱟',48],['貓仔話',50],['對牛墟到籃仔籗會',52],['澎湖臺灣味',54],['寒人會當變啥',56],['鹼仔水佮鹼仔粿',58]]],['臺灣心適代',[['怪縒的蟲豸',62],['做生理',64],['糞埽',66],['狗蟻怨的哀怨古',68]]]]}};
+LB.tg1.n=76;
+const bkSvL=sv=>LB[sv.n]?esc(LB[sv.n].t)+(sv.t?'・'+esc(sv.t):''):`第 ${sv.n} 期${sv.t?'・'+esc(sv.t):''}`;
+function lbIssue(id){
+  const B=LB[id];if(B._is)return B._is;
+  const arts=[{t:'封面與導讀',s:'前頁',st:0}];
+  B.secs.forEach(([sn,l])=>l.forEach(([t,pg])=>arts.push({t,s:sn,st:pg+1})));
+  const P=[];for(let i=0;i<B.n;i++){let a=-1;arts.forEach((x,k)=>{if(i>=x.st)a=k});if(i===B.n-1)a=-2;const u=`books/${id}/${String(i).padStart(3,'0')}.webp`;P.push({s:u,z:u,a})}
+  return B._is={n:id,arts,_pg:P,local:true,title:B.t,cover:`books/${id}/th.webp`};
+}
 function bkPages(is){
   if(is._pg)return is._pg;
   const P=[],seen=new Set(),add=(s,a)=>{const k=bkKey(s);if(!s||seen.has(k))return;seen.add(k);P.push({s:bkSz(s,1400),z:bkSz(s,2400),a})};
@@ -1286,8 +1298,8 @@ function bkBook(root,is,startPage){
   const n=is.n,P=bkPages(is),N=P.length;
   const secs=[];is.arts.forEach((a,k)=>{let s=secs.find(x=>x.s===a.s);if(!s){s={s:a.s,l:[]};secs.push(s)}s.l.push([k,a,P.findIndex(p=>p.a===k)])});
   root.className='bk-rd is-book';root.style.removeProperty('--bkfs');
-  root.innerHTML=`<div class="bk-bar"><a class="back" href="#books/bong">← 書架</a><span class="bk-bt">第 ${n} 期</span>
-    <span class="bk-fs bk-tools"><span class="bk-mode" data-m="img"><button class="on" data-bk="m-img">電子書</button><button data-bk="m-txt">文字</button></span><button data-bk="toc">目錄</button><button data-bk="fs" aria-label="全螢幕">全螢幕</button></span></div>
+  root.innerHTML=`<div class="bk-bar"><a class="back" href="${is.local?'#books':'#books/bong'}">← 書架</a><span class="bk-bt">${is.title||'第 '+n+' 期'}</span>
+    <span class="bk-fs bk-tools">${is.local?'':'<span class="bk-mode" data-m="img"><button class="on" data-bk="m-img">電子書</button><button data-bk="m-txt">文字</button></span>'}<button data-bk="toc">目錄</button><button data-bk="fs" aria-label="全螢幕">全螢幕</button></span></div>
    <div class="bk-stage"><button class="bk-arr l" data-bk="prev" aria-label="上一頁">‹</button>
      <div class="bk-zw"><div class="bkb"><div class="fb-p fb-l"></div><div class="fb-p fb-r"></div></div></div>
    <button class="bk-arr r" data-bk="next" aria-label="下一頁">›</button></div>
@@ -1423,15 +1435,13 @@ const bkSave=o=>{try{localStorage.setItem('tgbk',JSON.stringify(o))}catch(e){}};
 const bkFs=()=>{try{return +localStorage.getItem('tgbkfs')||18}catch(e){return 18}};
 const bkCredit=(n,u)=>`<p class="bk-cr">本文出自《台文通訊BONG報》第 ${n} 期，著作權屬李江却台語文教基金會與作者。${u?`<a href="${u}" target="_blank" rel="noopener">到原網站看這篇</a>`:''}　<a href="https://tsbp.tgb.org.tw/p/bong_31.html" target="_blank" rel="noopener">贊助刊物</a></p>`;
 function pBooks(r){
-  const m=/^books\/(\d+)(?:\/(\d+|b))?$/.exec(r);
+  const m=/^books\/(\d+|tg\d+)(?:\/(\d+|b))?$/.exec(r);
   if(r==='books/bong')return `<a class="back" href="#books">← 台語冊房</a>
    <div class="bk-h"><h2 class="hd">台文通訊 BONG 報</h2><span class="sub tl">Tâi-bûn Thong-sùn BONG Pò</span></div>
    <p class="sub bk-sub">一期一期放在書架上，點開就能讀。</p>
    <div id="bk-res"></div><div id="bk-shelf" class="bk-shelf"></div><div class="bk-more"><button class="btn" data-bk="more" hidden>看更早的期數</button></div>
    <p class="bk-note">內容是打開時才從 <a href="https://tsbp.tgb.org.tw/" target="_blank" rel="noopener">台文通訊 BONG 報網站</a> 即時讀取，這裡不複製也不存放。《台文通訊》由李江却台語文教基金會發行，著作權屬基金會與作者。</p>`;
   if(!m){
-   const dc=(h,y,t,sm,lb,bg)=>`<a class="bk-c" href="${h}" target="_blank" rel="noopener"><div class="bk-cv dc" style="background:${bg}"><span class="y">${y}</span><span class="v">${t}</span><span class="r">${sm}</span></div><i class="lg"></i><b>${lb[0]}</b><small>${lb[1]}</small></a>`;
-   const pdf=n=>'https://language.moe.gov.tw/upload/download/jts/04%E6%96%87%E7%AB%A0'+n+'.pdf';
    return `<a class="back" href="#home">← 街仔路</a>
    <div class="bk-h"><h2 class="hd">台語冊房</h2><span class="sub tl">Tâi-gí Tsheh-pâng</span></div>
    <p class="sub bk-sub">一排一排的書架。BONG 報可以直接在這裡讀，其他的點下去會到原本的網站。</p>
@@ -1439,20 +1449,17 @@ function pBooks(r){
    <section class="lib"><div class="lib-h"><h3 class="hd">台文通訊 BONG 報</h3><a href="#books/bong">全部期數 →</a></div>
     <p class="lib-s">李江却台語文教基金會發行，全台文。電子書、文字版都能讀。</p>
     <div class="shelf" id="bk-lib"></div></section>
-   <section class="lib"><div class="lib-h"><h3 class="hd">其他刊物與讀本</h3></div>
-    <p class="lib-s">這些在原發行單位的網站，點開是新分頁。</p>
-    <div class="shelf">
-     ${dc(pdf(1),'教育部','讀文章<br>蓋趣味','第一冊',['讀文章蓋趣味 一','PDF・教育部'],'linear-gradient(155deg,#35407e,#10132b)')}
-     ${dc(pdf(2),'教育部','讀文章<br>蓋趣味','第二冊',['讀文章蓋趣味 二','PDF・教育部'],'linear-gradient(155deg,#2c6b60,#0c1f1b)')}
-    </div></section>
-   <p class="bk-note">這裡只收能直接打開讀的刊物與讀本，點進去都是原發行單位的頁面，著作權屬各發行單位與作者。</p>`;
+   <section class="lib"><div class="lib-h"><h3 class="hd">讀文章蓋趣味</h3></div>
+    <p class="lib-s">教育部「咱來學臺灣台語」系列的讀本，短文附詞彙與文法。</p>
+    <div class="shelf">${['tg1','tg2'].map(k=>`<a class="bk-c" href="#books/${k}"><div class="bk-cv"><img src="books/${k}/th.webp" alt="" loading="lazy"></div><i class="lg"></i><b>${LB[k].t}</b><small>教育部・${LB[k].fs}</small></a>`).join('')}</div></section>
+   <p class="bk-note">BONG 報是打開時才從原網站即時讀取，這裡不複製也不存放，著作權屬李江却台語文教基金會與作者。《讀文章蓋趣味》是教育部公開提供的教材，這裡把原本的 PDF（<a href="https://language.moe.gov.tw/upload/download/jts/04%E6%96%87%E7%AB%A01.pdf" target="_blank" rel="noopener">第一冊</a>、<a href="https://language.moe.gov.tw/upload/download/jts/04%E6%96%87%E7%AB%A02.pdf" target="_blank" rel="noopener">第二冊</a>）拆成單頁方便翻閱，著作權屬教育部與作者；課文的音檔請到原 PDF 點藍字聆聽。</p>`;
   }
   return `<div id="bk-rd" data-n="${m[1]}" data-i="${m[2]===undefined?-1:m[2]}" class="bk-rd" style="--bkfs:${bkFs()}px"><a class="back" href="#books/bong">← 書架</a><p class="sub">讀取中⋯⋯</p></div>`;
 }
 async function bkShelf(){
   const box=document.getElementById('bk-shelf');if(!box)return;
   const last=await bkLatest(),sv=bkSaved(),res=document.getElementById('bk-res');
-  if(res&&sv&&sv.n)res.innerHTML=`<a class="bk-cont" href="#books/${sv.n}/${sv.i}"><span>繼續讀</span><b>第 ${sv.n} 期${sv.t?'・'+esc(sv.t):''}</b></a>`;
+  if(res&&sv&&sv.n)res.innerHTML=`<a class="bk-cont" href="#books/${sv.n}/${sv.i}"><span>繼續讀</span><b>${bkSvL(sv)}</b></a>`;
   const more=document.querySelector('[data-bk=more]');
   const add=async()=>{
     const from=last-BK.shown,ns=[];for(let k=0;k<12&&from-k>0;k++)ns.push(from-k);
@@ -1465,6 +1472,7 @@ async function bkShelf(){
 }
 async function bkReader(){
   const root=document.getElementById('bk-rd');if(!root)return;
+  if(LB[root.dataset.n]){const is=lbIssue(root.dataset.n),i=+root.dataset.i;bkBook(root,is,i>=0?Math.max(0,is._pg.findIndex(p=>p.a===i)):0);window.scrollTo(0,0);return}
   const n=+root.dataset.n,iraw=root.dataset.i,i=iraw==='b'?-3:+iraw;let is;
   try{is=await bkIssue(n)}catch(e){root.innerHTML=`<a class="back" href="#books/bong">← 書架</a><p class="sub">讀不到這一期。可能是網路問題，也可能是這一期不在網站上。<a href="https://tsbp.tgb.org.tw/" target="_blank" rel="noopener">到原網站看</a></p>`;return}
   if(!document.getElementById('bk-rd'))return;
@@ -1492,7 +1500,7 @@ async function bkReader(){
 }
 async function bkCovers(){
   const last=await bkLatest(),pc=document.getElementById('bk-pc'),bp=document.getElementById('bkp'),lib=document.getElementById('bk-lib'),res=document.getElementById('bk-res'),sv=bkSaved();
-  if(res&&sv&&sv.n)res.innerHTML=`<a class="bk-cont" href="#books/${sv.n}/${sv.i}"><span>繼續讀</span><b>第 ${sv.n} 期${sv.t?'・'+esc(sv.t):''}</b></a>`;
+  if(res&&sv&&sv.n)res.innerHTML=`<a class="bk-cont" href="#books/${sv.n}/${sv.i}"><span>繼續讀</span><b>${bkSvL(sv)}</b></a>`;
   if(lib){lib.innerHTML=[0,1,2,3,4,5].map(k=>{const n=last-k;return `<a class="bk-c" href="#books/${n}" data-n="${n}"><div class="bk-cv"><i>${n}</i></div><i class="lg"></i><b>第 ${n} 期</b><small>&nbsp;</small></a>`}).join('')+`<a class="bk-c mo" href="#books/bong"><div class="bk-cv">全部期數</div><i class="lg"></i><b>看更早的</b><small>&nbsp;</small></a>`;
    [0,1,2,3,4,5].forEach(k=>bkMeta(last-k).then(mt=>{const a=lib.querySelector(`[data-n="${last-k}"]`);if(!a)return;if(mt.cover)a.querySelector('.bk-cv').innerHTML=`<img src="${mt.cover}" alt="" referrerpolicy="no-referrer" onerror="this.remove()"><i>${last-k}</i>`;a.querySelector('small').textContent=mt.when||''}))}
   [last,last-1,last-2].forEach((n,k)=>bkMeta(n).then(mt=>{if(!mt.cover)return;if(k===0&&pc&&document.contains(pc))pc.innerHTML=`<img src="${mt.cover}" alt="" referrerpolicy="no-referrer" onerror="this.remove()">`;const i=bp&&document.contains(bp)&&bp.children[k];if(i){i.querySelector('em').textContent=n;i.insertAdjacentHTML('afterbegin',`<img src="${mt.cover}" alt="" referrerpolicy="no-referrer" onerror="this.remove()">`)}}))
