@@ -365,7 +365,7 @@ body[data-r=home] .wrap{padding:0 12px 60px;margin-top:-70px;max-width:1160px}
 .hh{position:relative;overflow:hidden;border-radius:30px;min-height:470px;margin-top:8px;padding:120px 22px 22px;display:flex;flex-direction:column;justify-content:space-between;gap:26px;color:#f6efe6;
  background:radial-gradient(55% 85% at 86% 28%,rgba(214,64,42,.62) 0,transparent 66%),radial-gradient(50% 60% at 8% 100%,rgba(110,140,130,.30) 0,transparent 70%),linear-gradient(160deg,#211d1a,#141210)}
 .hh .bgc{position:absolute;right:-20px;top:40px;font-family:GenRyu,"Cactus Classical Serif","Noto Serif TC",Huninn,serif;font-weight:600;font-synthesis:none;font-size:min(var(--bs,300px),70vw);line-height:1;color:rgba(255,245,235,.16);pointer-events:none;white-space:nowrap}
-.hh h1{position:relative;margin:0;font-size:min(36px,7.1vw);line-height:1.28;color:#f6efe6;letter-spacing:.03em}
+.hh h1{position:relative;margin:0;font-size:min(36px,9vw);line-height:1.28;color:#f6efe6;letter-spacing:.06em}.hh h1 .slow{letter-spacing:.32em;margin-left:.12em}.hh h1 .brm{display:none}@media(max-width:899px){.hh h1 .brm{display:block}}
 .dw{position:relative;display:flex;align-items:center;gap:16px;border-radius:26px;padding:16px 18px;background:rgba(255,255,255,.13);backdrop-filter:blur(26px) saturate(1.7);-webkit-backdrop-filter:blur(26px) saturate(1.7);border:1px solid rgba(255,255,255,.24);box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 14px 36px rgba(0,0,0,.28)}
 .dwc{font-family:GenRyu,"Cactus Classical Serif","Noto Serif TC",Huninn,serif;font-weight:600;font-synthesis:none;font-size:var(--ds,52px);line-height:1;flex:none;white-space:nowrap}
 .dwt{display:flex;flex-direction:column;flex:1;min-width:0}.dwt small{font-size:12px;letter-spacing:.2em;opacity:.7;white-space:nowrap}.dwt b{font-size:22px;font-weight:500;letter-spacing:.03em}.dwt span{font-size:15px;opacity:.85}
@@ -952,7 +952,7 @@ function pHome(){
   const zone=(h,ic,t,x,items)=>`<a class="ent zone" href="${h}"><div class="ic">${ic}</div><h3>${t}</h3>${x?`<p>${x}</p>`:''}<div class="li">${items.map(i=>`<span>${i}</span>`).join('')}</div></a>`;
   return `<section class="hh" style="--bs:${bs}px;--ds:${dm}px;--dsd:${dd}px">
     <span class="bgc" aria-hidden="true">${esc(bgw)}</span>
-    <h1 class="hd">學台語<br>對這條街仔路慢慢仔行</h1>
+    <h1 class="hd">學台語<br>對這條街仔路<i class="brm"></i><span class="slow">慢慢仔</span>行</h1>
     <div class="dw${lg?' long':md?' mid':''}"><div class="dwc">${esc(d.w)}</div><div class="dwt"><small>每日一字 ${d.n}</small><b class="tl">${esc(d.r)}</b><span>${esc(d.h)}</span></div><button class="dwb" type="button" data-act="say" data-n="${d.n}">${SI.spk}聽發音</button></div>
    </section>
    <div class="hsec g3 grid g3">
