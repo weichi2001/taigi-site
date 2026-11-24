@@ -393,6 +393,10 @@ a.pub:hover{transform:translateY(-2px)}.pub.ed{background:radial-gradient(80% 90
 .eb-lbtn{margin-left:auto}.eb-hr{display:flex;align-items:center;gap:16px}.eb-hr .eb-lbtn{margin:0;padding:6px 14px;font-size:13px}
 .eb-lp{display:grid;grid-template-rows:0fr;margin:0;transition:grid-template-rows .5s cubic-bezier(.2,.8,.2,1),margin .5s cubic-bezier(.2,.8,.2,1)}.eb-lp.open{grid-template-rows:1fr;margin:16px 0 6px}.eb-lp>div{overflow:hidden;min-height:0}
 .eb-lpi{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(250px,1fr);gap:24px;padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--card)}
+.bk-c.eb .bk-cv,.bkf-c{background:linear-gradient(155deg,var(--c1,#3a3430),var(--c2,#17130f))}
+.bk-c.eb .eb-f,.bkf-c .eb-f{inset:7px;border:1px solid rgba(232,200,114,.42);border-radius:2px;font-family:var(--serif);letter-spacing:.06em;color:#f3ead6;text-shadow:0 1px 6px rgba(0,0,0,.4)}
+.bk-c.eb .bk-cv::before,.bkf-c::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(115deg,rgba(255,255,255,.14),transparent 38%),repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 1px,transparent 1px 3px);mix-blend-mode:soft-light}
+.bk-c.eb .bk-cv img,.bkf-c img{z-index:0}
 .eb-fr{border:1px solid var(--line);border-radius:12px;padding:24px;display:flex;flex-direction:column;gap:14px;align-items:flex-start;justify-content:center}.eb-fr h4{margin:0;font-size:18px;font-family:var(--serif)}.eb-fr p{margin:0;font-size:14px;line-height:1.8;color:var(--ink2)}.eb-fr small{font-size:12.5px;color:var(--ink2);line-height:1.7}
 .eb-sd h4{margin:2px 0 10px;font-size:18px;font-family:var(--serif)}.eb-sd ol{margin:0 0 14px;padding-left:1.3em;line-height:1.85;font-size:14.5px}.eb-sd ol li{margin-bottom:8px}.eb-sd p{font-size:13px;color:var(--ink2);line-height:1.75;margin:0 0 12px}.eb-sd .eb-rw{display:flex;gap:10px;flex-wrap:wrap}
 
@@ -519,8 +523,8 @@ a.pub:hover{transform:translateY(-2px)}.pub.ed{background:radial-gradient(80% 90
 .lib-s{margin:4px 0 18px;font-size:14px;color:var(--ink2,#777)}
 .shelf{display:grid;grid-auto-flow:column;grid-auto-columns:clamp(124px,15vw,156px);gap:26px;overflow-x:auto;padding:26px 30px 36px;margin:-18px -30px -14px;scrollbar-width:none}.shelf::-webkit-scrollbar{display:none}
 .shelf .bk-c{position:relative}.shelf .bk-cv{border-radius:3px 7px 7px 3px}
-.lg{display:block;height:10px;margin:0 -13px 0;border-radius:2px;background:linear-gradient(180deg,#4a443e,#1b1815 70%);box-shadow:0 7px 12px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.18)}
-html[data-theme=dark] .lg{background:linear-gradient(180deg,#3a3632,#0e0c0a 70%);box-shadow:0 7px 12px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.1)}
+.lg{display:block;height:9px;margin:0 -13px 0;border-radius:2px;background:linear-gradient(180deg,#e4ddd0,#b4aa97 78%,#9c917c);box-shadow:0 8px 14px rgba(60,50,35,.22),inset 0 1px 0 rgba(255,255,255,.75)}
+html[data-theme=dark] .lg{background:linear-gradient(180deg,#6a645a,#38342e 78%,#24211d);box-shadow:0 8px 14px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.22)}
 .shelf .bk-c b{margin-top:12px}
 .dc{display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:16px 10px 14px;color:#efe6d6;text-align:center}
 .dc::before{content:"";position:absolute;inset:8px 8px 8px 11px;border:1px solid rgba(239,230,214,.26);border-radius:2px;pointer-events:none}
@@ -735,7 +739,7 @@ body:has(.bk-rd.ah) .wrap{padding-bottom:0}
 .bkt .hd{margin:6px 0 0;font-family:var(--serif);font-weight:700;font-size:clamp(46px,6.4vw,66px);letter-spacing:.08em;line-height:1.15;color:var(--ink)}
 .bkt::after{content:"";display:block;width:56px;height:2px;margin-top:18px;background:var(--gd)}
 .bkf{position:relative;margin:30px 0 10px;padding-bottom:16px}
-.bkf::after{content:"";position:absolute;left:0;right:0;bottom:0;height:16px;border-radius:3px;background:linear-gradient(180deg,#4a443e,#1b1815 72%);box-shadow:0 14px 24px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.18)}html[data-theme=dark] .bkf::after{background:linear-gradient(180deg,#3a3632,#0e0c0a 72%)}
+.bkf::after{content:"";position:absolute;left:0;right:0;bottom:0;height:16px;border-radius:3px;background:linear-gradient(180deg,#e4ddd0,#b4aa97 78%,#9c917c);box-shadow:0 12px 22px rgba(60,50,35,.24),inset 0 1px 0 rgba(255,255,255,.75)}html[data-theme=dark] .bkf::after{background:linear-gradient(180deg,#6a645a,#38342e 78%,#24211d);box-shadow:0 12px 22px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.22)}
 :root{--gd:#a9791a}html[data-theme=dark]{--gd:#e8c872}
 .bkf-a{position:relative;display:flex;gap:clamp(22px,4vw,44px);align-items:flex-end;padding:0 4px;color:var(--ink);text-decoration:none;background:radial-gradient(42% 100% at 12% 62%,rgba(232,200,114,.22),transparent 72%)}
 .bkf-c{position:relative;flex:none;width:clamp(120px,15vw,176px);aspect-ratio:5/7;border-radius:3px 8px 8px 3px;overflow:hidden;background:linear-gradient(150deg,#2b2623,#14110f);box-shadow:0 16px 28px rgba(0,0,0,.35),inset 5px 0 0 rgba(255,255,255,.14);transition:transform .25s}
@@ -1432,12 +1436,13 @@ LB.tg1.n=76;
 const EBS={d:null,tab:'all',q:''},EBC={B:'書籍',P:'繪本',C:'漫畫'};
 const ebsCover=id=>'https://tclwebdata.s3-ap-southeast-1.amazonaws.com/EBSRepos/EBSRepos/Images/cover450/'+id+'.jpg',ebsUrl=id=>'https://www.ebookservice.tw/tc/book/'+id;
 async function ebsLoad(){if(!EBS.d){try{const r=await fetch('ebs.json');EBS.d=r.ok?await r.json():[]}catch(e){EBS.d=[]}EBS.d.sort((a,b)=>'PCB'.indexOf(a[0])-'PCB'.indexOf(b[0]))}return EBS.d}
-const ebsCard=(b,lg)=>`<a class="bk-c eb" href="${ebsUrl(b[1])}" data-id="${b[1]}" data-t="${esc(b[2])}" target="_blank" rel="noopener"><div class="bk-cv"><span class="eb-f">${esc(b[2])}</span><img loading="lazy" decoding="async" referrerpolicy="no-referrer" src="${ebsCover(b[1])}" alt="" onerror="this.remove()"></div>${lg?'<i class="lg"></i>':''}<b>${esc(b[2])}</b><small>${esc(b[3])}${b[3]?'・':''}${EBC[b[0]]}</small></a>`;
+const EBP=["#27474a|#102426", "#5a2a36|#27121a", "#2a3459|#12172b", "#46472a|#1e1f10", "#3d2d4e|#1a1224", "#1f4036|#0c1c17", "#364859|#161f28", "#5a4630|#251c10"].map(x=>x.split('|')),ebsClr=t=>{let h=5381;for(const c of t)h=(h*33+c.charCodeAt(0))>>>0;const p=EBP[h%EBP.length];return `--c1:${p[0]};--c2:${p[1]}`};
+const ebsCard=(b,lg)=>`<a class="bk-c eb" style="${ebsClr(b[2])}" href="${ebsUrl(b[1])}" data-id="${b[1]}" data-t="${esc(b[2])}" target="_blank" rel="noopener"><div class="bk-cv"><span class="eb-f">${esc(b[2])}</span><img loading="lazy" decoding="async" referrerpolicy="no-referrer" src="${ebsCover(b[1])}" alt="" onerror="this.remove()"></div>${lg?'<i class="lg"></i>':''}<b>${esc(b[2])}</b><small>${esc(b[3])}${b[3]?'・':''}${EBC[b[0]]}</small></a>`;
 async function ebsFill(){const el=document.getElementById('eb-shelf');if(!el&&!document.getElementById('bkp')&&!document.getElementById('bkh-r'))return;const d=await ebsLoad();if(!d.length)return;ebsHero(d);ebsTile(d);const pick=[...d.filter(x=>x[0]==='P'),...d.filter(x=>x[0]==='C'),...d.filter(x=>x[0]==='B').slice(0,9)];if(el)el.innerHTML=pick.map(b=>ebsCard(b,1)).join('')+`<a class="bk-c mo" href="#books/ebs"><div class="bk-cv">全部 ${d.length} 本</div></a>`}
 const ebsDay=()=>Math.floor((Date.now()+288e5)/864e5);
 const ebsPick=d=>d[(ebsDay()*37)%d.length];
 function ebsHero(d){const r=document.getElementById('bkh-r');if(!r)return;const b=ebsPick(d),t=new Date(Date.now()+288e5);
- r.innerHTML=`<a class="bkf-a eb" href="${ebsUrl(b[1])}" data-id="${b[1]}" data-t="${esc(b[2])}" target="_blank" rel="noopener"><div class="bkf-c"><span class="eb-f">${esc(b[2])}</span><img referrerpolicy="no-referrer" src="${ebsCover(b[1])}" alt="" onerror="this.remove()"></div><div class="bkf-t"><small>本日推薦・${t.getUTCMonth()+1} 月 ${t.getUTCDate()} 日</small><b>${esc(b[2])}</b><em>${esc(b[3])}${b[3]?'・':''}${EBC[b[0]]}</em><i class="bkf-b">翻開這本</i></div></a>`}
+ r.innerHTML=`<a class="bkf-a eb" style="${ebsClr(b[2])}" href="${ebsUrl(b[1])}" data-id="${b[1]}" data-t="${esc(b[2])}" target="_blank" rel="noopener"><div class="bkf-c"><span class="eb-f">${esc(b[2])}</span><img referrerpolicy="no-referrer" src="${ebsCover(b[1])}" alt="" onerror="this.remove()"></div><div class="bkf-t"><small>本日推薦・${t.getUTCMonth()+1} 月 ${t.getUTCDate()} 日</small><b>${esc(b[2])}</b><em>${esc(b[3])}${b[3]?'・':''}${EBC[b[0]]}</em><i class="bkf-b">翻開這本</i></div></a>`}
 function ebsTile(d){const bp=document.getElementById('bkp');if(!bp)return;["67012785-8915-4115-a184-626597369db7", "198a9cf0-9f43-4d5b-9660-597b3569471b", "9afe9ff8-710f-4ece-ac3c-c45d5e70f55c", "33825999-1bdd-4619-81cc-9dc44b058cff", "e618cedd-bdea-4160-9f4d-51f8f56293da", "f6cf5bc6-900c-4711-b48d-47646a03bbe1", "add5e4a4-97e1-4edb-9ca5-b584482ac6bf"].forEach((id,j)=>{const b=d.find(x=>x[1]===id),i=bp.children[j];if(!b||!i)return;i.innerHTML=`<img referrerpolicy="no-referrer" src="${ebsCover(b[1])}" alt="" onerror="this.remove()"><em>${esc([...b[2]].slice(0,2).join(''))}</em>`})}
 
 async function ebsPage(){const el=document.getElementById('eb-grid');if(!el)return;const d=await ebsLoad();ebsDraw()}
