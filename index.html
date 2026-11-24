@@ -132,6 +132,7 @@ input[type=search]:focus{outline:2px solid var(--accent);outline-offset:1px}
 .note{font-size:13px;color:var(--ink2)}
 details{margin-top:8px}summary{cursor:pointer;font-size:14px;color:var(--ink2)}
 details ol{margin:6px 0 0;padding-left:20px;font-size:14px}
+body[data-r=home] footer{display:none}
 footer{margin-top:30px;font-size:12px;color:var(--ink2);border-top:1px solid var(--line);padding-top:12px}
 #toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:9px 16px;border-radius:99px;font-size:14px;opacity:0;pointer-events:none;transition:.25s;z-index:20;max-width:90vw}
 #toast.on{opacity:1;transform:translateX(-50%)}
@@ -947,8 +948,7 @@ function pHome(){
     <a class="pst c" href="#books"><div class="bkp" id="bkp"><i><em></em></i><i><em></em></i><i><em></em></i><i><em></em></i><i><em></em></i><i><em></em></i><i><em></em></i></div><small>Tâi-gí Tsheh-pâng</small><b>台語冊房</b><span>電子書、繪本、漫畫，還有 BONG 報</span></a>
    </div>
    <div class="hsec"><a class="more" href="#play">還有聽歌、節目的資源 ${SI.link}</a>
-    <a class="ent sm" href="#links"><div class="ic">${SI.link}</div><div><h3>其他推薦網站</h3><p>教育部資源、老師的 IG 等等。</p></div></a></div>
-   <h3 class="hd" style="margin-top:26px">用例與自測</h3>${row(d)}`;
+    <a class="ent sm" href="#links"><div class="ic">${SI.link}</div><div><h3>其他推薦網站</h3><p>教育部資源、老師的 IG 等等。</p></div></a></div>`;
 }
 function pAbout(){
   const it=(ic,t,d,h,ex)=>`<a class="ab-it card" href="${h}"${ex||''}><span class="ic">${ic}</span><span><b>${t}</b><small>${d}</small></span></a>`;
