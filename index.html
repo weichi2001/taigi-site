@@ -752,11 +752,11 @@ html[data-theme=dark] .bkf-a{background:radial-gradient(46% 110% at 14% 70%,rgba
 .bkf{position:relative;margin:30px 0 10px;padding-bottom:18px}
 .bkf::after{content:"";position:absolute;left:0;right:0;bottom:10px;height:8px;border-radius:3px;background:linear-gradient(180deg,#5a5855 0,#5a5855 1px,#2f2e2c 1px,#2f2e2c 100%);box-shadow:0 1px 0 rgba(0,0,0,.25)}html[data-theme=dark] .bkf::after{background:linear-gradient(180deg,#f6f0e4 0,#f6f0e4 1px,#e7dec9 1px,#e7dec9 100%);box-shadow:0 1px 0 rgba(0,0,0,.5)}
 :root{--gd:#a9791a}html[data-theme=dark]{--gd:#e8c872}
-.bkf-a{position:relative;display:flex;gap:clamp(22px,4vw,44px);align-items:flex-end;padding:0 4px;color:var(--ink);text-decoration:none;background:radial-gradient(42% 100% at 12% 62%,rgba(232,200,114,.22),transparent 72%)}
+.bkf-a{position:relative;display:flex;gap:clamp(22px,4vw,44px);align-items:center;padding:0 4px;color:var(--ink);text-decoration:none;background:radial-gradient(42% 100% at 12% 62%,rgba(232,200,114,.22),transparent 72%)}
 .bkf-c{position:relative;flex:none;width:clamp(130px,19vw,250px);aspect-ratio:5/7;border-radius:3px 8px 8px 3px;overflow:hidden;background:linear-gradient(150deg,#2b2623,#14110f);box-shadow:0 16px 28px rgba(0,0,0,.35),inset 5px 0 0 rgba(255,255,255,.14);transition:transform .25s}
 .bkf-a:hover .bkf-c{transform:translateY(-5px)}
 .bkf-c .eb-f{position:absolute;inset:0;display:grid;place-items:center;padding:10px;text-align:center;font:700 15px/1.45 var(--serif);color:#f1e9dd}.bkf-c img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.bkf-t{min-width:0;display:flex;flex-direction:column;gap:8px;padding-bottom:24px}.bkf-t small{font-size:15px;letter-spacing:.16em;color:var(--gd)}
+.bkf-t{min-width:0;display:flex;flex-direction:column;gap:8px;padding-bottom:0}.bkf-t small{font-size:15px;letter-spacing:.16em;color:var(--gd)}
 .bkf-t b{font-family:var(--serif);font-weight:700;font-size:clamp(26px,4vw,52px);line-height:1.35;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}.bkf-t em{font-style:normal;font-size:17px;color:var(--ink2)}
 .bkf-b{align-self:flex-start;margin-top:10px;padding:8px 20px;border-radius:99px;background:var(--accent);color:#fff;font-size:14px;font-style:normal}
 </style>
@@ -1452,7 +1452,7 @@ async function ebsFill(){const el=document.getElementById('eb-shelf');if(!el&&!d
 const ebsDay=()=>Math.floor((Date.now()+288e5)/864e5);
 const ebsPick=d=>d[(ebsDay()*37)%d.length];
 function ebsHero(d){const r=document.getElementById('bkh-r');if(!r)return;const b=ebsPick(d),t=new Date(Date.now()+288e5);
- r.innerHTML=`<a class="bkf-a eb" style="${ebsClr(b[2])}" href="${ebsUrl(b[1])}" data-id="${b[1]}" data-t="${esc(b[2])}" target="_blank" rel="noopener"><div class="bkf-c"><span class="eb-f">${esc(b[2])}</span><img referrerpolicy="no-referrer" src="${ebsCover(b[1])}" alt="" onerror="this.remove()"></div><div class="bkf-t"><small>本日推薦・${t.getUTCMonth()+1} 月 ${t.getUTCDate()} 日</small><b>${esc(b[2])}</b><em>${esc(b[3])}${b[3]?'・':''}${EBC[b[0]]}</em><i class="bkf-b">翻開這本</i></div></a>`}
+ r.innerHTML=`<a class="bkf-a eb" style="${ebsClr(b[2])}" href="${ebsUrl(b[1])}" data-id="${b[1]}" data-t="${esc(b[2])}" target="_blank" rel="noopener"><div class="bkf-c"><span class="eb-f">${esc(b[2])}</span><img referrerpolicy="no-referrer" src="${ebsCover(b[1])}" alt="" onerror="this.remove()"></div><div class="bkf-t"><small>本日推薦</small><b>${esc(b[2])}</b><em>${esc(b[3])}${b[3]?'・':''}${EBC[b[0]]}</em><i class="bkf-b">開始閱讀</i></div></a>`}
 function ebsTile(d){const bp=document.getElementById('bkp');if(!bp)return;["67012785-8915-4115-a184-626597369db7", "198a9cf0-9f43-4d5b-9660-597b3569471b", "9afe9ff8-710f-4ece-ac3c-c45d5e70f55c", "33825999-1bdd-4619-81cc-9dc44b058cff", "e618cedd-bdea-4160-9f4d-51f8f56293da", "f6cf5bc6-900c-4711-b48d-47646a03bbe1", "add5e4a4-97e1-4edb-9ca5-b584482ac6bf"].forEach((id,j)=>{const b=d.find(x=>x[1]===id),i=bp.children[j];if(!b||!i)return;i.innerHTML=`<img referrerpolicy="no-referrer" src="${ebsCover(b[1])}" alt="" onerror="this.remove()"><em>${esc([...b[2]].slice(0,2).join(''))}</em>`})}
 
 async function ebsPage(){const el=document.getElementById('eb-grid');if(!el)return;const d=await ebsLoad();ebsDraw()}
