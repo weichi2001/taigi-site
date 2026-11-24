@@ -1291,6 +1291,8 @@ function libOpen(id,side){
   if(!side){window.open(libUrl(id),'_blank','noopener');return 1}
   const v=window.open(libUrl(id),'udnviewer',`popup=yes,left=${ox},top=${oy},width=${sw-dw},height=${sh}`);
   const d=window.open(location.href.split('#')[0]+'#dictwin','taigidict',`popup=yes,left=${ox+sw-dw},top=${oy},width=${dw},height=${sh}`);
+  const place=()=>{try{if(v){v.resizeTo(sw-dw,sh);v.moveTo(ox,oy)}}catch(e){}try{if(d){d.resizeTo(dw,sh);d.moveTo(ox+sw-dw,oy)}}catch(e){}};
+  place();setTimeout(place,350);setTimeout(place,1200);
   return v&&d?2:v?1:0;
 }
 const libView=id=>{const b=LIBB.find(x=>x.id===id)||{id,t:'圖書館電子書',sub:'',a:'',p:'',bg:'#233'};
@@ -1585,7 +1587,7 @@ function render(keep){
   window.scrollTo(0,keep?y:0);
   if(r==='books'||r.startsWith('books/'))bkLoad(r);
   if(r==='home')bkCovers();
-  if(r==='dictwin'){mini.hidden=false;mini.classList.add('show');dxLoad();miniDraw();setTimeout(()=>mq.focus({preventScroll:true}),200);document.title='查辭典・街仔路'}
+  if(r==='dictwin'){mini.hidden=false;mini.classList.add('show');dxLoad();miniDraw();setTimeout(()=>mq.focus({preventScroll:true}),200);document.title='查辭典・街仔路';if(window.name==='taigidict'&&window.opener){const sw=screen.availWidth,sh=screen.availHeight,ox=screen.availLeft||0,oy=screen.availTop||0,dw=Math.min(440,Math.round(sw*.3));const pl=()=>{try{window.resizeTo(dw,sh);window.moveTo(ox+sw-dw,oy)}catch(e){}};pl();setTimeout(pl,400)}}
 }
 window.addEventListener('hashchange',()=>{enter(cur());render(false)});
 
