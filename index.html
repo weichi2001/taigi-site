@@ -1452,6 +1452,7 @@ const libView=id=>{const b=LIBB.find(x=>x.id===id)||{id,t:'圖書館電子書',s
    <p class="lib-msg" id="lib-msg"></p>
    <ol class="lib-st"><li>先到「借閱頁」，用自己的臺中市立圖書館帳號借閱這本書。</li><li>借到之後按「開閱讀器」，書會開在新分頁。</li><li>再按「開辭典」，辭典會開在另一個分頁。</li><li>想左右並排：在 Chrome 分頁列對辭典那個分頁按右鍵，選「新增分割畫面」（Add tab to new split view），把兩個分頁併成一個畫面，中間的線可以拖曳調寬度。需要較新版的 Chrome。</li></ol>
    <p class="lib-why">為什麼不直接嵌在這個頁面裡？我試過，udn 的閱讀器放進別的網站就讀不到你登入後的書，畫面會是空白，所以只能開在它自己的分頁。</p></div></div></div>`};
+const bkCont=sv=>sv.eb?`<a class="bk-cont eb" href="${ebsUrl(sv.eb)}" data-id="${esc(sv.eb)}" data-t="${esc(sv.t||'')}" target="_blank" rel="noopener"><span>繼續讀・台灣雲端書庫</span><b>${esc(sv.t||'')}</b></a>`:sv.n?`<a class="bk-cont" href="#books/${sv.n}/${sv.i}"><span>繼續讀</span><b>${bkSvL(sv)}</b></a>`:'';
 const bkSvL=sv=>LB[sv.n]?esc(LB[sv.n].t)+(sv.t?'・'+esc(sv.t):''):`第 ${sv.n} 期${sv.t?'・'+esc(sv.t):''}`;
 function lbIssue(id){
   const B=LB[id];if(B._is)return B._is;
@@ -1644,7 +1645,7 @@ function pBooks(r){
 async function bkShelf(){
   const box=document.getElementById('bk-shelf');if(!box)return;
   const last=await bkLatest(),sv=bkSaved(),res=document.getElementById('bk-res');
-  if(res&&sv&&sv.n)res.innerHTML=`<a class="bk-cont" href="#books/${sv.n}/${sv.i}"><span>繼續讀</span><b>${bkSvL(sv)}</b></a>`;
+  if(res&&sv)res.innerHTML=bkCont(sv);
   const more=document.querySelector('[data-bk=more]');
   const add=async()=>{
     const from=last-BK.shown,ns=[];for(let k=0;k<12&&from-k>0;k++)ns.push(from-k);
@@ -1685,7 +1686,7 @@ async function bkReader(){
 }
 async function bkCovers(){ebsFill();
   const last=await bkLatest(),pc=document.getElementById('bk-pc'),bp=document.getElementById('bkp'),lib=document.getElementById('bk-lib'),res=document.getElementById('bk-res'),sv=bkSaved();
-  if(res&&sv&&sv.n)res.innerHTML=`<a class="bk-cont" href="#books/${sv.n}/${sv.i}"><span>繼續讀</span><b>${bkSvL(sv)}</b></a>`;
+  if(res&&sv)res.innerHTML=bkCont(sv);
   if(lib){lib.innerHTML=[0,1,2,3,4,5].map(k=>{const n=last-k;return `<a class="bk-c" href="#books/${n}" data-n="${n}"><div class="bk-cv"><i>${n}</i></div><i class="lg"></i><b>第 ${n} 期</b><small>&nbsp;</small></a>`}).join('')+`<a class="bk-c mo" href="#books/bong"><div class="bk-cv">全部期數</div><i class="lg"></i><b>看更早的</b><small>&nbsp;</small></a>`;
    [0,1,2,3,4,5].forEach(k=>bkMeta(last-k).then(mt=>{const a=lib.querySelector(`[data-n="${last-k}"]`);if(!a)return;if(mt.cover)a.querySelector('.bk-cv').innerHTML=`<img src="${mt.cover}" alt="" referrerpolicy="no-referrer" onerror="this.remove()"><i>${last-k}</i>`;a.querySelector('small').textContent=mt.when||''}))}
   [last,last-1,last-2].forEach((n,k)=>bkMeta(n).then(mt=>{if(!mt.cover)return;if(k===0&&pc&&document.contains(pc))pc.innerHTML=`<img src="${mt.cover}" alt="" referrerpolicy="no-referrer" onerror="this.remove()">`;const i=bp&&document.contains(bp)&&bp.children[k];if(i){i.querySelector('em').textContent=n;i.insertAdjacentHTML('afterbegin',`<img src="${mt.cover}" alt="" referrerpolicy="no-referrer" onerror="this.remove()">`)}}))
@@ -1694,7 +1695,7 @@ const bkIn=()=>{BK.fade=0;const r=document.getElementById('bk-rd');if(r){delete 
 function bkLoad(r){if(BK.fade)bkIn();if(r==='books')bkCovers();else if(r==='books/ebs')ebsPage();else if(r==='books/bong')bkShelf();else bkReader()}
 document.getElementById('app').addEventListener('click',e=>{
     const ebl=e.target.closest('[data-ebl]');if(ebl&&ebl.dataset.ebl==='rp'){ebLgReset();return}if(ebl&&ebl.dataset.ebl==='w'){const w=Math.min(520,screen.availWidth),h=Math.min(780,screen.availHeight);window.open('https://www.ebookservice.tw/tc/account/sign-in','ebslogin',`popup=yes,width=${w},height=${h},left=${(screen.availLeft||0)+Math.round((screen.availWidth-w)/2)},top=${(screen.availTop||0)+Math.round((screen.availHeight-h)/3)}`);return}if(ebl){ebLogin(ebl.dataset.ebl==='t'?undefined:false);return}
-  const ebc=e.target.closest('a.bk-c.eb');if(ebc&&!e.metaKey&&!e.ctrlKey&&!e.shiftKey){e.preventDefault();ebGuide(ebc.dataset.id,ebc.dataset.t);return}
+  const ebc=e.target.closest('a.eb[data-id]');if(ebc){bkSave({eb:ebc.dataset.id,t:ebc.dataset.t});if(!e.metaKey&&!e.ctrlKey&&!e.shiftKey){e.preventDefault();ebGuide(ebc.dataset.id,ebc.dataset.t);return}}
   const ebt=e.target.closest('[data-eb]');if(ebt){EBS.tab=ebt.dataset.eb;ebsDraw();return}const lbtn=e.target.closest('[data-lib]');if(lbtn){const sd=lbtn.dataset.lib==='side',r=libOpen(lbtn.dataset.id,sd),m=document.getElementById('lib-msg');if(m)m.textContent=r?'':'視窗被瀏覽器擋住了，請允許彈出視窗後再按一次。';return}
   const b=e.target.closest('[data-bk]');if(!b)return;const k=b.dataset.bk;
   if(k==='more'&&BK.add)BK.add();
