@@ -636,7 +636,7 @@ body.anime .achips .fb,body.anime .achips .chip{font-size:15px}
 @media(min-width:1500px){body.anime .wrap{max-width:1500px}.pt{width:360px!important}.hero{min-height:460px}}
 /* 台語冊房 */
 body[data-r^=books] .wrap{max-width:1080px}
-.bk-h{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}.bk-h h2{margin:0}.bk-sub{margin:6px 0 20px}
+.bk-h{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}.bk-h h2{margin:0}.bk-h .sub{color:var(--ink)}.bk-sub{margin:6px 0 20px}
 .bk-cont{display:flex;flex-direction:column;gap:2px;padding:14px 18px;border-radius:16px;background:var(--card,#fff);border:1px solid var(--line);margin-bottom:22px;text-decoration:none;color:inherit}.bk-cont span{font-size:13px;color:var(--accent)}.bk-cont b{font-family:var(--serif);font-size:19px}
 .bk-shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:26px 18px}
 .bk-c{display:flex;flex-direction:column;gap:4px;text-decoration:none;color:inherit}
@@ -1628,7 +1628,6 @@ function pBooks(r){
   if(!m){
    return `<a class="back" href="#home">← 街仔路</a>
    <div class="bk-h"><h2 class="hd">台語冊房</h2><span class="sub tl">Tâi-gí Tsheh-pâng</span></div>
-   <p class="sub bk-sub">一排一排的書架。BONG 報可以直接在這裡讀，其他的點下去會到原本的網站。</p>
    <div id="bk-res"></div>
    <section class="lib"><div class="lib-h"><h3 class="hd">台灣雲端書庫</h3><span class="eb-hr"><button class="btn eb-lbtn" data-ebl="t" aria-expanded="false">登入帳號</button><a href="#books/ebs">全部 →</a></span></div>
     <p class="lib-s">臺中市立圖書館提供的台語相關電子書，有書籍、繪本、漫畫。點封面到書頁，用借書證借閱。</p>
