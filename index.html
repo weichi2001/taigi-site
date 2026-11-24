@@ -808,7 +808,7 @@ html[data-theme=dark] body .top .in{background:linear-gradient(180deg,rgba(255,2
   <div class="mtop"><div class="mtt"><b class="hd">查辭典</b><span>教育部臺灣台語常用詞辭典</span></div>
     <button class="mx-close" id="mclose" aria-label="關閉"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg></button></div>
   <label class="msb"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
-    <input type="search" id="mq" placeholder="漢字、台羅、華語都可以" autocomplete="off" enterkeyhint="search"><button type="button" class="clr" aria-label="清除" tabindex="-1"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg></button></label>
+    <input type="search" id="mq" placeholder="輸入漢字、台羅或華語進行搜尋" autocomplete="off" enterkeyhint="search"><button type="button" class="clr" aria-label="清除" tabindex="-1"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg></button></label>
   <div class="mb" id="mb"></div>
 </section>
 <noscript><p style="padding:20px">這個網站需要開啟 JavaScript 才能使用。</p></noscript>
@@ -1947,7 +1947,7 @@ function dxRow(e){
 }
 function miniDraw(){
   const raw=mq.value.trim();
-  if(!raw){mb.innerHTML=`<p class="note">輸入漢字、台羅或華語進行搜尋，例如：讀冊、<span style="white-space:nowrap">tha̍k-tsheh</span>、讀書。</p>`;return}
+  if(!raw){mb.innerHTML=`<p class="note">例如：讀冊、<span style="white-space:nowrap">tha̍k-tsheh</span> 或是 讀書。</p>`;return}
   if(DXS==='load'||DXS==='idle'){mb.innerHTML=`<p class="note">辭典載入中…</p>`;return}
   if(DXS==='err'){
     const k=norm(raw);const r=D.filter(o=>o.k.includes(k)).slice(0,10);
