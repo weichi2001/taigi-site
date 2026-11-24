@@ -952,7 +952,7 @@ function pHome(){
   const zone=(h,ic,t,x,items)=>`<a class="ent zone" href="${h}"><div class="ic">${ic}</div><h3>${t}</h3>${x?`<p>${x}</p>`:''}<div class="li">${items.map(i=>`<span>${i}</span>`).join('')}</div></a>`;
   return `<section class="hh" style="--bs:${bs}px;--ds:${dm}px;--dsd:${dd}px">
     <span class="bgc" aria-hidden="true">${esc(bgw)}</span>
-    <h1 class="hd">學台語<br>咱對這條街仔路<i class="brm"></i><span class="slow"><span style="letter-spacing:.14em">慢</span><span style="letter-spacing:.3em">慢</span><span style="letter-spacing:.52em">仔</span></span>行</h1>
+    <h1 class="hd">學台語<br>予咱對這條街仔路<i class="brm"></i><span class="slow"><span style="letter-spacing:.14em">慢</span><span style="letter-spacing:.3em">慢</span><span style="letter-spacing:.52em">仔</span></span>行</h1>
     <div class="dw${lg?' long':md?' mid':''}"><div class="dwc">${esc(d.w)}</div><div class="dwt"><small>每日一字 ${d.n}</small><b class="tl">${esc(d.r)}</b><span>${esc(d.h)}</span></div><button class="dwb" type="button" data-act="say" data-n="${d.n}">${SI.spk}聽發音</button></div>
    </section>
    <div class="hsec g3 grid g3">
