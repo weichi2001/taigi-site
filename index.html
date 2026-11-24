@@ -390,6 +390,10 @@ a.pub:hover{transform:translateY(-2px)}.pub.ed{background:radial-gradient(80% 90
 html.theming *,html.theming *::before,html.theming *::after{transition:background-color .45s ease,color .45s ease,border-color .45s ease,box-shadow .45s ease,fill .45s ease,stroke .45s ease!important}
 ::view-transition-old(root),::view-transition-new(root){animation-duration:.5s;animation-timing-function:ease}
 .pst span{text-wrap:balance}
+.hmore{display:flex;align-items:center;justify-content:space-between;margin-top:6px;padding:20px 6px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);color:var(--ink);text-decoration:none;font-family:var(--serif);font-weight:700;font-size:18px;letter-spacing:.08em}
+.hmore i{font-style:normal;font-family:inherit;font-weight:400;color:var(--ink2);transition:transform .2s,color .2s}
+.hmore:hover i{transform:translateX(6px);color:var(--accent)}
+
 .lib{margin-top:34px}.lib-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px}.lib-h h3{margin:0;font-size:22px}.lib-h a{font-size:14px;color:var(--accent);text-decoration:none}
 .eb-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:30px 24px;margin-top:20px}
 .eb-bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:6px 0 4px}.eb-tab{border:1px solid var(--line);background:none;color:var(--ink);padding:7px 16px;border-radius:99px;font:inherit;font-size:14px;cursor:pointer}.eb-tab.on{background:var(--accent);border-color:var(--accent);color:#fff}
@@ -965,8 +969,7 @@ function pHome(){
     <a class="pst b" href="https://weichi2001.github.io/taigi-ktv/?student"><div class="kv"><i class="on">${esc(pv1[0])}</i><em>${esc(pv1[1])}</em></div><small>Tâi-gí Ko-thiann</small><b>台語歌廳</b><span>正港台文正字的卡啦OK</span></a>
     <a class="pst c" href="#books"><div class="bkp" id="bkp"><i><em></em></i><i><em></em></i><i><em></em></i><i><em></em></i><i><em></em></i><i><em></em></i><i><em></em></i></div><small>Tâi-gí Tsheh-pâng</small><b>台語冊房</b><span>繪本、小說、漫畫、雜誌等應有盡有</span></a>
    </div>
-   <div class="hsec">
-    <a class="ent sm" href="#links"><div class="ic">${SI.link}</div><div><h3>其他推薦網站</h3></div></a></div>`;
+   <div class="hsec"><a class="hmore" href="#links"><span>其他推薦網站</span><i>→</i></a></div>`;
 }
 function pAbout(){
   const it=(ic,t,d,h,ex)=>`<a class="ab-it card" href="${h}"${ex||''}><span class="ic">${ic}</span><span><b>${t}</b><small>${d}</small></span></a>`;
