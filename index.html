@@ -1778,7 +1778,7 @@ function render(keep){
   const y=window.scrollY,r=cur();
   document.body.classList.toggle('anime',r==='anime');document.body.dataset.r=r;
   if(window.__tgForce)window.__tgForce(r==='anime');
-  $('#app').innerHTML=view(r)+foot;
+  $('#app').innerHTML=view(r);
   window.scrollTo(0,keep?y:0);
   if(r==='books'||r.startsWith('books/'))bkLoad(r);
   if(r==='home')bkCovers();
