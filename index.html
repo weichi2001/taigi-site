@@ -383,6 +383,19 @@ body[data-r=home] .wrap{padding:0 12px 60px;margin-top:-70px;max-width:1160px}
 .bk-pubs{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px;margin-top:18px}
 .pub{position:relative;overflow:hidden;display:flex;flex-direction:column;gap:6px;min-height:210px;padding:22px;border-radius:22px;color:#f1ece3;text-decoration:none;border:1px solid rgba(255,255,255,.08);background:radial-gradient(80% 90% at 100% 0%,rgba(58,150,128,.34),transparent 65%),linear-gradient(155deg,#14312c,#08130f);transition:transform .25s}
 a.pub:hover{transform:translateY(-2px)}.pub.ed{background:radial-gradient(80% 90% at 100% 0%,rgba(190,150,70,.3),transparent 65%),linear-gradient(155deg,#2a2412,#0f0c06)}.pub.rd{background:radial-gradient(80% 90% at 100% 0%,rgba(110,120,210,.34),transparent 65%),linear-gradient(155deg,#1a1d3a,#0a0b16)}
+.lib{margin-top:34px}.lib-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px}.lib-h h3{margin:0;font-size:22px}.lib-h a{font-size:14px;color:var(--accent);text-decoration:none}
+.lib-s{margin:4px 0 18px;font-size:14px;color:var(--ink2,#777)}
+.shelf{display:grid;grid-auto-flow:column;grid-auto-columns:clamp(124px,15vw,156px);gap:26px;overflow-x:auto;padding:26px 30px 36px;margin:-18px -30px -14px;scrollbar-width:none}.shelf::-webkit-scrollbar{display:none}
+.shelf .bk-c{position:relative}.shelf .bk-cv{border-radius:3px 7px 7px 3px}
+.lg{display:block;height:10px;margin:0 -13px 0;border-radius:2px;background:linear-gradient(180deg,#4a443e,#1b1815 70%);box-shadow:0 7px 12px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.18)}
+html[data-theme=dark] .lg{background:linear-gradient(180deg,#3a3632,#0e0c0a 70%);box-shadow:0 7px 12px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.1)}
+.shelf .bk-c b{margin-top:12px}
+.dc{display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:16px 10px 14px;color:#efe6d6;text-align:center}
+.dc::before{content:"";position:absolute;inset:8px 8px 8px 11px;border:1px solid rgba(239,230,214,.26);border-radius:2px;pointer-events:none}
+.dc .y{font:12px "GenRyu Lat","Noto Sans TC",sans-serif;letter-spacing:.2em;opacity:.75;position:relative}
+.dc .v{font-family:GenRyu,"Noto Serif TC",serif;font-weight:700;font-size:clamp(19px,2.1vw,23px);line-height:1.45;letter-spacing:.12em;position:relative;text-indent:.12em}
+.dc .r{font:10px/1.3 "GenRyu Lat","Noto Sans TC",sans-serif;letter-spacing:.04em;opacity:.7;position:relative}
+.bk-c.mo .bk-cv{background:none;border:1.5px dashed var(--line);box-shadow:none;display:grid;place-items:center;font-size:15px;color:var(--ink2)}
 .pub[hidden]{display:none}
 .pub small{font:12.5px "GenRyu Lat","Noto Sans TC",sans-serif;letter-spacing:.14em;opacity:.7}.pub b{font-family:GenRyu,"Noto Serif TC",serif;font-weight:700;font-size:26px;letter-spacing:.04em;line-height:1.25}
 .pub p{margin:2px 0 0;font-size:14.5px;line-height:1.7;opacity:.84;flex:1}
@@ -1417,17 +1430,22 @@ function pBooks(r){
    <div id="bk-res"></div><div id="bk-shelf" class="bk-shelf"></div><div class="bk-more"><button class="btn" data-bk="more" hidden>看更早的期數</button></div>
    <p class="bk-note">內容是打開時才從 <a href="https://tsbp.tgb.org.tw/" target="_blank" rel="noopener">台文通訊 BONG 報網站</a> 即時讀取，這裡不複製也不存放。《台文通訊》由李江却台語文教基金會發行，著作權屬基金會與作者。</p>`;
   if(!m){
-   const ex=(h,t)=>`<a href="${h}" target="_blank" rel="noopener">${t}</a>`;
+   const dc=(h,y,t,sm,lb,bg)=>`<a class="bk-c" href="${h}" target="_blank" rel="noopener"><div class="bk-cv dc" style="background:${bg}"><span class="y">${y}</span><span class="v">${t}</span><span class="r">${sm}</span></div><i class="lg"></i><b>${lb[0]}</b><small>${lb[1]}</small></a>`;
+   const pdf=n=>'https://language.moe.gov.tw/upload/download/jts/04%E6%96%87%E7%AB%A0'+n+'.pdf';
    return `<a class="back" href="#home">← 街仔路</a>
    <div class="bk-h"><h2 class="hd">台語冊房</h2><span class="sub tl">Tâi-gí Tsheh-pâng</span></div>
-   <p class="sub bk-sub">報刊、讀本放在同一個書架。能在這裡讀的就直接讀，其他的帶你到原本的網站。</p>
+   <p class="sub bk-sub">一排一排的書架。BONG 報可以直接在這裡讀，其他的點下去會到原本的網站。</p>
    <div id="bk-res"></div>
-   <div class="achips bk-ch"><button class="ach on" data-bk="flt" data-f="all">全部</button><button class="ach" data-bk="flt" data-f="ed">報刊</button><button class="ach" data-bk="flt" data-f="rd">讀本</button></div>
-   <div class="bk-pubs">
-    <a class="pub has" data-k="ed" href="#books/bong"><div class="cv" id="bk-pc"></div><small>Tâi-bûn Thong-sùn BONG Pò</small><b>台文通訊<br>BONG 報</b><p>李江却台語文教基金會發行的刊物，全台文，一期一期有主題、有專欄。</p><div class="tg"><u>在這裡讀</u><span>電子書、文字版</span></div></a>
-    <div class="pub ed" data-k="ed"><small>Tâi-oân Kàu-hōe Kong-pò</small><b>台灣教會公報</b><p>1885 年創刊，是台灣第一份報紙，早年用白話字（Pe̍h-ōe-jī）出版，現在還是每週發行。</p><div class="tg"><u>原網站</u><span>台灣教會公報社</span></div><div class="lk">${ex('https://tcnn.org.tw/','到公報網站')}</div></div>
-    <div class="pub rd" data-k="rd"><small>Tha̍k Bûn-tsiong Kài Tshù-bī</small><b>讀文章蓋趣味</b><p>教育部「咱來學臺灣台語」的讀本，短文附詞彙與文法，點藍字還能聽音檔。</p><div class="tg"><u>PDF 手冊</u><span>教育部</span></div><div class="lk">${ex('https://language.moe.gov.tw/upload/download/jts/04%E6%96%87%E7%AB%A01.pdf','第一冊')}${ex('https://language.moe.gov.tw/upload/download/jts/04%E6%96%87%E7%AB%A02.pdf','第二冊')}</div></div>
-   </div>
+   <section class="lib"><div class="lib-h"><h3 class="hd">台文通訊 BONG 報</h3><a href="#books/bong">全部期數 →</a></div>
+    <p class="lib-s">李江却台語文教基金會發行，全台文。電子書、文字版都能讀。</p>
+    <div class="shelf" id="bk-lib"></div></section>
+   <section class="lib"><div class="lib-h"><h3 class="hd">其他刊物與讀本</h3></div>
+    <p class="lib-s">這些在原發行單位的網站，點開是新分頁。</p>
+    <div class="shelf">
+     ${dc('https://tcnn.org.tw/','1885','台灣教會<br>公報','Tâi-oân Kàu-hōe Kong-pò',['台灣教會公報','原網站・台灣第一份報紙'],'linear-gradient(155deg,#6b5424,#241b0a)')}
+     ${dc(pdf(1),'教育部','讀文章<br>蓋趣味','第一冊',['讀文章蓋趣味 一','PDF・教育部'],'linear-gradient(155deg,#35407e,#10132b)')}
+     ${dc(pdf(2),'教育部','讀文章<br>蓋趣味','第二冊',['讀文章蓋趣味 二','PDF・教育部'],'linear-gradient(155deg,#2c6b60,#0c1f1b)')}
+    </div></section>
    <p class="bk-note">這裡只收能直接打開讀的刊物與讀本，點進去都是原發行單位的頁面，著作權屬各發行單位與作者。</p>`;
   }
   return `<div id="bk-rd" data-n="${m[1]}" data-i="${m[2]===undefined?-1:m[2]}" class="bk-rd" style="--bkfs:${bkFs()}px"><a class="back" href="#books/bong">← 書架</a><p class="sub">讀取中⋯⋯</p></div>`;
@@ -1474,7 +1492,10 @@ async function bkReader(){
   window.scrollTo(0,0);
 }
 async function bkCovers(){
-  const last=await bkLatest(),pc=document.getElementById('bk-pc'),bp=document.getElementById('bkp');
+  const last=await bkLatest(),pc=document.getElementById('bk-pc'),bp=document.getElementById('bkp'),lib=document.getElementById('bk-lib'),res=document.getElementById('bk-res'),sv=bkSaved();
+  if(res&&sv&&sv.n)res.innerHTML=`<a class="bk-cont" href="#books/${sv.n}/${sv.i}"><span>繼續讀</span><b>第 ${sv.n} 期${sv.t?'・'+esc(sv.t):''}</b></a>`;
+  if(lib){lib.innerHTML=[0,1,2,3,4,5].map(k=>{const n=last-k;return `<a class="bk-c" href="#books/${n}" data-n="${n}"><div class="bk-cv"><i>${n}</i></div><i class="lg"></i><b>第 ${n} 期</b><small>&nbsp;</small></a>`}).join('')+`<a class="bk-c mo" href="#books/bong"><div class="bk-cv">全部期數</div><i class="lg"></i><b>看更早的</b><small>&nbsp;</small></a>`;
+   [0,1,2,3,4,5].forEach(k=>bkMeta(last-k).then(mt=>{const a=lib.querySelector(`[data-n="${last-k}"]`);if(!a)return;if(mt.cover)a.querySelector('.bk-cv').innerHTML=`<img src="${mt.cover}" alt="" referrerpolicy="no-referrer" onerror="this.remove()"><i>${last-k}</i>`;a.querySelector('small').textContent=mt.when||''}))}
   [last,last-1,last-2].forEach((n,k)=>bkMeta(n).then(mt=>{if(!mt.cover)return;if(k===0&&pc&&document.contains(pc))pc.innerHTML=`<img src="${mt.cover}" alt="" referrerpolicy="no-referrer" onerror="this.remove()">`;const i=bp&&document.contains(bp)&&bp.children[k];if(i){i.querySelector('em').textContent=n;i.insertAdjacentHTML('afterbegin',`<img src="${mt.cover}" alt="" referrerpolicy="no-referrer" onerror="this.remove()">`)}}))
 }
 const bkIn=()=>{BK.fade=0;const r=document.getElementById('bk-rd');if(r){delete r.dataset.out;r.dataset.in=1;setTimeout(()=>{delete r.dataset.in},900)}};
