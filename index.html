@@ -396,6 +396,11 @@ html[data-theme=dark] .lg{background:linear-gradient(180deg,#3a3632,#0e0c0a 70%)
 .dc .v{font-family:GenRyu,"Noto Serif TC",serif;font-weight:700;font-size:clamp(19px,2.1vw,23px);line-height:1.45;letter-spacing:.12em;position:relative;text-indent:.12em}
 .dc .r{font:10px/1.3 "GenRyu Lat","Noto Sans TC",sans-serif;letter-spacing:.04em;opacity:.7;position:relative}
 .bk-c.mo .bk-cv{background:none;border:1.5px dashed var(--line);box-shadow:none;display:grid;place-items:center;font-size:15px;color:var(--ink2)}
+.lib-rd{position:fixed;inset:0;z-index:30;display:flex;flex-direction:column;background:var(--paper,#fbf8f3);color:var(--ink)}
+.lib-bar{display:flex;align-items:center;gap:12px;padding:10px 20px;border-bottom:1px solid var(--line)}.lib-bar b{flex:1;min-width:0;font-family:var(--serif);font-size:18px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.lib-bar b small{margin-left:10px;font-size:13px;font-weight:400;color:var(--ink2)}.lib-bar span{display:flex;gap:8px}.lib-bar .btn{font-size:14px;padding:6px 14px;text-decoration:none}
+.lib-fr{flex:1;min-height:0;position:relative}.lib-fr iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#fff}
+.lib-tip{margin:0;padding:8px 20px;font-size:13px;color:var(--ink2);border-top:1px solid var(--line)}
+@media(min-width:800px){.lib-fr{transition:margin-right .5s cubic-bezier(.45,.05,.2,1)}body.mini-on .lib-fr{margin-right:420px}}
 .pub[hidden]{display:none}
 .pub small{font:12.5px "GenRyu Lat","Noto Sans TC",sans-serif;letter-spacing:.14em;opacity:.7}.pub b{font-family:GenRyu,"Noto Serif TC",serif;font-weight:700;font-size:26px;letter-spacing:.04em;line-height:1.25}
 .pub p{margin:2px 0 0;font-size:14.5px;line-height:1.7;opacity:.84;flex:1}
@@ -1278,6 +1283,11 @@ const LB={
  tg1:{t:'讀文章蓋趣味 一',n:38*2,fs:'第一冊',pdf:1,secs:[['臺灣好',[['平溪放天燈',6],['矮靈祭——苗栗縣賽夏族重要的祭典',8],['鹿港八郊',10],['臺南縣北門鄉南鯤鯓的王爺祭',12],['臺灣第一个現代化的糖廠——橋仔頭糖廠',14],['茂林的Rukai 族佮烏秫米祭',16],['Truku（太魯閣）——花蓮的美景佮原住民族群',18]]],['臺灣好食物',[['新竹風佮新竹米粉',22],['佮竹仔無關係的竹塹餅',24],['覆菜——苗栗的名產',26],['新港飴按怎來',28],['臺南的度小月擔仔麵',30],['萬巒豬跤行遍全臺灣',32],['臺東池上便當——深深數念的古早味',34],['金門貢糖——予你袂假得',36]]],['臺灣人情味',[['千算萬算，毋值天一劃',40],['踢銅管仔',42],['遠足',44]]],['臺灣文史古',[['雲林口湖牽水',48],['馬偕牧師來臺灣宣教',50],['馬偕牧師的醫療傳教',52],['嘉南大圳之父——八田與一',54]]],['臺灣心適代',[['生查埔佮生查某',58],['世界一的臺灣Hinoki',60],['新族群',62],['魚仔話之一',64],['山球',66],['澎湖的大自然',68],['竹仔開花',70],['咱的大自然環境',72]]]]},
  tg2:{t:'讀文章蓋趣味 二',n:72,fs:'第二冊',pdf:2,secs:[['臺灣好',[['燦光寮山',6],['基隆的中元祭',8],['臺北草山的坪頂古圳',10],['新埔紅柿若出頭',12],['磺溪書院建築的古早味',14],['臺中縣白冷圳的本土味',16],['雙十吊橋搖啊搖',18],['嘉義交趾仔',20],['鹽水放蜂仔炮——世界獨一無二',22],['半屏山，真好看',24],['屏東九如的三山國王廟',26],['宜蘭頭城搶孤',28],['新的舊厝——澎湖二崁村的故事',30]]],['臺灣人情味',[['豬公無相請，嫁查某囝貺大餅',34],['阿母的老款',36],['掠蝦仔',38],['罣礙',40],['麥片摻咖啡',42]]],['臺灣文史古',[['阿姑轉外家',46],['語言內底的鱟',48],['貓仔話',50],['對牛墟到籃仔籗會',52],['澎湖臺灣味',54],['寒人會當變啥',56],['鹼仔水佮鹼仔粿',58]]],['臺灣心適代',[['怪縒的蟲豸',62],['做生理',64],['糞埽',66],['狗蟻怨的哀怨古',68]]]]}};
 LB.tg1.n=76;
+const LIBB=[{id:'196959',t:'日子',sub:'台語曆日仔詩',a:'陳胤',p:'前衛出版社',bg:'linear-gradient(155deg,#2c5f6b,#0b1d22)'}];
+const libView=id=>{const b=LIBB.find(x=>x.id===id)||{id,t:'圖書館電子書',sub:''};
+  return `<div id="lib-rd" class="lib-rd"><div class="lib-bar"><a class="back" href="#books">← 書架</a><b>${esc(b.t)}${b.sub?'<small>'+esc(b.sub)+'</small>':''}</b><span><a class="btn" href="https://reading.udn.com/udnlib/taich/B/${id}" target="_blank" rel="noopener">借閱頁</a><a class="btn" href="https://reading.udn.com/onlineViewer/2BpdfViewer/${id}" target="_blank" rel="noopener">新分頁開</a></span></div>
+   <div class="lib-fr"><iframe src="https://reading.udn.com/onlineViewer/2BpdfViewer/${id}" title="${esc(b.t)}" allow="fullscreen" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
+   <p class="lib-tip">要先在 udn 讀書館用自己的臺中市立圖書館帳號借閱這本書。如果這裡是空白或要求登入，請按「新分頁開」，登入後再回來。右下角的放大鏡可以查辭典。</p></div>`};
 const bkSvL=sv=>LB[sv.n]?esc(LB[sv.n].t)+(sv.t?'・'+esc(sv.t):''):`第 ${sv.n} 期${sv.t?'・'+esc(sv.t):''}`;
 function lbIssue(id){
   const B=LB[id];if(B._is)return B._is;
@@ -1435,6 +1445,7 @@ const bkSave=o=>{try{localStorage.setItem('tgbk',JSON.stringify(o))}catch(e){}};
 const bkFs=()=>{try{return +localStorage.getItem('tgbkfs')||18}catch(e){return 18}};
 const bkCredit=(n,u)=>`<p class="bk-cr">本文出自《台文通訊BONG報》第 ${n} 期，著作權屬李江却台語文教基金會與作者。${u?`<a href="${u}" target="_blank" rel="noopener">到原網站看這篇</a>`:''}　<a href="https://tsbp.tgb.org.tw/p/bong_31.html" target="_blank" rel="noopener">贊助刊物</a></p>`;
 function pBooks(r){
+  const lm=/^books\/lib\/(\d+)$/.exec(r);if(lm)return libView(lm[1]);
   const m=/^books\/(\d+|tg\d+)(?:\/(\d+|b))?$/.exec(r);
   if(r==='books/bong')return `<a class="back" href="#books">← 台語冊房</a>
    <div class="bk-h"><h2 class="hd">台文通訊 BONG 報</h2><span class="sub tl">Tâi-bûn Thong-sùn BONG Pò</span></div>
@@ -1452,6 +1463,9 @@ function pBooks(r){
    <section class="lib"><div class="lib-h"><h3 class="hd">讀文章蓋趣味</h3></div>
     <p class="lib-s">教育部「咱來學臺灣台語」系列的讀本，短文附詞彙與文法。</p>
     <div class="shelf">${['tg1','tg2'].map(k=>`<a class="bk-c" href="#books/${k}"><div class="bk-cv"><img src="books/${k}/th.webp" alt="" loading="lazy"></div><i class="lg"></i><b>${LB[k].t}</b><small>教育部・${LB[k].fs}</small></a>`).join('')}</div></section>
+   <section class="lib"><div class="lib-h"><h3 class="hd">臺中市立圖書館電子書</h3></div>
+    <p class="lib-s">要用自己的借書證先借閱。借到之後，點封面就能在這裡讀，也能用放大鏡查辭典。</p>
+    <div class="shelf">${LIBB.map(b=>`<a class="bk-c" href="#books/lib/${b.id}"><div class="bk-cv dc" style="background:${b.bg}"><span class="y">圖書館</span><span class="v">${esc(b.t)}</span><span class="r">${esc(b.sub)}</span></div><i class="lg"></i><b>${esc(b.t)}・${esc(b.sub)}</b><small>${esc(b.a)}・${esc(b.p)}</small></a>`).join('')}</div></section>
    <p class="bk-note">BONG 報是打開時才從原網站即時讀取，這裡不複製也不存放，著作權屬李江却台語文教基金會與作者。《讀文章蓋趣味》是教育部公開提供的教材，這裡把原本的 PDF（<a href="https://language.moe.gov.tw/upload/download/jts/04%E6%96%87%E7%AB%A01.pdf" target="_blank" rel="noopener">第一冊</a>、<a href="https://language.moe.gov.tw/upload/download/jts/04%E6%96%87%E7%AB%A02.pdf" target="_blank" rel="noopener">第二冊</a>）拆成單頁方便翻閱，著作權屬教育部與作者；課文的音檔請到原 PDF 點藍字聆聽。</p>`;
   }
   return `<div id="bk-rd" data-n="${m[1]}" data-i="${m[2]===undefined?-1:m[2]}" class="bk-rd" style="--bkfs:${bkFs()}px"><a class="back" href="#books/bong">← 書架</a><p class="sub">讀取中⋯⋯</p></div>`;
