@@ -8,7 +8,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-title" content="街仔路">
-<meta name="build" content="a8b07116bb">
+<meta name="build" content="529258e21a">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="mobile-web-app-capable" content="yes">
@@ -264,6 +264,9 @@ body.anime .back{color:#b9ab9b}body.anime .sub{color:#b9ab9b}
 @media(hover:none){.pt:hover{transform:none}}
 .achw .achips{padding:2px 0 8px;margin-bottom:-6px}
 @media(hover:none) and (pointer:coarse){html,body{scrollbar-width:none}html::-webkit-scrollbar,body::-webkit-scrollbar{display:none;width:0;height:0}}
+#upd{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:#f4e8d6;color:#3a2f26;font-size:18px;font-weight:700;letter-spacing:.08em;opacity:0;transition:opacity .25s;pointer-events:all}
+html[data-theme=dark] #upd{background:#14110f;color:#f1e9dd}
+#upd.on{opacity:1}
 .rowh{display:flex;align-items:center;gap:8px;margin:22px 0 8px}.rowh h3{margin:0;font-size:19px}.rowh small{color:#9c8e80}
 .rowh .arr{margin-left:auto;display:flex;gap:6px}
 .arr button{width:32px;height:32px;border-radius:50%;border:0;background:#2c2622;color:#f1e9dd;cursor:pointer;font-size:16px}
@@ -2668,23 +2671,21 @@ if(window.__tgReady)window.__tgReady();
   window.addEventListener('hashchange',close);
 })();
 
-// ---- 啟動時檢查有沒有新版：有就自動重新載入一次（主畫面 App 常會留著舊版）----
+// ---- 打開時檢查有沒有新版：只在剛打開的幾秒內檢查，有新版就顯示「更新中…」並重新載入一次（使用中不會被打斷）----
 (function(){
   const mine=(document.querySelector('meta[name=build]')||{}).content;
   if(!mine||mine==='__BUILD__'||!/^https?:/.test(location.protocol))return;
-  let last=0;
-  const check=()=>{
-    const now=Date.now();if(now-last<60000)return;last=now;
-    fetch(location.pathname+'?chk='+now,{cache:'no-store'}).then(r=>r.ok?r.text():'').then(h=>{
-      const m=/<meta name="build" content="([^"]+)"/.exec(h);if(!m||m[1]===mine)return;
-      let tried='';try{tried=sessionStorage.getItem('tg-reloaded')||''}catch(e){}
-      if(tried===m[1])return;                       // 同一版只重新載入一次，避免卡在快取時一直重載
-      try{sessionStorage.setItem('tg-reloaded',m[1])}catch(e){}
-      location.reload();
-    }).catch(()=>{});
-  };
-  setTimeout(check,1500);
-  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')check()});
+  const ac=new AbortController(),to=setTimeout(()=>ac.abort(),6000);
+  fetch(location.pathname+'?chk='+Date.now(),{cache:'no-store',signal:ac.signal}).then(r=>r.ok?r.text():'').then(h=>{
+    clearTimeout(to);
+    const m=/<meta name="build" content="([^"]+)"/.exec(h);if(!m||m[1]===mine)return;
+    let tried='';try{tried=sessionStorage.getItem('tg-reloaded')||''}catch(e){}
+    if(tried===m[1])return;                       // 同一版只重新載入一次，避免卡在快取時一直重載
+    try{sessionStorage.setItem('tg-reloaded',m[1])}catch(e){}
+    const d=document.createElement('div');d.id='upd';d.setAttribute('role','status');d.textContent='更新中…';
+    document.body.appendChild(d);requestAnimationFrame(()=>d.classList.add('on'));
+    setTimeout(()=>location.reload(),350);
+  }).catch(()=>{});
 })();
 </script>
 </body>
