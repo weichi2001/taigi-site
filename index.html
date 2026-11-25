@@ -134,6 +134,25 @@ details{margin-top:8px}summary{cursor:pointer;font-size:14px;color:var(--ink2)}
 details ol{margin:6px 0 0;padding-left:20px;font-size:14px}
 body[data-r=home] footer{display:none}
 footer{margin-top:30px;font-size:12px;color:var(--ink2);border-top:1px solid var(--line);padding-top:12px}
+/* ---- 問題回報 ---- */
+#rp{position:fixed;inset:0;z-index:400;display:flex;align-items:center;justify-content:center;padding:20px}
+#rp[hidden]{display:none}
+.rp-bg{position:absolute;inset:0;background:rgba(20,16,10,.42);backdrop-filter:blur(3px)}
+.rp-box{position:relative;width:100%;max-width:460px;max-height:92vh;overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:34px 34px 28px;box-shadow:0 24px 60px rgba(0,0,0,.22)}
+.rp-x{position:absolute;right:14px;top:10px;width:34px;height:34px;border:0;background:none;font-size:24px;line-height:1;color:var(--ink2);cursor:pointer}
+.rp-k{display:block;font-size:12.5px;letter-spacing:.24em;color:var(--gd)}
+.rp-box h3{margin:8px 0 8px;font-family:var(--serif);font-size:22px;color:var(--ink)}
+.rp-d{margin:0 0 20px;font-size:14px;line-height:1.8;color:var(--ink2)}
+.rp-box label{display:block;margin-bottom:14px;font-size:13px;color:var(--ink2)}
+.rp-box select,.rp-box textarea,.rp-box input[type=text]{display:block;width:100%;margin-top:6px;padding:10px 12px;font:inherit;font-size:15px;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:10px;box-sizing:border-box}
+.rp-box textarea{resize:vertical;line-height:1.7}
+.rp-box select:focus,.rp-box textarea:focus,.rp-box input:focus{outline:none;border-color:var(--gd)}
+.rp-a{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:6px}
+.rp-m{font-size:13px;color:var(--ink2)}
+.rp-ok{text-align:center;padding:26px 0 6px}.rp-ok[hidden]{display:none}
+.rp-ok p{margin:0 0 20px;font-size:14px;color:var(--ink2)}
+@media(max-width:480px){.top .logo .lp{display:none}}
+@media(max-width:520px){.rp-box{padding:30px 22px 22px}}
 #toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:9px 16px;border-radius:99px;font-size:14px;opacity:0;pointer-events:none;transition:.25s;z-index:20;max-width:90vw}
 #toast.on{opacity:1;transform:translateX(-50%)}
 .empty{text-align:center;color:var(--ink2);padding:30px 0}
@@ -1085,11 +1104,23 @@ html[data-theme=dark] body .top .in{background:linear-gradient(180deg,rgba(255,2
 <div class="top"><div class="in">
   <a class="logo hd" href="#home">街仔<b>路</b><span class="lp">Ke-á-<b>lōo</b></span></a>
   <div class="tools">
+    <button class="tool" id="rpBtn" type="button" data-act="report" style="font:inherit;cursor:pointer">問題回報</button>
     <a class="tool" href="#about">關於</a>
   </div>
     <button class="tool" id="themeBtn" type="button" aria-label="切換深色模式" title="切換深色／淺色" style="font:inherit;font-size:15px;cursor:pointer;flex:none"></button>
 </div></div>
 <main class="wrap" id="app"></main>
+<div id="rp" hidden><div class="rp-bg" data-act="rpclose"></div><form class="rp-box" id="rpForm" role="dialog" aria-modal="true" aria-labelledby="rpT" novalidate>
+ <button type="button" class="rp-x" data-act="rpclose" aria-label="關閉">×</button>
+ <div class="rp-main"><small class="rp-k">問題回報</small><h3 id="rpT">哪裡怪怪的？跟老師說</h3>
+ <p class="rp-d">字寫錯、音檔不對、按鈕壞掉，或是想要什麼功能，都可以寫在這裡，老師會收到</p>
+ <label>類型<select name="類型"><option>資料有誤（字、拼音、音檔）</option><option>功能有問題</option><option>想要的功能或建議</option><option>其他</option></select></label>
+ <label>內容<textarea name="內容" rows="5" required placeholder="發生了什麼事？在哪一頁、哪個字或哪個按鈕，寫得越清楚越好"></textarea></label>
+ <label>你是誰（選填）<input name="稱呼" type="text" maxlength="40" placeholder="班級、座號或名字，方便老師回覆你"></label>
+ <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
+ <div class="rp-a"><span class="rp-m" id="rpMsg" role="status"></span><button type="submit" class="btn pri" id="rpGo">送出</button></div></div>
+ <div class="rp-ok" hidden><h3>已經送出了</h3><p>謝謝你，老師看到之後會處理</p><button type="button" class="btn" data-act="rpclose">關閉</button></div>
+</form></div>
 <div id="toast"></div>
 <button id="fab" aria-label="查辭典" title="查辭典"><svg class="si" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg></button>
 <section id="mini" hidden aria-label="查辭典">
@@ -2162,6 +2193,23 @@ window.addEventListener('hashchange',()=>{enter(cur());pageGo(()=>render(false))
 
 // ---- 互動 ----
 let tt;
+// ---- 問題回報：用 Web3Forms 把表單寄到老師信箱（金鑰是公開用的，不含信箱） ----
+const RP_KEY='16b721bd-41fb-4860-a2d3-0bf25678e640';
+function rpOpen(){const r=$('#rp');r.hidden=false;$('#rpForm .rp-main').hidden=false;$('#rpForm .rp-ok').hidden=true;$('#rpMsg').textContent='';setTimeout(()=>{const t=$('#rpForm textarea');t&&t.focus()},30)}
+function rpClose(){$('#rp').hidden=true}
+document.addEventListener('click',e=>{const a=e.target.closest('[data-act=report],[data-act=rpclose]');if(!a)return;e.preventDefault();a.dataset.act==='report'?rpOpen():rpClose()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#rp').hidden)rpClose()});
+document.addEventListener('submit',async e=>{if(e.target.id!=='rpForm')return;e.preventDefault();
+ const f=e.target,m=$('#rpMsg'),b=$('#rpGo'),v=f.elements['內容'].value.trim();
+ if(!v){m.textContent='請先寫一下內容';f.elements['內容'].focus();return}
+ if(f.elements['_honey'].value)return;
+ b.disabled=true;m.textContent='送出中…';
+ const body={access_key:RP_KEY,subject:'【街仔路】問題回報：'+f.elements['類型'].value,from_name:'街仔路',name:f.elements['稱呼'].value.trim()||'（沒填）',類型:f.elements['類型'].value,內容:v,頁面:location.href,裝置:navigator.userAgent};
+ try{const r=await fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(body)});const j=await r.json().catch(()=>({}));
+  if(!r.ok||j.success!==true)throw 0;
+  f.reset();f.querySelector('.rp-main').hidden=true;f.querySelector('.rp-ok').hidden=false;
+ }catch(x){m.textContent='沒有送出去，請稍後再試，或直接告訴老師'}
+ b.disabled=false});
 function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),2400)}
 const segNow=()=>{const m=/^seg(\d+)$/.exec(cur());return m?+m[1]:0};
 $('#app').addEventListener('input',e=>{
