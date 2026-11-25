@@ -1154,7 +1154,7 @@ html[data-theme=dark] body .top .in{background:linear-gradient(180deg,rgba(255,2
 #fab{bottom:calc(18px + env(safe-area-inset-bottom,0px))}
 #toast,#eb-fb{bottom:calc(24px + env(safe-area-inset-bottom,0px))}
 .ktvw{padding-top:env(safe-area-inset-top,0px);box-sizing:border-box}
-@media(display-mode:standalone) and (max-width:860px){.ktvw{padding-top:calc(30px + env(safe-area-inset-top,0px));background:#121212}html:has(body[data-r=ktv]),body[data-r=ktv]{background:#121212}}
+@media(display-mode:standalone) and (max-width:860px){.ktvw{padding-top:calc(14px + env(safe-area-inset-top,0px));background:#121212}html:has(body[data-r=ktv]),body[data-r=ktv]{background:#121212}}
 html.ktvAbs,html.ktvAbs body{height:var(--ktvh)}html.ktvAbs .ktvw{position:absolute;inset:auto;top:0;left:0;width:100%;height:var(--ktvh)}
 
 #mini .mgrip{display:none}
@@ -2230,7 +2230,7 @@ function enter(r){
 }
 function pKtv(){
   setTimeout(()=>{const f=document.getElementById('ktvF');if(f){const w=f.parentNode,ok=()=>w.classList.add('ok'),fit=()=>{const H=document.documentElement;if(document.body.dataset.r!=='ktv'){H.classList.remove('ktvAbs');return}try{if(navigator.standalone||matchMedia('(display-mode:standalone)').matches){const sh=innerWidth>innerHeight?Math.min(screen.width,screen.height):Math.max(screen.width,screen.height);H.style.setProperty('--ktvh',sh+'px');H.classList.add('ktvAbs')}const p=document.createElement('div');p.style.cssText='position:fixed;left:0;bottom:0;width:0;height:env(safe-area-inset-bottom,0px);visibility:hidden';document.body.appendChild(p);const sab=p.offsetHeight;p.remove();f.contentWindow.postMessage({ktvInsets:{bottom:sab}},'*')}catch(e){}};addEventListener('hashchange',fit);fit();[300,1000,2500].forEach(t=>setTimeout(fit,t));addEventListener('resize',fit);addEventListener('orientationchange',fit);f.addEventListener('load',()=>{try{f.focus()}catch(e){};fit();setTimeout(fit,500);setTimeout(ok,250)});setTimeout(ok,6000)}},0);
-  return `<div class="ktvw"><div class="ktvl"><div style="text-align:center"><div class="sp-logo">街仔<b>路</b></div><i class="sp-bar"></i></div></div><iframe id="ktvF" class="ktvf" src="https://weichi2001.github.io/taigi-ktv/?student&v=20261125k" title="台語歌廳" allow="autoplay; fullscreen; encrypted-media; picture-in-picture; clipboard-write; display-capture" allowfullscreen></iframe></div>`;
+  return `<div class="ktvw"><div class="ktvl"><div style="text-align:center"><div class="sp-logo">街仔<b>路</b></div><i class="sp-bar"></i></div></div><iframe id="ktvF" class="ktvf" src="https://weichi2001.github.io/taigi-ktv/?student&v=20261125m" title="台語歌廳" allow="autoplay; fullscreen; encrypted-media; picture-in-picture; clipboard-write; display-capture" allowfullscreen></iframe></div>`;
 }
 function view(r){
   if(r==='dictwin')return '';
