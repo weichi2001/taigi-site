@@ -6,6 +6,7 @@
 <meta name="theme-color" content="#f4e8d6">
 <script>(function(){try{var t=localStorage.getItem('tgtheme');if(t!=='dark'&&t!=='light')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.dataset.theme=t;document.querySelector('meta[name=theme-color]').content=t==='dark'?'#14110f':'#f4e8d6'}catch(e){}})()</script>
 <title>街仔路</title>
+<noscript><style>#splash{display:none}</style></noscript>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Huninn&display=swap" rel="stylesheet">
@@ -14,7 +15,21 @@
 <style>@font-face{font-family:"Huninn";src:url(fonts/huninn.woff2) format("woff2");font-weight:400 900;font-display:swap}
 @font-face{font-family:"GenRyu";src:url(fonts/gr-disp.woff2) format("woff2");font-weight:100 900;font-display:swap}
 @font-face{font-family:"GenRyu Lat";src:url(fonts/gr-lat.woff2) format("woff2");font-weight:100 500;font-display:swap}
-@font-face{font-family:"GenRyu Lat";src:url(fonts/gr-lat-b.woff2) format("woff2");font-weight:600 900;font-display:swap}</style>
+@font-face{font-family:"GenRyu Lat";src:url(fonts/gr-lat-b.woff2) format("woff2");font-weight:600 900;font-display:swap}
+#splash{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:var(--paper,#f7f0e2);transition:opacity .5s ease,visibility .5s}
+#splash .sp-in{text-align:center}
+#splash .sp-logo{font-family:"GenRyu","Noto Serif TC",serif;font-weight:700;font-size:46px;letter-spacing:.04em;color:var(--ink,#615045);animation:spPulse 1.4s ease-in-out infinite}
+#splash .sp-logo b{color:var(--accent,#e24403);font-weight:700}
+#splash small{display:block;margin-top:8px;font-family:"GenRyu Lat","Noto Serif TC",serif;font-size:14px;letter-spacing:.3em;color:var(--ink2,#7a6a5e);opacity:.75}
+#splash .sp-bar{display:block;width:120px;height:2px;margin:24px auto 0;border-radius:2px;background:var(--line,#e4d8c3);position:relative;overflow:hidden}
+#splash .sp-bar::after{content:"";position:absolute;inset:0;background:var(--accent,#e24403);transform:translateX(-100%);animation:spBar 1.2s ease-in-out infinite}
+@keyframes spPulse{0%,100%{opacity:.55;transform:scale(.98)}50%{opacity:1;transform:scale(1.03)}}
+@keyframes spBar{100%{transform:translateX(100%)}}
+@keyframes spIn{from{opacity:0}}
+html.sp-out #splash{opacity:0;visibility:hidden;pointer-events:none}
+html.sp-out #app,html.sp-out .top{animation:spIn .6s ease both}
+@media(prefers-reduced-motion:reduce){#splash,#splash .sp-logo,#splash .sp-bar::after,html.sp-out #app,html.sp-out .top{animation:none!important;transition:none!important}}
+</style>
 <link href="https://fonts.googleapis.com/css2?family=Andika:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{--ink:#615045;--ink2:#7a6a5e;--paper:#f7f0e2;--card:#fffaf0;--line:#e4d8c3;--accent:#e24403;--ok:#4f8a3a;--okbg:#e9f2e1;--badbg:#fbe8de}
@@ -1121,6 +1136,13 @@ html[data-theme=dark] body .top .in{background:linear-gradient(180deg,rgba(255,2
 </style>
 </head>
 <body>
+<div id="splash" aria-hidden="true"><div class="sp-in"><div class="sp-logo">街仔<b>路</b></div><small>Ke-á-lōo</small><i class="sp-bar"></i></div></div>
+<script>(function(){var t0=Date.now(),sp=document.getElementById('splash'),ready=false,fonts=false,done=false,min=location.hash==='#dictwin'?0:650;
+function fin(){if(done)return;done=true;document.documentElement.classList.add('sp-out');setTimeout(function(){if(sp&&sp.parentNode)sp.parentNode.removeChild(sp)},600)}
+function chk(){if(ready&&fonts)setTimeout(fin,Math.max(0,min-(Date.now()-t0)))}
+window.__tgReady=function(){ready=true;chk()};
+if(document.fonts&&document.fonts.load){var T='街仔路台語學習abc',F=['700 28px "GenRyu"','400 16px "Huninn"','700 28px "GenRyu Lat"'];Promise.all(F.map(function(f){return document.fonts.load(f,T)})).then(function(){fonts=true;chk()},function(){fonts=true;chk()})}else{fonts=true}
+setTimeout(fin,4500)})()</script>
 <div class="top"><div class="in">
   <a class="logo hd" href="#home">街仔<b>路</b><span class="lp">Ke-á-<b>lōo</b></span></a>
   <div class="tools">
@@ -2489,6 +2511,7 @@ document.addEventListener('keydown',e=>{
 });
 
 enter(cur());render(false);
+if(window.__tgReady)window.__tgReady();
 })();
 
 // 第 8 聲符號 U+030D 在很多字型（含 Google Fonts 的 Andika 子集）會變豆腐，改用 CSS 畫
