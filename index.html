@@ -537,7 +537,9 @@ html[data-theme=dark] .mx i:not(.ok):not(.bad){background:rgba(255,255,255,.14)}
 .w7fc .hint{margin:6px 0 0;font-size:14px;letter-spacing:.1em;color:var(--ink2)}
 @keyframes w7fl{from{opacity:0;transform:perspective(900px) rotateX(-10deg) translateY(10px)}to{opacity:1;transform:none}}
 .w7sp2{text-align:center;margin:6px 0 0}
-.w7key{text-align:center;margin:22px 0 0;font-size:12.5px;letter-spacing:.12em;color:var(--ink2);opacity:.75}
+.w7key{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 30px;margin:22px 0 0;font-size:12.5px;letter-spacing:.12em;color:var(--ink2)}
+.w7key span{display:inline-flex;align-items:center;gap:8px}
+.w7key kbd{font:inherit;min-width:26px;padding:2px 9px;text-align:center;border:1px solid var(--line);border-bottom-width:2px;border-radius:7px;background:var(--card);color:var(--ink);letter-spacing:.04em}
 @media(hover:none){.w7key{display:none}}
 .w7res{padding:50px 10px 20px;text-align:center}
 .w7res small{display:block;font-family:"GenRyu Lat",Huninn,sans-serif;font-size:15px;letter-spacing:.22em;color:var(--gd)}
@@ -1153,7 +1155,7 @@ function flipHtml(){
       <button class="w7b pri" data-act="fmark" data-v="1">會了</button></div>
      <p class="w7sp2"><button class="w7lk" data-act="say" data-n="${o.n}">${SI.spk}<span>聽發音</span></button></p>`
      :`<p class="w7tap">點擊卡片即可翻面</p>`}
-   <p class="w7key">空白鍵　翻面　　←　還不熟　　→　會了</p>`;
+   <p class="w7key"><span><kbd>空白鍵</kbd>翻面</span><span><kbd>←</kbd>還不熟</span><span><kbd>→</kbd>會了</span></p>`;
 }
 
 // ---- 挑錯字 ----
@@ -1176,7 +1178,7 @@ function quizHtml(){
    <div class="w7op">${it.opts.map((p,i)=>`<button class="w7o ${done?(p.ok?'good':(z.pick===i?'wrong':'dim')):''}" data-act="pick" data-i="${i}" ${done?'disabled':''}><span class="tg">${done&&p.ok?'推薦用字':done&&z.pick===i?'檢定不可用':''}</span><b>${esc(p.t)}</b></button>`).join('')}</div>
    ${done?`<div class="w7fb ${okp?'ok':'no'}"><b>${okp?'答對了':'差一點'}</b><p>推薦用字是「${esc(o.w)}」，「${esc(it.wrong)}」是檢定不可用的寫法。</p>
       <div class="w7ac"><button class="w7b pri" data-act="qnext">${z.i+1>=z.q.length?'看結果':'下一題'}</button></div></div>`
-     :`<p class="w7key">1　2　或　←　→　選擇</p>`}`;
+     :`<p class="w7key"><span><kbd>1</kbd><kbd>2</kbd>或<kbd>←</kbd><kbd>→</kbd>選擇答案</span></p>`}`;
 }
 
 // ---- 頁面 ----
