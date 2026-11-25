@@ -165,6 +165,14 @@ html[data-theme=dark] .rp-bg{background:rgba(0,0,0,.6)}
 #eb-fb .fb-t b{display:block;font-weight:600}#eb-fb .fb-t small{display:block;margin-top:3px;font-size:12.5px;line-height:1.6;opacity:.75}#eb-fb .fb-a{display:flex;gap:8px;flex:none}
 #eb-fb a{color:#fff;background:var(--accent);padding:5px 14px;border-radius:99px;text-decoration:none;white-space:nowrap}
 #eb-fb button{border:0;background:none;color:#fff;font-size:20px;line-height:1;cursor:pointer;opacity:.7}
+/* ---- 台語歌廳（站內嵌入） ---- */
+body[data-r=ktv] .top,body[data-r=ktv] footer,body[data-r=ktv] #fab{display:none!important}
+body[data-r=ktv] .wrap{max-width:none;padding:0}
+.ktvw{position:fixed;inset:0;z-index:20;display:flex;flex-direction:column;background:var(--paper)}
+.ktvb{flex:none;display:flex;align-items:center;gap:14px;height:42px;padding:0 16px;background:var(--paper);border-bottom:1px solid var(--line);font-size:14px}
+.ktvb a{color:var(--ink2);text-decoration:none}.ktvb a:hover{color:var(--ink)}
+.ktvb b{font-weight:500;color:var(--ink)}
+.ktvf{flex:1;width:100%;border:0;background:#fff}
 #toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:9px 16px;border-radius:99px;font-size:14px;opacity:0;pointer-events:none;transition:.25s;z-index:20;max-width:90vw}
 #toast.on{opacity:1;transform:translateX(-50%)}
 .empty{text-align:center;color:var(--ink2);padding:30px 0}
@@ -249,7 +257,7 @@ body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;
 .ent:hover,.res:hover,.seg:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(150,95,50,.2),inset 0 1px 0 rgba(255,255,255,1)}
 .feat{border:1px solid rgba(255,255,255,.35)!important;border-radius:22px;backdrop-filter:blur(22px) saturate(1.8);-webkit-backdrop-filter:blur(22px) saturate(1.8);box-shadow:0 14px 36px rgba(60,40,25,.25),inset 0 1px 0 rgba(255,255,255,.45)}
 .feat:nth-of-type(1),a.feat[href="#anime"]{background:linear-gradient(135deg,rgba(44,36,32,.94),rgba(78,58,46,.88))!important}
-a.feat[href*="taigi-ktv"]{background:linear-gradient(135deg,rgba(58,30,66,.94),rgba(112,52,84,.88))!important}
+a.feat[href="#ktv"]{background:linear-gradient(135deg,rgba(58,30,66,.94),rgba(112,52,84,.88))!important}
 a.feat[href="#w700"]{background:linear-gradient(135deg,rgba(122,103,90,.92),rgba(98,80,69,.9))!important}
 
 .aic{box-shadow:0 6px 16px rgba(150,95,50,.22),inset 0 1px 0 rgba(255,255,255,.8)}
@@ -1189,7 +1197,7 @@ const plat=(/iPhone|iPad|iPod/.test(ua)||(/Macintosh/.test(ua)&&navigator.maxTou
 const RES=[
  {c:'s',t:'700 字自學',d:'教育部推薦用字，每字有台羅、華語、用例與常見錯寫，可翻卡自測。',tags:['讀','寫'],time:'每段約 10 分鐘',href:'#w700',inner:1},
  {c:'p',t:'挑錯字挑戰',d:'哪一個才是推薦用字？練習避開檢定不能用的寫法。',tags:['讀','寫'],time:'5 分鐘',href:'#quiz',inner:1},
- {c:'e',t:'台語歌廳 Tâi-gí Kua-thiann',d:'跟著字幕唱台語歌，歌詞用的都是正字。',tags:['聽','說','讀'],time:'一首歌',href:'https://weichi2001.github.io/taigi-ktv/?student',play:1},
+ {c:'e',t:'台語歌廳 Tâi-gí Kua-thiann',d:'跟著字幕唱台語歌，歌詞用的都是正字。',tags:['聽','說','讀'],time:'一首歌',href:'#ktv',play:1},
  {c:'e',t:'Spotify「台語歌」播放清單',d:'老師挑的台語歌，通勤、放學路上都能聽。',tags:['聽'],time:'隨時',href:'https://open.spotify.com/playlist/1FqTdaDvhYgQgENEJrQRix',play:1},
  {c:'e',t:'臺語歌真正正字歌詞網',d:'查歌詞的正確用字，網路上很多歌詞都是錯字。',tags:['讀'],time:'查詢',href:'https://taigilyrics.kiantiong.com/',play:1},
  {c:'o',t:'臺語歌真正正字歌詞網',d:'查歌詞的正確用字，網路上很多歌詞都是錯字。',tags:['讀'],time:'查詢',href:'https://taigilyrics.kiantiong.com/'},
@@ -1310,7 +1318,7 @@ function pHome(){
    </div>
    <div class="hsec g2 grid g2d">
     <a class="pst a" href="#anime"><div class="pv">${prv}</div><small>Tâi-gí Hì-tâi</small><b>台語戲台</b><span><u>動畫、電影、戲劇、節目，</u><u>邊看影片邊學習！</u></span></a>
-    <a class="pst b" href="https://weichi2001.github.io/taigi-ktv/?student"><div class="kv"><i class="on">${esc(pv1[0])}</i><em>${esc(pv1[1])}</em></div><small>Tâi-gí Ko-thiann</small><b>台語歌廳</b><span>正港台文正字的卡啦OK</span></a>
+    <a class="pst b" href="#ktv"><div class="kv"><i class="on">${esc(pv1[0])}</i><em>${esc(pv1[1])}</em></div><small>Tâi-gí Ko-thiann</small><b>台語歌廳</b><span>正港台文正字的卡啦OK</span></a>
     <a class="pst c" href="#books"><div class="bkp" id="bkp"><i><em></em></i><i><em></em></i><i><em></em></i><i><em></em></i><i><em></em></i><i><em></em></i><i><em></em></i></div><small>Tâi-gí Tsheh-pâng</small><b>台語冊房</b><span>繪本、小說、漫畫、雜誌等應有盡有</span></a>
    </div>
    <div class="hsec"><a class="hmore" href="#links"><span>其他推薦網站</span><i>→</i></a></div>`;
@@ -1357,7 +1365,7 @@ function pStart(){
       row('練習資源','把學過的內容反覆練習，練到熟悉為止','#learn'))}
     ${step(4,'創造沈浸式學習環境',
       row('台語戲台','動畫、電影、戲劇、節目，邊看影片邊學習！','#anime',{kick:'Tâi-gí Hì-tâi'})+
-      row('台語歌廳','正港台文正字的卡啦OK','https://weichi2001.github.io/taigi-ktv/?student',{kick:'Tâi-gí Ko-thiann'})+
+      row('台語歌廳','正港台文正字的卡啦OK','#ktv',{kick:'Tâi-gí Ko-thiann'})+
       row('台語冊房','繪本、小說、漫畫、雜誌等應有盡有','#books',{kick:'Tâi-gí Tsheh-pâng'}))}
    </div>
    <a class="w8ft" href="#apps"><span>需要工具嗎？來看看老師的「推薦工具」</span><i>→</i></a></div>`;
@@ -1378,7 +1386,7 @@ function pPlay(){
    <header class="w7sh"><div><h2 class="hd">娛樂學習</h2></div></header>
    <div class="w8"><div class="w8rows">
     ${w8row('台語戲台','動畫、電影、戲劇、節目，邊看影片邊學習！','#anime',{kick:'Tâi-gí Hì-tâi'})}
-    ${w8row('台語歌廳','正港台文正字的卡啦OK','https://weichi2001.github.io/taigi-ktv/?student',{kick:'Tâi-gí Ko-thiann'})}
+    ${w8row('台語歌廳','正港台文正字的卡啦OK','#ktv',{kick:'Tâi-gí Ko-thiann'})}
     ${w8row('台語冊房','繪本、小說、漫畫、雜誌等應有盡有','#books',{kick:'Tâi-gí Tsheh-pâng'})}
    </div></div></div>`;
 }
@@ -2169,6 +2177,10 @@ function enter(r){
   if(r==='review'){const b=D.filter(o=>get(o.n)==2);S.fl=b.length?{q:shuffle(b),i:0,side:0,dir:'h2w',ok:0,bad:0,src:b}:null}
   if(r==='quiz')S.qz=buildQuiz(D,10);
 }
+function pKtv(){
+  setTimeout(()=>{const f=document.getElementById('ktvF');if(f){f.addEventListener('load',()=>{try{f.focus()}catch(e){}})}},0);
+  return `<div class="ktvw"><div class="ktvb"><a href="#home">← 返回</a><b>台語歌廳</b></div><iframe id="ktvF" class="ktvf" src="https://weichi2001.github.io/taigi-ktv/?student" title="台語歌廳" allow="autoplay; fullscreen; encrypted-media; picture-in-picture; clipboard-write; display-capture" allowfullscreen></iframe></div>`;
+}
 function view(r){
   if(r==='dictwin')return '';
   if(r==='books'||r.startsWith('books/'))return pBooks(r);
@@ -2177,6 +2189,7 @@ function view(r){
   if(r==='learn')return pLearn();
   if(r==='play')return pPlay();
   if(r==='anime')return pAnime();
+  if(r==='ktv')return pKtv();
   if(r==='apps')return pApps();
   if(r==='links')return pLinks();
   if(r==='w700')return pW700();
