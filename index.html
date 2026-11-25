@@ -8,7 +8,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-title" content="街仔路">
-<meta name="build" content="4eb46b142f">
+<meta name="build" content="2c153cb2f2">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="mobile-web-app-capable" content="yes">
@@ -263,7 +263,7 @@ body.anime .back{color:#b9ab9b}body.anime .sub{color:#b9ab9b}
 .arr button{width:32px;height:32px;border-radius:50%;border:0;background:#2c2622;color:#f1e9dd;cursor:pointer;font-size:16px}
 .rowx{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x proximity;padding-bottom:8px;scrollbar-width:none}.rowx::-webkit-scrollbar{display:none}
 .pt{flex:none;width:138px;aspect-ratio:3/4;border-radius:12px;border:0;cursor:pointer;scroll-snap-align:start;position:relative;overflow:hidden;text-align:left;padding:10px;color:#fff;font:inherit;display:flex;flex-direction:column;justify-content:flex-end;background:linear-gradient(160deg,hsl(var(--h) 55% 38%),hsl(calc(var(--h) + 35) 50% 16%));transition:transform .15s}
-.pt:hover{transform:translateY(-3px) scale(1.02)}
+@media(hover:hover){.pt:hover{transform:translateY(-3px) scale(1.02)}}
 .pt b{font-size:16px;line-height:1.3;text-shadow:0 1px 6px rgba(0,0,0,.6)}
 .pt .bd{position:absolute;top:8px;left:8px;font-size:11px;background:#e24403;border-radius:4px;padding:0 6px}
 .pt .bd.pro{background:#7a4b00}.pt .st{position:absolute;top:6px;right:8px;font-size:15px}
@@ -284,7 +284,9 @@ body.anime .back{color:#b9ab9b}body.anime .sub{color:#b9ab9b}
 
 .pt{width:220px!important;aspect-ratio:16/10!important}
 @media(min-width:700px){.pt{width:260px!important}}
-.pt img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.pt img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;border-radius:inherit}
+.pt{isolation:isolate;-webkit-mask-image:-webkit-radial-gradient(white,black)}
+.pt img[src*="hqdefault"]{transform:scale(1.14)}   /* YouTube 的 hqdefault 上下有黑邊，放大一點切掉 */
 .pt::before{content:'';position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.82),rgba(0,0,0,.05) 62%);z-index:1}
 .pt>*:not(img){position:relative;z-index:2}.pt .bd,.pt .st{position:absolute!important}
 .hero .himg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:1}
