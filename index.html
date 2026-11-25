@@ -8,7 +8,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-title" content="街仔路">
-<meta name="build" content="eb0846feb2">
+<meta name="build" content="8d265e0330">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="mobile-web-app-capable" content="yes">
@@ -687,8 +687,8 @@ html[data-theme=dark] .mx i:not(.ok):not(.bad){background:rgba(255,255,255,.14)}
 .apx .sec:first-child{margin-top:0}
 .apx .sec i{font-style:normal;font-family:"GenRyu Lat",Huninn,sans-serif;font-size:14px;font-weight:400;letter-spacing:.2em;color:var(--gd)}
 .apx .sec::after{content:"";flex:1;height:1px;background:var(--line);transform:translateY(-4px)}
-.apx .apg{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
-.apx .apg>details[open]{grid-column:1/-1}
+.apx .apg{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;align-items:start}
+.apx .apg>details[open]{grid-column:1/-1}.apx .apg>details,.apx .ab .abb{min-width:0;max-width:100%}.apx .ab .abb{overflow:hidden}.shots{max-width:100%}
 .apx .ab.res.ap{margin:0;padding:0;border-radius:18px;border:1px solid var(--line);background:var(--card);box-shadow:none;transition:border-color .25s,box-shadow .3s}
 .apx .ab.res.ap.ime{margin:0}
 .apx .ab.res.ap:hover{border-color:color-mix(in srgb,var(--gd) 40%,var(--line))}
@@ -716,7 +716,7 @@ html[data-theme=dark] .mx i:not(.ok):not(.bad){background:rgba(255,255,255,.14)}
 .apx .tip{margin:14px 0 0;padding:2px 0 2px 14px;border-radius:0;border-left:2px solid var(--gd);background:none!important;color:var(--ink2);font-size:13.5px}
 .apx .plat{margin-top:14px}
 .apx .note{margin:18px 0 0;padding-top:14px;border-top:1px dashed var(--line)}
-@media(max-width:700px){.apx .apg{grid-template-columns:1fr}.apx .ab>summary{padding:16px 18px}.apx .ab .abb{margin:0 18px}.apx .sec{font-size:23px;margin-top:40px}}
+@media(max-width:700px){.apx .apg{grid-template-columns:minmax(0,1fr)}.apx .ab>summary{padding:16px 18px}.apx .ab .abb{margin:0 18px}.apx .sec{font-size:23px;margin-top:40px}}
 /* ---- 關於 ---- */
 .abx .abx-h{display:grid;grid-template-columns:320px 1fr;gap:80px;align-items:start;margin-top:48px}
 .abx .abx-l{position:sticky;top:96px}
