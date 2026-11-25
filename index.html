@@ -572,6 +572,7 @@ html[data-theme=dark] .mx i:not(.ok):not(.bad){background:rgba(255,255,255,.14)}
 .w7sh .hd.w8ti{color:var(--gd)}
 .w7sh:has(.w8ti){margin-top:36px}
 .w7sh:has(.w8ti)+.w8{margin-top:48px}
+.w8rows.w8l{grid-template-columns:1fr}
 .w8note{margin:26px 0 0;max-width:38em;font-size:14.5px;line-height:1.85;color:var(--ink2);letter-spacing:.04em}
 .w8{margin:22px 0 0}
 .w8s{position:relative;display:grid;grid-template-columns:38px 1fr;column-gap:22px;padding-bottom:38px;animation:w8in .7s cubic-bezier(.22,1,.36,1) both;animation-delay:calc(var(--i)*110ms)}
@@ -587,9 +588,9 @@ html[data-theme=dark] .mx i:not(.ok):not(.bad){background:rgba(255,255,255,.14)}
 .w8r .w8t{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
 .w8r .tx{min-width:0}
 .w8rows:has(>.w8r:nth-child(2):last-child){grid-template-columns:1fr 1fr}
-.w8s .w8r{grid-column:1/-1;display:grid;grid-template-columns:270px 1fr 22px;align-items:center;gap:6px 24px;min-height:0;padding:22px 26px}
-.w8s .w8r .w8t{display:contents}
-.w8s .w8r .tx{grid-column:1;grid-row:1}.w8s .w8r small{grid-column:2;grid-row:1/3}.w8s .w8r .w8p{grid-column:1;grid-row:2;margin:0;padding:0}.w8s .w8r .ar{grid-column:3;grid-row:1/3}
+.w8s .w8r,.w8l .w8r{grid-column:1/-1;display:grid;grid-template-columns:270px 1fr 22px;align-items:center;gap:6px 24px;min-height:0;padding:22px 26px}
+.w8s .w8r .w8t,.w8l .w8r .w8t{display:contents}
+.w8s .w8r .tx,.w8l .w8r .tx{grid-column:1;grid-row:1}.w8s .w8r small,.w8l .w8r small{grid-column:2;grid-row:1/3}.w8s .w8r .w8p,.w8l .w8r .w8p{grid-column:1;grid-row:2;margin:0;padding:0}.w8s .w8r .ar,.w8l .w8r .ar{grid-column:3;grid-row:1/3}
 .w8r .kk{display:block;margin-bottom:4px;font-family:"GenRyu Lat",Huninn,sans-serif;font-style:normal;font-size:12px;letter-spacing:.16em;color:var(--gd)}
 .w8r b{display:block;font-family:var(--serif);font-weight:700;font-size:20px;letter-spacing:.06em;line-height:1.4;transition:color .2s}
 .w8r .w8by{display:block;margin-top:10px;font-size:12px;letter-spacing:.1em;color:var(--ink2);opacity:.75}
@@ -602,7 +603,7 @@ html[data-theme=dark] .mx i:not(.ok):not(.bad){background:rgba(255,255,255,.14)}
 .w8ft{display:inline-flex;align-items:center;gap:10px;margin:30px 0 0 60px;padding:8px 0;color:var(--ink2);text-decoration:none;font-size:14.5px;letter-spacing:.08em;transition:color .2s}
 .w8ft i{font-style:normal;transition:transform .3s cubic-bezier(.22,1,.36,1)}.w8ft:hover{color:var(--accent)}.w8ft:hover i{transform:translateX(4px)}
 @keyframes w8in{from{opacity:0;transform:translateY(18px)}}
-@media(max-width:700px){.w8s .w8r{display:flex;flex-direction:column;align-items:stretch;gap:8px;padding:16px 18px 14px}.w8s .w8r .w8t{display:flex}.w8s .w8r .w8p{margin-top:auto;padding-top:6px}}
+@media(max-width:700px){.w8s .w8r,.w8l .w8r{display:flex;flex-direction:column;align-items:stretch;gap:8px;padding:16px 18px 14px}.w8s .w8r .w8t,.w8l .w8r .w8t{display:flex}.w8s .w8r .w8p,.w8l .w8r .w8p{margin-top:auto;padding-top:6px}}
 @media(max-width:560px){.w8rows,.w8rows:has(>.w8r:nth-child(2):last-child){grid-template-columns:1fr}.w8r{min-height:0;padding:16px 18px 14px}.w8s{grid-template-columns:34px 1fr;column-gap:14px}.w8h{height:34px}.w8n{width:34px;height:34px;font-size:14px}.w8s::before{left:17px;top:42px}.w8ft{margin-left:48px}}
 @media(prefers-reduced-motion:reduce){.w8s{animation:none}}
 @keyframes pgOut{to{opacity:0;transform:translateY(-8px)}}
@@ -1268,9 +1269,15 @@ function pStart(){
    <a class="w8ft" href="#apps"><span>需要工具嗎？來看看老師精選的「輸入法與軟體」</span><i>→</i></a></div>`;
 }
 function pLearn(){
-  return `<a class="back" href="#home">← 首頁</a><h2 class="hd">練習資源</h2>
-   ${RES.filter(r=>r.c==='p').map(resCard).join('')}
-   <a class="res" href="#review"><h3>700 字複習</h3><p>把標成「不熟」的字再翻一次。</p><div class="meta">隨時</div></a>`;
+  const tailo=RES.find(r=>r.t==='練台羅'),wr=RES.find(r=>r.t==='臺灣台語寫字練習簿');
+  return `<div class="w7"><a class="w7bk" href="#home">← 首頁</a>
+   <header class="w7sh"><div><h2 class="hd w8ti">練習資源</h2></div></header>
+   <div class="w8"><div class="w8rows w8l">
+    ${w8row('挑錯字挑戰','哪一個才是推薦用字？避開檢定不能用的寫法','#quiz')}
+    ${w8row(tailo.t,'聽音檔練拼寫、標聲調、打台羅，連變調也能練',tailo.href,{ext:1,kick:'設計者　Tân Kiàn-tiong'})}
+    ${w8row(wr.t,'線上練習寫台語字',wr.href,{ext:1})}
+    ${w8row('700 字複習','把標成「不熟」的字再翻一次','#review')}
+   </div></div></div>`;
 }
 function pPlay(){
   return `<div class="w7"><a class="w7bk" href="#home">← 首頁</a>
