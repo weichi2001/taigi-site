@@ -8,7 +8,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-title" content="街仔路">
-<meta name="build" content="8cc87d9bd7">
+<meta name="build" content="4eb46b142f">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="mobile-web-app-capable" content="yes">
@@ -241,6 +241,23 @@ body.anime .back{color:#b9ab9b}body.anime .sub{color:#b9ab9b}
 .ach{font:inherit;font-size:14px;color:#d8cdbd;background:#241f1b;border:1px solid #3a322c;border-radius:99px;padding:5px 14px;cursor:pointer}
 .achips{align-items:center}.asr{margin-left:auto;display:flex;align-items:center;gap:6px;background:#241f1b;border:1px solid #3a322c;border-radius:99px;padding:0 12px;height:32px;color:#b9ab9b;min-width:150px}.asr svg{width:15px;height:15px;flex:none}.asr input{all:unset;font-size:14px;color:#f1e9dd;width:100%;min-width:0}.asr input::placeholder{color:#8d8073}.asr:focus-within{border-color:#f1e9dd}.asr input:focus,.asr input:focus-visible{outline:none!important;box-shadow:none!important}.asr input::-webkit-search-cancel-button{display:none}@media(max-width:600px){.asr{flex:1 1 100%;margin-left:0}}
 .ach.on{background:#f1e9dd;color:#14110f;border-color:#f1e9dd}
+/* 戲台分類：同一排左右滑、不換行；搜尋獨立一行；手機上影片卡片放大 */
+.achw{display:flex;gap:8px 12px;align-items:center;margin:16px 0 4px}
+.achw .achips{flex:1 1 auto;min-width:0;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;margin:0}
+.achw .achips::-webkit-scrollbar{display:none}
+.achw .ach{flex:none;white-space:nowrap}
+.achw .asr{margin-left:0;flex:0 0 auto}
+@media(max-width:699px){
+ .achw{flex-direction:column;align-items:stretch;gap:10px}
+ .achw .ach{font-size:16px;padding:8px 18px}
+ .achw .asr{width:100%;box-sizing:border-box;height:42px;font-size:16px}
+ .achw .asr input{font-size:16px}
+}
+@media(max-width:559px){
+ .pt{width:78vw!important}
+ .rowx[style*="flex-wrap"] .pt{width:100%!important}
+ .pt b{font-size:20px}.pt small{font-size:14px}
+}
 .rowh{display:flex;align-items:center;gap:8px;margin:22px 0 8px}.rowh h3{margin:0;font-size:19px}.rowh small{color:#9c8e80}
 .rowh .arr{margin-left:auto;display:flex;gap:6px}
 .arr button{width:32px;height:32px;border-radius:50%;border:0;background:#2c2622;color:#f1e9dd;cursor:pointer;font-size:16px}
@@ -1764,7 +1781,7 @@ function pAnime(){
    <div class="hero" style="--h:${hue(pick.t)}">${pick.img||pick.pimg?heroImg(pick):''}<span class="kick">今日推薦</span><h2 class="hd">${esc(pick.t)}</h2>
      <p>${pick.lv?pick.lv+'・':''}${cat(pick)}</p>
      <div class="acts"><button class="abtn" data-act="asheet" data-i="${pi}">看這部</button></div></div>
-   <div class="achips">${chip('all','全部')}${CATS.map(c=>chip(c,c)).join('')}${chip('mine',`我的片單${mine.length?' ('+mine.length+')':''}`)}<label class="asr">${SI.search||''}<input id="aq" type="search" placeholder="搜尋作品" value="${esc(S.an.q||'')}" autocomplete="off" enterkeyhint="search"></label></div>
+   <div class="achw"><div class="achips">${chip('all','全部')}${chip('mine',`我的片單${mine.length?' ('+mine.length+')':''}`)}${CATS.map(c=>chip(c,c)).join('')}</div><label class="asr">${SI.search||''}<input id="aq" type="search" placeholder="搜尋作品" value="${esc(S.an.q||'')}" autocomplete="off" enterkeyhint="search"></label></div>
    <div id="anibody">${body}</div>${S.an.sheet!==null?aniSheet(ANI[S.an.sheet]):''}${S.an.view?aniView(S.an.view):''}${S.an.mv?mvView(S.an.mv):''}`;
 }
 
