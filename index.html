@@ -615,22 +615,23 @@ html[data-theme=dark] .mx i:not(.ok):not(.bad){background:rgba(255,255,255,.14)}
 .apx .note{margin:18px 0 0;padding-top:14px;border-top:1px dashed var(--line)}
 @media(max-width:700px){.apx .apg{grid-template-columns:1fr}.apx .ab>summary{padding:16px 18px}.apx .ab .abb{margin:0 18px}.apx .sec{font-size:23px;margin-top:40px}}
 /* ---- 關於 ---- */
-.abx .abx-h{display:grid;grid-template-columns:320px 1fr;gap:56px;align-items:start;margin-top:44px}
+.abx .abx-h{display:grid;grid-template-columns:320px 1fr;gap:80px;align-items:start;margin-top:48px}
+.abx .abx-l{position:sticky;top:96px}
 .abx .abx-ph{margin:0;border-radius:22px;overflow:hidden;line-height:0;background:var(--line);box-shadow:0 26px 50px -34px rgba(40,30,20,.5)}
 .abx .abx-ph img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover}
-.abx .abx-tx h3{margin:2px 0 0;font-family:var(--serif);font-weight:700;font-size:clamp(30px,4vw,38px);letter-spacing:.1em;line-height:1.2}
+.abx .abx-l .w8rows{margin-top:22px}
 .abx .abx-k{display:block;font-size:12.5px;letter-spacing:.3em;color:var(--gd)}
-.abx .abx-tx h3{margin-top:8px}
-.abx .abx-edu{display:flex;align-items:baseline;gap:14px;margin:0 0 26px;font-size:14.5px;letter-spacing:.08em;color:var(--ink2)}
+.abx .abx-tx h3{margin:12px 0 0;font-family:var(--serif);font-weight:700;font-size:clamp(30px,4vw,40px);letter-spacing:.12em;line-height:1.2}
+.abx .abx-role{margin:16px 0 10px;font-size:14.5px;letter-spacing:.1em;color:var(--gd)}
+.abx .abx-edu{display:flex;align-items:baseline;gap:14px;margin:0;font-size:14.5px;letter-spacing:.08em;color:var(--ink2)}
 .abx .abx-edu span{font-size:12.5px;letter-spacing:.24em;color:var(--gd)}
-.abx .abx-role{margin:10px 0 8px;font-size:14.5px;letter-spacing:.1em;color:var(--gd)}
-.abx .abx-tx>p.abx-lead{margin:0 0 20px;font-family:var(--serif);font-weight:700;font-size:20px;line-height:1.7;letter-spacing:.06em;color:var(--ink)}
-.abx .abx-tx>p:not(.abx-role):not(.abx-edu):not(.abx-lead){margin:0 0 14px;font-size:15.5px;line-height:2.05;color:var(--ink);max-width:36em}
-.abx .abx-tx .w8rows{margin-top:30px;max-width:420px}
-.abx .abx-src{margin-top:64px;padding-top:22px;border-top:1px solid var(--line)}
+.abx .abx-tx>p.abx-lead{margin:48px 0 34px;padding-top:34px;border-top:1px solid var(--line);font-family:var(--serif);font-weight:700;font-size:21px;line-height:1.8;letter-spacing:.08em;color:var(--ink)}
+.abx .abx-tx>p:not(.abx-role):not(.abx-edu):not(.abx-lead){margin:0 0 26px;font-size:16px;line-height:2.2;letter-spacing:.05em;color:var(--ink);text-align:justify;text-justify:inter-character;text-indent:2em;line-break:strict;hanging-punctuation:allow-end}
+.abx .abx-src{margin-top:80px;padding-top:24px;border-top:1px solid var(--line)}
 .abx .abx-src h4{margin:0 0 12px;font-size:12.5px;font-weight:400;letter-spacing:.24em;color:var(--gd)}
 .abx .abx-src ul{list-style:none;margin:0;padding:0;font-size:13px;line-height:2;color:var(--ink2)}
-@media(max-width:760px){.abx .abx-h{grid-template-columns:1fr;gap:28px;margin-top:32px}.abx .abx-ph{max-width:300px}.abx .abx-src{margin-top:48px}}
+@media(max-width:900px){.abx .abx-h{gap:48px}}
+@media(max-width:760px){.abx .abx-h{grid-template-columns:1fr;gap:30px;margin-top:32px}.abx .abx-l{display:contents}.abx .abx-ph{order:1;max-width:300px}.abx .abx-tx{order:2}.abx .abx-l .w8rows{order:3;margin-top:0}.abx .abx-tx>p.abx-lead{margin-top:36px;padding-top:28px}.abx .abx-tx>p:not(.abx-role):not(.abx-edu):not(.abx-lead){font-size:15.5px;line-height:2.1}.abx .abx-src{margin-top:56px}}
 .w8note{margin:26px 0 0;max-width:38em;font-size:14.5px;line-height:1.85;color:var(--ink2);letter-spacing:.04em}
 .w8{margin:22px 0 0}
 .w8s{position:relative;display:grid;grid-template-columns:38px 1fr;column-gap:22px;padding-bottom:38px;animation:w8in .7s cubic-bezier(.22,1,.36,1) both;animation-delay:calc(var(--i)*110ms)}
@@ -1270,7 +1271,8 @@ function pAbout(){
   return `<div class="w7 abx"><a class="w7bk" href="#home">← 首頁</a>
    <header class="w7sh"><div><h2 class="hd w8ti">關於</h2></div></header>
    <section class="abx-h">
-    <figure class="abx-ph"><img src="about-me.jpg" alt="陳威錡老師"></figure>
+    <div class="abx-l"><figure class="abx-ph"><img src="about-me.jpg" alt="陳威錡老師"></figure>
+    <div class="w8rows">${w8row('@taigi_lausu','教學記錄跟科普台語知識，目前只開放給任教班學生追蹤','https://www.instagram.com/taigi_lausu/',{ext:1,kick:'Instagram'})}</div></div>
     <div class="abx-tx">
      <small class="abx-k">設計者</small><h3>陳威錡</h3>
      <p class="abx-role">台中市立光明國中 台語老師</p>
@@ -1280,7 +1282,6 @@ function pAbout(){
      <p>就如同我一樣，小時候因為家裡、學校只講華語，我總沒辦法跟愛我的阿媽直接聊天，長大後我逐漸明白，語言對於人有多重要，所以我不只想學，也想把它教給更多台灣的孩子，以及任何想學的人。</p>
      <p>我深信，當你越了解台語，就會越認識台灣。語言從來就不只是用來溝通、寫文學的工具，更有代表民族情感、身份認同和承載文化的功能。</p>
      <p>所以我把這些年蒐集累積的資源，以及自己構想的工具，都放在這個網站，未來也會持續更新。就像在逛街，各式各樣的店都有，想買什麼由你自己決定。你在「街仔路」想學什麼、走多快，也都可以照自己的步調來。</p>
-     <div class="w8rows">${w8row('@taigi_lausu','教學記錄跟科普台語知識，目前只開放給任教班學生追蹤','https://www.instagram.com/taigi_lausu/',{ext:1,kick:'Instagram'})}</div>
     </div>
    </section>
    <section class="abx-src"><h4>其他說明</h4><ul>
