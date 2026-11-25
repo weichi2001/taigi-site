@@ -1088,7 +1088,7 @@ const RES=[
  {c:'e',t:'臺語歌真正正字歌詞網',d:'查歌詞的正確用字，網路上很多歌詞都是錯字。',tags:['讀'],time:'查詢',href:'https://taigilyrics.kiantiong.com/',play:1},
  {c:'o',t:'臺語歌真正正字歌詞網',d:'查歌詞的正確用字，網路上很多歌詞都是錯字。',tags:['讀'],time:'查詢',href:'https://taigilyrics.kiantiong.com/'},
  {c:'e',t:'國立教育廣播電臺 本土語言學習專區',d:'適合用來多聽的台語節目。',tags:['聽'],time:'隨時',href:'https://channelplus.ner.gov.tw/channel-language/85'},
- {c:'p',t:'臺灣台語寫字練習簿',d:'線上台語寫字練習簿。',tags:['寫'],time:'10 分鐘',href:'https://kiantiong.com/taigi_writing/'},
+ {c:'p',t:'台語寫字學習單編輯器',d:'自己做練字學習單，印出來練習',tags:['寫'],time:'10 分鐘',href:'https://kiantiong.com/taigi_writing/'},
  {c:'p',t:'練台羅',d:'聽音檔練拼寫、標聲調、打台羅，連變調也能練，還有錯題本。',tags:['聽','讀','寫'],time:'每回約 5 分鐘',href:'https://kiantiong.com/tailo_practice/'},
  {c:'e',t:'TaigiTube 台語水管',d:'用鄉土劇、台語新聞的影片學台語，聽得多、學得快。',tags:['聽','讀'],time:'一支影片',href:'https://taigitube.com/',play:1},
 ];
@@ -1199,7 +1199,7 @@ function pHome(){
    </section>
    <div class="hsec g3 grid g3">
     ${zone('#start',SI.sprout,'系統性學習','從台羅拼音開始，再一段一段學 700 字。',['台羅拼音','700 字自學'])}
-    ${zone('#learn',SI.target,'練習資源','把學過的內容反覆練習，練到熟悉為止',['挑錯字挑戰','練台羅','寫字練習','複習'])}
+    ${zone('#learn',SI.target,'練習資源','把學過的內容反覆練習，練到熟悉為止',['挑錯字挑戰','練台羅','寫字學習單','複習'])}
     ${zone('#apps',SI.kbd,'輸入法與軟體','電腦、手機怎麼打台語，還有辭典 App。',['輸入法','辭典'])}
    </div>
    <div class="hsec g2 grid g2d">
@@ -1271,13 +1271,13 @@ function pStart(){
    <a class="w8ft" href="#apps"><span>需要工具嗎？來看看老師精選的「輸入法與軟體」</span><i>→</i></a></div>`;
 }
 function pLearn(){
-  const tailo=RES.find(r=>r.t==='練台羅'),wr=RES.find(r=>r.t==='臺灣台語寫字練習簿');
+  const tailo=RES.find(r=>r.t==='練台羅'),wr=RES.find(r=>r.t==='台語寫字學習單編輯器');
   return `<div class="w7"><a class="w7bk" href="#home">← 首頁</a>
    <header class="w7sh"><div><h2 class="hd w8ti">練習資源</h2></div></header>
    <div class="w8"><div class="w8rows w8l">
     ${w8row('挑錯字挑戰','哪一個才是推薦用字？避開檢定不能用的寫法','#quiz')}
     ${w8row(tailo.t,'聽音檔練拼寫、標聲調、打台羅，連變調也能練',tailo.href,{ext:1,kick:'設計者　Tân Kiàn-tiong'})}
-    ${w8row(wr.t,'線上練習寫台語字',wr.href,{ext:1})}
+    ${w8row(wr.t,'做自己的練字學習單，印出來練習',wr.href,{ext:1})}
     ${w8row('700 字複習','把標成「不熟」的字再翻一次','#review')}
    </div></div></div>`;
 }
