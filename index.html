@@ -624,7 +624,8 @@ html[data-theme=dark] .mx i:not(.ok):not(.bad){background:rgba(255,255,255,.14)}
 .abx .abx-edu{display:flex;align-items:baseline;gap:14px;margin:0 0 26px;font-size:14.5px;letter-spacing:.08em;color:var(--ink2)}
 .abx .abx-edu span{font-size:12.5px;letter-spacing:.24em;color:var(--gd)}
 .abx .abx-role{margin:10px 0 8px;font-size:14.5px;letter-spacing:.1em;color:var(--gd)}
-.abx .abx-tx>p:not(.abx-role):not(.abx-edu){margin:0 0 14px;font-size:15.5px;line-height:2.05;color:var(--ink);max-width:36em}
+.abx .abx-tx>p.abx-lead{margin:0 0 20px;font-family:var(--serif);font-weight:700;font-size:20px;line-height:1.7;letter-spacing:.06em;color:var(--ink)}
+.abx .abx-tx>p:not(.abx-role):not(.abx-edu):not(.abx-lead){margin:0 0 14px;font-size:15.5px;line-height:2.05;color:var(--ink);max-width:36em}
 .abx .abx-tx .w8rows{margin-top:30px;max-width:420px}
 .abx .abx-src{margin-top:64px;padding-top:22px;border-top:1px solid var(--line)}
 .abx .abx-src h4{margin:0 0 12px;font-size:12.5px;font-weight:400;letter-spacing:.24em;color:var(--gd)}
@@ -1274,10 +1275,11 @@ function pAbout(){
      <small class="abx-k">設計者</small><h3>陳威錡</h3>
      <p class="abx-role">台中市立光明國中 台語老師</p>
      <p class="abx-edu"><span>學歷</span>國立臺灣師範大學 臺灣語文學系</p>
-     <p>我是一個還在把台語學回來的台語老師。小時候，我沒辦法跟阿媽直接聊天，後來才慢慢明白，台語對台灣有多重要。所以我不只想自己學回來，也想把它教給更多人</p>
-     <p>教過的學生各式各樣：定居在台灣的日本朋友、中研院的外籍研究員，還有學校裡的孩子。有趣的是，剛開始學台語的人，不管幾歲、母語是什麼，卡住的地方都差不多：不知道從哪裡開始、不知道字怎麼寫才對，很想練習，卻沒有一個能泡在台語裡的環境</p>
-     <p>我常覺得，越懂台語，就越懂台灣。語言不只是用來溝通、寫文學，裡面還有民族、身份認同和文化</p>
-     <p>所以我把這些年用得上的資源，和自己想到的工具，都放在這裡。就像逛街仔路，什麼店都有，想買什麼自己決定。你想學什麼、走多快，都照自己的步調來</p>
+     <p class="abx-lead">我是一個還在把台語學回來的台語老師。</p>
+     <p>這幾年我教過的學生各式各樣：有定居在台灣工作的日本人、想研究台灣的中研院研究員，還有仍在學校讀書的國中生們。有趣的是，剛開始學台語的人，無論年齡、母語，卡住的地方都差不多——不知道從哪裡開始、不知道字怎麼寫才對，甚至多數人很想練習，卻找不到一個能泡在全台語裡的環境。</p>
+     <p>就如同我一樣，小時候因為家裡、學校只講華語，我總沒辦法跟愛我的阿媽直接聊天，長大後我逐漸明白，語言對於人有多重要，所以我不只想學，也想把它教給更多臺灣的孩子，以及任何想學的人。</p>
+     <p>我深信，當你越了解台語，就會越認識台灣。語言從來就不只是用來溝通、寫文學的工具，更有代表民族情感、身份認同和乘載文化的功能。</p>
+     <p>所以我把這些年蒐集累積的資源，以及自己構想的工具，都放在這個網站，未來也會持續更新。就像在逛街，各式各樣的店都有，想買什麼由你自己決定。你在「街仔路」想學什麼、走多快，也都可以照自己的步調來。</p>
      <div class="w8rows">${w8row('@taigi_lausu','教學記錄跟科普台語知識，目前只開放給任教班學生追蹤','https://www.instagram.com/taigi_lausu/',{ext:1,kick:'Instagram'})}</div>
     </div>
    </section>
