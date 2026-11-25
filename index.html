@@ -1288,7 +1288,7 @@ function bodyW700(){
   if(!S.q&&S.f==='all'){
     return `<div class="w7g">${Array.from({length:NSEG},(_,i)=>i+1).map(s=>{
       const it=segItems(s),k=segKnown(s),n=it.length;
-      return `<a class="w7c${k===n?' done':''}" href="#seg${s}"><div class="t"><b>${String(s).padStart(2,'0')}</b><span>${segRange(s)}</span></div><em>${esc(segLabel(s))}</em><div class="mx">${dots(it)}</div><div class="ct"><span>會了 ${k} / ${n}</span>${k===n?'<span class="dn">完成</span>':''}</div></a>`}).join('')}</div>`;
+      return `<a class="w7c${k===n?' done':''}" href="#seg${s}"><div class="t"><b>${String(s).padStart(2,'0')}</b><span>${segRange(s)}</span></div><em>${esc(segLabel(s))}</em><div class="mx">${dots(it)}</div><div class="ct"><span>${k} / ${n}</span>${k===n?'<span class="dn">完成</span>':''}</div></a>`}).join('')}</div>`;
   }
   const r=filt();
   if(!r.length)return `<div class="w7em">找不到符合的字</div>`;
@@ -1299,7 +1299,7 @@ function pW700(){
   let last=0;try{last=+localStorage.getItem('tg700last')||0}catch(e){}
   if(last<1||last>NSEG)last=0;
   const first=Array.from({length:NSEG},(_,i)=>i+1).find(s=>segKnown(s)<segItems(s).length)||1,go=last||first;
-  const FL=[['all','全部'],['bad','不熟'],['ok','會了'],['x','有常見錯寫']];
+  const FL=[['all','全部'],['bad','不熟'],['ok','會了'],['x','常見錯寫']];
   return `<div class="w7"><section class="w7h"><span class="w7bg" aria-hidden="true"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor"><rect x=".6" y=".6" width="98.8" height="98.8" stroke-width="1.2"/><path d="M50 0V100M0 50H100M0 0L100 100M100 0L0 100" stroke-width=".7" stroke-dasharray="2.2 2.6"/></svg><b>字</b></span>
     <small>Tshit-pah Jī</small><h2 class="hd">700 字</h2><i class="ln"></i>
     <div class="w7hb">
