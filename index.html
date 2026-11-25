@@ -302,7 +302,7 @@ body.anime .hero{border:1px solid rgba(255,255,255,.22);box-shadow:0 20px 50px r
 body.anime .hero .kick{background:rgba(226,68,3,.85);backdrop-filter:blur(10px)}
 .pt{border-radius:16px;box-shadow:0 10px 26px rgba(0,0,0,.4),inset 0 0 0 1px rgba(255,255,255,.2)}
 
-#mini{position:fixed;z-index:41;left:0;right:0;bottom:0;height:78vh;display:flex;flex-direction:column;background:rgba(251,246,238,.97);backdrop-filter:blur(26px) saturate(1.6);-webkit-backdrop-filter:blur(26px) saturate(1.6);border-radius:24px 24px 0 0;box-shadow:0 -10px 40px rgba(60,40,25,.25),inset 0 1px 0 #fff;font-family:Huninn,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif}
+#mini{position:fixed;z-index:41;left:0;right:0;bottom:0;height:60vh;display:flex;flex-direction:column;background:rgba(251,246,238,.97);backdrop-filter:blur(26px) saturate(1.6);-webkit-backdrop-filter:blur(26px) saturate(1.6);border-radius:24px 24px 0 0;box-shadow:0 -10px 40px rgba(60,40,25,.25),inset 0 1px 0 #fff;font-family:Huninn,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif}
 @media(min-width:800px){#mini{left:auto;right:18px;bottom:18px;width:400px;height:min(680px,84vh);border-radius:24px;border:1px solid rgba(255,255,255,.9)}}
 #mini .mtop{display:flex;justify-content:space-between;align-items:center;padding:16px 18px 6px}
 #mini .mtt b{font-size:22px;display:block;line-height:1.2}#mini .mtt span{font-size:12px;color:var(--ink2)}
@@ -1154,6 +1154,11 @@ html[data-theme=dark] body .top .in{background:linear-gradient(180deg,rgba(255,2
 #fab{bottom:calc(18px + env(safe-area-inset-bottom,0px))}
 #toast,#eb-fb{bottom:calc(24px + env(safe-area-inset-bottom,0px))}
 .ktvw{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);box-sizing:border-box}
+
+#mini .mgrip{display:none}
+@media(max-width:799px){#mini .mgrip{display:flex;justify-content:center;align-items:center;height:26px;flex:none;touch-action:none;cursor:grab;-webkit-tap-highlight-color:transparent}#mini .mgrip i{display:block;width:42px;height:5px;border-radius:3px;background:rgba(97,80,69,.28)}#mini .mtop{padding-top:0;touch-action:none}#mini.drag{transition:none!important}}
+html[data-theme=dark] #mini .mgrip i{background:rgba(255,255,255,.3)}
+body[data-r=dictwin] #mini .mgrip{display:none}
 </style>
 </head>
 <body>
@@ -1188,6 +1193,7 @@ setTimeout(fin,4500)})()</script>
 <div id="toast"></div>
 <button id="fab" aria-label="查辭典" title="查辭典"><svg class="si" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg></button>
 <section id="mini" hidden aria-label="查辭典">
+  <div class="mgrip" id="mgrip" aria-hidden="true"><i></i></div>
   <div class="mtop"><div class="mtt"><b class="hd">查辭典</b><span>教育部臺灣台語常用詞辭典</span></div>
     <button class="mx-close" id="mclose" aria-label="關閉"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg></button></div>
   <label class="msb"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
@@ -2506,7 +2512,7 @@ function flipVideo(change){
 function miniOpen(open){
   clearTimeout(mt);
   if(open){
-    mini.hidden=false;void mini.offsetWidth;            // 先顯示、強制排版，transition 才會跑
+    mini.hidden=false;if(window.miniApplyH)miniApplyH();void mini.offsetWidth;            // 先顯示、強制排版，transition 才會跑
     flipVideo(()=>document.body.classList.add('mini-on'));
     mini.classList.add('show');fab.classList.add('gone');
     dxLoad();miniDraw();mt=setTimeout(()=>mq.focus({preventScroll:true}),380);
@@ -2516,6 +2522,36 @@ function miniOpen(open){
     mt=setTimeout(()=>{mini.hidden=true},420);
   }
 }
+
+// 手機版字典：拖曳頂端調整高度（預設保留頁面上方約五分之二）
+(function(){
+  const grip=document.getElementById('mgrip'),top=mini.querySelector('.mtop'),KEY='tgMiniH';
+  let sy=0,sh=0,on=false,pid=null;
+  const mob=()=>innerWidth<800&&document.body.dataset.r!=='dictwin';
+  const clampH=h=>Math.max(150,Math.min(h,Math.round(innerHeight*.94)));
+  window.miniApplyH=function(){
+    if(!mob()){mini.style.height='';return}
+    let r=0;try{r=parseFloat(localStorage.getItem(KEY))||0}catch(e){}
+    mini.style.height=r>=.35?clampH(Math.round(r*innerHeight))+'px':'';
+  };
+  function down(e){
+    if(!mob()||e.target.closest('button'))return;
+    on=true;pid=e.pointerId;sy=e.clientY;sh=mini.offsetHeight;mini.classList.add('drag');
+    try{e.currentTarget.setPointerCapture(pid)}catch(_){}
+  }
+  function move(e){
+    if(!on||e.pointerId!==pid)return;
+    mini.style.height=clampH(sh+(sy-e.clientY))+'px';e.preventDefault();
+  }
+  function up(e){
+    if(!on||e.pointerId!==pid)return;
+    on=false;mini.classList.remove('drag');
+    try{localStorage.setItem(KEY,String(mini.offsetHeight/innerHeight))}catch(_){}
+  }
+  [grip,top].forEach(el=>{el.addEventListener('pointerdown',down);el.addEventListener('pointermove',move);el.addEventListener('pointerup',up);el.addEventListener('pointercancel',up)});
+  grip.addEventListener('dblclick',()=>{mini.style.height='';try{localStorage.removeItem(KEY)}catch(_){}});
+  addEventListener('resize',()=>{if(!on)miniApplyH()});
+})();
 fab.addEventListener('click',()=>miniOpen(true));
 $('#mclose').addEventListener('click',()=>miniOpen(false));
 mini.addEventListener('click',e=>{if(!e.target.closest('.clr'))return;const q=mini.querySelector('#mq');q.value='';q.dispatchEvent(new Event('input',{bubbles:true}));q.focus()});
