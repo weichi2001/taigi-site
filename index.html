@@ -40,6 +40,11 @@ button,input,select,textarea{font-family:inherit}
 .zone .li .si{width:14px;height:14px;vertical-align:-.18em}
 #fab{display:grid;place-items:center;padding:0;line-height:0}#fab .si{width:25px;height:25px}
 .btn .si,.abtn .si,.ab-btn .si{width:16px;height:16px;vertical-align:-.2em}.btn[data-act=say],.btn.ok{display:inline-flex;align-items:center;gap:6px}
+#fsBtn[hidden]{display:none}
+#fsBtn .si{width:17px;height:17px;margin:0;vertical-align:middle}
+.top #fsBtn{width:40px;padding:0;border-radius:50%}
+.top #fsBtn .si{width:19px;height:19px;margin:0;vertical-align:baseline;display:block}
+@media(max-width:600px){#fsBtn{display:none!important}}
 #themeBtn .si{width:17px;height:17px;margin:0;vertical-align:middle}
 .row .st .si,.tile .st .si{width:13px;height:13px}
 .agebox b .si{width:16px;height:16px;color:#ff9a5a}
@@ -1113,6 +1118,7 @@ html[data-theme=dark] body .top .in{background:linear-gradient(180deg,rgba(255,2
     <button class="tool" id="rpBtn" type="button" data-act="report">問題回報</button>
     <a class="tool" href="#about">關於</a>
   </div>
+    <button class="tool" id="fsBtn" type="button" aria-label="全螢幕" title="全螢幕（F）" hidden style="font:inherit;font-size:15px;cursor:pointer;flex:none"></button>
     <button class="tool" id="themeBtn" type="button" aria-label="切換深色模式" title="切換深色／淺色" style="font:inherit;font-size:15px;cursor:pointer;flex:none"></button>
 </div></div>
 <main class="wrap" id="app"></main>
@@ -2218,6 +2224,17 @@ document.addEventListener('submit',async e=>{if(e.target.id!=='rpForm')return;e.
   f.reset();f.querySelector('.rp-main').hidden=true;f.querySelector('.rp-ok').hidden=false;
  }catch(x){m.textContent='送出失敗，請稍後再試'}
  b.disabled=false});
+// ---- 全螢幕：按鈕或 F 鍵 ----
+(function(){const b=document.getElementById('fsBtn'),de=document.documentElement;
+ if(!b||!(document.fullscreenEnabled||document.webkitFullscreenEnabled))return;
+ const on=()=>!!(document.fullscreenElement||document.webkitFullscreenElement);
+ const ic=f=>'<svg class="si" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(f?'<path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/>':'<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>')+'</svg>';
+ const paint=()=>{const f=on();b.innerHTML=ic(f);b.title=f?'離開全螢幕（F 或 Esc）':'全螢幕（F）';b.setAttribute('aria-label',f?'離開全螢幕':'全螢幕')};
+ const toggle=()=>{try{if(on())(document.exitFullscreen||document.webkitExitFullscreen).call(document);else(de.requestFullscreen||de.webkitRequestFullscreen).call(de)}catch(e){}};
+ b.hidden=false;paint();b.addEventListener('click',toggle);
+ document.addEventListener('fullscreenchange',paint);document.addEventListener('webkitfullscreenchange',paint);
+ document.addEventListener('keydown',e=>{if((e.key!=='f'&&e.key!=='F')||e.metaKey||e.ctrlKey||e.altKey||e.shiftKey||e.repeat)return;const t=e.target;if(t&&t.closest&&t.closest('input,textarea,select,[contenteditable]'))return;e.preventDefault();toggle()});
+})();
 function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),2400)}
 const segNow=()=>{const m=/^seg(\d+)$/.exec(cur());return m?+m[1]:0};
 $('#app').addEventListener('input',e=>{
