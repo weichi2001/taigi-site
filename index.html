@@ -563,6 +563,7 @@ html[data-theme=dark] .mx i:not(.ok):not(.bad){background:rgba(255,255,255,.14)}
 .w7fb b{font-family:var(--serif);font-size:22px;letter-spacing:.1em}.w7fb.ok b{color:var(--gd)}.w7fb.no b{color:var(--accent)}
 .w7fb p{margin:8px 0 0;color:var(--ink2);line-height:1.8}
 .w7fb .w7ac{justify-content:center}
+.w7tap{margin:22px 0 0;text-align:center;font-size:13.5px;letter-spacing:.14em;color:var(--ink2);opacity:.6}
 .w7fc.fo{animation:none;transform:perspective(1100px) rotateY(90deg);transition:transform .16s cubic-bezier(.4,0,1,1)}
 .w7fc.fi{animation:w7fi .3s cubic-bezier(.2,.9,.3,1) both;transform-origin:50% 50%}
 @keyframes w7fi{from{transform:perspective(1100px) rotateY(-90deg)}to{transform:perspective(1100px) rotateY(0)}}
@@ -1150,7 +1151,7 @@ function flipHtml(){
       <button class="w7b bad" data-act="fmark" data-v="2">還不熟</button>
       <button class="w7b pri" data-act="fmark" data-v="1">會了</button></div>
      <p class="w7sp2"><button class="w7lk" data-act="say" data-n="${o.n}">${SI.spk}<span>聽發音</span></button></p>`
-     :`<div class="w7ac c"><button class="w7b pri" data-act="flip">翻面</button></div>`}
+     :`<p class="w7tap">點擊卡片即可翻面</p>`}
    <p class="w7key">空白鍵　翻面　　←　還不熟　　→　會了</p>`;
 }
 
