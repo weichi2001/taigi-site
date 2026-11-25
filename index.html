@@ -563,7 +563,10 @@ html[data-theme=dark] .mx i:not(.ok):not(.bad){background:rgba(255,255,255,.14)}
 .w7fb b{font-family:var(--serif);font-size:22px;letter-spacing:.1em}.w7fb.ok b{color:var(--gd)}.w7fb.no b{color:var(--accent)}
 .w7fb p{margin:8px 0 0;color:var(--ink2);line-height:1.8}
 .w7fb .w7ac{justify-content:center}
-@media(prefers-reduced-motion:reduce){.w7fc,.w7fb{animation:none}}
+.w7fc.fo{animation:none;transform:perspective(1100px) rotateY(90deg);transition:transform .16s cubic-bezier(.4,0,1,1)}
+.w7fc.fi{animation:w7fi .3s cubic-bezier(.2,.9,.3,1) both;transform-origin:50% 50%}
+@keyframes w7fi{from{transform:perspective(1100px) rotateY(-90deg)}to{transform:perspective(1100px) rotateY(0)}}
+@media(prefers-reduced-motion:reduce){.w7fc,.w7fb,.w7fc.fi{animation:none}.w7fc.fo{transition:none}}
 /* ===== 系統性學習（按部就班）===== */
 .w7sh .hd.w8ti{color:var(--gd)}
 .w7sh:has(.w8ti){margin-top:36px}
@@ -1139,9 +1142,10 @@ function flipHtml(){
                  :`<small class="k">漢字</small><div class="big">${esc(o.w)}</div><p class="hint">怎麼唸？是什麼意思？</p>`;
   const back=h2w?`<small class="k">台語</small><div class="big">${esc(o.w)}</div><div class="rr tl">${esc(o.r)}</div>${o.e.length?`<p class="hint">${o.e.slice(0,2).map(esc).join('、')}</p>`:''}`
                 :`<small class="k">台羅</small><div class="rr tl big2">${esc(o.r)}</div><div class="mean">${esc(o.h)}</div>`;
+  const fxc=f.fx;f.fx=0;
   return `<div class="w7fh"><div class="w7pg"><i style="width:${f.i/f.q.length*100}%"></i></div><span>${f.i+1} / ${f.q.length}</span></div>
    <div class="w7tb sm"><button class="w7t ${h2w?'on':''}" data-act="dir" data-d="h2w">華語 → 台語</button><button class="w7t ${h2w?'':'on'}" data-act="dir" data-d="w2h">漢字 → 台羅</button></div>
-   <div class="w7fc${f.side?' bk':''}" data-act="flip">${f.side?back:front}</div>
+   <div class="w7fc${f.side?' bk':''}${fxc?' fi':''}" data-act="flip">${f.side?back:front}</div>
    ${f.side?`<div class="w7ac c">
       <button class="w7b bad" data-act="fmark" data-v="2">還不熟</button>
       <button class="w7b pri" data-act="fmark" data-v="1">會了</button></div>
@@ -2131,7 +2135,13 @@ $('#app').addEventListener('click',e=>{
     if(S.mode==='flip')S.fl=buildFlip(segItems(s));
     if(S.mode==='quiz')S.qz=buildQuiz(segItems(s),10);
     render(true)}
-  else if(a==='flip'){S.fl.side=S.fl.side?0:1;render(true)}
+  else if(a==='flip'){
+    if(S.flBusy)return;
+    const card=document.querySelector('.w7fc');
+    let rm=false;try{rm=matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){}
+    const doit=()=>{S.flBusy=0;S.fl.side=S.fl.side?0:1;S.fl.fx=!rm;render(true)};
+    if(!card||rm){doit();return}
+    S.flBusy=1;card.classList.add('fo');setTimeout(doit,160)}
   else if(a==='dir'){S.fl.dir=el.dataset.d;S.fl.side=0;render(true)}
   else if(a==='fmark'){
     const f=S.fl,o=f.q[f.i],v=+el.dataset.v;setSt(o.n,v);
