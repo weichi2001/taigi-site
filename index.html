@@ -1327,7 +1327,7 @@ function pSeg(s){
   const nv=(t,c)=>`<a class="${c}" href="#seg${t}"><small>${c==='p'?'上一段':'下一段'}</small><b>第 ${t} 段</b><span>${esc(segLabel(t))}</span></a>`;
   return `<div class="w7 w7s${S.mode==='list'?'':' cmp'}"><a class="w7bk" href="#w700">← 700 字</a>
    <header class="w7sh"><div><small>編號 ${segRange(s)}</small><h2 class="hd">第 ${s} 段</h2><i class="ln"></i><p class="lb">${esc(segLabel(s))}</p></div>
-    <div class="w7sp"><div class="mx big">${dots(items)}</div><p><b>${k}</b> / ${items.length} 會了${bad?`<u>${bad} 不熟</u>`:''}</p></div></header>
+    <div class="w7sp"><div class="mx big">${dots(items)}</div><p><b>${k}</b> / ${items.length}${bad?`<u>${bad} 不熟</u>`:''}</p></div></header>
    <div class="w7tb">${tabs.map(([m,l])=>`<button class="w7t ${S.mode===m?'on':''}" data-act="mode" data-m="${m}">${l}</button>`).join('')}</div>
    ${body}
    <nav class="w7nv">${s>1?nv(s-1,'p'):'<span></span>'}${s<NSEG?nv(s+1,'n'):'<span></span>'}</nav></div>`;
