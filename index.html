@@ -8,7 +8,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-title" content="街仔路">
-<meta name="build" content="529258e21a">
+<meta name="build" content="d7667bef74">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="mobile-web-app-capable" content="yes">
@@ -267,6 +267,11 @@ body.anime .back{color:#b9ab9b}body.anime .sub{color:#b9ab9b}
 #upd{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:#f4e8d6;color:#3a2f26;font-size:18px;font-weight:700;letter-spacing:.08em;opacity:0;transition:opacity .25s;pointer-events:all}
 html[data-theme=dark] #upd{background:#14110f;color:#f1e9dd}
 #upd.on{opacity:1}
+/* 戲台頁的上方列按鈕：跟其他頁一樣的透明描邊質感（不要被戲台的玻璃按鈕樣式蓋掉） */
+body.anime .top .tool{background:transparent;border:1px solid rgba(255,255,255,.32);color:#f6efe6;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}
+body.anime .top .tool:hover{background:rgba(255,255,255,.12)}
+/* 關於頁的照片：不能長按存圖或拖曳 */
+.abx-ph img{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;-webkit-user-drag:none;pointer-events:none}
 .rowh{display:flex;align-items:center;gap:8px;margin:22px 0 8px}.rowh h3{margin:0;font-size:19px}.rowh small{color:#9c8e80}
 .rowh .arr{margin-left:auto;display:flex;gap:6px}
 .arr button{width:32px;height:32px;border-radius:50%;border:0;background:#2c2622;color:#f1e9dd;cursor:pointer;font-size:16px}
@@ -1408,7 +1413,7 @@ function pAbout(){
   return `<div class="w7 abx"><a class="w7bk" href="#home">← 首頁</a>
    <header class="w7sh"><div><h2 class="hd w8ti">關於</h2></div></header>
    <section class="abx-h">
-    <div class="abx-l"><figure class="abx-ph"><img src="about-me.jpg" alt="陳威錡老師"></figure>
+    <div class="abx-l"><figure class="abx-ph"><img src="about-me.jpg" alt="陳威錡老師" draggable="false" oncontextmenu="return false"></figure>
     <div class="w8rows">${w8row('@taigi_lausu','教學記錄跟科普台語知識，目前只開放給任教班學生追蹤','https://www.instagram.com/taigi_lausu/',{ext:1,kick:'Instagram'})}</div></div>
     <div class="abx-tx">
      <small class="abx-k">設計者</small><h3>陳威錡</h3>
