@@ -416,33 +416,35 @@ body[data-r=w700] .back{display:none}
 @media(min-width:900px){body[data-r=w700] .wrap{padding:0 0 80px;margin-top:-80px}}
 body[data-r=quiz] .wrap,body[data-r=review] .wrap,body[data-r^=seg] .wrap{max-width:920px}
 .w7 button{font-family:inherit}
-.w7h{position:relative;margin:8px 0 0;padding:112px 24px 26px;border-radius:30px;color:#f6efe6;overflow:hidden;background:radial-gradient(55% 85% at 86% 28%,rgba(214,64,42,.55) 0,transparent 66%),radial-gradient(50% 60% at 8% 100%,rgba(110,140,130,.30) 0,transparent 70%),linear-gradient(160deg,#211d1a,#141210)}
+.w7h{--hi:#1c1b19;--hi2:#6b6860;--hl:rgba(28,27,25,.16);--hk:rgba(28,27,25,.11);position:relative;margin:8px 0 0;padding:112px 24px 28px;border-radius:30px;color:var(--hi);overflow:hidden;border:1px solid rgba(28,27,25,.06);background:radial-gradient(60% 90% at 92% 0%,rgba(169,121,26,.13) 0,transparent 66%),linear-gradient(165deg,#ece8de,#e2ddd0)}
+html[data-theme=dark] .w7h{--hi:#f3f1ec;--hi2:rgba(243,241,236,.62);--hl:rgba(255,255,255,.2);--hk:rgba(255,255,255,.1);border-color:rgba(255,255,255,.08);background:radial-gradient(60% 90% at 92% 0%,rgba(232,200,114,.12) 0,transparent 66%),linear-gradient(165deg,#1d1b18,#141311)}
 .w7h>*{position:relative;z-index:1}
-.w7h small{display:block;font-family:"GenRyu Lat",Huninn,sans-serif;font-size:16px;letter-spacing:.22em;color:#e8c872}
-.w7h .hd{margin:6px 0 0;font-family:var(--serif);font-weight:700;font-size:clamp(52px,7.4vw,92px);letter-spacing:.08em;line-height:1.15;color:#f6efe6}
-.w7h .ln{display:block;width:56px;height:2px;margin-top:18px;background:#e8c872}
-.w7bg{position:absolute!important;right:60px;top:56px;z-index:0!important;font-family:var(--serif);font-weight:700;font-size:300px;line-height:1;color:transparent;-webkit-text-stroke:1.2px rgba(255,245,235,.13);pointer-events:none;user-select:none}
-.w7hb{display:grid;gap:26px;margin-top:30px}
-.w7hl p{margin:0 0 18px;max-width:34em;font-size:15px;line-height:1.8;color:rgba(246,239,230,.72)}
+.w7h small{display:block;font-family:"GenRyu Lat",Huninn,sans-serif;font-size:16px;letter-spacing:.22em;color:var(--gd)}
+.w7h .hd{margin:6px 0 0;font-family:var(--serif);font-weight:700;font-size:clamp(52px,7.4vw,92px);letter-spacing:.08em;line-height:1.15;color:var(--hi)}
+.w7h .ln{display:block;width:56px;height:2px;margin-top:18px;background:var(--gd)}
+.w7bg{position:absolute!important;right:72px;top:88px;z-index:0!important;width:250px;height:250px;color:var(--hk);pointer-events:none;user-select:none}
+.w7bg svg{position:absolute;inset:0;width:100%;height:100%}
+.w7bg b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--serif);font-weight:700;font-size:180px;line-height:1;color:var(--hk);opacity:.7}
+.w7hb{display:grid;gap:28px;margin-top:34px}
 .w7ha{display:flex;flex-wrap:wrap;gap:10px}
 .w7hp .num{display:flex;align-items:baseline;gap:10px}
-.w7hp .num b{font-family:var(--serif);font-weight:700;font-size:54px;line-height:1;color:#e8c872;letter-spacing:.02em}
-.w7hp .num span{font-size:14px;letter-spacing:.1em;color:rgba(246,239,230,.62)}
-.w7pb{display:flex;height:3px;margin:14px 0 12px;border-radius:3px;overflow:hidden;background:rgba(255,255,255,.14)}
+.w7hp .num b{font-family:var(--serif);font-weight:700;font-size:54px;line-height:1;color:var(--gd);letter-spacing:.02em}
+.w7hp .num span{font-size:14px;letter-spacing:.1em;color:var(--hi2)}
+.w7pb{display:flex;height:3px;margin:14px 0 12px;border-radius:3px;overflow:hidden;background:var(--hl)}
 .w7pb i{display:block;height:100%;transition:width .5s cubic-bezier(.22,1,.36,1)}
-.w7pb .ok{background:#e8c872}.w7pb .bad{background:#ff7a5c}
-.w7hp .w7lg{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12.5px;letter-spacing:.06em;color:rgba(246,239,230,.62)}
-.w7hp .w7lg i{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:7px;background:rgba(255,255,255,.22)}
-.w7hp .w7lg i.ok{background:#e8c872}.w7hp .w7lg i.bad{background:#ff7a5c}
-@media(min-width:900px){.w7h{padding:150px 56px 46px;border-radius:34px}.w7hb{grid-template-columns:1fr 300px;align-items:end;gap:60px;margin-top:34px}}
+.w7pb .ok{background:var(--gd)}.w7pb .bad{background:var(--accent)}
+.w7hp .w7lg{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12.5px;letter-spacing:.06em;color:var(--hi2)}
+.w7hp .w7lg i{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:7px;background:var(--hl)}
+.w7hp .w7lg i.ok{background:var(--gd)}.w7hp .w7lg i.bad{background:var(--accent)}
+@media(min-width:900px){.w7h{padding:150px 56px 46px;border-radius:34px}.w7hb{grid-template-columns:1fr 300px;align-items:end;gap:60px;margin-top:40px}}
 @media(max-width:899px){.w7bg{display:none}}
 
 .w7b{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:46px;padding:0 24px;border-radius:99px;border:1px solid var(--line);background:none;color:var(--ink);font:inherit;font-size:15px;letter-spacing:.06em;text-decoration:none;cursor:pointer;white-space:nowrap;transition:background .25s,border-color .25s,color .25s,transform .25s}
 .w7b:active{transform:scale(.97)}
 .w7b.pri{background:var(--ink);border-color:var(--ink);color:var(--paper)}
 .w7b.pri:hover{opacity:.88}
-.w7b.lt{background:#f6efe6;border-color:#f6efe6;color:#141210;font-weight:700}.w7b.lt:hover{background:#fff}
-.w7b.gh{border-color:rgba(255,255,255,.28);color:#f6efe6}.w7b.gh:hover{border-color:rgba(255,255,255,.6);background:rgba(255,255,255,.06)}
+.w7b.lt{background:var(--hi);border-color:var(--hi);color:var(--paper);font-weight:700}.w7b.lt:hover{opacity:.88}
+.w7b.gh{border-color:var(--hl);color:var(--hi)}.w7b.gh:hover{border-color:var(--hi)}
 .w7b.off{opacity:.4;pointer-events:none}
 .w7b.sm{min-height:36px;padding:0 16px;font-size:14px}
 .w7b.sm .si{width:15px;height:15px}
@@ -1297,16 +1299,16 @@ function pW700(){
   let last=0;try{last=+localStorage.getItem('tg700last')||0}catch(e){}
   if(last<1||last>NSEG)last=0;
   const first=Array.from({length:NSEG},(_,i)=>i+1).find(s=>segKnown(s)<segItems(s).length)||1,go=last||first;
-  const FL=[['all','全部'],['b1','第一冊'],['b2','第二冊'],['b3','第三冊'],['bad','不熟'],['ok','會了'],['x','有常見錯寫']];
-  return `<div class="w7"><section class="w7h"><span class="w7bg" aria-hidden="true">字</span>
+  const FL=[['all','全部'],['bad','不熟'],['ok','會了'],['x','有常見錯寫']];
+  return `<div class="w7"><section class="w7h"><span class="w7bg" aria-hidden="true"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor"><rect x=".6" y=".6" width="98.8" height="98.8" stroke-width="1.2"/><path d="M50 0V100M0 50H100M0 0L100 100M100 0L0 100" stroke-width=".7" stroke-dasharray="2.2 2.6"/></svg><b>字</b></span>
     <small>Tshit-pah Jī</small><h2 class="hd">700 字</h2><i class="ln"></i>
     <div class="w7hb">
-     <div class="w7hl"><p>教育部《臺灣台語推薦用字 700 字表》，照原表順序。每段 ${SEG} 字，從哪一段開始都可以。</p>
+     <div class="w7hl">
       <div class="w7ha"><a class="w7b lt" href="#seg${go}">${last?'繼續':'開始'}　第 ${go} 段</a><a class="w7b gh${bad?'':' off'}" href="#review">複習不熟的字　${bad}</a><a class="w7b gh" href="#quiz">挑錯字挑戰</a></div></div>
      <div class="w7hp"><div class="num"><b>${known}</b><span>/ ${D.length} 會了</span></div>${pbar(known,bad,D.length)}
       <div class="w7lg"><span><i class="ok"></i>會了 ${known}</span><span><i class="bad"></i>不熟 ${bad}</span><span><i></i>未學 ${D.length-known-bad}</span></div></div>
     </div></section>
-   <div class="w7tl"><input type="search" class="w7q" id="q" placeholder="搜尋：漢字、台羅、華語都可以（例：舅媽、a-kim）" value="${esc(S.q)}" autocomplete="off">
+   <div class="w7tl"><input type="search" class="w7q" id="q" placeholder="搜尋" value="${esc(S.q)}" autocomplete="off">
     <div class="w7tb">${FL.map(([k,l])=>`<button class="w7t ${S.f===k?'on':''}" data-act="filt" data-f="${k}">${l}</button>`).join('')}</div></div>
    <div id="body">${bodyW700()}</div></div>`;
 }
