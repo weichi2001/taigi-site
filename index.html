@@ -575,6 +575,42 @@ html[data-theme=dark] .mx i:not(.ok):not(.bad){background:rgba(255,255,255,.14)}
 .w7sh:has(.w8ti){margin-top:36px}
 .w7sh:has(.w8ti)+.w8{margin-top:48px}
 .w8rows.w8l{grid-template-columns:1fr}
+/* ---- 輸入法與軟體 ---- */
+.apx .apb{margin-top:40px}
+.apx .sec{display:flex;align-items:baseline;gap:14px;margin:48px 0 18px;font-family:var(--serif);font-size:26px;font-weight:700;letter-spacing:.08em;line-height:1.2;color:var(--ink)}
+.apx .sec:first-child{margin-top:0}
+.apx .sec i{font-style:normal;font-family:"GenRyu Lat",Huninn,sans-serif;font-size:14px;font-weight:400;letter-spacing:.2em;color:var(--gd)}
+.apx .sec::after{content:"";flex:1;height:1px;background:var(--line);transform:translateY(-4px)}
+.apx .apg{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
+.apx .apg>details[open]{grid-column:1/-1}
+.apx .ab.res.ap{margin:0;padding:0;border-radius:18px;border:1px solid var(--line);background:var(--card);box-shadow:none;transition:border-color .25s,box-shadow .3s}
+.apx .ab.res.ap.ime{margin:0}
+.apx .ab.res.ap:hover{border-color:color-mix(in srgb,var(--gd) 40%,var(--line))}
+.apx .ab[open]{border-color:color-mix(in srgb,var(--gd) 55%,var(--line));box-shadow:0 18px 40px -30px rgba(40,30,20,.4)}
+.apx .ab>summary{gap:16px;padding:18px 22px;align-items:center}
+.apx .ab>summary::after{content:"+";font-size:24px;font-weight:300;line-height:1;color:var(--ink2);opacity:.65;transition:transform .35s cubic-bezier(.22,1,.36,1),opacity .2s}
+.apx .ab[open]>summary::after{transform:rotate(45deg);opacity:1;color:var(--gd)}
+.apx .aic{width:52px;height:52px;border-radius:13px;box-shadow:0 0 0 1px rgba(0,0,0,.06);font-size:26px}
+.apx .aic .si{width:26px;height:26px}
+.apx .ab>summary{color:var(--ink)}
+.apx .ab>summary h3{color:var(--ink);margin:0 0 4px;font-family:var(--serif);font-weight:700;font-size:19px;letter-spacing:.06em;line-height:1.35}
+.apx .ab>summary p{font-size:13.5px;line-height:1.6;color:var(--ink2)}
+.apx .ab .abb{margin:0 22px;padding:20px 0 22px;border-top:1px solid var(--line);font-size:14.5px;line-height:1.85}
+.apx .ab h4{margin:20px 0 8px;font-size:12.5px;font-weight:400;letter-spacing:.24em;color:var(--gd)}
+.apx .ab .abb>p:first-child+h4,.apx .ab .abb>h4:first-child{margin-top:0}
+.apx .ab ul{list-style:none;margin:0 0 14px;padding:0}
+.apx .ab li{position:relative;padding-left:18px}
+.apx .ab ul li::before{content:"";position:absolute;left:0;top:.95em;width:8px;height:1px;background:var(--gd)}
+.apx .abb p:empty{display:none}
+.apx .ime .tabs{margin:4px 0 14px}
+.apx .ime .tabs .fb{border-radius:14px;padding:10px 2px}
+.apx .steps{list-style:none;counter-reset:st;padding:0;margin:18px 0 0}
+.apx .steps li{counter-increment:st;position:relative;padding:0 0 10px 36px}
+.apx .steps li::before{content:counter(st);position:absolute;left:0;top:2px;width:22px;height:22px;border-radius:50%;border:1px solid var(--gd);font-family:var(--serif);font-size:12.5px;line-height:20px;text-align:center;color:var(--gd)}
+.apx .tip{margin:14px 0 0;padding:2px 0 2px 14px;border-radius:0;border-left:2px solid var(--gd);background:none!important;color:var(--ink2);font-size:13.5px}
+.apx .plat{margin-top:14px}
+.apx .note{margin:18px 0 0;padding-top:14px;border-top:1px dashed var(--line)}
+@media(max-width:700px){.apx .apg{grid-template-columns:1fr}.apx .ab>summary{padding:16px 18px}.apx .ab .abb{margin:0 18px}.apx .sec{font-size:23px;margin-top:40px}}
 .w8note{margin:26px 0 0;max-width:38em;font-size:14.5px;line-height:1.85;color:var(--ink2);letter-spacing:.04em}
 .w8{margin:22px 0 0}
 .w8s{position:relative;display:grid;grid-template-columns:38px 1fr;column-gap:22px;padding-bottom:38px;animation:w8in .7s cubic-bezier(.22,1,.36,1) both;animation-delay:calc(var(--i)*110ms)}
@@ -1321,20 +1357,22 @@ const PG='https://play-lh.googleusercontent.com/',SHOT={
 const aic=(u,f)=>`<img class="aic" src="${u}" alt="" referrerpolicy="no-referrer" onerror="this.outerHTML=this.dataset.f" data-f="${('<span class=&quot;aic&quot;>'+f+'</span>').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;')}">`;
 function pApps(){
   const k=S.ime||imeDef,d=IME[k],M='https://language.moe.gov.tw/uploads/files/';
-  return `<a class="back" href="#home">← 首頁</a><h2 class="hd">輸入法與軟體</h2>
+  return `<div class="w7 apx"><a class="w7bk" href="#home">← 首頁</a>
+   <header class="w7sh"><div><h2 class="hd w8ti">輸入法與軟體</h2></div></header>
+   <div class="w8 apb"><h3 class="sec"><i>01</i>輸入法</h3>
    <details class="ab res ap ime"><summary>${aic('https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/19/c7/8a/19c78a71-3b44-644a-86a0-7b4357e17f30/AppIcon-0-0-1x_U007epad-0-1-85-220.jpeg/200x200bb.jpg',SI.kbd)}<div><h3>教育部臺灣台語輸入法</h3><p>用臺羅拼音打台語漢字</p></div></summary><div class="abb"><p>教育部出的台語輸入法。照臺羅拼音打，像打注音一樣，會跳出漢字給你選。</p>${shots(SHOT.ime)}<h4>特色</h4><ul><li>用字照教育部的推薦用字和辭典</li><li>常用詞排前面，也能一次連打一整串</li><li>會看前後文，猜你要打哪個字</li><li>可以匯出、匯入自己的詞庫</li><li>手機版可以用講的轉成文字</li></ul>
     <h4>下載</h4><div class="filters tabs">${Object.entries(IME).map(([id,v])=>`<button class="fb ${k===id?'on':''}" data-act="ime" data-k="${id}">${imeIc(id)}<span>${v.n}</span></button>`).join('')}</div>
     <a class="btn pri big dl" href="${d.url}" target="_blank" rel="noopener">${d.cta}</a>
     <ol class="steps">${d.steps.map(x=>`<li>${x}</li>`).join('')}</ol>
     ${d.tip?`<p class="tip">${d.tip}</p>`:''}
     <p class="note"><a href="${M}${d.man}.pdf" target="_blank" rel="noopener">${d.n} 操作手冊（PDF）</a>　·　<a href="https://language.moe.gov.tw/material/info?m=a1c64194-23d9-433e-8782-8550080788d2" target="_blank" rel="noopener">官方說明頁</a></p></div></details>
-   <h3 class="sec">查字典</h3>
+   <h3 class="sec"><i>02</i>查字典</h3><div class="apg">
    <details class="ab res ap"><summary>${aic('https://sutian.moe.edu.tw/static/image/favicon/apple-touch-icon.png',SI.book)}<div><h3>教育部臺灣台語常用詞辭典</h3><p>教育部編的官方辭典</p></div></summary><div class="abb"><p>教育部編的台語辭典，收了兩萬多個詞。手機瀏覽器就能用。</p><h4>特色</h4><ul><li>可以用台語查，也可以用華語查</li><li>有詞義、例句、同義詞、反義詞</li><li>詞目和例句都能聽真人發音</li><li>還有分類、部首、筆畫的索引</li></ul><div class="plat"><a class="btn pri" href="${DICT}" target="_blank" rel="noopener" data-act="dict">開啟辭典</a></div></div></details>
    <details class="ab res ap"><summary>${aic('https://chhoe.taigi.info/images/apple-touch-icon.png',SI.search)}<div><h3>揣台語 ChhoeTaigi</h3><p>很多本辭典一起查</p></div></summary><div class="abb"><p>民間團隊做的辭典網站，把很多本辭典放在同一個搜尋框，一次查完。</p><h4>特色</h4><ul><li>詞量很大，查得到比較冷門的詞</li><li>白話字、臺羅、漢字都能打</li><li>可以用英文、日文、華語反過來找台文</li><li>各本辭典的寫法放在一起比</li></ul><div class="plat"><a class="btn pri" href="https://chhoe.taigi.info/" target="_blank" rel="noopener">開啟揣台語</a></div></div></details>
    <details class="ab res ap"><summary>${aic('https://itaigi.tw/static/tsiantuan/apple-touch-icon.png',SI.chat)}<div><h3>iTaigi 愛台語</h3><p>大家一起編的辭典</p></div></summary><div class="abb"><p>大家一起編的辭典。輸入華語詞，就看到民間各種台語講法，日常用語、新詞特別好查。</p><h4>特色</h4><ul><li>同一個詞常有好幾種講法，會一起列出來</li><li>有發音可以聽</li><li>大家投票：「按呢講好」或「按呢怪怪」，票多的排前面</li><li>查不到的詞可以自己補</li></ul><div class="plat"><a class="btn pri" href="https://itaigi.tw/k" target="_blank" rel="noopener">開啟 iTaigi</a></div></div></details>
    <details class="ab res ap"><summary>${aic('https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/b1/e5/f3/b1e5f3bb-9022-d6f7-a59c-67d8bcfafee6/AppIcon-0-0-1x_U007epad-0-1-0-sRGB-85-220.png/200x200bb.jpg',SI.books)}<div><h3>芋圓字典 Oo Inn</h3><p>台語、客語查詞 App</p></div></summary><div class="abb"><p>台語、客語的辭典 App，詞庫用教育部的。基本查字免費，進階功能要 App 內購買。</p>${shots(SHOT.oo)}<h4>特色</h4><ul><li>漢字、華語、台羅、注音都能查，不會標聲調也行</li><li>有真人發音</li><li>整篇文章貼上去，會幫你逐詞標上讀音</li><li>生詞可以收進詞單複習，也有複習遊戲</li></ul><div class="plat"><a class="btn pri" href="https://apps.apple.com/tw/app/id6477933002" target="_blank" rel="noopener">iPhone</a><a class="btn pri" href="https://play.google.com/store/apps/developer?id=Oo+Inn" target="_blank" rel="noopener">Android</a></div></div></details>
-   <h3 class="sec">學台語 App</h3>
-   <details class="ab res ap"><summary>${aic('muyu-icon.png',SI.mic)}<div><h3>台語嘛會通</h3><p>用遊戲練聽說讀寫</p></div></summary><div class="abb"><p>跟著「烏狗兄」用遊戲練習台語，適合初學者、家長和老師。基本功能免費，進階功能要 App 內購買。</p>${shots(SHOT.mh)}<h4>特色</h4><ul><li>聽、說、讀、寫四種題型都有</li><li>內容貼近生活情境，附真人錄音</li><li>有錯題本，答錯的題目可以回頭再練</li><li>可以跟朋友對戰</li></ul><div class="plat"><a class="btn pri" href="https://apps.apple.com/tw/app/id6751629581" target="_blank" rel="noopener">iPhone</a></div><p class="note">目前只有 iPhone 版。</p></div></details>`;
+   </div><h3 class="sec"><i>03</i>學台語 App</h3>
+   <details class="ab res ap"><summary>${aic('muyu-icon.png',SI.mic)}<div><h3>台語嘛會通</h3><p>用遊戲練聽說讀寫</p></div></summary><div class="abb"><p>跟著「烏狗兄」用遊戲練習台語，適合初學者、家長和老師。基本功能免費，進階功能要 App 內購買。</p>${shots(SHOT.mh)}<h4>特色</h4><ul><li>聽、說、讀、寫四種題型都有</li><li>內容貼近生活情境，附真人錄音</li><li>有錯題本，答錯的題目可以回頭再練</li><li>可以跟朋友對戰</li></ul><div class="plat"><a class="btn pri" href="https://apps.apple.com/tw/app/id6751629581" target="_blank" rel="noopener">iPhone</a></div><p class="note">目前只有 iPhone 版。</p></div></details></div></div>`;
 }
 
 // ---- 700 字 ----
