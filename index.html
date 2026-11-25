@@ -619,8 +619,12 @@ html[data-theme=dark] .mx i:not(.ok):not(.bad){background:rgba(255,255,255,.14)}
 .abx .abx-ph{margin:0;border-radius:22px;overflow:hidden;line-height:0;background:var(--line);box-shadow:0 26px 50px -34px rgba(40,30,20,.5)}
 .abx .abx-ph img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover}
 .abx .abx-tx h3{margin:2px 0 0;font-family:var(--serif);font-weight:700;font-size:clamp(30px,4vw,38px);letter-spacing:.1em;line-height:1.2}
-.abx .abx-role{margin:10px 0 26px;font-size:14.5px;letter-spacing:.1em;color:var(--gd)}
-.abx .abx-tx>p:not(.abx-role){margin:0 0 14px;font-size:15.5px;line-height:2.05;color:var(--ink);max-width:36em}
+.abx .abx-k{display:block;font-size:12.5px;letter-spacing:.3em;color:var(--gd)}
+.abx .abx-tx h3{margin-top:8px}
+.abx .abx-edu{display:flex;align-items:baseline;gap:14px;margin:0 0 26px;font-size:14.5px;letter-spacing:.08em;color:var(--ink2)}
+.abx .abx-edu span{font-size:12.5px;letter-spacing:.24em;color:var(--gd)}
+.abx .abx-role{margin:10px 0 8px;font-size:14.5px;letter-spacing:.1em;color:var(--gd)}
+.abx .abx-tx>p:not(.abx-role):not(.abx-edu){margin:0 0 14px;font-size:15.5px;line-height:2.05;color:var(--ink);max-width:36em}
 .abx .abx-tx .w8rows{margin-top:30px;max-width:420px}
 .abx .abx-src{margin-top:64px;padding-top:22px;border-top:1px solid var(--line)}
 .abx .abx-src h4{margin:0 0 12px;font-size:12.5px;font-weight:400;letter-spacing:.24em;color:var(--gd)}
@@ -1267,11 +1271,12 @@ function pAbout(){
    <section class="abx-h">
     <figure class="abx-ph"><img src="about-me.jpg" alt="陳威錡老師"></figure>
     <div class="abx-tx">
-     <h3>陳威錡</h3>
-     <p class="abx-role">光明國中・本土語文（閩南語）老師</p>
+     <small class="abx-k">設計者</small><h3>陳威錡</h3>
+     <p class="abx-role">台中市立光明國中 台語老師</p>
+     <p class="abx-edu"><span>學歷</span>國立臺灣師範大學 臺灣語文學系</p>
      <p>我在國中教台語，也在研究所讀台灣文學。教過學生，也教過日本學員和外籍研究員，發現不管年紀、母語是什麼，大家學台語卡住的地方其實差不多：不知道從哪裡開始、字不知道怎麼寫、聽得懂但開不了口</p>
      <p>所以我想把這些年用得上的資源和自己做的小工具，放在同一個地方。街仔路是給學生自己練習用的，進度只存在你自己的瀏覽器裡，不用註冊，也不會被收集</p>
-     <div class="w8rows">${w8row('@taigi_lausu','教學紀錄和台語文小知識，網站哪裡怪怪的，也歡迎告訴我','https://www.instagram.com/taigi_lausu/',{ext:1,kick:'Instagram'})}</div>
+     <div class="w8rows">${w8row('@taigi_lausu','教學記錄跟科普台語知識，目前只開放給任教班學生追蹤','https://www.instagram.com/taigi_lausu/',{ext:1,kick:'Instagram'})}</div>
     </div>
    </section>
    <section class="abx-src"><h4>資料來源</h4><ul>
