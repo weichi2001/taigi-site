@@ -1218,7 +1218,7 @@ function pAbout(){
   <h3 class="ab-sec hd">這個網站</h3>
   <p class="ab-p">街仔路是給學生自己練習用的。聽、說、讀、寫的資源都整理在這裡，點一下就能開始，不用到處找。進度和測驗紀錄只存在你自己的瀏覽器裡，不用註冊，也不會被收集。</p>
   <div class="ab-list">
-    ${it(SI.book,'700 字自學','教育部推薦用字，每字有台羅、華語、用例，可翻卡自測。','#w700')}
+    ${it(SI.book,'700 字自學','教育部推薦用字，每字有台羅、華語、用例，可翻卡自測','#w700')}
     ${it(SI.pen,'挑錯字挑戰','哪一個才是推薦用字？練習避開檢定不能用的寫法。','#quiz')}
     ${it(SI.search,'辭典','輸入華語、漢字或台羅都查得到，還能聽發音。','#',' data-act="minidict"')}
     ${it(SI.screen,'台語戲台','動畫、電影、節目，邊看邊練聽力。','#anime')}
@@ -1244,15 +1244,15 @@ function pStart(){
   const row=w8row;
   const step=(n,t,rows)=>`<section class="w8s" style="--i:${n}"><div class="w8n">${String(n).padStart(2,'0')}</div><div class="w8c"><div class="w8h"><h3>${t}</h3></div><div class="w8rows">${rows}</div></div></section>`;
   return `<div class="w7"><a class="w7bk" href="#home">← 首頁</a>
-   <header class="w7sh"><div><h2 class="hd w8ti">系統性學習</h2><p class="w8note">四個步驟是依照基礎至進階排序，不必嚴格照順序進行，四者並行效果更好。<br>不過，當你學得越久，建議可以嘗試看看將更多時間放在後面的步驟。</p></div></header>
+   <header class="w7sh"><div><h2 class="hd w8ti">系統性學習</h2><p class="w8note">四個步驟依照基礎至進階排序，因此不必嚴格照順序進行，四者並行效果會更好<br>不過，當你學得越久，建議可以嘗試將更多時間放在後面的步驟</p></div></header>
    <div class="w8">
     ${step(1,'認識台羅拼音',
       row('台灣台語羅馬拼音教學網','結合嘴部動作的發音示範及練習遊戲，讓你自學也能學得標準！','https://tailo.moe.edu.tw/',{ext:1,kick:'教育部'})+
-      row(tailo.t,'聽音檔練拼寫、標聲調、打台羅，連變調也能練。',tailo.href,{ext:1,kick:'設計者　Tân Kiàn-tiong'}))}
+      row(tailo.t,'聽音檔練拼寫、標聲調、打台羅，連變調也能練',tailo.href,{ext:1,kick:'設計者　Tân Kiàn-tiong'}))}
     ${step(2,'學會基礎 700 字',
       row('700 字自學','教育部推薦用字，每字有台羅、華語、用例與常見錯寫，可翻卡自測。','#w700',{bar:known/D.length,mt:`${known} / ${D.length}`}))}
     ${step(3,'持續練習',
-      row('練習資源','挑錯字、寫字、練台羅、複習。','#learn'))}
+      row('練習資源','挑錯字、寫字、練台羅、複習','#learn'))}
     ${step(4,'創造沈浸式學習環境',
       row('台語戲台','動畫、電影、戲劇、節目，邊看影片邊學習！','#anime',{kick:'Tâi-gí Hì-tâi'})+
       row('台語歌廳','正港台文正字的卡啦OK','https://weichi2001.github.io/taigi-ktv/?student',{kick:'Tâi-gí Ko-thiann'})+
