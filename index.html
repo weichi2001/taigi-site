@@ -2228,7 +2228,7 @@ function enter(r){
 }
 function pKtv(){
   setTimeout(()=>{const f=document.getElementById('ktvF');if(f){const w=f.parentNode,ok=()=>w.classList.add('ok'),fit=()=>{if(document.body.dataset.r!=='ktv')return;try{const p=document.createElement('div');p.style.cssText='position:fixed;left:0;bottom:0;width:0;height:env(safe-area-inset-bottom,0px);visibility:hidden';document.body.appendChild(p);const sab=p.offsetHeight;p.remove();f.contentWindow.postMessage({ktvInsets:{bottom:sab}},'*')}catch(e){}};fit();addEventListener('resize',fit);addEventListener('orientationchange',fit);f.addEventListener('load',()=>{try{f.focus()}catch(e){};fit();setTimeout(fit,500);setTimeout(ok,250)});setTimeout(ok,6000)}},0);
-  return `<div class="ktvw"><div class="ktvl"><div style="text-align:center"><div class="sp-logo">街仔<b>路</b></div><i class="sp-bar"></i></div></div><iframe id="ktvF" class="ktvf" src="https://weichi2001.github.io/taigi-ktv/?student&v=20261125h" title="台語歌廳" allow="autoplay; fullscreen; encrypted-media; picture-in-picture; clipboard-write; display-capture" allowfullscreen></iframe></div>`;
+  return `<div class="ktvw"><div class="ktvl"><div style="text-align:center"><div class="sp-logo">街仔<b>路</b></div><i class="sp-bar"></i></div></div><iframe id="ktvF" class="ktvf" src="https://weichi2001.github.io/taigi-ktv/?student&v=20261125i" title="台語歌廳" allow="autoplay; fullscreen; encrypted-media; picture-in-picture; clipboard-write; display-capture" allowfullscreen></iframe></div>`;
 }
 function view(r){
   if(r==='dictwin')return '';
