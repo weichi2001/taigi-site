@@ -2318,6 +2318,8 @@ $('#app').addEventListener('click',e=>{
   if(a==='arev'){S.an.rev=!S.an.rev;render(true);return}
   if(a==='ass'){S.an.ss=+el.dataset.k;render(true);return}
   if(a==='aview'){const d=el.dataset;if(d.p){const r=epSt[d.p]||(epSt[d.p]={w:[]});r.s=d.s;r.l=d.e;r.n=+d.n;r.w=r.w||[];if(!r.w.includes(d.e))r.w.push(d.e);saveEp()}
+  // iPhone / iPad：公視+ 的播放器放在別人網頁裡會被 Safari 擋掉（第三方儲存限制），直接開新分頁才播得出來
+  if(!el.dataset.l&&(/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1))){window.open(el.dataset.u,'_blank','noopener');render(true);return}
   S.an.view={u:el.dataset.u,t:el.dataset.t,o:el.dataset.o,l:el.dataset.l};render(true);return}
   if(a==='mview'){mvOpen(el.dataset.a,el.dataset.e);return}
   if(a==='mvclose'){S.an.mv=null;render(true);return}
