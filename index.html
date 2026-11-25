@@ -581,9 +581,9 @@ html[data-theme=dark] .mx i:not(.ok):not(.bad){background:rgba(255,255,255,.14)}
 .w8r .w8t{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
 .w8r .tx{min-width:0}
 .w8rows:has(>.w8r:nth-child(2):last-child){grid-template-columns:1fr 1fr}
-.w8r:only-child{grid-column:1/-1;display:grid;grid-template-columns:minmax(170px,230px) 1fr 220px 22px;align-items:center;gap:8px 28px;min-height:0;padding:22px 26px}
-.w8r:only-child .w8t{display:contents}
-.w8r:only-child .tx{grid-column:1;grid-row:1}.w8r:only-child small{grid-column:2;grid-row:1}.w8r:only-child .w8p{grid-column:3;grid-row:1;margin:0;padding:0}.w8r:only-child .ar{grid-column:4;grid-row:1}
+.w8s .w8r{grid-column:1/-1;display:grid;grid-template-columns:270px 1fr 22px;align-items:center;gap:6px 24px;min-height:0;padding:22px 26px}
+.w8s .w8r .w8t{display:contents}
+.w8s .w8r .tx{grid-column:1;grid-row:1}.w8s .w8r small{grid-column:2;grid-row:1/3}.w8s .w8r .w8p{grid-column:1;grid-row:2;margin:0;padding:0}.w8s .w8r .ar{grid-column:3;grid-row:1/3}
 .w8r .kk{display:block;margin-bottom:4px;font-family:"GenRyu Lat",Huninn,sans-serif;font-style:normal;font-size:12px;letter-spacing:.16em;color:var(--gd)}
 .w8r b{display:block;font-family:var(--serif);font-weight:700;font-size:20px;letter-spacing:.06em;line-height:1.4;transition:color .2s}
 .w8r .w8by{display:block;margin-top:10px;font-size:12px;letter-spacing:.1em;color:var(--ink2);opacity:.75}
@@ -596,7 +596,7 @@ html[data-theme=dark] .mx i:not(.ok):not(.bad){background:rgba(255,255,255,.14)}
 .w8ft{display:inline-flex;align-items:center;gap:10px;margin:30px 0 0 60px;padding:8px 0;color:var(--ink2);text-decoration:none;font-size:14.5px;letter-spacing:.08em;transition:color .2s}
 .w8ft i{font-style:normal;transition:transform .3s cubic-bezier(.22,1,.36,1)}.w8ft:hover{color:var(--accent)}.w8ft:hover i{transform:translateX(4px)}
 @keyframes w8in{from{opacity:0;transform:translateY(18px)}}
-@media(max-width:700px){.w8r:only-child{display:flex;flex-direction:column;align-items:stretch;gap:8px;padding:16px 18px 14px}.w8r:only-child .w8t{display:flex}.w8r:only-child .w8p{margin-top:auto;padding-top:6px}}
+@media(max-width:700px){.w8s .w8r{display:flex;flex-direction:column;align-items:stretch;gap:8px;padding:16px 18px 14px}.w8s .w8r .w8t{display:flex}.w8s .w8r .w8p{margin-top:auto;padding-top:6px}}
 @media(max-width:560px){.w8rows,.w8rows:has(>.w8r:nth-child(2):last-child){grid-template-columns:1fr}.w8r{min-height:0;padding:16px 18px 14px}.w8s{grid-template-columns:34px 1fr;column-gap:14px}.w8h{height:34px}.w8n{width:34px;height:34px;font-size:14px}.w8s::before{left:17px;top:42px}.w8ft{margin-left:48px}}
 @media(prefers-reduced-motion:reduce){.w8s{animation:none}}
 @keyframes pgOut{to{opacity:0;transform:translateY(-8px)}}
@@ -1250,7 +1250,7 @@ function pStart(){
       row('台灣台語羅馬拼音教學網','結合嘴部動作的發音示範及練習遊戲，讓你自學也能學得標準！','https://tailo.moe.edu.tw/',{ext:1,kick:'教育部'})+
       row(tailo.t,'聽音檔練拼寫、標聲調、打台羅，連變調也能練',tailo.href,{ext:1,kick:'設計者　Tân Kiàn-tiong'}))}
     ${step(2,'學會基礎 700 字',
-      row('700 字自學','教育部推薦用字，每字有台羅、華語、用例與常見錯寫，可翻卡自測。','#w700',{bar:known/D.length,mt:`${known} / ${D.length}`}))}
+      row('700 字自學','教育部推薦用字，每字有台羅、華語、用例與常見錯寫，可翻卡自測','#w700',{bar:known/D.length,mt:`${known} / ${D.length}`}))}
     ${step(3,'持續練習',
       row('練習資源','挑錯字、寫字、練台羅、複習','#learn'))}
     ${step(4,'創造沈浸式學習環境',
