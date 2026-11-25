@@ -565,28 +565,28 @@ html[data-theme=dark] .mx i:not(.ok):not(.bad){background:rgba(255,255,255,.14)}
 .w7fb .w7ac{justify-content:center}
 @media(prefers-reduced-motion:reduce){.w7fc,.w7fb{animation:none}}
 /* ===== 系統性學習（按部就班）===== */
-.w8{margin:14px 0 0}
-.w8s{position:relative;display:grid;grid-template-columns:44px 1fr;column-gap:22px;padding-bottom:44px;animation:w8in .7s cubic-bezier(.22,1,.36,1) both;animation-delay:calc(var(--i)*110ms)}
-.w8s:last-of-type{padding-bottom:14px}
-.w8s::before{content:"";position:absolute;left:22px;top:52px;bottom:8px;width:1px;background:var(--line)}
+.w8{margin:22px 0 0}
+.w8s{position:relative;display:grid;grid-template-columns:38px 1fr;column-gap:22px;padding-bottom:38px;animation:w8in .7s cubic-bezier(.22,1,.36,1) both;animation-delay:calc(var(--i)*110ms)}
+.w8s:last-of-type{padding-bottom:6px}
+.w8s::before{content:"";position:absolute;left:19px;top:46px;bottom:6px;width:1px;background:var(--line)}
 .w8s:last-of-type::before{display:none}
-.w8n{position:relative;z-index:1;width:44px;height:44px;border-radius:50%;border:1px solid var(--gd);display:grid;place-items:center;font-family:var(--serif);font-weight:700;font-size:17px;letter-spacing:.04em;color:var(--gd);background:var(--paper)}
-.w8h{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 16px;min-height:44px;align-content:center}
-.w8h h3{margin:0;font-family:var(--serif);font-weight:700;font-size:clamp(24px,3.4vw,30px);letter-spacing:.06em;line-height:1.3}
-.w8h p{margin:0;font-size:14px;letter-spacing:.08em;color:var(--ink2)}
-.w8rows{margin-top:12px;border-top:1px solid var(--line)}
-.w8r{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:17px 4px;border-bottom:1px solid var(--line);color:var(--ink);text-decoration:none}
+.w8n{position:relative;z-index:1;width:38px;height:38px;border-radius:50%;border:1px solid var(--gd);display:grid;place-items:center;font-family:var(--serif);font-weight:700;font-size:15px;letter-spacing:.04em;color:var(--gd);background:var(--paper)}
+.w8h{display:flex;align-items:center;min-height:38px}
+.w8h h3{margin:0;font-family:var(--serif);font-weight:700;font-size:clamp(22px,3vw,26px);letter-spacing:.06em;line-height:1.3}
+.w8rows{margin-top:6px}
+.w8r{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:11px 0;color:var(--ink);text-decoration:none}
 .w8r .tx{min-width:0}
-.w8r b{display:block;font-family:var(--serif);font-weight:700;font-size:20px;letter-spacing:.05em;line-height:1.35;transition:color .2s}
-.w8r small{display:block;margin-top:3px;font-size:14px;line-height:1.6;color:var(--ink2)}
+.w8r b{display:block;font-family:var(--serif);font-weight:700;font-size:18px;letter-spacing:.05em;line-height:1.4;transition:color .2s}
+.w8r small{display:block;margin-top:2px;font-size:13.5px;line-height:1.6;color:var(--ink2)}
 .w8r .rt{flex:none;display:flex;align-items:center;gap:14px}
-.w8r .rt em{font-style:normal;font-size:12.5px;letter-spacing:.08em;color:var(--ink2);white-space:nowrap}
-.w8r .ar{font-style:normal;font-size:18px;color:var(--ink2);transition:transform .3s cubic-bezier(.22,1,.36,1),color .2s}
-.w8r:hover b,.w8r:hover .ar{color:var(--accent)}.w8r:hover .ar{transform:translateX(4px)}
-.w8ft{display:flex;justify-content:space-between;align-items:center;margin-top:30px;padding:20px 4px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);color:var(--ink);text-decoration:none;font-family:var(--serif);font-weight:700;font-size:18px;letter-spacing:.06em}
-.w8ft i{font-style:normal;color:var(--ink2);transition:transform .3s cubic-bezier(.22,1,.36,1),color .2s}.w8ft:hover i{transform:translateX(4px);color:var(--accent)}
+.w8r b em{margin-left:12px;font-family:"GenRyu Lat",Huninn,sans-serif;font-style:normal;font-weight:400;font-size:13px;letter-spacing:.1em;color:var(--gd)}
+.w8r .ar{font-style:normal;font-size:17px;color:var(--ink2);opacity:0;transform:translateX(-6px);transition:transform .3s cubic-bezier(.22,1,.36,1),opacity .25s,color .2s}
+.w8r:hover b,.w8r:hover .ar{color:var(--accent)}.w8r:hover .ar{opacity:1;transform:none}
+@media(hover:none){.w8r .ar{opacity:.5;transform:none}}
+.w8ft{display:inline-flex;align-items:center;gap:10px;margin:30px 0 0 60px;padding:8px 0;color:var(--ink2);text-decoration:none;font-size:14.5px;letter-spacing:.08em;transition:color .2s}
+.w8ft i{font-style:normal;transition:transform .3s cubic-bezier(.22,1,.36,1)}.w8ft:hover{color:var(--accent)}.w8ft:hover i{transform:translateX(4px)}
 @keyframes w8in{from{opacity:0;transform:translateY(18px)}}
-@media(max-width:560px){.w8s{grid-template-columns:36px 1fr;column-gap:14px}.w8n{width:36px;height:36px;font-size:14px}.w8s::before{left:18px;top:44px}.w8r .rt em{display:none}}
+@media(max-width:560px){.w8s{grid-template-columns:34px 1fr;column-gap:14px}.w8n{width:34px;height:34px;font-size:14px}.w8s::before{left:17px;top:42px}.w8ft{margin-left:48px}}
 @media(prefers-reduced-motion:reduce){.w8s{animation:none}}
 @keyframes pgOut{to{opacity:0;transform:translateY(-8px)}}
 @keyframes pgIn{from{opacity:0;transform:translateY(16px)}}
@@ -1229,14 +1229,14 @@ function pAbout(){
 }
 function pStart(){
   const known=D.filter(o=>get(o.n)==1).length,tailo=RES.find(r=>r.t==='練台羅');
-  const row=(t,d,href,o)=>{o=o||{};const ext=o.ext;return `<a class="w8r" href="${esc(href)}"${ext?' target="_blank" rel="noopener"':''}><span class="tx"><b>${esc(t)}</b><small>${esc(d)}</small></span><span class="rt">${o.mt?`<em>${esc(o.mt)}</em>`:''}<i class="ar">${ext?'↗':'→'}</i></span></a>`};
-  const step=(n,t,lead,rows)=>`<section class="w8s" style="--i:${n}"><div class="w8n">${String(n).padStart(2,'0')}</div><div class="w8c"><div class="w8h"><h3>${t}</h3><p>${lead}</p></div><div class="w8rows">${rows}</div></div></section>`;
+  const row=(t,d,href,o)=>{o=o||{};const ext=o.ext;return `<a class="w8r" href="${esc(href)}"${ext?' target="_blank" rel="noopener"':''}><span class="tx"><b>${esc(t)}${o.mt?`<em>${esc(o.mt)}</em>`:''}</b><small>${esc(d)}</small></span><span class="rt"><i class="ar">${ext?'↗':'→'}</i></span></a>`};
+  const step=(n,t,lead,rows)=>`<section class="w8s" style="--i:${n}"><div class="w8n">${String(n).padStart(2,'0')}</div><div class="w8c"><div class="w8h"><h3>${t}</h3></div><div class="w8rows">${rows}</div></div></section>`;
   return `<div class="w7"><a class="w7bk" href="#home">← 首頁</a>
-   <header class="w7sh"><div><small>四個步驟</small><h2 class="hd">系統性學習</h2><i class="ln"></i></div></header>
+   <header class="w7sh"><div><h2 class="hd">系統性學習</h2></div></header>
    <div class="w8">
     ${step(1,'認識台羅拼音','先學會唸、會拼',
-      row('教育部臺羅網站','教育部的台語羅馬字資訊。','https://tailo.moe.edu.tw/',{ext:1,mt:'查詢'})+
-      row(tailo.t,tailo.d,tailo.href,{ext:1,mt:tailo.time}))}
+      row('教育部臺羅網站','教育部的台語羅馬字資訊。','https://tailo.moe.edu.tw/',{ext:1})+
+      row(tailo.t,tailo.d,tailo.href,{ext:1}))}
     ${step(2,'學 700 字','一段 35 字，一段一段來',
       row('700 字自學','教育部推薦用字，每字有台羅、華語、用例與常見錯寫，可翻卡自測。','#w700',{mt:`${known} / ${D.length}`}))}
     ${step(3,'練習','把學過的用出來，錯的回頭複習',
