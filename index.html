@@ -8,7 +8,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-title" content="街仔路">
-<meta name="build" content="2c153cb2f2">
+<meta name="build" content="a8b07116bb">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="mobile-web-app-capable" content="yes">
@@ -258,6 +258,12 @@ body.anime .back{color:#b9ab9b}body.anime .sub{color:#b9ab9b}
  .rowx[style*="flex-wrap"] .pt{width:100%!important}
  .pt b{font-size:20px}.pt small{font-size:14px}
 }
+/* 手機：圓角裁切在 iOS 會被縮放／圖片蓋掉，改用遮罩；分類列底部不要被切；隱藏右側捲動條 */
+.pt{-webkit-mask-image:-webkit-radial-gradient(white,black);isolation:isolate}
+.pt img{border-radius:inherit}
+@media(hover:none){.pt:hover{transform:none}}
+.achw .achips{padding:2px 0 8px;margin-bottom:-6px}
+@media(hover:none) and (pointer:coarse){html,body{scrollbar-width:none}html::-webkit-scrollbar,body::-webkit-scrollbar{display:none;width:0;height:0}}
 .rowh{display:flex;align-items:center;gap:8px;margin:22px 0 8px}.rowh h3{margin:0;font-size:19px}.rowh small{color:#9c8e80}
 .rowh .arr{margin-left:auto;display:flex;gap:6px}
 .arr button{width:32px;height:32px;border-radius:50%;border:0;background:#2c2622;color:#f1e9dd;cursor:pointer;font-size:16px}
