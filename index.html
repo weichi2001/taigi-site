@@ -586,6 +586,7 @@ html[data-theme=dark] .mx i:not(.ok):not(.bad){background:rgba(255,255,255,.14)}
 .w8r:only-child .tx{grid-column:1;grid-row:1}.w8r:only-child small{grid-column:2;grid-row:1}.w8r:only-child .w8p{grid-column:3;grid-row:1;margin:0;padding:0}.w8r:only-child .ar{grid-column:4;grid-row:1}
 .w8r .kk{display:block;margin-bottom:4px;font-family:"GenRyu Lat",Huninn,sans-serif;font-style:normal;font-size:12px;letter-spacing:.16em;color:var(--gd)}
 .w8r b{display:block;font-family:var(--serif);font-weight:700;font-size:20px;letter-spacing:.06em;line-height:1.4;transition:color .2s}
+.w8r .w8by{display:block;margin-top:10px;font-size:12px;letter-spacing:.1em;color:var(--ink2);opacity:.75}
 .w8r small{display:block;font-size:13.5px;line-height:1.7;color:var(--ink2)}
 .w8r .ar{flex:none;font-style:normal;font-size:17px;line-height:1.5;color:var(--ink2);opacity:.6;transition:transform .3s cubic-bezier(.22,1,.36,1),opacity .25s,color .2s}
 .w8r:hover b{color:var(--accent)}.w8r:hover .ar{color:var(--accent);opacity:1;transform:translateX(4px)}
@@ -1237,7 +1238,7 @@ function pAbout(){
   <p class="ab-p">教學紀錄和台語文小知識，我會放在 IG。網站哪裡怪怪的，也歡迎告訴我。</p>
   <a class="ab-btn" href="https://www.instagram.com/taigi_lausu/" target="_blank" rel="noopener">${SI.cam}<span>@taigi_lausu</span></a>`;
 }
-const w8row=(t,d,href,o)=>{o=o||{};const ext=o.ext;return `<a class="w8r" href="${esc(href)}"${ext?' target="_blank" rel="noopener"':''}><span class="w8t"><span class="tx">${o.kick?`<em class="kk">${esc(o.kick)}</em>`:''}<b>${esc(t)}</b></span><i class="ar">${ext?'↗':'→'}</i></span><small>${esc(d)}</small>${o.bar!=null?`<span class="w8p"><i><u style="width:${o.bar*100}%"></u></i><em>${esc(o.mt||'')}</em></span>`:''}</a>`};
+const w8row=(t,d,href,o)=>{o=o||{};const ext=o.ext;return `<a class="w8r" href="${esc(href)}"${ext?' target="_blank" rel="noopener"':''}><span class="w8t"><span class="tx">${o.kick?`<em class="kk">${esc(o.kick)}</em>`:''}<b>${esc(t)}</b></span><i class="ar">${ext?'↗':'→'}</i></span><small>${esc(d)}</small>${o.by?`<span class="w8by">設計者　${esc(o.by)}</span>`:''}${o.bar!=null?`<span class="w8p"><i><u style="width:${o.bar*100}%"></u></i><em>${esc(o.mt||'')}</em></span>`:''}</a>`};
 function pStart(){
   const known=D.filter(o=>get(o.n)==1).length,tailo=RES.find(r=>r.t==='練台羅');
   const row=w8row;
@@ -1246,8 +1247,8 @@ function pStart(){
    <header class="w7sh"><div><h2 class="hd w8ti">系統性學習</h2><p class="w8note">四個步驟是依照基礎至進階排序，不必嚴格照順序進行，四者並行效果更好。<br>不過，當你學得越久，建議可以嘗試看看將更多時間放在後面的步驟。</p></div></header>
    <div class="w8">
     ${step(1,'認識台羅拼音',
-      row('教育部臺羅網站','教育部的台語羅馬字資訊。','https://tailo.moe.edu.tw/',{ext:1})+
-      row(tailo.t,tailo.d,tailo.href,{ext:1}))}
+      row('台灣台語羅馬拼音教學網','結合嘴部動作的發音示範及練習遊戲，讓你自學也能學得標準！','https://tailo.moe.edu.tw/',{ext:1,kick:'教育部'})+
+      row(tailo.t,'聽音檔練拼寫、標聲調、打台羅，連變調也能練。',tailo.href,{ext:1,kick:'設計者　Tân Kiàn-tiong'}))}
     ${step(2,'學會基礎 700 字',
       row('700 字自學','教育部推薦用字，每字有台羅、華語、用例與常見錯寫，可翻卡自測。','#w700',{bar:known/D.length,mt:`${known} / ${D.length}`}))}
     ${step(3,'持續練習',
