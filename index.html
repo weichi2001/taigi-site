@@ -2,13 +2,14 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#f4e8d6">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-title" content="街仔路">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="mobile-web-app-capable" content="yes">
 <script>(function(){try{var t=localStorage.getItem('tgtheme');if(t!=='dark'&&t!=='light')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.dataset.theme=t;document.querySelector('meta[name=theme-color]').content=t==='dark'?'#14110f':'#f4e8d6'}catch(e){}})()</script>
 <title>街仔路</title>
@@ -1147,9 +1148,18 @@ html[data-theme=dark] .bkf-a{background:radial-gradient(46% 110% at 14% 70%,rgba
 body .top .in{position:relative;background:linear-gradient(180deg,rgba(255,255,255,.10) 0,rgba(255,255,255,0) 60%),rgba(26,25,23,.6);-webkit-backdrop-filter:blur(18px) saturate(1.8) brightness(.78);backdrop-filter:blur(18px) saturate(1.8) brightness(.78);border:1px solid rgba(255,255,255,.1);box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 10px 28px rgba(0,0,0,.2)}
 body .top .in::before{display:none}
 html[data-theme=dark] body .top .in{background:linear-gradient(180deg,rgba(255,255,255,.08) 0,rgba(255,255,255,0) 60%),rgba(255,255,255,.10);-webkit-backdrop-filter:blur(18px) saturate(1.6) brightness(1);backdrop-filter:blur(18px) saturate(1.6) brightness(1);border:1px solid rgba(255,255,255,.12);box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 10px 28px rgba(0,0,0,.4)}
+
+.top{padding-top:calc(16px + env(safe-area-inset-top,0px))}
+@media(min-width:900px){.top{padding-top:calc(20px + env(safe-area-inset-top,0px))}}
+#fab{bottom:calc(18px + env(safe-area-inset-bottom,0px))}
+#toast,#eb-fb{bottom:calc(24px + env(safe-area-inset-bottom,0px))}
+.ktvw{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);box-sizing:border-box}
+#sbar{display:none}
+@media(display-mode:standalone){#sbar{display:block;position:fixed;top:0;left:0;right:0;height:calc(env(safe-area-inset-top,0px) + 4px);z-index:10000;pointer-events:none;background:linear-gradient(rgba(26,19,15,.58),rgba(26,19,15,0))}body[data-r=ktv] #sbar{display:none}}
 </style>
 </head>
 <body>
+<div id="sbar" aria-hidden="true"></div>
 <div id="splash" aria-hidden="true"><div class="sp-in"><div class="sp-logo">街仔<b>路</b></div><small>Ke-á-lōo</small><i class="sp-bar"></i></div></div>
 <script>(function(){var t0=Date.now(),sp=document.getElementById('splash'),ready=false,fonts=false,done=false,min=location.hash==='#dictwin'?0:650;
 function fin(){if(done)return;done=true;document.documentElement.classList.add('sp-out');setTimeout(function(){if(sp&&sp.parentNode)sp.parentNode.removeChild(sp)},600)}
