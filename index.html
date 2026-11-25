@@ -27,7 +27,7 @@
 @keyframes spBar{100%{transform:translateX(100%)}}
 @keyframes spIn{from{opacity:0}}
 html.sp-out #splash{opacity:0;visibility:hidden;pointer-events:none}
-html.sp-out #app,html.sp-out .top{animation:spIn .6s ease both}
+html.sp-out #app,html.sp-out .top{animation:spIn .6s ease backwards}
 @media(prefers-reduced-motion:reduce){#splash,#splash .sp-logo,#splash .sp-bar::after,html.sp-out #app,html.sp-out .top{animation:none!important;transition:none!important}}
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Andika:wght@400;700&display=swap" rel="stylesheet">
