@@ -630,10 +630,11 @@ html[data-theme=dark] .mx i:not(.ok):not(.bad){background:rgba(255,255,255,.14)}
 .abx .abx-src{margin-top:80px;padding-top:24px;border-top:1px solid var(--line)}
 .abx .abx-src h4{margin:0 0 12px;font-size:12.5px;font-weight:400;letter-spacing:.24em;color:var(--gd)}
 .abx .abx-src ul{list-style:none;margin:0;padding:0;font-size:13px;line-height:2;color:var(--ink2)}
-.abx .abx-src li span{display:inline-block;min-width:9em;margin-right:.5em;color:var(--ink);opacity:.62}
+.abx .abx-src li{display:grid;grid-template-columns:11.5em 1fr;gap:0 .5em}
+.abx .abx-src li span{display:block;margin:0;color:var(--ink);opacity:.62}
 .abx .abx-pv{margin:22px 0 0;font-size:12.5px;color:var(--ink2);opacity:.8}
 @media(max-width:900px){.abx .abx-h{gap:48px}}
-@media(max-width:760px){.abx .abx-src li{margin-bottom:8px;line-height:1.7}.abx .abx-src li span{display:block;min-width:0;margin:0 0 1px;font-size:12px}.abx .abx-h{grid-template-columns:1fr;gap:30px;margin-top:32px}.abx .abx-l{display:contents}.abx .abx-ph{order:1;max-width:300px}.abx .abx-tx{order:2}.abx .abx-l .w8rows{order:3;margin-top:0}.abx .abx-tx>p.abx-lead{margin-top:36px;padding-top:28px}.abx .abx-tx>p:not(.abx-role):not(.abx-edu):not(.abx-lead){font-size:15.5px;line-height:2.1}.abx .abx-src{margin-top:56px}}
+@media(max-width:760px){.abx .abx-src li{display:block;margin-bottom:8px;line-height:1.7}.abx .abx-src li span{display:block;min-width:0;margin:0 0 1px;font-size:12px}.abx .abx-h{grid-template-columns:1fr;gap:30px;margin-top:32px}.abx .abx-l{display:contents}.abx .abx-ph{order:1;max-width:300px}.abx .abx-tx{order:2}.abx .abx-l .w8rows{order:3;margin-top:0}.abx .abx-tx>p.abx-lead{margin-top:36px;padding-top:28px}.abx .abx-tx>p:not(.abx-role):not(.abx-edu):not(.abx-lead){font-size:15.5px;line-height:2.1}.abx .abx-src{margin-top:56px}}
 .w8note{margin:26px 0 0;max-width:38em;font-size:14.5px;line-height:1.85;color:var(--ink2);letter-spacing:.04em}
 .w8{margin:22px 0 0}
 .w8s{position:relative;display:grid;grid-template-columns:38px 1fr;column-gap:22px;padding-bottom:38px;animation:w8in .7s cubic-bezier(.22,1,.36,1) both;animation-delay:calc(var(--i)*110ms)}
@@ -1287,15 +1288,10 @@ function pAbout(){
     </div>
    </section>
    <section class="abx-src"><h4>參考資料</h4><ul>
-    <li><span>辭典、例句、發音</span>教育部《臺灣台語常用詞辭典》</li>
-    <li><span>700 字</span>教育部《臺灣台語推薦用字 700 字表》</li>
-    <li><span>台羅與輸入法</span>教育部臺灣台語羅馬拼音教學網、臺灣台語輸入法</li>
-    <li><span>課本對照</span>全華版國中台語課本</li>
-    <li><span>歌詞用字</span>臺語歌真正正字歌詞網</li>
-    <li><span>書與繪本</span>國立教育廣播電臺、台文通訊 BONG 報（李江却台語文教基金會）</li>
-    <li><span>影片</span>公視台語台、公視+、教育部臺灣台語動畫網、TaigiTube 台語水管</li>
-    <li><span>練習工具</span>Tân Kiàn-tiong 設計的練台羅、台語寫字學習單編輯器</li>
-    <li><span>推薦工具</span>揣台語 ChhoeTaigi、iTaigi 愛台語、芋圓字典 Oo Inn、台語嘛會通</li>
+    <li><span>學會基礎 700 字</span>教育部《臺灣台語推薦用字 700 字表》、《臺灣台語常用詞辭典》（辭典、例句、發音）</li>
+    <li><span>持續練習</span>教育部臺灣台語羅馬拼音教學網；Tân Kiàn-tiong 設計的練台羅、台語寫字學習單編輯器</li>
+    <li><span>沈浸式學習環境</span>臺語歌真正正字歌詞網、臺灣雲端書庫、台文通訊 BONG 報（李江却台語文教基金會）、國立教育廣播電臺、公視台語台、公視⁠+、教育部臺灣台語動畫網、TaigiTube 台語水管</li>
+    <li><span>推薦工具</span>教育部臺灣台語輸入法、揣台語 ChhoeTaigi、iTaigi 愛台語、芋圓字典 Oo Inn、台語嘛會通</li>
     <li><span>字體</span>源流明體 GenRyu Serif、粉圓體 Huninn（皆為 Open Font License）</li>
    </ul><p class="abx-pv">進度只存在你自己的瀏覽器裡，不用註冊，也不會被收集</p></section></div>`;
 }
@@ -1475,7 +1471,7 @@ document.addEventListener('keydown',e=>{
   }
 });
 
-const foot=`<footer><p style="margin:0 0 8px"><a href="#about">關於這個網站與老師</a></p>資料來源：教育部《臺灣台語推薦用字 700 字表》（民國 98 年 10 月公布，113 年 8 月修正）。「檢定不可用的寫法」是提醒學生避免誤用。全華課本標記以課本漢字與台羅逐字對照而來。學習進度只存在你自己的瀏覽器裡。</footer>`;
+const foot=`<footer><p style="margin:0 0 8px"><a href="#about">關於這個網站與老師</a></p>資料來源：教育部《臺灣台語推薦用字 700 字表》（民國 98 年 10 月公布，113 年 8 月修正）。「檢定不可用的寫法」是提醒學生避免誤用。學習進度只存在你自己的瀏覽器裡。</footer>`;
 
 
 // ---- 動畫專區 ----
