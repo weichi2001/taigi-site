@@ -575,7 +575,9 @@ html[data-theme=dark] .mx i:not(.ok):not(.bad){background:rgba(255,255,255,.14)}
 .w7sh:has(.w8ti){margin-top:36px}
 .w7sh:has(.w8ti)+.w8{margin-top:48px}
 .w8rows.w8l{grid-template-columns:1fr}
-/* ---- 輸入法與軟體 ---- */
+/* ---- 推薦工具 ---- */
+.ent.zone h3{margin:10px 0 14px}
+.ent.zone p{line-height:1.8}
 .apx .apb{margin-top:40px}
 .apx .sec{display:flex;align-items:baseline;gap:14px;margin:48px 0 18px;font-family:var(--serif);font-size:26px;font-weight:700;letter-spacing:.08em;line-height:1.2;color:var(--ink)}
 .apx .sec:first-child{margin-top:0}
@@ -1234,9 +1236,9 @@ function pHome(){
     <div class="dw${lg?' long':md?' mid':''}"><div class="dwc">${esc(d.w)}</div><div class="dwt"><small>每日一字 ${d.n}</small><b class="tl">${esc(d.r)}</b><span>${esc(d.h)}</span></div><button class="dwb" type="button" data-act="say" data-n="${d.n}">${SI.spk}聽發音</button></div>
    </section>
    <div class="hsec g3 grid g3">
-    ${zone('#start',SI.sprout,'系統性學習','不知道從哪裡開始？跟著四個步驟，由基礎慢慢學到進階',[])}
-    ${zone('#learn',SI.target,'練習資源','把學過的內容反覆練習，練到熟悉為止',[])}
-    ${zone('#apps',SI.kbd,'輸入法與軟體','想打台語、查字詞？老師精選的輸入法、辭典和 App 都在這裡',[])}
+    ${zone('#start',SI.sprout,'系統性學習','不知道從哪裡開始？<br>跟著四個步驟，由基礎慢慢學到進階',[])}
+    ${zone('#learn',SI.target,'練習資源','把學過的內容反覆練習，<br>練到熟悉為止',[])}
+    ${zone('#apps',SI.kbd,'推薦工具','想打台語、查字詞？<br>老師精選的輸入法、辭典和 App 都在這裡',[])}
    </div>
    <div class="hsec g2 grid g2d">
     <a class="pst a" href="#anime"><div class="pv">${prv}</div><small>Tâi-gí Hì-tâi</small><b>台語戲台</b><span><u>動畫、電影、戲劇、節目，</u><u>邊看影片邊學習！</u></span></a>
@@ -1304,7 +1306,7 @@ function pStart(){
       row('台語歌廳','正港台文正字的卡啦OK','https://weichi2001.github.io/taigi-ktv/?student',{kick:'Tâi-gí Ko-thiann'})+
       row('台語冊房','繪本、小說、漫畫、雜誌等應有盡有','#books',{kick:'Tâi-gí Tsheh-pâng'}))}
    </div>
-   <a class="w8ft" href="#apps"><span>需要工具嗎？來看看老師精選的「輸入法與軟體」</span><i>→</i></a></div>`;
+   <a class="w8ft" href="#apps"><span>需要工具嗎？來看看老師的「推薦工具」</span><i>→</i></a></div>`;
 }
 function pLearn(){
   const tailo=RES.find(r=>r.t==='練台羅'),wr=RES.find(r=>r.t==='台語寫字學習單編輯器');
@@ -1358,7 +1360,7 @@ const aic=(u,f)=>`<img class="aic" src="${u}" alt="" referrerpolicy="no-referrer
 function pApps(){
   const k=S.ime||imeDef,d=IME[k],M='https://language.moe.gov.tw/uploads/files/';
   return `<div class="w7 apx"><a class="w7bk" href="#home">← 首頁</a>
-   <header class="w7sh"><div><h2 class="hd w8ti">輸入法與軟體</h2></div></header>
+   <header class="w7sh"><div><h2 class="hd w8ti">推薦工具</h2></div></header>
    <div class="w8 apb"><h3 class="sec"><i>01</i>輸入法</h3>
    <details class="ab res ap ime"><summary>${aic('https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/19/c7/8a/19c78a71-3b44-644a-86a0-7b4357e17f30/AppIcon-0-0-1x_U007epad-0-1-85-220.jpeg/200x200bb.jpg',SI.kbd)}<div><h3>教育部臺灣台語輸入法</h3><p>用臺羅拼音打台語漢字</p></div></summary><div class="abb"><p>教育部出的台語輸入法。照臺羅拼音打，像打注音一樣，會跳出漢字給你選。</p>${shots(SHOT.ime)}<h4>特色</h4><ul><li>用字照教育部的推薦用字和辭典</li><li>常用詞排前面，也能一次連打一整串</li><li>會看前後文，猜你要打哪個字</li><li>可以匯出、匯入自己的詞庫</li><li>手機版可以用講的轉成文字</li></ul>
     <h4>下載</h4><div class="filters tabs">${Object.entries(IME).map(([id,v])=>`<button class="fb ${k===id?'on':''}" data-act="ime" data-k="${id}">${imeIc(id)}<span>${v.n}</span></button>`).join('')}</div>
