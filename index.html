@@ -8,6 +8,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-title" content="街仔路">
+<meta name="build" content="8cc87d9bd7">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="mobile-web-app-capable" content="yes">
@@ -2640,6 +2641,25 @@ if(window.__tgReady)window.__tgReady();
   });
   document.addEventListener('keydown',e=>{if(!lb||!lb.classList.contains('in'))return;if(e.key==='Escape')close();else if(e.key==='ArrowRight')go(1);else if(e.key==='ArrowLeft')go(-1)});
   window.addEventListener('hashchange',close);
+})();
+
+// ---- 啟動時檢查有沒有新版：有就自動重新載入一次（主畫面 App 常會留著舊版）----
+(function(){
+  const mine=(document.querySelector('meta[name=build]')||{}).content;
+  if(!mine||mine==='__BUILD__'||!/^https?:/.test(location.protocol))return;
+  let last=0;
+  const check=()=>{
+    const now=Date.now();if(now-last<60000)return;last=now;
+    fetch(location.pathname+'?chk='+now,{cache:'no-store'}).then(r=>r.ok?r.text():'').then(h=>{
+      const m=/<meta name="build" content="([^"]+)"/.exec(h);if(!m||m[1]===mine)return;
+      let tried='';try{tried=sessionStorage.getItem('tg-reloaded')||''}catch(e){}
+      if(tried===m[1])return;                       // 同一版只重新載入一次，避免卡在快取時一直重載
+      try{sessionStorage.setItem('tg-reloaded',m[1])}catch(e){}
+      location.reload();
+    }).catch(()=>{});
+  };
+  setTimeout(check,1500);
+  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')check()});
 })();
 </script>
 </body>
