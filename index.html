@@ -614,6 +614,18 @@ html[data-theme=dark] .mx i:not(.ok):not(.bad){background:rgba(255,255,255,.14)}
 .apx .plat{margin-top:14px}
 .apx .note{margin:18px 0 0;padding-top:14px;border-top:1px dashed var(--line)}
 @media(max-width:700px){.apx .apg{grid-template-columns:1fr}.apx .ab>summary{padding:16px 18px}.apx .ab .abb{margin:0 18px}.apx .sec{font-size:23px;margin-top:40px}}
+/* ---- 關於 ---- */
+.abx .abx-h{display:grid;grid-template-columns:320px 1fr;gap:56px;align-items:start;margin-top:44px}
+.abx .abx-ph{margin:0;border-radius:22px;overflow:hidden;line-height:0;background:var(--line);box-shadow:0 26px 50px -34px rgba(40,30,20,.5)}
+.abx .abx-ph img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover}
+.abx .abx-tx h3{margin:2px 0 0;font-family:var(--serif);font-weight:700;font-size:clamp(30px,4vw,38px);letter-spacing:.1em;line-height:1.2}
+.abx .abx-role{margin:10px 0 26px;font-size:14.5px;letter-spacing:.1em;color:var(--gd)}
+.abx .abx-tx>p:not(.abx-role){margin:0 0 14px;font-size:15.5px;line-height:2.05;color:var(--ink);max-width:36em}
+.abx .abx-tx .w8rows{margin-top:30px;max-width:420px}
+.abx .abx-src{margin-top:64px;padding-top:22px;border-top:1px solid var(--line)}
+.abx .abx-src h4{margin:0 0 12px;font-size:12.5px;font-weight:400;letter-spacing:.24em;color:var(--gd)}
+.abx .abx-src ul{list-style:none;margin:0;padding:0;font-size:13px;line-height:2;color:var(--ink2)}
+@media(max-width:760px){.abx .abx-h{grid-template-columns:1fr;gap:28px;margin-top:32px}.abx .abx-ph{max-width:300px}.abx .abx-src{margin-top:48px}}
 .w8note{margin:26px 0 0;max-width:38em;font-size:14.5px;line-height:1.85;color:var(--ink2);letter-spacing:.04em}
 .w8{margin:22px 0 0}
 .w8s{position:relative;display:grid;grid-template-columns:38px 1fr;column-gap:22px;padding-bottom:38px;animation:w8in .7s cubic-bezier(.22,1,.36,1) both;animation-delay:calc(var(--i)*110ms)}
@@ -849,7 +861,7 @@ html[data-theme=dark] body .top .in{background:rgba(255,255,255,.10)}
  .dw{width:fit-content;min-width:400px;max-width:560px;padding:22px 26px;gap:22px}.dw.long{max-width:640px}.dw.mid{flex-wrap:nowrap;row-gap:0}.dw.mid .dwb{margin-left:0}.dwc{font-size:var(--dsd,72px)}.dwt b{font-size:24px}
  .pst,.pst.c{min-height:250px;padding:32px}.pst b{font-size:40px}
  .hsec,.hsec.grid+.hsec.grid{margin-top:30px}.hsec.g2{grid-template-columns:repeat(2,minmax(0,1fr));gap:26px}.hsec.g3{grid-template-columns:repeat(3,minmax(0,1fr));gap:26px}
- body[data-r=quiz] .wrap,body[data-r=review] .wrap,body[data-r=about] .wrap{max-width:860px}
+ body[data-r=quiz] .wrap,body[data-r=review] .wrap{max-width:860px}body[data-r=about] .wrap{max-width:980px}
  body[data-r^=seg] .wrap{max-width:900px}
  body[data-r=start] .wrap{max-width:980px}
  .logo,.logo.hd{font-size:28px}
@@ -1250,43 +1262,24 @@ function pHome(){
    <div class="hsec"><a class="hmore" href="#links"><span>其他推薦網站</span><i>→</i></a></div>`;
 }
 function pAbout(){
-  const it=(ic,t,d,h,ex)=>`<a class="ab-it card" href="${h}"${ex||''}><span class="ic">${ic}</span><span><b>${t}</b><small>${d}</small></span></a>`;
-  return `<a class="back" href="#home">← 首頁</a>
-  <section class="ab-hero card">
-    <div class="ab-ph"><img src="about-me-full.jpg" alt="陳威錡老師"></div>
-    <div>
-      <h2 class="hd">陳威錡</h2>
-      <p class="ab-role">光明國中・本土語文（閩南語）老師</p>
-      <div class="ab-chips"><span>師大台灣語文學系畢業</span><span>研究台灣文學</span><span>台語中高級認證</span></div>
-      <div class="ab-bio">
-        <p class="ab-p">我在國中教台語，也在研究所裡讀台灣文學。教過學生，也教過日本學員和外籍研究員，發現不管年紀、不管母語是什麼，大家學台語卡住的地方其實差不多：不知道從哪裡開始、字不知道怎麼寫、聽得懂但開不了口。</p>
-        <p class="ab-p">所以我想把這些年用得上的資源和自己做的小工具放在同一個地方。</p>
-      </div>
+  return `<div class="w7 abx"><a class="w7bk" href="#home">← 首頁</a>
+   <header class="w7sh"><div><h2 class="hd w8ti">關於</h2></div></header>
+   <section class="abx-h">
+    <figure class="abx-ph"><img src="about-me.jpg" alt="陳威錡老師"></figure>
+    <div class="abx-tx">
+     <h3>陳威錡</h3>
+     <p class="abx-role">光明國中・本土語文（閩南語）老師</p>
+     <p>我在國中教台語，也在研究所讀台灣文學。教過學生，也教過日本學員和外籍研究員，發現不管年紀、母語是什麼，大家學台語卡住的地方其實差不多：不知道從哪裡開始、字不知道怎麼寫、聽得懂但開不了口</p>
+     <p>所以我想把這些年用得上的資源和自己做的小工具，放在同一個地方。街仔路是給學生自己練習用的，進度只存在你自己的瀏覽器裡，不用註冊，也不會被收集</p>
+     <div class="w8rows">${w8row('@taigi_lausu','教學紀錄和台語文小知識，網站哪裡怪怪的，也歡迎告訴我','https://www.instagram.com/taigi_lausu/',{ext:1,kick:'Instagram'})}</div>
     </div>
-  </section>
-
-  <h3 class="ab-sec hd">這個網站</h3>
-  <p class="ab-p">街仔路是給學生自己練習用的。聽、說、讀、寫的資源都整理在這裡，點一下就能開始，不用到處找。進度和測驗紀錄只存在你自己的瀏覽器裡，不用註冊，也不會被收集。</p>
-  <div class="ab-list">
-    ${it(SI.book,'700 字自學','教育部推薦用字，每字有台羅、華語、用例，可翻卡自測','#w700')}
-    ${it(SI.pen,'挑錯字挑戰','哪一個才是推薦用字？練習避開檢定不能用的寫法。','#quiz')}
-    ${it(SI.search,'辭典','輸入華語、漢字或台羅都查得到，還能聽發音。','#',' data-act="minidict"')}
-    ${it(SI.screen,'台語戲台','動畫、電影、節目，邊看邊練聽力。','#anime')}
-    ${it(SI.mic,'台語歌廳','跟著字幕唱歌，歌詞用正字，點字就能查辭典。','https://weichi2001.github.io/taigi-ktv/?student')}
-    ${it(SI.kbd,'輸入法','電腦、手機怎麼打台語，一次整理好。','#apps')}
-  </div>
-
-  <h3 class="ab-sec hd">資料來源</h3>
-  <ul class="ab-src">
-    <li>辭典與例句：教育部《臺灣台語常用詞辭典》。</li>
-    <li>700 字：教育部《臺灣台語推薦用字 700 字表》。</li>
-    <li>歌詞用字：參考「臺語歌真正正字歌詞網」。</li>
-    <li>字體：源流明體 GenRyu Serif、粉圓體 Huninn（皆為 Open Font License）。</li>
-  </ul>
-
-  <h3 class="ab-sec hd">找老師</h3>
-  <p class="ab-p">教學紀錄和台語文小知識，我會放在 IG。網站哪裡怪怪的，也歡迎告訴我。</p>
-  <a class="ab-btn" href="https://www.instagram.com/taigi_lausu/" target="_blank" rel="noopener">${SI.cam}<span>@taigi_lausu</span></a>`;
+   </section>
+   <section class="abx-src"><h4>資料來源</h4><ul>
+    <li>辭典與例句：教育部《臺灣台語常用詞辭典》</li>
+    <li>700 字：教育部《臺灣台語推薦用字 700 字表》</li>
+    <li>歌詞用字：參考「臺語歌真正正字歌詞網」</li>
+    <li>字體：源流明體 GenRyu Serif、粉圓體 Huninn（皆為 Open Font License）</li>
+   </ul></section></div>`;
 }
 const w8row=(t,d,href,o)=>{o=o||{};const ext=o.ext;return `<a class="w8r" href="${esc(href)}"${ext?' target="_blank" rel="noopener"':''}><span class="w8t"><span class="tx">${o.kick?`<em class="kk">${esc(o.kick)}</em>`:''}<b>${esc(t)}</b></span><i class="ar${ext?' ex':''}">${ext?'<svg viewBox="0 0 16 16"><path d="M4.5 11.5l7-7M5.5 4.5h6v6"/></svg>':'<svg viewBox="0 0 16 16"><path d="M2.5 8h11M9 3.5L13.5 8 9 12.5"/></svg>'}</i></span><small>${esc(d)}</small>${o.by?`<span class="w8by">設計者　${esc(o.by)}</span>`:''}${o.bar!=null?`<span class="w8p"><i><u style="width:${o.bar*100}%"></u></i><em>${esc(o.mt||'')}</em></span>`:''}</a>`};
 function pStart(){
