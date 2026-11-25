@@ -1154,12 +1154,9 @@ html[data-theme=dark] body .top .in{background:linear-gradient(180deg,rgba(255,2
 #fab{bottom:calc(18px + env(safe-area-inset-bottom,0px))}
 #toast,#eb-fb{bottom:calc(24px + env(safe-area-inset-bottom,0px))}
 .ktvw{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);box-sizing:border-box}
-#sbar{display:none}
-@media(display-mode:standalone){#sbar{display:block;position:fixed;top:0;left:0;right:0;height:calc(env(safe-area-inset-top,0px) + 4px);z-index:10000;pointer-events:none;background:linear-gradient(rgba(26,19,15,.58),rgba(26,19,15,0))}body[data-r=ktv] #sbar{display:none}}
 </style>
 </head>
 <body>
-<div id="sbar" aria-hidden="true"></div>
 <div id="splash" aria-hidden="true"><div class="sp-in"><div class="sp-logo">街仔<b>路</b></div><small>Ke-á-lōo</small><i class="sp-bar"></i></div></div>
 <script>(function(){var t0=Date.now(),sp=document.getElementById('splash'),ready=false,fonts=false,done=false,min=location.hash==='#dictwin'?0:650;
 function fin(){if(done)return;done=true;document.documentElement.classList.add('sp-out');setTimeout(function(){if(sp&&sp.parentNode)sp.parentNode.removeChild(sp)},600)}
