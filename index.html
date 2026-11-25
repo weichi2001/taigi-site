@@ -1699,7 +1699,7 @@ function pAnime(){
   const chip=(k,l)=>`<button class="ach ${f===k?'on':''}" data-act="asrc" data-f="${k}">${l}</button>`;
   const mine=v.filter(a=>aniSt[a.t]);
   const body=aniBody();
-  return `<a class="back" href="#home">← 街仔路</a><h2 class="hd">台語戲台 <span class="tl" style="font-size:.7em;font-weight:500;opacity:.85">Tâi-gí Hì-tâi</span></h2>
+  return `<h2 class="hd">台語戲台 <span class="tl" style="font-size:.7em;font-weight:500;opacity:.85">Tâi-gí Hì-tâi</span></h2>
    <div class="hero" style="--h:${hue(pick.t)}">${pick.img||pick.pimg?heroImg(pick):''}<span class="kick">今日推薦</span><h2 class="hd">${esc(pick.t)}</h2>
      <p>${pick.lv?pick.lv+'・':''}${cat(pick)}</p>
      <div class="acts"><button class="abtn" data-act="asheet" data-i="${pi}">看這部</button></div></div>
