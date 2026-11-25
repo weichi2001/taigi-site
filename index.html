@@ -566,6 +566,7 @@ html[data-theme=dark] .mx i:not(.ok):not(.bad){background:rgba(255,255,255,.14)}
 @media(prefers-reduced-motion:reduce){.w7fc,.w7fb{animation:none}}
 /* ===== 系統性學習（按部就班）===== */
 .w7sh .hd.w8ti{color:var(--gd)}
+.w8note{margin:14px 0 0;max-width:34em;font-size:14.5px;line-height:1.85;color:var(--ink2);letter-spacing:.04em}
 .w8{margin:22px 0 0}
 .w8s{position:relative;display:grid;grid-template-columns:38px 1fr;column-gap:22px;padding-bottom:38px;animation:w8in .7s cubic-bezier(.22,1,.36,1) both;animation-delay:calc(var(--i)*110ms)}
 .w8s:last-of-type{padding-bottom:6px}
@@ -1242,7 +1243,7 @@ function pStart(){
   const row=w8row;
   const step=(n,t,rows)=>`<section class="w8s" style="--i:${n}"><div class="w8n">${String(n).padStart(2,'0')}</div><div class="w8c"><div class="w8h"><h3>${t}</h3></div><div class="w8rows">${rows}</div></div></section>`;
   return `<div class="w7"><a class="w7bk" href="#home">← 首頁</a>
-   <header class="w7sh"><div><h2 class="hd w8ti">系統性學習</h2></div></header>
+   <header class="w7sh"><div><h2 class="hd w8ti">系統性學習</h2><p class="w8note">四個步驟不必照順序走，只是由基礎排到進階。學得越久，越後面的步驟就可以佔越多時間。</p></div></header>
    <div class="w8">
     ${step(1,'認識台羅拼音',
       row('教育部臺羅網站','教育部的台語羅馬字資訊。','https://tailo.moe.edu.tw/',{ext:1})+
