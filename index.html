@@ -2227,8 +2227,8 @@ function enter(r){
   if(r==='quiz')S.qz=buildQuiz(D,10);
 }
 function pKtv(){
-  setTimeout(()=>{const f=document.getElementById('ktvF');if(f){const w=f.parentNode,ok=()=>w.classList.add('ok'),fit=()=>{if(document.body.dataset.r==='ktv')w.style.height=innerHeight+'px'};fit();addEventListener('resize',fit);addEventListener('orientationchange',fit);f.addEventListener('load',()=>{try{f.focus()}catch(e){};setTimeout(ok,250)});setTimeout(ok,6000)}},0);
-  return `<div class="ktvw"><div class="ktvl"><div style="text-align:center"><div class="sp-logo">街仔<b>路</b></div><i class="sp-bar"></i></div></div><iframe id="ktvF" class="ktvf" src="https://weichi2001.github.io/taigi-ktv/?student&v=20261125e" title="台語歌廳" allow="autoplay; fullscreen; encrypted-media; picture-in-picture; clipboard-write; display-capture" allowfullscreen></iframe></div>`;
+  setTimeout(()=>{const f=document.getElementById('ktvF');if(f){const w=f.parentNode,ok=()=>w.classList.add('ok'),fit=()=>{if(document.body.dataset.r!=='ktv')return;let h=innerHeight;try{if(navigator.standalone||matchMedia('(display-mode:standalone)').matches){const a=Math.max(screen.width,screen.height),b=Math.min(screen.width,screen.height);h=Math.max(h,innerWidth>innerHeight?b:a)}}catch(e){}w.style.height=h+'px'};fit();addEventListener('resize',fit);addEventListener('orientationchange',fit);f.addEventListener('load',()=>{try{f.focus()}catch(e){};setTimeout(ok,250)});setTimeout(ok,6000)}},0);
+  return `<div class="ktvw"><div class="ktvl"><div style="text-align:center"><div class="sp-logo">街仔<b>路</b></div><i class="sp-bar"></i></div></div><iframe id="ktvF" class="ktvf" src="https://weichi2001.github.io/taigi-ktv/?student&v=20261125f" title="台語歌廳" allow="autoplay; fullscreen; encrypted-media; picture-in-picture; clipboard-write; display-capture" allowfullscreen></iframe></div>`;
 }
 function view(r){
   if(r==='dictwin')return '';
