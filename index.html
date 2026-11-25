@@ -1227,16 +1227,16 @@ function pHome(){
   S.open.add(d.n);
   const dy=Math.floor((Date.now()+288e5)/864e5),yv=0,prv=pvHtml(),pv1=[['一枝草，一點露','tsi̍t ki tsháu, tsi̍t tiám lōo'],['食果子，拜樹頭','tsia̍h kué-tsí, pài tshiū-thâu'],['好天著存雨來糧','hó-thinn tio̍h tsûn hōo-lâi liông']][dy%3];
   const L=[...d.w].length,bgw=[...d.w.split('/')[0].replace(/[（(][^）)]*[）)]/g,'')].slice(0,3).join(''),BL=[...bgw].length,bs=BL<=1?470:BL==2?300:210,dm=L<=1?52:L==2?40:L==3?32:26,dd=L<=1?72:L==2?52:L==3?40:32,lg=L>=4,md=L>=2&&L<4;
-  const zone=(h,ic,t,x,items)=>`<a class="ent zone" href="${h}"><div class="ic">${ic}</div><h3>${t}</h3>${x?`<p>${x}</p>`:''}<div class="li">${items.map(i=>`<span>${i}</span>`).join('')}</div></a>`;
+  const zone=(h,ic,t,x,items)=>`<a class="ent zone" href="${h}"><div class="ic">${ic}</div><h3>${t}</h3>${x?`<p>${x}</p>`:''}${items.length?`<div class="li">${items.map(i=>`<span>${i}</span>`).join('')}</div>`:''}</a>`;
   return `<section class="hh" style="--bs:${bs}px;--ds:${dm}px;--dsd:${dd}px">
     <span class="bgc" aria-hidden="true">${esc(bgw)}</span>
     <h1 class="hd">學台語<br>予咱對這條街仔路<i class="brm"></i><span class="slow"><span style="letter-spacing:.14em">慢</span><span style="letter-spacing:.3em">慢</span><span style="letter-spacing:.52em">仔</span></span>行</h1>
     <div class="dw${lg?' long':md?' mid':''}"><div class="dwc">${esc(d.w)}</div><div class="dwt"><small>每日一字 ${d.n}</small><b class="tl">${esc(d.r)}</b><span>${esc(d.h)}</span></div><button class="dwb" type="button" data-act="say" data-n="${d.n}">${SI.spk}聽發音</button></div>
    </section>
    <div class="hsec g3 grid g3">
-    ${zone('#start',SI.sprout,'系統性學習','從台羅拼音開始，再一段一段學 700 字。',['台羅拼音','700 字自學'])}
-    ${zone('#learn',SI.target,'練習資源','把學過的內容反覆練習，練到熟悉為止',['挑錯字挑戰','練台羅','寫字學習單','複習'])}
-    ${zone('#apps',SI.kbd,'輸入法與軟體','電腦、手機怎麼打台語，還有辭典 App。',['輸入法','辭典'])}
+    ${zone('#start',SI.sprout,'系統性學習','不知道從哪裡開始？跟著四個步驟，由基礎慢慢學到進階',[])}
+    ${zone('#learn',SI.target,'練習資源','把學過的內容反覆練習，練到熟悉為止',[])}
+    ${zone('#apps',SI.kbd,'輸入法與軟體','想打台語、查字詞？老師精選的輸入法、辭典和 App 都在這裡',[])}
    </div>
    <div class="hsec g2 grid g2d">
     <a class="pst a" href="#anime"><div class="pv">${prv}</div><small>Tâi-gí Hì-tâi</small><b>台語戲台</b><span><u>動畫、電影、戲劇、節目，</u><u>邊看影片邊學習！</u></span></a>
