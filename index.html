@@ -2116,6 +2116,16 @@ enter(cur());render(false);
     lb.innerHTML='<button class="lbx" aria-label="關閉">'+ic('M6 6l12 12M18 6L6 18')+'</button><button class="lbn lbp" aria-label="上一張">'+ic('M14 5l-7 7 7 7')+'</button><img alt=""><button class="lbn lbq" aria-label="下一張">'+ic('M10 5l7 7-7 7')+'</button><div class="lbc"></div>';
     document.body.appendChild(lb);im=lb.querySelector('img');cn=lb.querySelector('.lbc');
     lb.addEventListener('click',e=>{if(e.target.closest('.lbx')||e.target===lb)close();else if(e.target.closest('.lbp'))go(-1);else if(e.target.closest('.lbq'))go(1)});
+    let wa=0,wl=0,wt;
+    lb.addEventListener('wheel',e=>{
+      e.preventDefault();
+      if(Math.abs(e.deltaX)<=Math.abs(e.deltaY))return;
+      clearTimeout(wt);wt=setTimeout(()=>{wa=0;wl=0;if(!busy){im.style.transition='';im.style.transform=''}},150);
+      if(wl||busy)return;
+      wa+=e.deltaX;
+      im.style.transition='none';im.style.transform='translateX('+(-wa*.5)+'px)';
+      if(Math.abs(wa)>80){const d=wa>0?1:-1;wl=1;wa=0;im.style.transition='';im.style.transform='';go(d)}
+    },{passive:false});
     lb.addEventListener('touchstart',e=>{tx=e.touches[0].clientX},{passive:true});
     lb.addEventListener('touchend',e=>{const d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>45)go(d<0?1:-1)},{passive:true});
   }
