@@ -2749,7 +2749,7 @@ const BASE=[
  {s:'#fab',act:1,auto:1,wait:()=>miniOpen(),t:'試試看「放大鏡」',d:'<p>若看見不懂的字詞或是想確認發音，可以點選右下角放大鏡。</p>'},
  {s:'#mq',act:1,auto:1,fill:1,wait:()=>{const q=$('#mq');return !!(q&&q.value.indexOf('街仔路')>-1&&$('#mini .mr .au'))},t:'查一個詞',d:'輸入「街仔路」，看看辭典怎麼說'},
  {s:'#mini .mr .au',act:1,auto:1,wait:()=>auHit,t:'聽聽看發音',d:'點喇叭，聽「街仔路」怎麼唸'},
- {s:'#mclose',act:1,auto:1,wait:()=>!miniOpen(),t:'收起辭典',d:'點右上角的叉叉收起來，繼續導覽'},
+ {s:'#mclose',act:1,auto:1,wait:()=>!miniOpen(),t:'收起放大鏡',d:'<p>漂亮！接下來點擊右上角的叉叉將放大鏡收起，繼續進行導覽</p>'},
  {s:'.hsec.g3',t:'三個起點',d:'沒基礎就從系統性學習開始，學過的內容到練習資源複習，輸入法和辭典放在推薦工具'},
  {s:'a.pst.a',up:1,t:'看戲、聽歌、讀冊',d:'戲台看台語影片，歌廳跟著 KTV 字幕唱，歌詞可以直接點字查，冊房讀台文書'},
  {s:'#themeBtn',act:1,wait:()=>de.dataset.theme!==th0,t:'淺色或深色',d:'晚上看比較舒服，點一下切換看看',okd:'選你喜歡的，決定好就按下一步'},
