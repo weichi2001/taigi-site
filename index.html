@@ -1433,7 +1433,7 @@ function pAbout(){
     <li><span>沈浸式學習環境</span>臺語歌真正正字歌詞網、臺灣雲端書庫、台文通訊 BONG 報（李江却台語文教基金會）、國立教育廣播電臺、公視台語台、公視⁠+、教育部臺灣台語動畫網、TaigiTube 台語水管</li>
     <li><span>推薦工具</span>教育部臺灣台語輸入法、揣台語 ChhoeTaigi、iTaigi 愛台語、芋圓字典 Oo Inn、台語嘛會通</li>
     <li><span>字體</span>源流明體 GenRyu Serif、粉圓體 Huninn（皆為 Open Font License）</li>
-   </ul><p class="abx-pv">進度只存在你自己的瀏覽器裡，不用註冊，也不會被收集</p></section></div>`;
+   </ul><p class="abx-pv">進度只存在你自己的瀏覽器裡，不用註冊，也不會被收集</p><p class="abx-pv"><a href="#home" class="abx-tour" data-tour>再看一次網站導覽</a></p></section></div>`;
 }
 const w8row=(t,d,href,o)=>{o=o||{};const ext=o.ext;return `<a class="w8r" href="${esc(href)}"${ext?' target="_blank" rel="noopener"':''}><span class="w8t"><span class="tx">${o.kick?`<em class="kk">${esc(o.kick)}</em>`:''}<b>${esc(t)}</b></span><i class="ar${ext?' ex':''}">${ext?'<svg viewBox="0 0 16 16"><path d="M4.5 11.5l7-7M5.5 4.5h6v6"/></svg>':'<svg viewBox="0 0 16 16"><path d="M2.5 8h11M9 3.5L13.5 8 9 12.5"/></svg>'}</i></span><small>${esc(d)}</small>${o.by?`<span class="w8by">設計者　${esc(o.by)}</span>`:''}${o.bar!=null?`<span class="w8p"><i><u style="width:${o.bar*100}%"></u></i><em>${esc(o.mt||'')}</em></span>`:''}</a>`};
 function pStart(){
@@ -2692,6 +2692,90 @@ if(window.__tgReady)window.__tgReady();
     document.body.appendChild(d);requestAnimationFrame(()=>d.classList.add('on'));
     setTimeout(()=>location.reload(),350);
   }).catch(()=>{});
+})();
+</script>
+<style>
+#tgt{position:fixed;inset:0;z-index:3000;display:none}
+#tgt.on{display:block}
+#tgt .bg{position:absolute;inset:0}
+#tgt .hole{position:absolute;border-radius:20px;box-shadow:0 0 0 9999px rgba(24,17,12,.58),0 0 0 2px rgba(255,255,255,.55) inset;pointer-events:none;transition:top .38s cubic-bezier(.4,.1,.2,1),left .38s cubic-bezier(.4,.1,.2,1),width .38s cubic-bezier(.4,.1,.2,1),height .38s cubic-bezier(.4,.1,.2,1),border-radius .38s,opacity .3s}
+#tgt .hole.none{width:0!important;height:0!important;left:50%!important;top:50%!important;box-shadow:0 0 0 9999px rgba(24,17,12,.58)}
+#tgt .tc{position:absolute;width:min(340px,calc(100vw - 32px));box-sizing:border-box;padding:20px 22px 16px;border-radius:24px;color:var(--ink);background:rgba(255,251,243,.8);-webkit-backdrop-filter:blur(22px) saturate(1.5);backdrop-filter:blur(22px) saturate(1.5);border:1px solid rgba(255,255,255,.7);box-shadow:0 18px 50px rgba(40,26,16,.28),inset 0 1px 0 rgba(255,255,255,.95);transition:top .38s cubic-bezier(.4,.1,.2,1),left .38s cubic-bezier(.4,.1,.2,1),opacity .25s}
+html[data-theme=dark] #tgt .tc{background:rgba(34,28,24,.78);border-color:rgba(255,255,255,.14);box-shadow:0 18px 50px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.12)}
+#tgt .tc small{display:block;font-size:12px;letter-spacing:.14em;color:var(--ink2);margin-bottom:8px}
+#tgt .tc h3{margin:0 0 8px;font-size:21px;line-height:1.3;font-weight:700;font-family:inherit}
+#tgt .tc p{margin:0;font-size:15px;line-height:1.75;color:var(--ink2)}
+#tgt .tr{display:flex;align-items:center;gap:8px;margin-top:18px}
+#tgt .tr .sp{flex:1}
+#tgt .tr button{font:inherit;font-size:14px;cursor:pointer;border-radius:99px;padding:8px 16px;border:1px solid var(--line);background:transparent;color:var(--ink)}
+#tgt .tr button.sk{border:0;padding:8px 4px;color:var(--ink2)}
+#tgt .tr button.pr{background:var(--accent);border-color:transparent;color:#fff}
+#tgt .tr button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.abx-tour{color:inherit;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+@media(prefers-reduced-motion:reduce){#tgt .hole,#tgt .tc{transition:none}}
+</style>
+<div id="tgt" role="dialog" aria-modal="true" aria-label="網站導覽"><div class="bg"></div><div class="hole none"></div><div class="tc"></div></div>
+<script>
+(function(){
+const KEY='tgtour',$=s=>document.querySelector(s);
+const STEPS=[
+ {t:'歡迎來到街仔路',d:'花半分鐘，認識這個網站怎麼用'},
+ {s:'#fab',t:'不懂就查',d:'讀到不懂的字，隨時點這個放大鏡查台語辭典，每一頁都找得到'},
+ {s:'.hsec.g3',t:'三個起點',d:'沒基礎就從系統性學習開始，學過的內容到練習資源複習，輸入法和辭典放在推薦工具'},
+ {s:'a.pst.a',up:1,t:'看戲、聽歌、讀冊',d:'戲台看台語影片，歌廳跟著 KTV 字幕唱，歌詞可以直接點字查，冊房讀台文書'},
+ {s:'#themeBtn',t:'淺色或深色',d:'晚上看比較舒服，點這裡隨時切換'},
+ {t:'開始吧',d:'之後想再看一次，到「關於」頁最下面'}
+];
+let i=0,on=false,steps=[],raf=0,tmr=0;
+const root=$('#tgt'),hole=root.querySelector('.hole'),tc=root.querySelector('.tc');
+const seen=()=>{try{return localStorage.getItem(KEY)}catch(e){return '1'}};
+const mark=()=>{try{localStorage.setItem(KEY,'1')}catch(e){}};
+const tgt=s=>{if(!s.s)return null;let e=$(s.s);if(e&&s.up)e=e.parentElement;return e&&e.offsetParent!==null||(e&&getComputedStyle(e).position==='fixed')?e:null};
+function place(){
+  const s=steps[i];if(!s)return;const e=tgt(s),vw=innerWidth,vh=innerHeight;
+  if(e){
+    const r=e.getBoundingClientRect(),p=8;
+    let rad=parseFloat(getComputedStyle(e).borderTopLeftRadius)||0;if(rad>r.width/2)rad=(r.width+p*2)/2;rad=Math.max(rad+p,16);
+    hole.classList.remove('none');
+    hole.style.cssText=`top:${r.top-p}px;left:${r.left-p}px;width:${r.width+p*2}px;height:${r.height+p*2}px;border-radius:${rad}px`;
+    const cw=tc.offsetWidth,ch=tc.offsetHeight,g=16;
+    let x=Math.min(Math.max(16,r.left+r.width/2-cw/2),vw-cw-16),y;
+    if(vh-r.bottom-p-g>=ch)y=r.bottom+p+g;else if(r.top-p-g>=ch)y=r.top-p-g-ch;else y=vh-ch-16;
+    tc.style.left=x+'px';tc.style.top=y+'px';
+  }else{
+    hole.classList.add('none');hole.style.cssText='';
+    tc.style.left=Math.max(16,(vw-tc.offsetWidth)/2)+'px';tc.style.top=Math.max(16,(vh-tc.offsetHeight)/2)+'px';
+  }
+}
+const sched=()=>{cancelAnimationFrame(raf);raf=requestAnimationFrame(place)};
+function show(){
+  const s=steps[i],last=i===steps.length-1,first=i===0;
+  tc.innerHTML=`<small>${i+1} / ${steps.length}</small><h3>${s.t}</h3><p>${s.d}</p><div class="tr">${last?'':'<button class="sk" data-a="x">略過</button>'}<span class="sp"></span>${first?'':'<button data-a="p">上一步</button>'}<button class="pr" data-a="n">${last?'完成':first?'開始導覽':'下一步'}</button></div>`;
+  const e=tgt(s);
+  if(e){const r=e.getBoundingClientRect();if(r.top<70||r.bottom>innerHeight-20){try{e.scrollIntoView({block:'center',behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'})}catch(x){}}}
+  place();clearTimeout(tmr);tmr=setTimeout(place,420);setTimeout(place,800);
+  const b=tc.querySelector('.pr');if(b)b.focus({preventScroll:true});
+}
+function go(n){i=Math.max(0,Math.min(steps.length-1,n));show()}
+function close(m){if(!on)return;on=false;root.classList.remove('on');removeEventListener('resize',sched);removeEventListener('scroll',sched,true);removeEventListener('keydown',key,true);if(m)mark()}
+function key(e){if(!on)return;if(e.key==='Escape'){e.preventDefault();close(1)}else if(e.key==='ArrowRight'||e.key==='Enter'&&document.activeElement===document.body){e.preventDefault();next()}else if(e.key==='ArrowLeft'){e.preventDefault();go(i-1)}}
+function next(){if(i>=steps.length-1)close(1);else go(i+1)}
+tc.addEventListener('click',e=>{const a=e.target.closest('[data-a]');if(!a)return;const k=a.dataset.a;if(k==='x')close(1);else if(k==='p')go(i-1);else next()});
+function start(){
+  if(on||document.body.dataset.r!=='home')return;
+  steps=STEPS.filter((s,k)=>!s.s||tgt(s));if(steps.length<3)return;
+  on=true;i=0;root.classList.add('on');addEventListener('resize',sched);addEventListener('scroll',sched,true);addEventListener('keydown',key,true);scrollTo(0,0);show();
+}
+function when(){
+  let n=0;const t=setInterval(()=>{n++;if(document.body.dataset.r!=='home'&&n>2){}
+    const sp=$('#splash'),ready=document.body.dataset.r==='home'&&$('.hsec.g3')&&$('#fab')&&(!sp||getComputedStyle(sp).display==='none'||getComputedStyle(sp).opacity==='0'||!sp.offsetParent);
+    if(ready){clearInterval(t);setTimeout(()=>{if(!seen())start()},900)}else if(n>40)clearInterval(t)},250);
+}
+if(!seen())when();
+addEventListener('hashchange',()=>{if(on&&document.body.dataset.r!=='home')close(0)});
+document.addEventListener('click',e=>{const a=e.target.closest('[data-tour]');if(!a)return;e.preventDefault();try{localStorage.removeItem(KEY)}catch(x){}
+  if(location.hash!=='#home'&&location.hash!==''){location.hash='#home'}
+  let n=0;const t=setInterval(()=>{n++;if(document.body.dataset.r==='home'&&$('.hsec.g3')){clearInterval(t);setTimeout(start,500)}else if(n>30)clearInterval(t)},150)});
 })();
 </script>
 </body>
