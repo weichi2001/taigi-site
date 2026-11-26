@@ -2695,9 +2695,11 @@ if(window.__tgReady)window.__tgReady();
 })();
 </script>
 <style>
-#tgt{position:fixed;inset:0;z-index:3000;display:none}
+#tgt{position:fixed;inset:0;z-index:3000;display:none;pointer-events:none}
+#tgt .bg,#tgt .bk,#tgt .tc{pointer-events:auto}
 #tgt.on{display:block}
 #tgt .bg{position:absolute;inset:0}
+#tgt .bk{position:absolute;display:none}
 #tgt .hole{position:absolute;border-radius:20px;box-shadow:0 0 0 9999px rgba(24,17,12,.58),0 0 0 2px rgba(255,255,255,.55) inset;pointer-events:none;transition:top .38s cubic-bezier(.4,.1,.2,1),left .38s cubic-bezier(.4,.1,.2,1),width .38s cubic-bezier(.4,.1,.2,1),height .38s cubic-bezier(.4,.1,.2,1),border-radius .38s,opacity .3s}
 #tgt .hole.none{width:0!important;height:0!important;left:50%!important;top:50%!important;box-shadow:0 0 0 9999px rgba(24,17,12,.58)}
 #tgt .tc{position:absolute;width:min(340px,calc(100vw - 32px));box-sizing:border-box;padding:20px 22px 16px;border-radius:24px;color:var(--ink);background:rgba(255,251,243,.8);-webkit-backdrop-filter:blur(22px) saturate(1.5);backdrop-filter:blur(22px) saturate(1.5);border:1px solid rgba(255,255,255,.7);box-shadow:0 18px 50px rgba(40,26,16,.28),inset 0 1px 0 rgba(255,255,255,.95);transition:top .38s cubic-bezier(.4,.1,.2,1),left .38s cubic-bezier(.4,.1,.2,1),opacity .25s}
@@ -2723,7 +2725,7 @@ html[data-theme=dark] #tgt .tc{background:rgba(34,28,24,.78);border-color:rgba(2
 #tgt .tr button.dis{opacity:.4;cursor:not-allowed}
 @media(prefers-reduced-motion:reduce){#tgt .hole,#tgt .tc{transition:none}}
 </style>
-<div id="tgt" role="dialog" aria-modal="true" aria-label="網站導覽"><div class="bg"></div><div class="hole none"></div><div class="tc"></div></div>
+<div id="tgt" role="dialog" aria-modal="true" aria-label="網站導覽"><div class="bg"></div><div class="bk"></div><div class="bk"></div><div class="bk"></div><div class="bk"></div><div class="hole none"></div><div class="tc"></div></div>
 <script>
 (function(){
 const KEY='tgtour',$=s=>document.querySelector(s);
@@ -2732,6 +2734,7 @@ const inApp=/Line\/|FBAN|FBAV|FB_IAB|Instagram|MicroMessenger|; wv\)/i.test(ua);
 const standalone=()=>navigator.standalone===true||matchMedia('(display-mode:standalone)').matches;
 let dip=null;addEventListener('beforeinstallprompt',e=>{e.preventDefault();dip=e});
 const de=document.documentElement,fsOK=!!(de.requestFullscreen||de.webkitRequestFullscreen);
+const miniOpen=()=>{const m=$('#mini');return !!(m&&m.classList.contains('show'))};let auHit=false,th0='';document.addEventListener('click',e=>{if(e.target.closest&&e.target.closest('#mini .au'))auHit=true},true);
 const isFs=()=>!!(document.fullscreenElement||document.webkitFullscreenElement)||(innerHeight>=screen.height-2&&innerWidth>=screen.width-2);
 const IC={share:'<svg viewBox="0 0 24 24"><path d="M12 15V4M8.5 7.5L12 4l3.5 3.5M7 10H6a1.5 1.5 0 0 0-1.5 1.5v7A1.5 1.5 0 0 0 6 20h12a1.5 1.5 0 0 0 1.5-1.5v-7A1.5 1.5 0 0 0 18 10h-1"/></svg>',dots:'<svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="12" cy="19" r="1.3"/></svg>',add:'<svg viewBox="0 0 24 24"><rect x="4.5" y="4.5" width="15" height="15" rx="3.5"/><path d="M12 8.5v7M8.5 12h7"/></svg>'};
 const ol=a=>'<ol class="tl">'+a.map(x=>'<li>'+x+'</li>').join('')+'</ol>';
@@ -2743,10 +2746,13 @@ const SETUP=()=>{
   return {k:'and',t:'加到主畫面',d:dip?'一鍵安裝，之後從桌面圖示開啟':ol(['點右上角選單 <i class="ic">'+IC.dots+'</i>','選「安裝應用程式」或「加到主畫面」','點「安裝」，之後從桌面圖示開啟'])};
 };
 const BASE=[
- {s:'#fab',t:'不懂就查',d:'讀到不懂的字，隨時點這個放大鏡查台語辭典，每一頁都找得到'},
+ {s:'#fab',act:1,auto:1,wait:()=>miniOpen(),t:'試試看放大鏡',d:'讀到不懂的字，就點右下角的放大鏡，每一頁都找得到'},
+ {s:'#mq',act:1,auto:1,fill:1,wait:()=>{const q=$('#mq');return !!(q&&q.value.indexOf('街仔路')>-1&&$('#mini .mr .au'))},t:'查一個詞',d:'輸入「街仔路」，看看辭典怎麼說'},
+ {s:'#mini .mr .au',act:1,auto:1,wait:()=>auHit,t:'聽聽看發音',d:'點喇叭，聽「街仔路」怎麼唸'},
+ {s:'#mclose',act:1,auto:1,wait:()=>!miniOpen(),t:'收起辭典',d:'點右上角的叉叉收起來，繼續導覽'},
  {s:'.hsec.g3',t:'三個起點',d:'沒基礎就從系統性學習開始，學過的內容到練習資源複習，輸入法和辭典放在推薦工具'},
  {s:'a.pst.a',up:1,t:'看戲、聽歌、讀冊',d:'戲台看台語影片，歌廳跟著 KTV 字幕唱，歌詞可以直接點字查，冊房讀台文書'},
- {s:'#themeBtn',t:'淺色或深色',d:'晚上看比較舒服，點這裡隨時切換'},
+ {s:'#themeBtn',act:1,wait:()=>de.dataset.theme!==th0,t:'淺色或深色',d:'晚上看比較舒服，點一下切換看看',okd:'選你喜歡的，決定好就按下一步'},
  {t:'開始吧',d:'之後想再看一次，到「關於」頁最下面'}
 ];
 let i=0,on=false,steps=[],raf=0,tmr=0;
@@ -2754,14 +2760,18 @@ const root=$('#tgt'),hole=root.querySelector('.hole'),tc=root.querySelector('.tc
 const seen=()=>{try{return localStorage.getItem(KEY)}catch(e){return '1'}};
 const mark=()=>{try{localStorage.setItem(KEY,'1')}catch(e){}};
 const tgt=s=>{if(!s.s)return null;let e=$(s.s);if(e&&s.up)e=e.parentElement;return (e&&e.offsetParent!==null)||(e&&getComputedStyle(e).position==='fixed')?e:null};
-const gated=()=>{const s=steps[i];return !!(s&&s.gate&&!isFs()&&!s.tried)};
+const gated=()=>{const s=steps[i];return !!(s&&((s.gate&&!isFs()&&!s.tried)||(s.wait&&!s.done&&!s.skip)))};
+function blk(on_,r){const bs=root.querySelectorAll('.bk');root.querySelector('.bg').style.display=on_?'none':'';bs.forEach(b=>b.style.display=on_?'block':'none');if(!on_)return;const vw=innerWidth,vh=innerHeight;
+  const set=(b,l,t,w,h)=>{b.style.cssText=`display:block;left:${l}px;top:${t}px;width:${Math.max(0,w)}px;height:${Math.max(0,h)}px`};
+  set(bs[0],0,0,vw,r.top);set(bs[1],0,r.bottom,vw,vh-r.bottom);set(bs[2],0,r.top,r.left,r.height);set(bs[3],r.right,r.top,vw-r.right,r.height)}
 function place(){
-  const s=steps[i];if(!s)return;const e=tgt(s),vw=innerWidth,vh=innerHeight;
+  const s=steps[i];if(!s)return;const e=tgt(s),vw=innerWidth,vh=innerHeight;blk(false);
   if(e){
     const r=e.getBoundingClientRect(),p=8;
     let rad=parseFloat(getComputedStyle(e).borderTopLeftRadius)||0;if(rad>r.width/2)rad=(r.width+p*2)/2;rad=Math.max(rad+p,16);
     hole.classList.remove('none');
     hole.style.cssText=`top:${r.top-p}px;left:${r.left-p}px;width:${r.width+p*2}px;height:${r.height+p*2}px;border-radius:${rad}px`;
+    if(s.act)blk(true,{left:r.left-p,top:r.top-p,right:r.right+p,bottom:r.bottom+p,width:r.width+p*2,height:r.height+p*2});
     const cw=tc.offsetWidth,ch=tc.offsetHeight,g=16;
     let x=Math.min(Math.max(16,r.left+r.width/2-cw/2),vw-cw-16),y;
     if(vh-r.bottom-p-g>=ch)y=r.bottom+p+g;else if(r.top-p-g>=ch)y=r.top-p-g-ch;else y=vh-ch-16;
@@ -2772,31 +2782,37 @@ function place(){
   }
 }
 const sched=()=>{cancelAnimationFrame(raf);raf=requestAnimationFrame(()=>{place();sync()})};
-function sync(){const b=tc.querySelector('.pr');if(!b)return;const s=steps[i];if(s&&s.gate){const ok=isFs();b.disabled=!ok&&!s.tried;b.classList.toggle('dis',b.disabled);const a=tc.querySelector('.fsgo');if(a)a.hidden=ok}}
+function sync(){const b=tc.querySelector('.pr');if(!b)return;const s=steps[i];if(s&&s.wait){const ok=s.done||s.skip;b.disabled=!ok;b.classList.toggle('dis',!ok);const p=tc.querySelector('.dd p');if(p&&s.okd&&ok)p.textContent=s.okd}if(s&&s.gate){const ok=isFs();b.disabled=!ok&&!s.tried;b.classList.toggle('dis',b.disabled);const a=tc.querySelector('.fsgo');if(a)a.hidden=ok}}
 function show(){
   const s=steps[i],last=i===steps.length-1,first=i===0,gate=s.gate;
-  const extra=gate&&!tgt(s)?'<button class="fsgo" data-a="fs">開啟全螢幕</button>':s.k==='and'&&dip?'<button class="fsgo" data-a="inst">安裝到主畫面</button>':'';
-  tc.innerHTML=`<small>${i+1} / ${steps.length}</small><h3>${s.t}</h3><div class="dd">${s.d.charAt(0)==='<'?s.d:'<p>'+s.d+'</p>'}</div>${extra}<div class="tr">${last||gate?'':'<button class="sk" data-a="x">略過</button>'}<span class="sp"></span>${first?'':'<button data-a="p">上一步</button>'}<button class="pr" data-a="n">${last?'完成':first?'開始導覽':'下一步'}</button></div>`;
+  const extra=s.fill?'<button class="fsgo" data-a="fill">幫我輸入</button>':gate&&!tgt(s)?'<button class="fsgo" data-a="fs">開啟全螢幕</button>':s.k==='and'&&dip?'<button class="fsgo" data-a="inst">安裝到主畫面</button>':'';
+  tc.innerHTML=`<small>${i+1} / ${steps.length}</small><h3>${s.t}</h3><div class="dd">${s.d.charAt(0)==='<'?s.d:'<p>'+s.d+'</p>'}</div>${extra}<div class="tr">${last||gate?'':'<button class="sk" data-a="x">略過導覽</button>'}<span class="sp"></span>${first?'':'<button data-a="p">上一步</button>'}${s.wait&&s.auto?'<button data-a="sk2">跳過這步</button>':''}<button class="pr" data-a="n"${s.wait&&s.auto?' hidden':''}>${last?'完成':first?'開始導覽':'下一步'}</button></div>`;
+  if(s.wait){s.done=false;s.skip=false;if(s.wait()){s.done=true;s.manual=true}}
   const e=tgt(s);
-  if(e){const r=e.getBoundingClientRect();if(r.top<70||r.bottom>innerHeight-20){try{e.scrollIntoView({block:'center',behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'})}catch(x){}}}
-  place();sync();clearTimeout(tmr);tmr=setTimeout(place,420);setTimeout(place,800);
+  if(e&&!s.act){const r=e.getBoundingClientRect();if(r.top<70||r.bottom>innerHeight-20){try{e.scrollIntoView({block:'center',behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'})}catch(x){}}}
+  place();sync();if(s.wait&&s.done&&s.auto&&s.manual){const b=tc.querySelector('.pr');if(b)b.hidden=false}clearTimeout(tmr);tmr=setTimeout(place,420);setTimeout(place,800);
   const b=tc.querySelector('.fsgo')||tc.querySelector('.pr');if(b&&!b.disabled)b.focus({preventScroll:true});
 }
+function tick(){if(!on)return;const s=steps[i];if(!s)return;if(s.act)place();
+  if(s.wait&&!s.done){let ok=false;try{ok=s.wait()}catch(x){}if(ok){s.done=true;sync();if(s.auto&&!s.manual){const k=i;setTimeout(()=>{if(on&&i===k)go(i+1)},450)}else{const b=tc.querySelector('.pr');if(b)b.hidden=false}}}}
+let pt=0;
 function go(n){i=Math.max(0,Math.min(steps.length-1,n));show()}
-function close(m){if(!on)return;on=false;root.classList.remove('on');removeEventListener('resize',sched);removeEventListener('scroll',sched,true);removeEventListener('keydown',key,true);document.removeEventListener('fullscreenchange',sched);document.removeEventListener('webkitfullscreenchange',sched);if(m)mark()}
+function close(m){if(!on)return;on=false;clearInterval(pt);if(miniOpen()){const c=$('#mclose');if(c)c.click()}root.classList.remove('on');removeEventListener('resize',sched);removeEventListener('scroll',sched,true);removeEventListener('keydown',key,true);document.removeEventListener('fullscreenchange',sched);document.removeEventListener('webkitfullscreenchange',sched);if(m)mark()}
 function key(e){if(!on)return;const s=steps[i];if(e.key==='Escape'){if(s&&s.gate)return;e.preventDefault();close(1)}else if(e.key==='ArrowRight'){e.preventDefault();next()}else if(e.key==='ArrowLeft'){e.preventDefault();go(i-1)}}
 function next(){if(gated())return;if(i>=steps.length-1)close(1);else go(i+1)}
 root.querySelector('.bg').addEventListener('click',e=>{const s=steps[i];if(!on||!s||!s.gate)return;const b=$('#fsBtn');if(!b)return;const r=b.getBoundingClientRect();if(e.clientX>=r.left-8&&e.clientX<=r.right+8&&e.clientY>=r.top-8&&e.clientY<=r.bottom+8){b.click();setTimeout(()=>{if(!isFs())s.tried=1;sync()},700)}});
 tc.addEventListener('click',e=>{const a=e.target.closest('[data-a]');if(!a||a.disabled)return;const k=a.dataset.a;
+  if(k==='sk2'){steps[i].skip=true;if(steps[i].k!=='fs'&&steps[i].s==='#mq'&&miniOpen()){}go(i+1);return}
+  if(k==='fill'){const q=$('#mq');if(q){q.focus();q.value='街仔路';q.dispatchEvent(new Event('input',{bubbles:true}))}return}
   if(k==='x')close(1);else if(k==='p')go(i-1);
   else if(k==='fs'){const s=steps[i];try{(de.requestFullscreen||de.webkitRequestFullscreen).call(de)}catch(x){}setTimeout(()=>{if(!isFs())s.tried=1;sync()},700)}
   else if(k==='inst'){try{dip.prompt();dip.userChoice&&dip.userChoice.then(()=>{dip=null;next()})}catch(x){next()}}
   else next()});
 function start(){
   if(on||document.body.dataset.r!=='home')return;
-  const st=SETUP(),mid=BASE.filter(s=>!s.s||tgt(s));if(mid.length<3)return;
+  const st=SETUP(),mid=BASE.filter(s=>!s.s||(s.act&&/^#m/.test(s.s))||tgt(s));if(mid.length<3)return;
   steps=[{t:'歡迎來到街仔路',d:'花半分鐘，認識這個網站怎麼用'}].concat(st?[st]:[],mid);
-  on=true;i=0;root.classList.add('on');addEventListener('resize',sched);addEventListener('scroll',sched,true);addEventListener('keydown',key,true);document.addEventListener('fullscreenchange',sched);document.addEventListener('webkitfullscreenchange',sched);scrollTo(0,0);show();
+  th0=de.dataset.theme;auHit=false;on=true;i=0;root.classList.add('on');pt=setInterval(tick,150);addEventListener('resize',sched);addEventListener('scroll',sched,true);addEventListener('keydown',key,true);document.addEventListener('fullscreenchange',sched);document.addEventListener('webkitfullscreenchange',sched);scrollTo(0,0);show();
 }
 function when(){
   let n=0;const t=setInterval(()=>{n++;
