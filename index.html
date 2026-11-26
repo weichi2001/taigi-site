@@ -2746,7 +2746,7 @@ const SETUP=()=>{
   return {k:'and',t:'加到主畫面',d:dip?'一鍵安裝，之後從桌面圖示開啟':ol(['點右上角選單 <i class="ic">'+IC.dots+'</i>','選「安裝應用程式」或「加到主畫面」','點「安裝」，之後從桌面圖示開啟'])};
 };
 const BASE=[
- {s:'#fab',act:1,auto:1,wait:()=>miniOpen(),t:'試試看放大鏡',d:'讀到不懂的字，就點右下角的放大鏡，每一頁都找得到'},
+ {s:'#fab',act:1,auto:1,wait:()=>miniOpen(),t:'試試看「放大鏡」',d:'<p>若看見不懂的字詞或是想確認發音，可以點選右下角放大鏡。</p>'},
  {s:'#mq',act:1,auto:1,fill:1,wait:()=>{const q=$('#mq');return !!(q&&q.value.indexOf('街仔路')>-1&&$('#mini .mr .au'))},t:'查一個詞',d:'輸入「街仔路」，看看辭典怎麼說'},
  {s:'#mini .mr .au',act:1,auto:1,wait:()=>auHit,t:'聽聽看發音',d:'點喇叭，聽「街仔路」怎麼唸'},
  {s:'#mclose',act:1,auto:1,wait:()=>!miniOpen(),t:'收起辭典',d:'點右上角的叉叉收起來，繼續導覽'},
