@@ -8,7 +8,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-title" content="街仔路">
-<meta name="build" content="be738fdef7">
+<meta name="build" content="f084517f2a">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <script>if(navigator.standalone===true)document.documentElement.classList.add('ios-sa')</script>
@@ -338,7 +338,6 @@ body.anime .hero .kick{background:rgba(226,68,3,.85);backdrop-filter:blur(10px)}
 .pt{border-radius:16px;box-shadow:0 10px 26px rgba(0,0,0,.4),inset 0 0 0 1px rgba(255,255,255,.2)}
 
 #mini{position:fixed;z-index:41;left:0;right:0;bottom:0;height:60vh;display:flex;flex-direction:column;background:rgba(251,246,238,.97);backdrop-filter:blur(26px) saturate(1.6);-webkit-backdrop-filter:blur(26px) saturate(1.6);border-radius:24px 24px 0 0;box-shadow:0 -10px 40px rgba(60,40,25,.25),inset 0 1px 0 #fff;font-family:Huninn,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif}
-@media(max-width:799px){body.mini-on:has(.bk-rd.is-book) #mini{height:44vh}}
 @media(min-width:800px){#mini{left:auto;right:18px;bottom:18px;width:400px;height:min(680px,84vh);border-radius:24px;border:1px solid rgba(255,255,255,.9)}}
 #mini .mtop{display:flex;justify-content:space-between;align-items:center;padding:16px 18px 6px}
 #mini .mtt b{font-size:22px;display:block;line-height:1.2}#mini .mtt span{font-size:12px;color:var(--ink2)}
@@ -2156,11 +2155,14 @@ function bkBook(root,is,startPage){
     let sc=1;if(on){const w=fb.offsetWidth,r=zw.getBoundingClientRect(),L=28,R=innerWidth-440;sc=Math.min(1,Math.max(.5,(R-L)/w));x=r.left+r.width/2-Z.x-(L+R)/2}
     if(mon&&innerWidth<800&&mini){
       if(Z.s!==1)zReset();
-      const top=Math.max(mini.offsetHeight?innerHeight-mini.offsetHeight:innerHeight*.45,120),T=10,B=top-10;
-      const r=zw.getBoundingClientRect(),h=fb.offsetHeight||r.height,w=fb.offsetWidth||r.width;
-      const s2=Math.min(1,(B-T)/h);
-      const cy=r.top+r.height/2;
-      fb.style.transform=`translateY(${(T+B)/2-cy}px) scale(${s2})`;ui(false);return}
+      const r=zw.getBoundingClientRect(),h=fb.offsetHeight||r.height,T=10;
+      if(!mini.dataset.u&&!mini.classList.contains('drag')){
+        const want=Math.max(Math.round(innerHeight*.3),innerHeight-(T+h+10));
+        if(Math.abs(mini.offsetHeight-want)>1)mini.style.height=want+'px';mini.dataset.bh='1'}
+      const top=innerHeight-mini.offsetHeight;
+      const ty=Math.min(T-r.top,top-10-(r.top+h));
+      fb.style.transform=`translateY(${ty}px)`;ui(false);return}
+    if(!mon&&mini){delete mini.dataset.u;if(mini.dataset.bh){delete mini.dataset.bh;try{miniApplyH()}catch(_){mini.style.height=''}}}
     fb.style.transform=on?`translateX(${-x}px) scale(${sc})`:''};
   const mo=new MutationObserver(shift);mo.observe(document.body,{attributes:true,attributeFilter:['class']});
   try{const mi=document.getElementById('mini');if(mi&&window.ResizeObserver)new ResizeObserver(()=>{if(document.contains(root))shift()}).observe(mi)}catch(_){}
@@ -2598,7 +2600,7 @@ function miniOpen(open){
   };
   function down(e){
     if(!mob()||e.target.closest('button'))return;
-    on=true;pid=e.pointerId;sy=e.clientY;sh=mini.offsetHeight;mini.classList.add('drag');
+    on=true;pid=e.pointerId;sy=e.clientY;sh=mini.offsetHeight;mini.classList.add('drag');mini.dataset.u='1';
     try{e.currentTarget.setPointerCapture(pid)}catch(_){}
   }
   function move(e){
