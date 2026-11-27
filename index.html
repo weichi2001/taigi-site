@@ -8,7 +8,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-title" content="街仔路">
-<meta name="build" content="f7d303b8a6">
+<meta name="build" content="9c45987f65">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <script>if(navigator.standalone===true)document.documentElement.classList.add('ios-sa')</script>
@@ -18,7 +18,7 @@
 <noscript><style>#splash{display:none}</style></noscript>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Huninn&family=Noto+Serif+TC:wght@400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Huninn&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Cactus+Classical+Serif&family=Chocolate+Classical+Sans&display=swap" rel="stylesheet">
 <style>@font-face{font-family:"Huninn";src:url(fonts/huninn.woff2) format("woff2");font-weight:400 900;font-display:swap}
@@ -1095,7 +1095,8 @@ body[data-r=books] .bkt .hd{color:#f6efe6}body[data-r=books] .bkt small{color:#e
 .bk-sec{font-size:14px;color:var(--accent);letter-spacing:.06em;margin:0}
 .bk-body{font-size:var(--bkfs,18px);line-height:2.05;word-break:break-word}
 .bk-body p,.bk-body div{margin:0 0 1em}.bk-body img{display:block;max-width:100%;height:auto;margin:18px auto;border-radius:10px}
-.bk-body,.bk-body .tl{font-family:"GenRyu Lat","Noto Serif TC","Source Han Serif TC","Songti TC","PMingLiU",serif;font-weight:400}.bk-body .tl{letter-spacing:0}
+.bk-body,.bk-body .tl{font-family:Huninn,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;font-weight:400}.bk-body .tl{letter-spacing:0}.bk-body .t8{text-indent:0;text-align:left}
+
 .bk-body .ind{text-indent:2em;text-align:justify;text-justify:inter-character;margin:0 0 .35em}
 .bk-body h2,.bk-body h3,.bk-body h4{font-family:var(--serif);margin:1.6em 0 .5em}.bk-body a{color:var(--accent)}.bk-body blockquote{margin:1em 0;padding-left:16px;border-left:3px solid var(--line);color:var(--ink2)}
 .bk-cr{font-size:13px;color:var(--ink2,#777);border-top:1px solid var(--line);padding-top:14px;margin-top:34px;line-height:1.8}.bk-cr a{color:var(--accent)}
@@ -1926,7 +1927,7 @@ function bkCleanEl(h){
     for(const c of [...src.childNodes]){
       if(c.nodeType===3){
         const t=c.nodeValue,f=document.createDocumentFragment();let last=0,m;BKLAT.lastIndex=0;
-        while(m=BKLAT.exec(t)){if(m.index>last)f.append(t.slice(last,m.index));const s=document.createElement('span');s.className='tl'+(/[\u030D\u0358]/.test(m[0])?' cm':'');s.textContent=m[0];f.append(s);last=m.index+m[0].length}
+        while(m=BKLAT.exec(t)){if(m.index>last)f.append(t.slice(last,m.index));const s=document.createElement('span');s.className='tl';s.textContent=m[0];f.append(s);last=m.index+m[0].length}
         if(last<t.length)f.append(t.slice(last));dst.append(f);continue}
       if(c.nodeType!==1)continue;
       const tg=c.tagName;if(BKDROP.has(tg))continue;
