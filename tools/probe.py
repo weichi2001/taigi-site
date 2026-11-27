@@ -1,20 +1,8 @@
-import json,re,sys,time,urllib.request,urllib.parse
+import json,urllib.request
 UA='Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/124 Safari/537.36'
-def get(u):
-    r=urllib.request.Request(u,headers={'user-agent':UA,'accept':'application/json','referer':'https://www.ebookservice.tw/tc/'})
-    return json.load(urllib.request.urlopen(r,timeout=40))
-inc={x[1]:x for x in json.load(open('ebs.json'))}
-cand={}
-for qq in ['台語','臺語','台羅','閩南語','河洛','台文','母語','Tâi','Taiwanese','台灣話','客語','原住民']:
-    got=0
-    for pg in range(1,8):
-        try: d=get('https://www.ebookservice.tw/api/1.00/search/web/tc/2/60/%d?q=%s'%(pg,urllib.parse.quote(qq)))
-        except Exception as e: print(qq,pg,'ERR',e);break
-        h=d['payload']['hits']
-        if pg==1: print(qq,'found',h['found'], list(h['hit'][0]['fields'].keys()))
-        for x in h['hit']: cand.setdefault(x['id'],x['fields']);got+=1
-        if len(h['hit'])<60: break
-        time.sleep(.3)
-json.dump(cand,open('tools/_cand.json','w'),ensure_ascii=False)
-print('cand',len(cand),'inc',len(inc),'recall',len([i for i in inc if i in cand]))
-miss=[i for i in inc if i not in cand];print('missed inc',[(inc[i][2]) for i in miss])
+def post(s):
+    r=urllib.request.Request('https://www.ptsplus.tv/graphql',json.dumps({'query':s}).encode(),{'content-type':'application/json','user-agent':UA})
+    try: return json.load(urllib.request.urlopen(r,timeout=40))
+    except urllib.error.HTTPError as e: return e.read().decode()[:700]
+for s in ['{ homepageMarketingLabels{ __typename } }','{ homepageMarketingLabels{ labels{ id name } } }','{ homepageMarketingLabels{ items{ id name } } }','{ homepageMarketingLabels{ list{ id name } } }','{ homepageMarketingLabels{ marketingLabels{ id name } } }','{ programs{ __typename } }','{ programs{ items{ id name } } }','{ programs{ programs{ id name } } }','{ programs{ list{ id name } } }','{ programs{ edges{ node{ id name } } } }','{ programs{ programs{ id } total } }','{ videoSubMarketingLabel{ __typename } }','{ videoSubMarketingLabel(id:"695802cc-c1fe-4071-aea4-5bb21f0cee5a"){ id name } }','{ program(id:"419e0c83-bc3c-44ec-8f1a-9e871b1310ca"){ __typename id name } }']:
+    print(s,'->',json.dumps(post(s),ensure_ascii=False)[:700]);print()
