@@ -2723,6 +2723,8 @@ html[data-theme=dark] #tgt .tc{background:rgba(34,28,24,.78);border-color:rgba(2
 #tgt .fsgo{display:block;width:100%;margin-top:14px;font:inherit;font-size:15px;cursor:pointer;border-radius:99px;padding:10px 16px;border:1px solid var(--accent);background:transparent;color:var(--accent)}
 #tgt .fsgo[hidden]{display:none}
 #tgt .tr button.dis{opacity:.4;cursor:not-allowed}
+#tgt.nt .hole,#tgt.nt .tc{transition:none!important}
+#tgt.trk .hole,#tgt.trk .tc{transition:top .14s linear,left .14s linear,width .14s linear,height .14s linear,opacity .25s}
 @media(prefers-reduced-motion:reduce){#tgt .hole,#tgt .tc{transition:none}}
 </style>
 <div id="tgt" role="dialog" aria-modal="true" aria-label="網站導覽"><div class="bg"></div><div class="bk"></div><div class="bk"></div><div class="bk"></div><div class="bk"></div><div class="hole none"></div><div class="tc"></div></div>
@@ -2764,6 +2766,7 @@ const gated=()=>{const s=steps[i];return !!(s&&((s.gate&&!isFs()&&!s.tried)||(s.
 function blk(on_,r){const bs=root.querySelectorAll('.bk');root.querySelector('.bg').style.display=on_?'none':'';bs.forEach(b=>b.style.display=on_?'block':'none');if(!on_)return;const vw=innerWidth,vh=innerHeight;
   const set=(b,l,t,w,h)=>{b.style.cssText=`display:block;left:${l}px;top:${t}px;width:${Math.max(0,w)}px;height:${Math.max(0,h)}px`};
   set(bs[0],0,0,vw,r.top);set(bs[1],0,r.bottom,vw,vh-r.bottom);set(bs[2],0,r.top,r.left,r.height);set(bs[3],r.right,r.top,vw-r.right,r.height)}
+function noT(){root.classList.add('nt');requestAnimationFrame(()=>requestAnimationFrame(()=>root.classList.remove('nt')))}
 function place(){
   const s=steps[i];if(!s)return;const e=tgt(s),vw=innerWidth,vh=innerHeight;blk(false);
   if(e){
@@ -2787,14 +2790,16 @@ function show(){
   const s=steps[i],last=i===steps.length-1,first=i===0,gate=s.gate;
   const extra=s.fill?'<button class="fsgo" data-a="fill">幫我輸入</button>':gate&&!tgt(s)?'<button class="fsgo" data-a="fs">開啟全螢幕</button>':s.k==='and'&&dip?'<button class="fsgo" data-a="inst">安裝到主畫面</button>':'';
   tc.innerHTML=`<small>${i+1} / ${steps.length}</small><h3>${s.t}</h3><div class="dd">${s.d.charAt(0)==='<'?s.d:'<p>'+s.d+'</p>'}</div>${extra}<div class="tr">${last||gate?'':'<button class="sk" data-a="x">略過導覽</button>'}<span class="sp"></span>${first?'':'<button data-a="p">上一步</button>'}${s.wait&&s.auto?'<button data-a="sk2">跳過這步</button>':''}<button class="pr" data-a="n"${s.wait&&s.auto?' hidden':''}>${last?'完成':first?'開始導覽':'下一步'}</button></div>`;
+  root.classList.toggle('trk',!!s.act);
   if(s.wait){s.done=false;s.skip=false;if(s.wait()){s.done=true;s.manual=true}}
   const e=tgt(s);
-  if(e&&!s.act){const r=e.getBoundingClientRect();if(r.top<70||r.bottom>innerHeight-20){try{e.scrollIntoView({block:'center',behavior:'auto'})}catch(x){}}}
+  if(e&&!s.act){const r=e.getBoundingClientRect();if(r.top<70||r.bottom>innerHeight-20){try{noT();e.scrollIntoView({block:'center',behavior:'instant'})}catch(x){}}}
   place();sync();if(s.wait&&s.done&&s.auto&&s.manual){const b=tc.querySelector('.pr');if(b)b.hidden=false}clearTimeout(tmr);tmr=setTimeout(place,420);setTimeout(place,800);
   const b=tc.querySelector('.fsgo')||tc.querySelector('.pr');if(b&&!b.disabled)b.focus({preventScroll:true});
 }
-function tick(){if(!on)return;const s=steps[i];if(!s)return;if(s.act)place();
-  if(s.wait&&!s.done){let ok=false;try{ok=s.wait()}catch(x){}if(ok){s.done=true;sync();if(s.auto&&!s.manual){const k=i;setTimeout(()=>{if(on&&i===k)go(i+1)},450)}else{const b=tc.querySelector('.pr');if(b)b.hidden=false}}}}
+function loop(){if(!on)return;const s=steps[i];if(s&&s.act)place();requestAnimationFrame(loop)}
+function tick(){if(!on)return;const s=steps[i];if(!s)return;
+  if(s.wait&&!s.done){let ok=false;try{ok=s.wait()}catch(x){}if(ok){s.done=true;sync();if(s.auto&&!s.manual){const k=i;setTimeout(()=>{if(on&&i===k)go(i+1)},350)}else{const b=tc.querySelector('.pr');if(b)b.hidden=false}}}}
 let pt=0;
 function go(n){i=Math.max(0,Math.min(steps.length-1,n));show()}
 function close(m){if(!on)return;on=false;clearInterval(pt);if(miniOpen()){const c=$('#mclose');if(c)c.click()}root.classList.remove('on');removeEventListener('resize',sched);removeEventListener('scroll',sched,true);removeEventListener('keydown',key,true);document.removeEventListener('fullscreenchange',sched);document.removeEventListener('webkitfullscreenchange',sched);if(m)mark()}
@@ -2812,7 +2817,7 @@ function start(){
   if(on||document.body.dataset.r!=='home')return;
   const st=SETUP(),mid=BASE.filter(s=>!s.s||(s.act&&/^#m/.test(s.s))||tgt(s));if(mid.length<3)return;
   steps=[{t:'歡迎來到街仔路！',d:'用半分鐘的時間，帶你認識如何使用'}].concat(st?[st]:[],mid);
-  th0=de.dataset.theme;auHit=false;on=true;i=0;root.classList.add('on');pt=setInterval(tick,150);addEventListener('resize',sched);addEventListener('scroll',sched,true);addEventListener('keydown',key,true);document.addEventListener('fullscreenchange',sched);document.addEventListener('webkitfullscreenchange',sched);scrollTo(0,0);show();
+  th0=de.dataset.theme;auHit=false;on=true;i=0;root.classList.add('on');pt=setInterval(tick,150);requestAnimationFrame(loop);addEventListener('resize',sched);addEventListener('scroll',sched,true);addEventListener('keydown',key,true);document.addEventListener('fullscreenchange',sched);document.addEventListener('webkitfullscreenchange',sched);scrollTo(0,0);show();
 }
 function when(){
   let n=0;const t=setInterval(()=>{n++;
