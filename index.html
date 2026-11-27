@@ -1430,7 +1430,7 @@ function pAbout(){
    <section class="abx-src"><h4>參考資料</h4><ul>
     <li><span>學會基礎 700 字</span>教育部《臺灣台語推薦用字 700 字表》、《臺灣台語常用詞辭典》（辭典、例句、發音）</li>
     <li><span>持續練習</span>教育部臺灣台語羅馬拼音教學網；Tân Kiàn-tiong 設計的練台羅、台語寫字學習單編輯器</li>
-    <li><span>沈浸式學習環境</span>臺語歌真正正字歌詞網、臺灣雲端書庫、台文通訊 BONG 報（李江却台語文教基金會）、國立教育廣播電臺、公視台語台、公視⁠+、教育部臺灣台語動畫網、TaigiTube 台語水管</li>
+    <li><span>沉浸式學習環境</span>臺語歌真正正字歌詞網、臺灣雲端書庫、台文通訊 BONG 報（李江却台語文教基金會）、國立教育廣播電臺、公視台語台、公視⁠+、教育部臺灣台語動畫網、TaigiTube 台語水管</li>
     <li><span>推薦工具</span>教育部臺灣台語輸入法、揣台語 ChhoeTaigi、iTaigi 愛台語、芋圓字典 Oo Inn、台語嘛會通</li>
     <li><span>字體</span>源流明體 GenRyu Serif、粉圓體 Huninn（皆為 Open Font License）</li>
    </ul><p class="abx-pv">進度只存在你自己的瀏覽器裡，不用註冊，也不會被收集</p><p class="abx-pv"><a href="#home" class="abx-tour" data-tour>再看一次網站導覽</a></p></section></div>`;
@@ -1450,7 +1450,7 @@ function pStart(){
       row('700 字自學','教育部推薦用字，每字有台羅、華語、用例與常見錯寫，可翻卡自測','#w700',{bar:known/D.length,mt:`${known} / ${D.length}`}))}
     ${step(3,'持續練習',
       row('練習資源','把學過的內容反覆練習，練到熟悉為止','#learn'))}
-    ${step(4,'創造沈浸式學習環境',
+    ${step(4,'創造沉浸式學習環境',
       row('台語戲台','動畫、電影、戲劇、節目，邊看影片邊學習！','#anime',{kick:'Tâi-gí Hì-tâi'})+
       row('台語歌廳','正港台文正字的卡啦OK','#ktv',{kick:'Tâi-gí Ko-thiann'})+
       row('台語冊房','繪本、小說、漫畫、雜誌等應有盡有','#books',{kick:'Tâi-gí Tsheh-pâng'}))}
@@ -2745,7 +2745,7 @@ const IC={share:'<svg viewBox="0 0 24 24"><path d="M12 15V4M8.5 7.5L12 4l3.5 3.5
 const PP=(...a)=>a.map(x=>'<p>'+x+'</p>').join('');
 const ol=a=>'<ol class="tl">'+a.map(x=>'<li>'+x+'</li>').join('')+'</ol>';
 const SETUP=()=>{
-  if(!isIOS&&!isAnd){ if(!fsOK||isFs())return null; return {k:'fs',s:'#fsBtn',t:'開啟全螢幕',d:PP('強力推薦使用全螢幕模式','該模式可以擁有最完整、最沈浸的學習體驗'),gate:1}; }
+  if(!isIOS&&!isAnd){ if(!fsOK||isFs())return null; return {k:'fs',s:'#fsBtn',t:'開啟全螢幕',d:PP('強力推薦使用全螢幕模式','該模式可以擁有最完整、最沉浸的學習體驗'),gate:1}; }
   if(standalone())return null;
   if(inApp)return {k:'in',t:'將「街仔路」加入到主畫面',d:ol(['點選單，選「用瀏覽器開啟」','在 Safari 或 Chrome 裡即可將「街仔路」加入主畫面'])};
   if(isIOS)return {k:'ios',t:'將「街仔路」加入到主畫面',d:ol(['點擊分享按鈕 <i class="ic">'+IC.share+'</i>','在<span class="nw">「檢視較多」</span>中找到<span class="nw">「加入主畫面」<i class="ic">'+IC.add+'</i></span>並點擊','點選「加入」，之後即可從桌面圖示開啟軟體，享受全螢幕操作'])};
@@ -2757,7 +2757,7 @@ const BASE=[
  {s:'#mini .mr .au',act:1,auto:1,wait:()=>auHit&&(Date.now()-auT>5000||(!!lastAu&&lastAu.ended&&Date.now()-auT>800)),t:'聽聽看發音',d:'點選喇叭，聽「街仔路」怎麼唸'},
  {s:'#mclose',act:1,auto:1,wait:()=>!miniOpen(),t:'收起放大鏡',d:PP('漂亮！接下來點擊右上角的 X','將放大鏡收起後繼續完成導覽')},
  {s:'.hsec.g3',t:'各類資源任你選',d:PP('初學建議從系統性學習開始','學習台羅拼音、認識基礎 700 字','可以善用各類「練習資源」','及老師精選的「推薦工具」')},
- {s:'a.pst.a',up:1,t:'看戲、聽歌、讀冊',d:PP('有時不妨試試看沈浸式學習功能','可以依照自己感興趣的內容學習','不要忘記可以隨時使用放大鏡工具！')},
+ {s:'a.pst.a',up:1,t:'看戲、聽歌、讀冊',d:PP('有時不妨試試看沉浸式學習功能','可以依照自己感興趣的內容學習','不要忘記可以隨時使用放大鏡工具！')},
  {s:'#themeBtn',act:1,wait:()=>de.dataset.theme!==th0,t:'淺色或深色',d:PP('可以隨時依照偏好、心情、用眼舒適度切換','點一下試試！'),okd:'決定好了嗎～好了就按下一步吧！'},
  {t:'歡迎來到「街仔路」，祝你逛得開心！',d:PP('如果之後想再觀看一次導覽','可以到「關於」頁面的最下方點選複習')}
 ];
