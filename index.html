@@ -8,7 +8,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-title" content="街仔路">
-<meta name="build" content="9c45987f65">
+<meta name="build" content="708afe7873">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <script>if(navigator.standalone===true)document.documentElement.classList.add('ios-sa')</script>
@@ -734,7 +734,7 @@ html[data-theme=dark] .mx i:not(.ok):not(.bad){background:rgba(255,255,255,.14)}
 .abx .abx-edu{display:flex;align-items:baseline;gap:14px;margin:0;font-size:14.5px;letter-spacing:.08em;color:var(--ink2)}
 .abx .abx-edu span{font-size:12.5px;letter-spacing:.24em;color:var(--gd)}
 .abx .abx-tx>p.abx-lead{margin:48px 0 34px;padding-top:34px;border-top:1px solid var(--line);font-family:var(--serif);font-weight:700;font-size:21px;line-height:1.8;letter-spacing:.08em;color:var(--ink)}
-.abx .abx-tx>p:not(.abx-role):not(.abx-edu):not(.abx-lead){margin:0 0 26px;font-size:16px;line-height:2.2;letter-spacing:.05em;color:var(--ink);text-align:justify;text-justify:inter-character;text-indent:2em;line-break:strict;hanging-punctuation:allow-end}
+.abx .abx-tx>p:not(.abx-role):not(.abx-edu):not(.abx-lead){margin:0 0 26px;font-size:16px;line-height:2.2;letter-spacing:.05em;color:var(--ink);text-align:justify;text-indent:2em;line-break:strict;hanging-punctuation:allow-end}
 .abx .abx-src{margin-top:80px;padding-top:24px;border-top:1px solid var(--line)}
 .abx .abx-src h4{margin:0 0 12px;font-size:12.5px;font-weight:400;letter-spacing:.24em;color:var(--gd)}
 .abx .abx-src ul{list-style:none;margin:0;padding:0;font-size:13px;line-height:2;color:var(--ink2)}
@@ -2682,7 +2682,7 @@ if(window.__tgReady)window.__tgReady();
   const re=/(\p{L})\u030D/gu;
   function fix(root){
     const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);const hits=[];
-    for(let n=w.nextNode();n;n=w.nextNode()){if(n.nodeValue.indexOf('\u030D')>=0&&!(n.parentNode.closest&&n.parentNode.closest('textarea,input,script,style')))hits.push(n)}
+    for(let n=w.nextNode();n;n=w.nextNode()){if(n.nodeValue.indexOf('\u030D')>=0&&!(n.parentNode.closest&&n.parentNode.closest('textarea,input,script,style,.bk-body')))hits.push(n)}
     hits.forEach(n=>{
       const s=n.nodeValue.normalize('NFD').normalize('NFC');const f=document.createDocumentFragment();let last=0,m;re.lastIndex=0;
       while((m=re.exec(s))){f.append(s.slice(last,m.index));const sp=document.createElement('span');sp.className='t8';sp.textContent=m[1];f.append(sp);last=m.index+m[0].length}
