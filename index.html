@@ -8,7 +8,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-title" content="街仔路">
-<meta name="build" content="ac00419d16">
+<meta name="build" content="26c826e355">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <script>if(navigator.standalone===true)document.documentElement.classList.add('ios-sa')</script>
@@ -18,9 +18,8 @@
 <noscript><style>#splash{display:none}</style></noscript>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Huninn&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Cactus+Classical+Serif&family=Chocolate+Classical+Sans&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<link href="https://fonts.googleapis.com/css2?family=Cactus+Classical+Serif&family=Chocolate+Classical+Sans&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <style>@font-face{font-family:"Huninn";src:url(fonts/huninn.woff2) format("woff2");font-weight:400 900;font-display:swap}
 @font-face{font-family:"GenRyu";src:url(fonts/gr-disp.woff2) format("woff2");font-weight:100 900;font-display:swap}
 @font-face{font-family:"GenRyu Lat";src:url(fonts/gr-lat.woff2) format("woff2");font-weight:100 500;font-display:swap}
@@ -39,7 +38,7 @@ html.sp-out #splash{opacity:0;visibility:hidden;pointer-events:none}
 html.sp-out #app,html.sp-out .top{animation:spIn .6s ease backwards}
 @media(prefers-reduced-motion:reduce){#splash,#splash .sp-logo,#splash .sp-bar::after,html.sp-out #app,html.sp-out .top{animation:none!important;transition:none!important}}
 </style>
-<link href="https://fonts.googleapis.com/css2?family=Andika:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Andika:wght@400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <style>
 :root{--ink:#615045;--ink2:#7a6a5e;--paper:#f7f0e2;--card:#fffaf0;--line:#e4d8c3;--accent:#e24403;--ok:#4f8a3a;--okbg:#e9f2e1;--badbg:#fbe8de}
 *{box-sizing:border-box}
@@ -2975,8 +2974,8 @@ const SETUP=()=>{
 };
 const BASE=[
  {s:'#fab',act:1,auto:1,wait:()=>miniOpen(),t:'試試看「放大鏡」',d:PP('若看見不懂的字詞或是想確認發音','記得使用右下角的放大鏡')},
- {s:'#mq',act:1,auto:1,fill:1,wait:()=>{const q=$('#mq');return !!(q&&q.value.indexOf('街仔路')>-1&&$('#mini .mr .au'))},t:'查詢練習',d:'輸入「街仔路」，看看辭典怎麼說'},
- {s:'#mini .mr .au',act:1,auto:1,wait:()=>auHit&&(Date.now()-auT>5000||(!!lastAu&&lastAu.ended&&Date.now()-auT>800)),t:'聽聽看發音',d:'點選喇叭，聽「街仔路」怎麼唸'},
+ {s:'#mini .msb',act:1,auto:1,fill:1,wait:()=>{const q=$('#mq');return !!(q&&q.value.indexOf('街仔路')>-1&&$('#mini .mr .au'))},t:'查詢練習',d:'輸入「街仔路」，看看辭典怎麼說'},
+ {s:'#mini .mr .au',act:1,auto:1,init:()=>{auHit=false;lastAu=null},wait:()=>auHit&&(Date.now()-auT>5000||(!!lastAu&&lastAu.ended&&Date.now()-auT>800)),t:'聽聽看發音',d:'點選喇叭，聽「街仔路」怎麼唸'},
  {s:'#mclose',act:1,auto:1,wait:()=>!miniOpen(),t:'收起放大鏡',d:PP('漂亮！接下來點擊右上角的 X','將放大鏡收起後繼續完成導覽')},
  {s:'.hsec.g3',t:'各類資源任你選',d:PP('初學建議從系統性學習開始','學習台羅拼音、認識基礎 700 字','可以善用各類「練習資源」','及老師精選的「推薦工具」')},
  {s:'a.pst.a',up:1,t:'看戲、聽歌、讀冊',d:PP('有時不妨試試看沉浸式學習功能','可以依照自己感興趣的內容學習','不要忘記可以隨時使用放大鏡工具！')},
@@ -3021,6 +3020,7 @@ function show(){
   const extra=s.fill?'<button class="fsgo" data-a="fill">幫我輸入</button>':gate&&!tgt(s)?'<button class="fsgo" data-a="fs">開啟全螢幕</button>':s.k==='and'&&dip?'<button class="fsgo" data-a="inst">安裝到主畫面</button>':'';
   tc.innerHTML=`<small>${i+1} / ${steps.length}</small><h3>${s.t}</h3><div class="dd">${s.d.charAt(0)==='<'?s.d:'<p>'+s.d+'</p>'}</div>${extra}<div class="tr">${s.k==='open'?'<button class="sk" data-a="n">先在網頁繼續</button>':last||gate?'':'<button class="sk" data-a="x">略過導覽</button>'}<span class="sp"></span>${first?'':'<button data-a="p">上一步</button>'}<button class="pr" data-a="${s.k==='open'?'app':'n'}"${s.wait&&s.auto?' hidden':''}>${s.k==='open'?'我去開啟':last?'完成':first?'開始導覽':'下一步'}</button></div>`;
   root.classList.toggle('trk',!!s.act);
+  if(fwd&&s.init)s.init();
   if(s.wait){s.done=false;s.skip=false;if(s.wait()){s.done=true;s.manual=true}}
   const e=tgt(s);
   lockR=null;if(e&&!s.act){const r=e.getBoundingClientRect();if(r.top<70||r.bottom>innerHeight-20){const mx=Math.max(0,de.scrollHeight-innerHeight),y0=scrollY,y1=Math.min(mx,Math.max(0,y0+r.top+r.height/2-innerHeight/2)),d=y1-y0;if(Math.abs(d)>2){lockR={top:r.top-d,bottom:r.bottom-d,left:r.left,right:r.right,width:r.width,height:r.height};lockT=performance.now()+1400;scrollTo({top:y1,behavior:'smooth'});const k=i;const ck=()=>{if(!lockR||!on||i!==k)return;if(Math.abs(scrollY-y1)<2||performance.now()>lockT){lockR=null;place();return}requestAnimationFrame(ck)};requestAnimationFrame(ck)}}}
@@ -3031,7 +3031,8 @@ function loop(){if(!on)return;const s=steps[i];if(s&&s.act)place();requestAnimat
 function tick(){if(!on)return;const s=steps[i];if(!s)return;
   if(s.wait&&!s.done){let ok=false;try{ok=s.wait()}catch(x){}if(ok){s.done=true;sync();if(s.auto&&!s.manual){const k=i;setTimeout(()=>{if(on&&i===k)go(i+1)},350)}else{const b=tc.querySelector('.pr');if(b)b.hidden=false}}}}
 let pt=0;
-function go(n){i=Math.max(0,Math.min(steps.length-1,n));show()}
+let fwd=true;
+function go(n){n=Math.max(0,Math.min(steps.length-1,n));fwd=n>=i;i=n;show()}
 function close(m){if(!on)return;on=false;clearInterval(pt);if(miniOpen()){const c=$('#mclose');if(c)c.click()}root.classList.remove('on');removeEventListener('resize',sched);removeEventListener('scroll',sched,true);removeEventListener('keydown',key,true);document.removeEventListener('fullscreenchange',sched);document.removeEventListener('webkitfullscreenchange',sched);if(m)mark()}
 function key(e){if(!on)return;const s=steps[i];if(e.key==='Escape'){if(s&&s.gate)return;e.preventDefault();close(1)}else if(e.key==='ArrowRight'){e.preventDefault();next()}else if(e.key==='ArrowLeft'){e.preventDefault();go(i-1)}}
 function next(){if(gated())return;if(i>=steps.length-1)close(1);else go(i+1)}
