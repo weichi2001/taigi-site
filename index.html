@@ -8,7 +8,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-title" content="街仔路">
-<meta name="build" content="e99917cd7e">
+<meta name="build" content="1fdaff71d6">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <script>if(navigator.standalone===true)document.documentElement.classList.add('ios-sa')</script>
@@ -1095,6 +1095,7 @@ body[data-r=books] .bkt .hd{color:#f6efe6}body[data-r=books] .bkt small{color:#e
 .bk-sec{font-size:14px;color:var(--accent);letter-spacing:.06em;margin:0}
 .bk-body{font-size:var(--bkfs,18px);line-height:2.05;word-break:break-word}
 .bk-body p,.bk-body div{margin:0 0 1em}.bk-body img{display:block;max-width:100%;height:auto;margin:18px auto;border-radius:10px}
+.bk-body .ind{text-indent:2em;text-align:justify;text-justify:inter-character;margin:0 0 .35em}
 .bk-body h2,.bk-body h3,.bk-body h4{font-family:var(--serif);margin:1.6em 0 .5em}.bk-body a{color:var(--accent)}.bk-body blockquote{margin:1em 0;padding-left:16px;border-left:3px solid var(--line);color:var(--ink2)}
 .bk-cr{font-size:13px;color:var(--ink2,#777);border-top:1px solid var(--line);padding-top:14px;margin-top:34px;line-height:1.8}.bk-cr a{color:var(--accent)}
 .bk-nav{display:flex;gap:12px;justify-content:space-between;margin:20px 0 60px}.bk-nav .btn{flex:1;text-align:center;text-decoration:none}
@@ -2251,6 +2252,7 @@ async function bkReader(){
    <div class="bk-mode" data-m="${md}"><button data-bk="m-img" class="${md==='img'?'on':''}">電子書</button><button data-bk="m-txt" class="${md==='txt'?'on':''}">文字</button></div>${note?`<p class="bk-nt">${note}</p>`:''}
    ${bodyH}${last&&is.back?`<div class="bk-bc"><p>封底</p><img src="${is.back}" alt="" referrerpolicy="no-referrer" onerror="this.parentNode.remove()"></div>`:''}${bkCredit(n,a.u)}</article>
    <div class="bk-nav">${i>0?`<a class="btn" href="#books/${n}/${i-1}">← ${esc(A[i-1].t)}</a>`:`<a class="btn" href="#books/${n}">← 目錄</a>`}${i<A.length-1?`<a class="btn pri" href="#books/${n}/${i+1}">${esc(A[i+1].t)} →</a>`:`<a class="btn" href="#books/${n}">回目錄</a>`}</div>`;
+  root.querySelectorAll('.bk-body p,.bk-body div').forEach(p=>{if(!p.querySelector('img,p,div,h2,h3,h4,ul,ol,blockquote,table')&&!p.closest('blockquote')&&p.textContent.trim().length>=24)p.classList.add('ind')});
   window.scrollTo(0,0);
 }
 async function bkCovers(){ebsFill();
