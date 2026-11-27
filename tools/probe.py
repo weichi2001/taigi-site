@@ -1,8 +1,19 @@
-import json,urllib.request
+import json,re,urllib.request
 UA='Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/124 Safari/537.36'
-def post(s):
-    r=urllib.request.Request('https://www.ptsplus.tv/graphql',json.dumps({'query':s}).encode(),{'content-type':'application/json','user-agent':UA})
-    try: return json.load(urllib.request.urlopen(r,timeout=40))
-    except urllib.error.HTTPError as e: return e.read().decode()[:700]
-for s in ['{ homepageMarketingLabels{ __typename } }','{ homepageMarketingLabels{ labels{ id name } } }','{ homepageMarketingLabels{ items{ id name } } }','{ homepageMarketingLabels{ list{ id name } } }','{ homepageMarketingLabels{ marketingLabels{ id name } } }','{ programs{ __typename } }','{ programs{ items{ id name } } }','{ programs{ programs{ id name } } }','{ programs{ list{ id name } } }','{ programs{ edges{ node{ id name } } } }','{ programs{ programs{ id } total } }','{ videoSubMarketingLabel{ __typename } }','{ videoSubMarketingLabel(id:"695802cc-c1fe-4071-aea4-5bb21f0cee5a"){ id name } }','{ program(id:"419e0c83-bc3c-44ec-8f1a-9e871b1310ca"){ __typename id name } }']:
-    print(s,'->',json.dumps(post(s),ensure_ascii=False)[:700]);print()
+def get(u):
+    r=urllib.request.Request(u,headers={'user-agent':UA})
+    try: return urllib.request.urlopen(r,timeout=40).read().decode('utf8','replace')
+    except Exception as e: return 'ERR %s'%e
+h=get('https://www.ptsplus.tv/')
+srcs=sorted(set(re.findall(r'(/_next/static/[^"\']+\.js)',h)))
+print(len(srcs))
+seen=set()
+for s in srcs:
+    js=get('https://www.ptsplus.tv'+s)
+    for kw in ['homepageMarketingLabels','programs(','searchProgram','search(','keyword','videoMarketingLabel']:
+        for m in re.finditer(re.escape(kw),js):
+            seg=js[max(0,m.start()-150):m.start()+450].replace('\n',' ')
+            key=seg[:80]
+            if key in seen: continue
+            seen.add(key); print('##',s[-40:],kw,'::',seg);print()
+            break
