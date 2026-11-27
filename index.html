@@ -8,7 +8,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-title" content="街仔路">
-<meta name="build" content="708afe7873">
+<meta name="build" content="e4deed24bd">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <script>if(navigator.standalone===true)document.documentElement.classList.add('ios-sa')</script>
@@ -2851,9 +2851,10 @@ html[data-theme=dark] #tgt .pm{border-color:#5a4d42}
 @media(prefers-reduced-motion:reduce){#tgt .pm *{animation:none!important}#tgt .pm .sh,#tgt .pm .mn{opacity:1}}
 @media(max-height:620px){#tgt .pm{display:none}}
 
-#tgt .pi{--k:.5;box-sizing:content-box;position:relative;width:calc(402px*var(--k));height:calc(474px*var(--k));margin:2px auto 14px;border-radius:8px 8px 30px 30px;border:3px solid #2b211b;border-top-width:0;overflow:hidden;box-shadow:0 8px 22px rgba(40,26,16,.25);background:#000;transform:translateZ(0);--sb:#f2f2f7;--rw:#fff;--tx:#000;--tx2:#8a8a8e;--ck:#e6e6eb;--pg:#fbf6ec;--hero:#3a2a22;--blk:#eadfcd;--ln:rgba(0,0,0,.1)}
-html[data-theme=dark] #tgt .pi{border-color:#5a4d42;--sb:#2a2a2c;--rw:#3a3a3c;--tx:#fff;--tx2:#98989f;--ck:#4a4a4c;--pg:#241b16;--hero:#4a2519;--blk:#352a23;--ln:rgba(255,255,255,.12)}
-#tgt .pi .sc{left:0;top:0;width:402px;height:874px;transform:scale(var(--k)) translateY(-400px);animation:picam 14s infinite;transform-origin:0 0;font-size:15px;line-height:1.2;color:var(--tx);white-space:nowrap;overflow:hidden;background:var(--pg)}
+#tgt .pi{--k:.5;box-sizing:content-box;position:relative;width:calc(402px*var(--k));height:calc(474px*var(--k));margin:2px auto 14px;border:0;overflow:hidden;background:transparent;transform:translateZ(0);--bz:#2b211b;--sb:#f2f2f7;--rw:#fff;--tx:#000;--tx2:#8a8a8e;--ck:#e6e6eb;--pg:#fbf6ec;--hero:#3a2a22;--blk:#eadfcd;--ln:rgba(0,0,0,.1)}
+html[data-theme=dark] #tgt .pi{--bz:#5a4d42;--sb:#2a2a2c;--rw:#3a3a3c;--tx:#fff;--tx2:#98989f;--ck:#4a4a4c;--pg:#241b16;--hero:#4a2519;--blk:#352a23;--ln:rgba(255,255,255,.12)}
+#tgt .pi .sc{border-radius:54px;left:0;top:0;width:402px;height:874px;transform:scale(var(--k)) translateY(-400px);animation:picam 14s infinite;transform-origin:0 0;font-size:15px;line-height:1.2;color:var(--tx);white-space:nowrap;overflow:hidden;background:var(--pg)}
+#tgt .pi .sc::after{content:"";position:absolute;inset:0;border-radius:54px;box-shadow:inset 0 0 0 10px var(--bz);z-index:20;pointer-events:none}
 #tgt .pi *{position:absolute;box-sizing:border-box;margin:0;padding:0}
 #tgt .pi .st{left:0;top:0;width:402px;height:54px;z-index:1}
 #tgt .pi .st b{left:42px;top:19px;font-size:17px}
@@ -2866,8 +2867,17 @@ html[data-theme=dark] #tgt .pi{border-color:#5a4d42;--sb:#2a2a2c;--rw:#3a3a3c;--
 #tgt .pi .ab i{left:20px;top:17px;width:18px;height:2px;background:var(--tx);box-shadow:0 6px var(--tx),0 -6px var(--tx)}
 #tgt .pi .ab em{right:20px;top:14px;width:20px;height:20px;border:2.5px solid var(--tx);border-radius:50%;border-top-color:transparent}
 #tgt .pi .tbr{left:0;right:0;top:826px;height:44px}
-#tgt .pi .tbr b{top:10px;width:24px;height:24px;border:2.5px solid var(--tx);border-radius:6px;opacity:.85}
-#tgt .pi .tbr b:nth-child(1){left:40px;border-radius:50%;opacity:.9}#tgt .pi .tbr b:nth-child(2){left:113px;border-radius:50%;opacity:.35}#tgt .pi .tbr b:nth-child(3){left:183px;border-color:#2f7cf6;border-top-width:0;height:16px;top:18px;border-radius:2px 2px 6px 6px}#tgt .pi .tbr b:nth-child(4){left:258px}#tgt .pi .tbr b:nth-child(5){left:332px}
+#tgt .pi .tbr b{top:10px;width:24px;height:24px;opacity:.9}
+#tgt .pi .tbr b:nth-child(1),#tgt .pi .tbr b:nth-child(2){width:15px;height:15px;top:14px;border-left:3px solid var(--tx);border-bottom:3px solid var(--tx);border-radius:2px}
+#tgt .pi .tbr b:nth-child(1){left:47px;transform:rotate(45deg)}
+#tgt .pi .tbr b:nth-child(2){left:119px;transform:rotate(-135deg);opacity:.35}
+#tgt .pi .tbr b:nth-child(3){left:181px;top:19px;width:24px;height:17px;border:2.5px solid var(--tx);border-top:0;border-radius:0 0 6px 6px}
+#tgt .pi .tbr b:nth-child(3)::before{content:"";position:absolute;left:9px;top:-17px;width:2.5px;height:17px;background:var(--tx)}
+#tgt .pi .tbr b:nth-child(3)::after{content:"";position:absolute;left:6px;top:-18px;width:8px;height:8px;border-left:2.5px solid var(--tx);border-top:2.5px solid var(--tx);transform:rotate(45deg)}
+#tgt .pi .tbr b:nth-child(4){left:252px;top:15px;width:32px;height:22px;border:2.5px solid var(--tx);border-radius:4px}
+#tgt .pi .tbr b:nth-child(4)::before{content:"";position:absolute;left:12px;top:-1px;width:2.5px;height:20px;background:var(--tx)}
+#tgt .pi .tbr b:nth-child(5){left:330px;top:17px;width:22px;height:22px;border:2.5px solid var(--tx);border-radius:5px}
+#tgt .pi .tbr b:nth-child(5)::before{content:"";position:absolute;left:-2px;top:-9px;width:22px;height:8px;border:2.5px solid var(--tx);border-bottom:0;border-radius:5px 5px 0 0;opacity:.8}
 #tgt .pi .dm{inset:0;background:#000;opacity:0;animation:pidm 14s infinite;z-index:2}
 #tgt .pi .sh{left:10px;right:10px;top:330px;bottom:10px;border-radius:40px;background:var(--sb);z-index:3;animation:pish 14s infinite;box-shadow:0 0 30px rgba(0,0,0,.25)}
 #tgt .pi .sh2{left:10px;right:10px;top:44px;bottom:10px;border-radius:40px;background:var(--sb);z-index:3;opacity:0;animation:pish2 14s infinite}
