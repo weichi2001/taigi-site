@@ -8,7 +8,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-title" content="街仔路">
-<meta name="build" content="5d7a799807">
+<meta name="build" content="608a603253">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <script>if(navigator.standalone===true)document.documentElement.classList.add('ios-sa')</script>
@@ -941,6 +941,7 @@ html[data-theme=dark] .lg{background:linear-gradient(180deg,#f6f0e4 0,#f6f0e4 1p
 .bk-c.mo .bk-cv{background:none;border:1.5px dashed var(--line);box-shadow:none;display:grid;place-items:center;font-size:15px;color:var(--ink2)}
 .lib-pg{display:grid;grid-template-columns:minmax(130px,170px) 1fr;gap:28px;margin-top:22px;align-items:start}@media(max-width:620px){.lib-pg{grid-template-columns:1fr}.lib-pg .bk-c{width:150px}}
 .lib-act{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 6px}.lib-act .btn{text-decoration:none}.lib-msg{min-height:1.4em;font-size:14px;color:var(--accent);margin:4px 0}
+.bmk{margin:12px 0;border:1px solid var(--line);border-radius:16px;background:var(--card);padding:0 16px}.bmk>summary{cursor:pointer;padding:13px 0;font-weight:600;list-style:none}.bmk>summary::-webkit-details-marker{display:none}.bmk>summary:after{content:"＋";float:right;color:var(--ink2)}.bmk[open]>summary:after{content:"－"}.bmk-b{padding-bottom:12px}
 .lib-st{margin:14px 0;padding-left:1.3em;line-height:1.9;color:var(--ink)}.lib-why{font-size:13px;color:var(--ink2);line-height:1.8}
 body[data-r=dictwin] .top,body[data-r=dictwin] #app,body[data-r=dictwin] #fab,body[data-r=dictwin] #mclose{display:none!important}
 body[data-r=dictwin]{background:#f7f2ea}
@@ -1977,6 +1978,25 @@ async function ebsPage(){const el=document.getElementById('eb-grid');if(!el)retu
 function ebsDraw(){const el=document.getElementById('eb-grid');if(!el||!EBS.d)return;const q=EBS.q.trim().toLowerCase(),l=EBS.d.filter(b=>(EBS.tab==='all'||b[0]===EBS.tab)&&(!q||(b[2]+' '+b[3]).toLowerCase().includes(q)));el.innerHTML=l.map(b=>ebsCard(b,1)).join('');const n=document.getElementById('eb-n');if(n)n.textContent=l.length?`共 ${l.length} 本`:'找不到符合的書';document.querySelectorAll('.eb-tab').forEach(t=>t.classList.toggle('on',t.dataset.eb===EBS.tab))}
 
 function ebLgReset(){const a=document.querySelector('#eb-lp .lg-an');if(a)a.replaceWith(a.cloneNode(true))}
+window.addEventListener('message',e=>{const d=e.data;if(!d||d.tg!=='q'||window.top===window||document.body.dataset.r!=='dictwin')return;try{mq.value=String(d.v||'').slice(0,30);mlim=30;miniDraw()}catch(_){}});
+document.addEventListener('mouseover',e=>{const a=e.target.closest&&e.target.closest('#bmk-a');if(a&&!a.dataset.h){a.href=bmkCode();a.dataset.h=1}});
+function bmkCode(){
+  const base=location.href.split('#')[0]+'#dictwin';
+  const f=function(U){var d=document,I='tgdw',o=d.getElementById(I),sel=String(window.getSelection?window.getSelection():'').replace(/\s+/g,' ').trim().slice(0,30);
+    if(o){var f0=o.querySelector('iframe');if(sel){o.style.display='block';try{f0.contentWindow.postMessage({tg:'q',v:sel},'*')}catch(x){}}else o.style.display=o.style.display==='none'?'block':'none';return}
+    var w=d.createElement('div');w.id=I;w.style.cssText='position:fixed;left:0;right:0;bottom:0;height:48vh;z-index:2147483647;background:#f7f2ea;border-radius:18px 18px 0 0;box-shadow:0 -8px 30px rgba(0,0,0,.3);overflow:hidden';
+    var g=d.createElement('div');g.style.cssText='height:30px;display:flex;align-items:center;justify-content:center;touch-action:none;cursor:ns-resize';g.innerHTML='<i style="width:42px;height:5px;border-radius:3px;background:rgba(0,0,0,.28)"></i>';
+    var x=d.createElement('b');x.textContent='\u2715';x.style.cssText='position:absolute;right:8px;top:0;padding:5px 12px;font:600 17px sans-serif;color:#615045';x.onclick=function(){w.style.display='none'};
+    var fr=d.createElement('iframe');fr.src=U;fr.style.cssText='border:0;width:100%;height:calc(100% - 30px);background:#f7f2ea';
+    fr.onload=function(){if(sel)setTimeout(function(){try{fr.contentWindow.postMessage({tg:'q',v:sel},'*')}catch(y){}},900)};
+    var sy=0,sh=0;g.addEventListener('touchstart',function(e){sy=e.touches[0].clientY;sh=w.offsetHeight},{passive:true});
+    g.addEventListener('touchmove',function(e){var h=sh+(sy-e.touches[0].clientY);h=Math.max(150,Math.min(innerHeight*.92,h));w.style.height=h+'px';e.preventDefault()},{passive:false});
+    w.appendChild(g);w.appendChild(x);w.appendChild(fr);d.body.appendChild(w)};
+  const src='('+f.toString()+')('+JSON.stringify(base)+')';
+  return 'javascript:'+encodeURIComponent(src).replace(/'/g,'%27');
+}
+window.bmkCode=bmkCode;
+const BMK=()=>`<details class="bmk"><summary>手機邊讀邊查：書籤小工具</summary><div class="bmk-b"><p class="lib-why" style="margin:6px 0 10px">iPhone 沒有分割畫面，可以把「查辭典」存成 Safari 書籤。在書庫閱讀器裡點一下這個書籤，辭典就會從畫面下方浮出來，邊讀邊查。選取一段字再點書籤，會直接查那幾個字。</p><button class="btn pri" data-bmk="copy">複製小工具</button> <a class="btn" id="bmk-a" href="#" draggable="true" data-bmk="drag">查辭典</a><ol class="lib-st"><li>按上面的「複製小工具」。</li><li>在 Safari 按分享，選「加入書籤」，名稱改成「查辭典」，按儲存。</li><li>點下方的書籤圖示，找到剛存的「查辭典」，長按選「編輯」，把網址整段刪掉，貼上剛複製的內容，儲存。</li><li>之後在書的閱讀頁，打開書籤清單點「查辭典」就會出現辭典面板。再點一次可收起，面板上緣可以上下拖曳調整高度。</li></ol><p class="lib-why">電腦版 Chrome 可以直接把「查辭典」按鈕拖到書籤列。若點了書籤面板是空白，表示閱讀器網站不允許嵌入，這時只能改用分頁切換。</p></div></details>`;
 function ebLogin(open){const p=document.getElementById('eb-lp'),b=document.querySelector('[data-ebl=t]');if(!p)return;if(open===undefined)open=!p.classList.contains('open');if(open){p.classList.add('open');ebLgReset();setTimeout(()=>p.scrollIntoView({behavior:'smooth',block:'nearest'}),120)}else p.classList.remove('open');if(b){b.setAttribute('aria-expanded',open);b.textContent=open?'收合登入':'登入帳號'}}
 const dwUrl=()=>location.href.split('#')[0]+'#dictwin';
 function ebFb(id,nd,nb){let b=document.getElementById('eb-fb');if(b)b.remove();b=document.createElement('div');b.id='eb-fb';b.innerHTML='<div class="fb-t"><b>瀏覽器擋住了彈出視窗</b><small>請按網址列右側的「已封鎖彈出式視窗」圖示，選「一律允許」，之後就不會再被擋</small></div><div class="fb-a">'+(nb?'<a href="'+ebsUrl(id)+'" target="_blank" rel="noopener noreferrer">開啟書籍</a>':'')+(nd?'<a href="'+dwUrl()+'" target="taigidict">開啟辭典</a>':'')+'</div><button type="button" aria-label="關閉">×</button>';b.querySelector('button').onclick=()=>b.remove();b.querySelectorAll('a').forEach(a=>a.onclick=()=>setTimeout(()=>{if(!b.querySelector('a:not([data-d])')||1)b.remove()},50));document.body.appendChild(b);setTimeout(()=>b.remove(),45000)}
@@ -2008,6 +2028,7 @@ const libView=id=>{const b=LIBB.find(x=>x.id===id)||{id,t:'圖書館電子書',s
    <div class="lib-act"><button class="btn pri" data-lib="one" data-id="${b.id}">開閱讀器</button><button class="btn" id="lib-b2" data-lib="side" data-id="${b.id}">開辭典</button><a class="btn" href="https://reading.udn.com/udnlib/taich/B/${b.id}" target="_blank" rel="noopener">借閱頁</a></div>
    <p class="lib-msg" id="lib-msg"></p>
    <ol class="lib-st"><li>先到「借閱頁」，用自己的臺中市立圖書館帳號借閱這本書。</li><li>借到之後按「開閱讀器」，書會開在新分頁。</li><li>再按「開辭典」，辭典會開在另一個分頁。</li><li>想左右並排：在 Chrome 分頁列對辭典那個分頁按右鍵，選「新增分割畫面」（Add tab to new split view），把兩個分頁併成一個畫面，中間的線可以拖曳調寬度。需要較新版的 Chrome。</li></ol>
+   ${BMK()}
    <p class="lib-why">為什麼不直接嵌在這個頁面裡？我試過，udn 的閱讀器放進別的網站就讀不到你登入後的書，畫面會是空白，所以只能開在它自己的分頁。</p></div></div></div>`};
 const bkCont=sv=>sv.eb?`<a class="bk-cont eb" href="${ebsUrl(sv.eb)}" data-id="${esc(sv.eb)}" data-t="${esc(sv.t||'')}" target="_blank" rel="noopener"><span>繼續讀・台灣雲端書庫</span><b>${esc(sv.t||'')}</b></a>`:sv.n?`<a class="bk-cont" href="#books/${sv.n}/${sv.i}"><span>繼續讀</span><b>${bkSvL(sv)}</b></a>`:'';
 const bkSvL=sv=>LB[sv.n]?esc(LB[sv.n].t)+(sv.t?'・'+esc(sv.t):''):`第 ${sv.n} 期${sv.t?'・'+esc(sv.t):''}`;
@@ -2188,7 +2209,7 @@ function pBooks(r){
   if(r==='books/ebs')return `<header class="ebh"><a class="ebh-back" href="#books">← 台語冊房</a><small>Tâi-uân Hûn-tuan Tsheh-khòo</small><h2 class="hd">台灣雲端書庫</h2>
    <div class="eb-bar"><button class="eb-tab on" data-eb="all">全部</button><button class="eb-tab" data-eb="B">書籍</button><button class="eb-tab" data-eb="P">繪本</button><button class="eb-tab" data-eb="C">漫畫</button><input id="eb-q" class="eb-q" type="search" placeholder="找書名或作者" autocomplete="off"><button class="btn eb-lbtn" data-ebl="t" aria-expanded="false">登入帳號</button></div></header>
    ${EBLP}
-   <p class="eb-n" id="eb-n"></p><div class="eb-g" id="eb-grid"></div>`;
+   ${BMK()}<p class="eb-n" id="eb-n"></p><div class="eb-g" id="eb-grid"></div>`;
   const lm=/^books\/lib\/(\d+)$/.exec(r);if(lm)return libView(lm[1]);
   const m=/^books\/(\d+|tg\d+)(?:\/(\d+|b))?$/.exec(r);
   if(r==='books/bong')return `<a class="back" href="#books">← 台語冊房</a>
@@ -2265,6 +2286,7 @@ async function bkCovers(){ebsFill();
 const bkIn=()=>{BK.fade=0;const r=document.getElementById('bk-rd');if(r){delete r.dataset.out;r.dataset.in=1;setTimeout(()=>{delete r.dataset.in},900)}};
 function bkLoad(r){if(BK.fade)bkIn();if(r==='books')bkCovers();else if(r==='books/ebs')ebsPage();else if(r==='books/bong')bkShelf();else bkReader()}
 document.getElementById('app').addEventListener('click',e=>{
+    const bm=e.target.closest('[data-bmk]');if(bm){e.preventDefault();if(bm.dataset.bmk==='copy'){const c=bmkCode();const ok=()=>{bm.textContent='已複製，去加入書籤吧';setTimeout(()=>bm.textContent='複製小工具',2500)};if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(c).then(ok,()=>{window.prompt('請全選複製',c)});else window.prompt('請全選複製',c)}return}
     const ebl=e.target.closest('[data-ebl]');if(ebl&&ebl.dataset.ebl==='rp'){ebLgReset();return}if(ebl&&ebl.dataset.ebl==='w'){const w=Math.min(520,screen.availWidth),h=Math.min(780,screen.availHeight);window.open('https://www.ebookservice.tw/tc/account/sign-in','ebslogin',`popup=yes,width=${w},height=${h},left=${(screen.availLeft||0)+Math.round((screen.availWidth-w)/2)},top=${(screen.availTop||0)+Math.round((screen.availHeight-h)/3)}`);return}if(ebl){ebLogin(ebl.dataset.ebl==='t'?undefined:false);return}
   const ebc=e.target.closest('a.eb[data-id]');if(ebc){bkSave({eb:ebc.dataset.id,t:ebc.dataset.t});if(!e.metaKey&&!e.ctrlKey&&!e.shiftKey){e.preventDefault();ebGuide(ebc.dataset.id,ebc.dataset.t);return}}
   const ebt=e.target.closest('[data-eb]');if(ebt){EBS.tab=ebt.dataset.eb;ebsDraw();return}const lbtn=e.target.closest('[data-lib]');if(lbtn){const sd=lbtn.dataset.lib==='side',r=libOpen(lbtn.dataset.id,sd),m=document.getElementById('lib-msg');if(m)m.textContent=r?'':'視窗被瀏覽器擋住了，請允許彈出視窗後再按一次。';return}
@@ -2322,7 +2344,7 @@ function render(keep){
   window.scrollTo(0,keep?y:0);
   if(r==='books'||r.startsWith('books/'))bkLoad(r);
   if(r==='home')bkCovers();
-  if(r==='dictwin'){mini.hidden=false;mini.classList.add('show');dxLoad();miniDraw();setTimeout(()=>mq.focus({preventScroll:true}),200);document.title='查辭典・街仔路';if(window.name==='taigidict'&&window.opener){const sw=screen.availWidth,sh=screen.availHeight,ox=screen.availLeft||0,oy=screen.availTop||0,dw=Math.min(440,Math.round(sw*.3));const pl=()=>{try{window.resizeTo(dw,sh);window.moveTo(ox+sw-dw,oy)}catch(e){}};pl();setTimeout(pl,400)}}
+  if(r==='dictwin'){mini.hidden=false;mini.classList.add('show');dxLoad();miniDraw();if(window.top===window)setTimeout(()=>mq.focus({preventScroll:true}),200);document.title='查辭典・街仔路';if(window.name==='taigidict'&&window.opener){const sw=screen.availWidth,sh=screen.availHeight,ox=screen.availLeft||0,oy=screen.availTop||0,dw=Math.min(440,Math.round(sw*.3));const pl=()=>{try{window.resizeTo(dw,sh);window.moveTo(ox+sw-dw,oy)}catch(e){}};pl();setTimeout(pl,400)}}
 }
 let pgT=0;
 const pageGo=fn=>{
