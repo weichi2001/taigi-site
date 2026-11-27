@@ -2742,7 +2742,7 @@ const SETUP=()=>{
   if(!isIOS&&!isAnd){ if(!fsOK||isFs())return null; return {k:'fs',s:'#fsBtn',t:'開啟全螢幕',d:'使用全螢幕可以獲得最完整、沈浸的體驗。',gate:1}; }
   if(standalone())return null;
   if(inApp)return {k:'in',t:'加到主畫面',d:ol(['點選單，選「用瀏覽器開啟」',isIOS?'在 Safari 裡再加入主畫面':'在 Chrome 裡再加入主畫面'])};
-  if(isIOS)return {k:'ios',t:'加到主畫面',d:ol(['點擊分享按鈕 <i class="ic">'+IC.share+'</i>','在「檢視較多」中找到「加入主畫面」 <i class="ic">'+IC.add+'</i> 並點擊','點選「加入」，之後即可從桌面圖示開啟軟體，想享受全螢幕操作'])};
+  if(isIOS)return {k:'ios',t:'加到主畫面',d:ol(['點擊分享按鈕 <i class="ic">'+IC.share+'</i>','在「檢視較多」中找到「加入主畫面」 <i class="ic">'+IC.add+'</i> 並點擊','點選「加入」，之後即可從桌面圖示開啟軟體，享受全螢幕操作'])};
   return {k:'and',t:'加到主畫面',d:dip?'一鍵安裝，之後從桌面圖示開啟':ol(['點右上角選單 <i class="ic">'+IC.dots+'</i>','選「安裝應用程式」或「加到主畫面」','點「安裝」，之後從桌面圖示開啟'])};
 };
 const BASE=[
