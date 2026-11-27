@@ -2019,6 +2019,7 @@ function bkPages(is){
 }
 function bkBook(root,is,startPage){
   const n=is.n,P=bkPages(is),N=P.length;
+  setTimeout(()=>{try{dxLoad()}catch(_){}},1500);
   const secs=[];is.arts.forEach((a,k)=>{let s=secs.find(x=>x.s===a.s);if(!s){s={s:a.s,l:[]};secs.push(s)}s.l.push([k,a,P.findIndex(p=>p.a===k)])});
   root.className='bk-rd is-book';root.style.removeProperty('--bkfs');
   root.innerHTML=`<div class="bk-bar"><a class="back" href="${is.local?'#books':'#books/bong'}">← 書架</a><span class="bk-bt">${is.title||'第 '+n+' 期'}</span>
@@ -2114,17 +2115,17 @@ function bkBook(root,is,startPage){
   const zSet=(ns,cx,cy)=>{ns=Math.max(1,Math.min(5,ns));const r=zw.getBoundingClientRect(),px=cx-(r.left+r.width/2-Z.x),py=cy-(r.top+r.height/2-Z.y),k=ns/Z.s;Z.x=px-(px-Z.x)*k;Z.y=py-(py-Z.y)*k;Z.s=ns;if(ns<1.001){Z.s=1;Z.x=Z.y=0}zApply();hi(Z.s>1.25)};
   const zReset=()=>{if(Z.s===1)return;Z={s:1,x:0,y:0};zApply();hi(false)};
   const zoom=()=>{Z.s>1?zReset():zSet(2.2,innerWidth/2,innerHeight/2)};
-  {const st=$('.bk-stage'),pt=new Map();let pd=0,mv=0,g0=1;
+  {const st=$('.bk-stage'),pt=new Map();let pd=0,mv=0,g0=1,sw=null;
    st.addEventListener('wheel',e=>{if(e.ctrlKey||e.metaKey){e.preventDefault();zSet(Z.s*Math.exp(-e.deltaY*.01),e.clientX,e.clientY)}else if(Z.s>1){e.preventDefault();Z.x-=e.deltaX;Z.y-=e.deltaY;zApply()}},{passive:false});
    st.addEventListener('gesturestart',e=>{e.preventDefault();g0=Z.s});
    st.addEventListener('gesturechange',e=>{e.preventDefault();zSet(g0*e.scale,e.clientX||innerWidth/2,e.clientY||innerHeight/2)});
    st.addEventListener('gestureend',e=>e.preventDefault());
-   zw.addEventListener('pointerdown',e=>{pt.set(e.pointerId,[e.clientX,e.clientY]);mv=0;dragged=false;if(pt.size===2){const [a,b]=[...pt.values()];pd=Math.hypot(a[0]-b[0],a[1]-b[1]);dragged=true}if(Z.s>1||pt.size===2){try{zw.setPointerCapture(e.pointerId)}catch(_){}}});
+   zw.addEventListener('pointerdown',e=>{pt.set(e.pointerId,[e.clientX,e.clientY]);mv=0;dragged=false;sw=pt.size===1&&Z.s<=1.02?{x:e.clientX,y:e.clientY,t:Date.now()}:null;if(pt.size===2){const [a,b]=[...pt.values()];pd=Math.hypot(a[0]-b[0],a[1]-b[1]);dragged=true}if(Z.s>1||pt.size===2){try{zw.setPointerCapture(e.pointerId)}catch(_){}}});
    zw.addEventListener('pointermove',e=>{const o=pt.get(e.pointerId);if(!o)return;const n=[e.clientX,e.clientY];
      if(pt.size===1){const dx=n[0]-o[0],dy=n[1]-o[1];mv+=Math.abs(dx)+Math.abs(dy);if(mv>6)dragged=true;if(Z.s>1){Z.x+=dx;Z.y+=dy;zApply()}}
      else if(pt.size===2){pt.set(e.pointerId,n);const [a,b]=[...pt.values()],d=Math.hypot(a[0]-b[0],a[1]-b[1]);if(pd>0)zSet(Z.s*d/pd,(a[0]+b[0])/2,(a[1]+b[1])/2);pd=d;return}
      pt.set(e.pointerId,n)});
-   const up=e=>{pt.delete(e.pointerId)};zw.addEventListener('pointerup',up);zw.addEventListener('pointercancel',up);
+   const up=e=>{if(e.type==='pointerup'&&sw&&pt.size===1&&Z.s<=1.02){const dx=e.clientX-sw.x,dy=e.clientY-sw.y;if(Date.now()-sw.t<900&&Math.abs(dx)>40&&Math.abs(dx)>Math.abs(dy)*1.4){dragged=true;flip(dx<0?1:-1)}}sw=null;pt.delete(e.pointerId)};zw.addEventListener('pointerup',up);zw.addEventListener('pointercancel',up);
    zw.addEventListener('click',e=>{if(dragged){e.stopPropagation();dragged=false}},true);}
   const zstep=d=>{};
   BK.book={el:root,flip,zoom,zzoom:()=>Z.s>1,zset:k=>zSet(Z.s*k,innerWidth/2,innerHeight/2),zreset:zReset,go:p=>{goPage(p);$('.bk-drawer').classList.remove('open')},toc:()=>{const d=$('.bk-drawer');d.classList.toggle('open')},
@@ -2408,11 +2409,12 @@ const SU='https://sutian.moe.edu.tw/';
 let DX=null,DXS='idle',EXD=null,mlim=30;
 const hasHan=s=>/\p{Script=Han}/u.test(s), clean=s=>s.replace(/【[^】]*】/g,'');
 function dxLoad(){
-  if(DXS!=='idle')return;DXS='load';
-  fetch('dict.json',{cache:'no-cache'}).then(r=>r.ok?r.json():Promise.reject()).then(a=>(a[0]&&a[0][5][0]&&a[0][5][0][2]===undefined)?fetch('dict.json',{cache:'reload'}).then(r=>r.json()):a).then(a=>{
-    DX=a.map(e=>({id:e[0],h:e[1],hc:clean(e[1]),r:e[2],c:e[3],a:e[4],ap:e[7]||'',s:e[5],v:e[6],k:norm(e[2]+' '+e[6].map(x=>x[1]).join(' ')),ks:[norm(e[2])].concat(e[6].map(x=>norm(x[1]))),d:e[5].map(x=>x[1]).join('')}));
-    DXS='ok';miniDraw();
-  }).catch(()=>{DXS='err';miniDraw()});
+  if(DXS==='load'||DXS==='ok')return;DXS='load';
+  const get=(u,n)=>{const ac=window.AbortController?new AbortController():null,tm=ac?setTimeout(()=>ac.abort(),30000):0;
+    return fetch(n?u+'?r='+Date.now():u,{cache:n?'reload':'no-cache',signal:ac?ac.signal:undefined}).then(r=>r.ok?r.json():Promise.reject(new Error('http')),e=>Promise.reject(e)).finally(()=>clearTimeout(tm))};
+  const build=a=>{DX=a.map(e=>({id:e[0],h:e[1],hc:clean(e[1]),r:e[2],c:e[3],a:e[4],ap:e[7]||'',s:e[5],v:e[6],k:norm(e[2]+' '+e[6].map(x=>x[1]).join(' ')),ks:[norm(e[2])].concat(e[6].map(x=>norm(x[1]))),d:e[5].map(x=>x[1]).join('')}));DXS='ok';miniDraw()};
+  const go=n=>get('dict.json',n).then(a=>{if(!Array.isArray(a)||!a.length)throw new Error('bad');return (a[0]&&a[0][5]&&a[0][5][0]&&a[0][5][0][2]===undefined&&n<1)?get('dict.json',1):a}).then(build).catch(()=>{if(n<3)setTimeout(()=>go(n+1),700*(n+1));else{DXS='err';miniDraw()}});
+  go(0);
 }
 function exLoad(cb){
   if(EXD){cb();return}
@@ -2478,7 +2480,7 @@ function miniDraw(){
   if(DXS==='err'){
     const k=norm(raw);const r=D.filter(o=>o.k.includes(k)).slice(0,10);
     mb.innerHTML=`<p class="note">完整辭典暫時載不進來，先用 700 字查：</p>`+r.map(o=>`<div class="mr"><span class="w">${esc(o.w)}</span><span class="tl r">${esc(o.r)}</span><div class="h">${esc(o.h)}</div></div>`).join('')
-      +`<div class="acts"><a class="btn pri" href="${dictUrl(raw)}" target="_blank" rel="noopener" data-act="dict">到教育部辭典查「${esc(raw)}」</a></div>`;return}
+      +`<div class="acts"><button class="btn" id="dxretry">重新載入完整辭典</button><a class="btn pri" href="${dictUrl(raw)}" target="_blank" rel="noopener" data-act="dict">到教育部辭典查「${esc(raw)}」</a></div>`;return}
   if(hasHan(raw)&&!EXD&&!window.__exAsk){window.__exAsk=1;exLoad(()=>{if(mq.value.trim()===raw)miniDraw()})}
   const r=dxFind(raw);
   mb.innerHTML=(r.length?`<p class="cnt">找到 ${r.length} 筆</p>`+r.slice(0,mlim).map(dxRow).join('')+(r.length>mlim?`<div class="acts" style="justify-content:center"><button class="btn" id="mmore">再看更多</button></div>`:'')
@@ -2531,6 +2533,7 @@ mb.addEventListener('click',e=>{
     if(open&&!row.dataset.done)exLoad(fill);else fill();
     return}
   if(e.target.id==='mmore'){mlim+=30;miniDraw()}
+  if(e.target.id==='dxretry'){DXS='idle';dxLoad();miniDraw()}
 });
 document.addEventListener('click',e=>{const a=e.target.closest('[data-act=minidict]');if(a){e.preventDefault();miniOpen(true)}});
 let mt=0;
