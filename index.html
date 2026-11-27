@@ -1156,7 +1156,8 @@ body[data-r^="books/"]:not([data-r="books/bong"]) .bk-bar{top:0}
 .bk-rd.ah .bk-foot{position:fixed;left:50%;bottom:16px;z-index:30;width:min(560px,86vw);max-width:none;margin:0;padding:9px 20px;border-radius:99px;background:var(--paper,#fbf8f3);box-shadow:0 8px 26px rgba(40,25,10,.2),0 0 0 1px var(--line);transform:translate(-50%,0);transition:transform .45s cubic-bezier(.45,.05,.2,1),opacity .3s}
 .bk-rd.ah.ui-off .bk-bar{transform:translateY(-115%);opacity:0;pointer-events:none}
 .bk-rd.ah.ui-off .bk-foot{transform:translate(-50%,170%);opacity:0;pointer-events:none}
-.bk-rd.ah .bk-stage{height:100vh;min-height:0;padding:0}
+.bk-rd.ah .bk-stage{height:100vh;height:100dvh;min-height:0;padding:0}
+@media(pointer:coarse){.bk-rd.ah .bk-bar{padding:calc(10px + env(safe-area-inset-top,0px)) 14px 10px}html.ios-sa .bk-rd.ah .bk-bar{padding-top:calc(10px + max(env(safe-area-inset-top,0px),50px))}.bk-rd.ah .bk-foot{bottom:calc(16px + env(safe-area-inset-bottom,0px));left:14px;width:calc(100vw - 100px);transform:none}.bk-rd.ah.ui-off .bk-foot{transform:translateY(170%)}.bk-rd.ah .bk-bar .bk-fs{margin-left:auto}}
 body:has(.bk-rd.ah){overflow:hidden}
 body:has(.bk-rd.ah) footer{display:none}
 body:has(.bk-rd.ah) .wrap{padding-bottom:0}
@@ -2054,7 +2055,7 @@ function bkBook(root,is,startPage){
     const pageNow=wide?(cur?2*cur-1:0):cur;
     const W=stage.clientWidth;let H=Math.max(320,window.innerHeight-(stage.getBoundingClientRect().top+window.scrollY>0?stage.getBoundingClientRect().top+window.scrollY:200)-86);
     wide=window.innerWidth>=900;
-    const ah=wide&&matchMedia('(hover:hover)').matches;root.classList.toggle('ah',ah);
+    const ah=(wide&&matchMedia('(hover:hover)').matches)||matchMedia('(pointer:coarse)').matches;root.classList.toggle('ah',ah);
     if(ah)H=window.innerHeight-28;
     const h=wide?Math.min(H,(W-120)/2/ratio):Math.min(H,(W-8)/ratio),w=h*ratio;
     fb.style.setProperty('--pw',w+'px');fb.style.setProperty('--pp',Math.round(w*6)+'px');fb.style.setProperty('--ph',h+'px');fb.classList.toggle('single',!wide);
@@ -2133,7 +2134,12 @@ function bkBook(root,is,startPage){
   BK.book={el:root,flip,zoom,zzoom:()=>Z.s>1,zset:k=>zSet(Z.s*k,innerWidth/2,innerHeight/2),zreset:zReset,go:p=>{goPage(p);$('.bk-drawer').classList.remove('open')},toc:()=>{const d=$('.bk-drawer');d.classList.toggle('open')},
     fs:()=>{const e=document.fullscreenElement,d=document.documentElement;if(e)document.exitFullscreen();else if(d.requestFullscreen)d.requestFullscreen()},
     art,pageNow:()=>wide?(cur?2*cur-1:0):cur};
-  fb.addEventListener('click',e=>{if(Z.s>1.02)return;const r=fb.getBoundingClientRect();if(wide){flip(e.clientX<r.left+r.width/2?-1:1)}else flip(e.clientX<r.left+r.width/3?-1:1)});
+  const coarse=()=>root.classList.contains('ah')&&matchMedia('(pointer:coarse)').matches;
+  const arm=()=>{clearTimeout(uiT);uiT=setTimeout(()=>{uiT=0;if(uiHold())arm();else ui(false)},3500)};
+  const tapUi=()=>{if(root.classList.contains('ui-off')){ui(true);arm()}else ui(false)};
+  ['pointerdown','input','click'].forEach(t=>{[root.querySelector('.bk-bar'),root.querySelector('.bk-foot')].forEach(el=>el&&el.addEventListener(t,()=>{if(coarse()&&!root.classList.contains('ui-off'))arm()}))});
+  stage.addEventListener('click',e=>{if(!coarse()||e.target.closest('.bkb,.bk-arr,.bk-bar,.bk-foot'))return;tapUi()});
+  fb.addEventListener('click',e=>{if(Z.s>1.02)return;const r=fb.getBoundingClientRect();if(coarse()){const x=(e.clientX-r.left)/r.width;if(x<.25)flip(-1);else if(x>.75)flip(1);else tapUi();return}if(wide){flip(e.clientX<r.left+r.width/2?-1:1)}else flip(e.clientX<r.left+r.width/3?-1:1)});
   rg.addEventListener('input',()=>{cur=+rg.value;show()});
   document.addEventListener('fullscreenchange',()=>{document.documentElement.classList.toggle('bk-fs-on',!!document.fullscreenElement);if(document.contains(root))setTimeout(layout,200)});
   let rt;window.addEventListener('resize',()=>{if(!document.contains(root))return;clearTimeout(rt);rt=setTimeout(layout,120)});
@@ -2149,7 +2155,7 @@ function bkBook(root,is,startPage){
     fb.style.transform=on?`translateX(${-x}px) scale(${sc})`:''};
   const mo=new MutationObserver(shift);mo.observe(document.body,{attributes:true,attributeFilter:['class']});
   layout();
-  if(root.classList.contains('ah')){ui(true);uiT=setTimeout(()=>{uiT=0;if(!uiHold())ui(false)},2200)}
+  if(root.classList.contains('ah')){ui(true);uiT=setTimeout(()=>{uiT=0;if(!uiHold())ui(false)},coarse()?3200:2200)}
   if(startPage>0){cur=wide?Math.ceil(startPage/2):startPage;show()}
   im.src=P[0]?P[0].s:'';
   if(!N){root.querySelector('.bk-stage').innerHTML='<p class="sub" style="padding:40px">這一期沒有電子書版面，請改看文字版。</p>'}
