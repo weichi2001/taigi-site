@@ -8,7 +8,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-title" content="街仔路">
-<meta name="build" content="0d2fa3aa03">
+<meta name="build" content="ac00419d16">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <script>if(navigator.standalone===true)document.documentElement.classList.add('ios-sa')</script>
@@ -2859,7 +2859,7 @@ html[data-theme=dark] #tgt .pi{--bz:#5a4d42;--sb:#2a2a2c;--rw:#3a3a3c;--tx:#fff;
 #tgt .pi .st{left:0;top:0;width:402px;height:54px;z-index:1}
 #tgt .pi .st b{left:42px;top:19px;font-size:17px}
 #tgt .pi .st u{left:128px;top:11px;width:126px;height:37px;border-radius:19px;background:#000}
-#tgt .pi .st i{right:28px;top:21px;width:50px;height:14px;border-radius:4px;background:currentColor;opacity:.75}
+#tgt .pi .st svg{right:28px;top:20px;width:80px;height:14px;fill:currentColor;overflow:visible}
 #tgt .pi .hr{left:20px;right:20px;top:90px;height:190px;border-radius:26px;background:var(--hero)}
 #tgt .pi .bl{left:20px;right:20px;height:96px;border-radius:22px;background:var(--blk)}
 #tgt .pi .bl.a{top:300px}#tgt .pi .bl.b{top:410px}#tgt .pi .bl.c{top:520px}
@@ -2871,9 +2871,8 @@ html[data-theme=dark] #tgt .pi{--bz:#5a4d42;--sb:#2a2a2c;--rw:#3a3a3c;--tx:#fff;
 #tgt .pi .tbr b:nth-child(1),#tgt .pi .tbr b:nth-child(2){width:15px;height:15px;top:14px;border-left:3px solid var(--tx);border-bottom:3px solid var(--tx);border-radius:2px}
 #tgt .pi .tbr b:nth-child(1){left:47px;transform:rotate(45deg)}
 #tgt .pi .tbr b:nth-child(2){left:119px;transform:rotate(-135deg);opacity:.35}
-#tgt .pi .tbr b:nth-child(3){left:181px;top:19px;width:24px;height:15px;border:2.5px solid var(--tx);border-top:0;border-radius:0 0 6px 6px;opacity:.9}
-#tgt .pi .tbr b:nth-child(3)::before{content:"";position:absolute;left:8.25px;top:-13px;width:2.5px;height:21px;background:var(--tx);border-radius:1px}
-#tgt .pi .tbr b:nth-child(3)::after{content:"";position:absolute;left:5.5px;top:-13px;width:8px;height:8px;border-left:2.5px solid var(--tx);border-top:2.5px solid var(--tx);transform:rotate(45deg);transform-origin:50% 50%}
+#tgt .pi .tbr b:nth-child(3){left:178px;top:9px;width:30px;height:30px;border:0;opacity:.95}
+#tgt .pi .tbr b svg{left:0;top:0;width:100%;height:100%;fill:none;stroke:var(--tx);stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 #tgt .pi .tbr b:nth-child(4){left:252px;top:15px;width:32px;height:22px;border:2.5px solid var(--tx);border-radius:4px}
 #tgt .pi .tbr b:nth-child(4)::before{content:"";position:absolute;left:12px;top:-1px;width:2.5px;height:20px;background:var(--tx)}
 #tgt .pi .tbr b:nth-child(5){left:330px;top:17px;width:22px;height:22px;border:2.5px solid var(--tx);border-radius:5px}
@@ -2917,7 +2916,7 @@ html[data-theme=dark] #tgt .pi{--bz:#5a4d42;--sb:#2a2a2c;--rw:#3a3a3c;--tx:#fff;
 #tgt .pi .hm{inset:0;background:linear-gradient(180deg,#8fa6b8 0%,#a9b7bd 45%,#2f6f7a 72%,#143645 100%);opacity:0;animation:pihm 14s infinite;z-index:5;color:#fff}
 #tgt .pi .hm u{width:74px;height:74px;border-radius:19px;background:rgba(255,255,255,.55);text-decoration:none}
 #tgt .pi .hm img{width:74px;height:74px;border-radius:19px;animation:pipop 14s infinite}
-#tgt .pi .hm em{font-style:normal;font-size:12px;width:90px;text-align:center;text-shadow:0 1px 3px rgba(0,0,0,.4);margin-left:0}
+#tgt .pi .hm em{animation:pilab 14s infinite;font-style:normal;font-size:12px;width:90px;text-align:center;text-shadow:0 1px 3px rgba(0,0,0,.4);margin-left:0}
 #tgt .pi .dk{left:14px;right:14px;bottom:22px;height:100px;border-radius:36px;background:rgba(255,255,255,.28)}
 #tgt .pi .dk u{top:13px;width:74px;height:74px;border-radius:19px;background:rgba(255,255,255,.6);text-decoration:none}
 #tgt .pi .fg{width:46px;height:46px;border-radius:50%;background:rgba(120,120,128,.55);border:3px solid rgba(255,255,255,.85);opacity:0;z-index:9;animation:pifg 14s infinite;box-shadow:0 0 10px rgba(0,0,0,.25)}
@@ -2929,6 +2928,7 @@ html[data-theme=dark] #tgt .pi{--bz:#5a4d42;--sb:#2a2a2c;--rw:#3a3a3c;--tx:#fff;
 @keyframes pidl{0%,60%{opacity:0;transform:translateY(40px)}66%,79%{opacity:1;transform:none}83%,100%{opacity:0;transform:none}}
 @keyframes pibt{0%,70%{filter:none}73%,78%{filter:brightness(.8)}80%,100%{filter:none}}
 @keyframes pihm{0%,80%{opacity:0}86%,96%{opacity:1}100%{opacity:0}}
+@keyframes pilab{0%,89%{opacity:0}93%,100%{opacity:1}}
 @keyframes pipop{0%,86%{transform:scale(.2);opacity:0}91%{transform:scale(1.12);opacity:1}94%,100%{transform:scale(1);opacity:1}}
 @keyframes pifg{0%{left:172px;top:812px;opacity:0;transform:scale(1.5)}5%{left:172px;top:812px;opacity:1;transform:scale(1)}10%,12%{left:172px;top:812px;opacity:1;transform:scale(.8)}14%{left:172px;top:812px;opacity:0;transform:scale(1)}
  29%{left:318px;top:636px;opacity:0;transform:scale(1.5)}32%{left:318px;top:636px;opacity:1;transform:scale(1)}35%,36%{left:318px;top:636px;opacity:1;transform:scale(.8)}38%{left:318px;top:636px;opacity:0;transform:scale(1)}
@@ -2958,7 +2958,7 @@ const MOCK=k=>{const home='<div class="hm">'+'<u style="left:12px;top:22px"></u>
  if(k==='ios'){const li=(n,x,y)=>'';const cl=(c,items,cls)=>'<div class="cl '+cls+' c1">'+items.map(()=>'<u></u>').join('')+items.map(t=>'<em>'+t+'</em>').join('')+'</div>';
   const rows=(act)=>cl('',['','','',''],'ppl')+cl('',['AirDrop','訊息','郵件','更多'],'app')+'<div class="cl act c1"><u></u><u></u><u></u><u></u><em>拷貝</em><em>加入「書籤」</em><em>加入閱讀列表</em><em>'+act+'</em></div>';
   const hd='<div class="hd"><img src="apple-touch-icon.png" alt=""><b>街仔路 Ke-á-lōo</b><span>weichi2001.github.io</span></div>';
-  return '<div class="pi" aria-hidden="true"><div class="sc"><div class="st"><b>11:01</b><u></u><i></i></div><div class="hr"></div><div class="bl a"></div><div class="bl b"></div><div class="bl c"></div><div class="ab"><i></i>weichi2001.github.io<em></em></div><div class="tbr"><b></b><b></b><b></b><b></b><b></b></div><div class="dm"></div>'
+  return '<div class="pi" aria-hidden="true"><div class="sc"><div class="st"><b>11:01</b><u></u><svg viewBox="0 0 80 14" aria-hidden="true"><rect x="0" y="9" width="3.2" height="4" rx="1"/><rect x="5" y="6.5" width="3.2" height="6.5" rx="1"/><rect x="10" y="3.5" width="3.2" height="9.5" rx="1"/><rect x="15" y="0.5" width="3.2" height="12.5" rx="1"/><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M30.2 9.9A4 4 0 0 1 35.8 9.9"/><path d="M27.7 7.4A7.5 7.5 0 0 1 38.3 7.4"/><path d="M25.2 4.9A11 11 0 0 1 40.8 4.9"/></g><circle cx="33" cy="12.2" r="1.5"/><rect x="48.5" y="0.8" width="26" height="12.4" rx="3.8" fill="none" stroke="currentColor" stroke-opacity=".4" stroke-width="1"/><rect x="50.3" y="2.6" width="19" height="8.8" rx="2.4"/><path d="M76.5 4.8v4.4c1-.4 1.7-1.2 1.7-2.2s-.7-1.8-1.7-2.2z" fill-opacity=".45"/></svg></div><div class="hr"></div><div class="bl a"></div><div class="bl b"></div><div class="bl c"></div><div class="ab"><i></i>weichi2001.github.io<em></em></div><div class="tbr"><b></b><b></b><b>'+IC.share+'</b><b></b><b></b></div><div class="dm"></div>'
   +'<div class="sh">'+hd+rows('檢視較多')+'<s class="ch" style="left:324px;top:343px;display:none"></s></div>'
   +'<div class="sh2">'+hd+'<div class="x"></div>'+rows('檢視較少')+'<div class="ls"><p>將書籤加入檔案夾…</p><p>加入喜好項目</p><p>在網頁中尋找</p><p class="hl">加入主畫面</p><p>標示</p></div></div>'
   +'<div class="dl"><div class="no"></div><span class="tt">加入主畫面</span><div class="ad">加入</div><div class="fd"><img src="apple-touch-icon.png" alt=""><b>街仔路</b><i>https://weichi2001.github.io/taigi-site/</i></div><div class="tg">打開為網頁 App<i></i></div><span class="nt">在主畫面加入圖像，讓你快速連接此網站。</span></div>'
@@ -3019,7 +3019,7 @@ function sync(){const b=tc.querySelector('.pr');if(!b)return;const s=steps[i];if
 function show(){
   const s=steps[i],last=i===steps.length-1,first=i===0,gate=s.gate;
   const extra=s.fill?'<button class="fsgo" data-a="fill">幫我輸入</button>':gate&&!tgt(s)?'<button class="fsgo" data-a="fs">開啟全螢幕</button>':s.k==='and'&&dip?'<button class="fsgo" data-a="inst">安裝到主畫面</button>':'';
-  tc.innerHTML=`<small>${i+1} / ${steps.length}</small><h3>${s.t}</h3><div class="dd">${s.d.charAt(0)==='<'?s.d:'<p>'+s.d+'</p>'}</div>${extra}<div class="tr">${last||gate?'':'<button class="sk" data-a="x">略過導覽</button>'}<span class="sp"></span>${first?'':'<button data-a="p">上一步</button>'}<button class="pr" data-a="n"${s.wait&&s.auto?' hidden':''}>${last?'完成':first?'開始導覽':'下一步'}</button></div>`;
+  tc.innerHTML=`<small>${i+1} / ${steps.length}</small><h3>${s.t}</h3><div class="dd">${s.d.charAt(0)==='<'?s.d:'<p>'+s.d+'</p>'}</div>${extra}<div class="tr">${s.k==='open'?'<button class="sk" data-a="n">先在網頁繼續</button>':last||gate?'':'<button class="sk" data-a="x">略過導覽</button>'}<span class="sp"></span>${first?'':'<button data-a="p">上一步</button>'}<button class="pr" data-a="${s.k==='open'?'app':'n'}"${s.wait&&s.auto?' hidden':''}>${s.k==='open'?'我去開啟':last?'完成':first?'開始導覽':'下一步'}</button></div>`;
   root.classList.toggle('trk',!!s.act);
   if(s.wait){s.done=false;s.skip=false;if(s.wait()){s.done=true;s.manual=true}}
   const e=tgt(s);
@@ -3038,14 +3038,15 @@ function next(){if(gated())return;if(i>=steps.length-1)close(1);else go(i+1)}
 root.querySelector('.bg').addEventListener('click',e=>{const s=steps[i];if(!on||!s||!s.gate)return;const b=$('#fsBtn');if(!b)return;const r=b.getBoundingClientRect();if(e.clientX>=r.left-8&&e.clientX<=r.right+8&&e.clientY>=r.top-8&&e.clientY<=r.bottom+8){b.click();setTimeout(()=>{if(!isFs())s.tried=1;sync()},700)}});
 tc.addEventListener('click',e=>{const a=e.target.closest('[data-a]');if(!a||a.disabled)return;const k=a.dataset.a;
     if(k==='fill'){const q=$('#mq');if(q){q.focus();q.value='街仔路';q.dispatchEvent(new Event('input',{bubbles:true}))}return}
-  if(k==='x')close(1);else if(k==='p')go(i-1);
+  if(k==='x')close(1);else if(k==='app')close(0);else if(k==='p')go(i-1);
   else if(k==='fs'){const s=steps[i];try{(de.requestFullscreen||de.webkitRequestFullscreen).call(de)}catch(x){}setTimeout(()=>{if(!isFs())s.tried=1;sync()},700)}
   else if(k==='inst'){try{dip.prompt();dip.userChoice&&dip.userChoice.then(()=>{dip=null;next()})}catch(x){next()}}
   else next()});
 function start(){
   if(on||document.body.dataset.r!=='home')return;
   const st=SETUP(),mid=BASE.filter(s=>!s.s||(s.act&&/^#m/.test(s.s))||tgt(s));if(mid.length<3)return;
-  steps=[{t:'歡迎來到「街仔路」',d:PP('接下來將用半分鐘的時間','帶你熟悉最重要的幾項操作方式')}].concat(st?[st]:[],mid);
+  const open=st&&(st.k==='ios'||st.k==='and')?[{k:'open',t:'從主畫面開啟「街仔路」',d:PP('加入完成後，回到手機桌面','點選「街仔路」圖示開啟','導覽會在 App 裡接續進行')}]:[];
+  steps=(standalone()?[]:[{t:'歡迎來到「街仔路」',d:PP('接下來將用半分鐘的時間','帶你熟悉最重要的幾項操作方式')}]).concat(st?[st]:[],open,mid);
   th0=de.dataset.theme;auHit=false;on=true;i=0;root.classList.add('on');pt=setInterval(tick,150);requestAnimationFrame(loop);addEventListener('resize',sched);addEventListener('scroll',sched,true);addEventListener('keydown',key,true);document.addEventListener('fullscreenchange',sched);document.addEventListener('webkitfullscreenchange',sched);scrollTo(0,0);show();
 }
 function when(){
