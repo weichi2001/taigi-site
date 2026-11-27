@@ -2766,11 +2766,12 @@ const gated=()=>{const s=steps[i];return !!(s&&((s.gate&&!isFs()&&!s.tried)||(s.
 function blk(on_,r){const bs=root.querySelectorAll('.bk');root.querySelector('.bg').style.display=on_?'none':'';bs.forEach(b=>b.style.display=on_?'block':'none');if(!on_)return;const vw=innerWidth,vh=innerHeight;
   const set=(b,l,t,w,h)=>{b.style.cssText=`display:block;left:${l}px;top:${t}px;width:${Math.max(0,w)}px;height:${Math.max(0,h)}px`};
   set(bs[0],0,0,vw,r.top);set(bs[1],0,r.bottom,vw,vh-r.bottom);set(bs[2],0,r.top,r.left,r.height);set(bs[3],r.right,r.top,vw-r.right,r.height)}
+let lockR=null,lockT=0;
 function noT(){root.classList.add('nt');requestAnimationFrame(()=>requestAnimationFrame(()=>root.classList.remove('nt')))}
 function place(){
   const s=steps[i];if(!s)return;const e=tgt(s),vw=innerWidth,vh=innerHeight;blk(false);
   if(e){
-    const r=e.getBoundingClientRect(),p=8;
+    const r=(lockR&&performance.now()<lockT)?lockR:e.getBoundingClientRect(),p=8;
     let rad=parseFloat(getComputedStyle(e).borderTopLeftRadius)||0;if(rad>r.width/2)rad=(r.width+p*2)/2;rad=Math.max(rad+p,16);
     hole.classList.remove('none');
     hole.style.cssText=`top:${r.top-p}px;left:${r.left-p}px;width:${r.width+p*2}px;height:${r.height+p*2}px;border-radius:${rad}px`;
@@ -2793,7 +2794,7 @@ function show(){
   root.classList.toggle('trk',!!s.act);
   if(s.wait){s.done=false;s.skip=false;if(s.wait()){s.done=true;s.manual=true}}
   const e=tgt(s);
-  if(e&&!s.act){const r=e.getBoundingClientRect();if(r.top<70||r.bottom>innerHeight-20){try{noT();e.scrollIntoView({block:'center',behavior:'instant'})}catch(x){}}}
+  lockR=null;if(e&&!s.act){const r=e.getBoundingClientRect();if(r.top<70||r.bottom>innerHeight-20){const mx=Math.max(0,de.scrollHeight-innerHeight),y0=scrollY,y1=Math.min(mx,Math.max(0,y0+r.top+r.height/2-innerHeight/2)),d=y1-y0;if(Math.abs(d)>2){lockR={top:r.top-d,bottom:r.bottom-d,left:r.left,right:r.right,width:r.width,height:r.height};lockT=performance.now()+1400;scrollTo({top:y1,behavior:'smooth'});const k=i;const ck=()=>{if(!lockR||!on||i!==k)return;if(Math.abs(scrollY-y1)<2||performance.now()>lockT){lockR=null;place();return}requestAnimationFrame(ck)};requestAnimationFrame(ck)}}}
   place();sync();if(s.wait&&s.done&&s.auto&&s.manual){const b=tc.querySelector('.pr');if(b)b.hidden=false}clearTimeout(tmr);tmr=setTimeout(place,420);setTimeout(place,800);
   const b=tc.querySelector('.fsgo')||tc.querySelector('.pr');if(b&&!b.disabled)b.focus({preventScroll:true});
 }
