@@ -8,7 +8,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-title" content="街仔路">
-<meta name="build" content="lm11271621">
+<meta name="build" content="lm11271632">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <script>if(navigator.standalone===true)document.documentElement.classList.add('ios-sa')</script>
@@ -2091,21 +2091,23 @@ const dwUrl=()=>location.href.split('#')[0]+'#dictwin';
 function ebFb(id,nd,nb){let b=document.getElementById('eb-fb');if(b)b.remove();b=document.createElement('div');b.id='eb-fb';b.innerHTML='<div class="fb-t"><b>瀏覽器擋住了彈出視窗</b><small>請按網址列右側的「已封鎖彈出式視窗」圖示，選「一律允許」，之後就不會再被擋</small></div><div class="fb-a">'+(nb?'<a href="'+ebsUrl(id)+'" target="_blank" rel="noopener noreferrer">開啟書籍</a>':'')+(nd?'<a href="'+dwUrl()+'" target="taigidict">開啟辭典</a>':'')+'</div><button type="button" aria-label="關閉">×</button>';b.querySelector('button').onclick=()=>b.remove();b.querySelectorAll('a').forEach(a=>a.onclick=()=>setTimeout(()=>{if(!b.querySelector('a:not([data-d])')||1)b.remove()},50));document.body.appendChild(b);setTimeout(()=>b.remove(),45000)}
 function ebOpen(id,both){const d=both?window.open(dwUrl(),'taigidict'):1;const w=window.open(ebsUrl(id),'_blank');if(w){try{w.opener=null}catch(e){}}if(!d||!w)ebFb(id,!d,!w)}
 function ebGuide(id,t){let skip=0;try{skip=localStorage.getItem('gdSkip')}catch(e){}const ph=/iPhone|iPod/.test(navigator.userAgent);if(skip){ebOpen(id,ph?0:1);return}let g=document.getElementById('eb-gd');if(!g){g=document.createElement('div');g.id='eb-gd';g.className='gd';g.setAttribute('role','dialog');g.setAttribute('aria-modal','true');document.body.appendChild(g)}
- if(ph){g.innerHTML=`<div class="gd-c"><h3>iPhone 沒辦法分割畫面</h3><p class="gd-bk">${esc(t)}</p>
- <div class="gd-ph"><p>因為 iOS 不支援分割畫面，沒辦法一邊看書、一邊開著辭典。</p><p><b>建議改用 iPad 或電腦版</b>，書和辭典就能並排，隨時查詢。</p><p>如果還是想在手機上讀，可以到「推薦工具」下載<b>芋圓字典 Oo Inn</b>，讀到不會的字再切過去查。</p></div>
- <div class="gd-ft"><a class="btn pri" href="#apps" data-gd="x">前往推薦工具</a><button class="btn" data-gd="one">只開書</button><button class="btn" data-gd="x">取消</button><label><input type="checkbox" id="gd-skip"> 之後不再顯示</label></div></div>`;g.dataset.id=id;requestAnimationFrame(()=>g.classList.add('on'));return}
- g.innerHTML=`<div class="gd-c"><h3>開書之前，先看怎麼分割畫面</h3><p class="gd-bk">${esc(t)}</p>
- <div class="gd-an"><div class="gd-st" aria-hidden="true"><div class="gd-w"><div class="gd-tb"><div class="gd-li"><i></i><i></i><i></i></div><div class="gd-tab"><b class="gd-tx"><span>街仔路</span></b></div><div class="gd-tab gdb"><b class="gd-tx"><span>台灣雲端書庫</span></b></div><div class="gd-tab gdd"><b class="gd-tx"><span>查辭典・街仔路</span><span>選擇分頁</span></b></div></div>
+ const AN=`<div class="gd-an"><div class="gd-st" aria-hidden="true"><div class="gd-w"><div class="gd-tb"><div class="gd-li"><i></i><i></i><i></i></div><div class="gd-tab"><b class="gd-tx"><span>街仔路</span></b></div><div class="gd-tab gdb"><b class="gd-tx"><span>台灣雲端書庫</span></b></div><div class="gd-tab gdd"><b class="gd-tx"><span>查辭典・街仔路</span><span>選擇分頁</span></b></div></div>
   <div class="gd-tl"><i></i><i></i><div class="gd-ad">ebookservice.tw</div></div>
   <div class="gd-bd"><div class="gd-p gd-p1"><div class="gd-bh"><b></b><u></u><i></i></div><div class="gd-bn"></div><div class="gd-bb"><div class="gd-cv"></div><div><h5>${esc(t).slice(0,9)}</h5><u style="width:36cqw"></u><u style="width:30cqw"></u><u style="width:33cqw"></u></div></div></div>
    <div class="gd-p gd-p2"><div class="gd-dk"><h5>查辭典</h5><small>教育部臺灣台語常用詞辭典</small><div class="sr">漢字、台羅、華語都可以</div><u style="width:80%"></u><u style="width:62%"></u><u style="width:72%"></u></div><div class="gd-pk"><em>×</em><div class="gd-pl"><div class="gdh"><i></i><span>查辭典・街仔路<small>weichi2001.github.io</small></span></div><div><i></i><span>街仔路<small>weichi2001.github.io</small></span></div><div><i></i><span>台灣雲端書庫<small>www.ebookservice.tw</small></span></div></div></div></div></div>
   <div class="gd-mn"><span class="f">在右側新增分頁</span><span class="h">將頁面加入新的分割畫面</span><span>將頁面加入新群組</span><span>將頁面移到新視窗</span><span class="s"></span><span>重新載入</span><span>複製</span><span>關閉</span></div>
   <div class="gd-cu"><svg class="ca" viewBox="0 0 20 26"><path d="M2 1.5v19l4.6-4.4 3.2 7.4 3-1.3-3.2-7.2 6.4-.4z" fill="#111" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg><svg class="cr" viewBox="0 0 28 28"><path d="M13 5h2v18h-2zM11 14l-6-4v8zM17 14l6-4v8z" fill="#111" stroke="#fff" stroke-width="1.6" stroke-linejoin="round" paint-order="stroke"/></svg></div></div></div>
- <ol class="gd-cap"><li><em>1</em><span>按下「開啟」，會開出書和辭典兩個新分頁，排在街仔路旁邊。</span></li><li><em>2</em><span>在書的分頁上按右鍵，選「將頁面加入新的分割畫面」。</span></li><li><em>3</em><span>右邊會出現「選擇分頁」的清單，點「查辭典・街仔路」。</span></li><li><em>4</em><span>兩個分頁併成同一個畫面。把滑鼠移到中間的線，按住左右拖曳，就能調整兩邊的比例。</span></li></ol></div>
+ <ol class="gd-cap"><li><em>1</em><span>按下「開啟」，會開出書和辭典兩個新分頁，排在街仔路旁邊。</span></li><li><em>2</em><span>在書的分頁上按右鍵，選「將頁面加入新的分割畫面」。</span></li><li><em>3</em><span>右邊會出現「選擇分頁」的清單，點「查辭典・街仔路」。</span></li><li><em>4</em><span>兩個分頁併成同一個畫面。把滑鼠移到中間的線，按住左右拖曳，就能調整兩邊的比例。</span></li></ol></div>`;
+ if(ph){g.innerHTML=`<div class="gd-c"><h3>iPhone目前無法獲得完整學習體驗</h3><p class="gd-bk">${esc(t)}</p>
+ <div class="gd-ph"><p>1. 由於 iOS 目前不支援分割畫面，因此無法做到在看書的視窗中利用放大鏡查詢生詞。</p><p>2. 建議改用 iPad 操作或使用電腦版，利用分割畫面開啟書與辭典來隨時查詢。</p><p>3. 如果還是想在手機上閱讀，建議可以到「推薦工具」下載「芋圓字典 Oo Inn」，遇到不會的字再切過去查。</p></div>
+ <div class="gd-pv" hidden>${AN}</div>
+ <div class="gd-ft"><a class="btn pri" href="#apps" data-gd="x">前往推薦工具</a><button class="btn" data-gd="pv">預覽電腦版操作</button><button class="btn" data-gd="one">只開書</button><button class="btn" data-gd="x">取消</button><label><input type="checkbox" id="gd-skip"> 之後不再顯示</label></div></div>`;g.dataset.id=id;requestAnimationFrame(()=>g.classList.add('on'));return}
+ g.innerHTML=`<div class="gd-c"><h3>開書之前，先看怎麼分割畫面</h3><p class="gd-bk">${esc(t)}</p>
+ ${AN}
  <p class="gd-nt">需要電腦版 Chrome，而且要是比較新的版本。手機或平板請直接分開兩個分頁切換。</p>
  <div class="gd-ft"><button class="btn pri" data-gd="both">開啟書和辭典</button><button class="btn" data-gd="rp">重播動畫</button><button class="btn" data-gd="one">只開書</button><button class="btn" data-gd="x">取消</button><label><input type="checkbox" id="gd-skip"> 之後不再顯示</label></div></div>`;g.dataset.id=id;requestAnimationFrame(()=>g.classList.add('on'))}
 function ebGuideClose(){const g=document.getElementById('eb-gd');if(g)g.classList.remove('on')}
-document.addEventListener('click',e=>{const gdb=e.target.closest('[data-gd]');if(gdb&&gdb.dataset.gd==='rp'){const a=document.querySelector('#eb-gd .gd-an');if(a)a.replaceWith(a.cloneNode(true));return}if(gdb){const g=document.getElementById('eb-gd'),id=g.dataset.id,k=gdb.dataset.gd;if(k!=='x'){try{if(document.getElementById('gd-skip').checked)localStorage.setItem('gdSkip','1')}catch(_){}ebOpen(id,k==='both')}ebGuideClose();return}
+document.addEventListener('click',e=>{const gdb=e.target.closest('[data-gd]');if(gdb&&gdb.dataset.gd==='pv'){const pv=document.querySelector('#eb-gd .gd-pv');if(pv){const on=pv.hidden;pv.hidden=!on;gdb.textContent=on?'收起預覽':'預覽電腦版操作';if(on){const a=pv.querySelector('.gd-an');if(a)a.replaceWith(a.cloneNode(true));pv.scrollIntoView({behavior:'smooth',block:'nearest'})}}return}if(gdb&&gdb.dataset.gd==='rp'){const a=document.querySelector('#eb-gd .gd-an');if(a)a.replaceWith(a.cloneNode(true));return}if(gdb){const g=document.getElementById('eb-gd'),id=g.dataset.id,k=gdb.dataset.gd;if(k!=='x'){try{if(document.getElementById('gd-skip').checked)localStorage.setItem('gdSkip','1')}catch(_){}ebOpen(id,k==='both')}ebGuideClose();return}
   if(e.target.id==='eb-gd'){ebGuideClose();return}});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')ebGuideClose()});
 document.addEventListener('input',e=>{if(e.target.id==='eb-q'){EBS.q=e.target.value;ebsDraw()}});
