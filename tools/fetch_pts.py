@@ -15,15 +15,33 @@ def q(query):
     d=json.load(urllib.request.urlopen(r,timeout=30))
     if d.get('errors'): raise RuntimeError(d['errors'])
     return d['data']
-progs={}
+progs={}   # pid -> True（來自精選專輯：沒標台語也先收，標 u）
 for v in q('{ videoMarketingLabel(id:"%s"){ videos{ program{ id } } } }'%LABEL)['videoMarketingLabel']['videos']:
-    progs[v['program']['id']]=1
+    progs[v['program']['id']]=True
+# 公視+ 首頁所有頻道／片單：只收「季名或片名有標台語」的作品，這是判斷有沒有新台語片源的關鍵
+try:
+    off=0
+    while off<400:
+        recs=q('{ homepageMarketingLabels(limit:20,offset:%d){ records{ marketingLabel{ id name } } } }'%off)['homepageMarketingLabels']['records']
+        if not recs: break
+        for r in recs:
+            lid=r['marketingLabel']['id']
+            try:
+                for v in q('{ videoMarketingLabel(id:"%s"){ videos{ program{ id } } } }'%lid)['videoMarketingLabel']['videos']:
+                    progs.setdefault(v['program']['id'],False)
+            except Exception as e: print('label fail',lid,e)
+            time.sleep(.2)
+        off+=20
+except Exception as e: print('homepage labels fail',e)
 items=[]
-for pid in progs:
+for pid,album in progs.items():
     if pid in EXCLUDE: continue
-    p=q('{ program(id:"%s"){ id name latestCover seasons{ id name cover } } }'%pid)['program']
+    try: p=q('{ program(id:"%s"){ id name latestCover seasons{ id name cover } } }'%pid)['program']
+    except Exception as e: print('program fail',pid,e); continue
     ss=p['seasons'] or []
     tw=[s for s in ss if '台語' in s['name']]
+    if not album and not tw and not ('台語' in p['name'] and ss):
+        time.sleep(.15); continue
     it={'pid':pid,'t':p['name'],'img':p.get('latestCover') or ''}
     if tw: s=tw[0]
     elif '台語' in p['name'] and ss: s=ss[-1]
@@ -48,5 +66,13 @@ for pid in progs:
         if ss: it['ss']=ss
     items.append(it); time.sleep(.3)
 if len(items)<10: print('too few items',len(items)); sys.exit(1)
+old=json.loads(OUT.read_text(encoding='utf-8')) if OUT.exists() else {'items':[]}
+oldp={i['pid'] for i in old['items']}
+newp=[i['t'] for i in items if i['pid'] not in oldp and not i.get('u')]
+print('NEW台語片源:',newp)
+if oldp:
+    sys.path.insert(0,str(pathlib.Path(__file__).resolve().parent))
+    import updlog
+    for t in newp: updlog.add('video',t,src='公視+')
 OUT.write_text(json.dumps({'updated':datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M'),'items':items},ensure_ascii=False,indent=1),encoding='utf-8')
 print('ok',len(items))

@@ -8,7 +8,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-title" content="街仔路">
-<meta name="build" content="lm11271637">
+<meta name="build" content="lm11271714">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <script>if(navigator.standalone===true)document.documentElement.classList.add('ios-sa')</script>
@@ -1996,10 +1996,15 @@ const bkTitle=t=>{const m=t.split(/ - (.+)/);return m[1]?{s:m[0],t:m[1]}:{s:'',t
 const bkImg=u=>u.replace(/^http:/,'https:');
 function bkCover(h){const i=bkDoc(h).querySelector('img');return i?bkImg(i.getAttribute('src')||'').replace(/\/(s\d+|w\d+-h\d+)(-c)?\//,'/s600/'):''}
 function bkWhen(h,t){const m=/(\d{4})\s*年\s*(\d{1,2})\s*月/.exec(bkDoc(h).body.textContent)||/(\d{4})年(\d{1,2})月/.exec(t);return m?m[1]+' 年 '+(+m[2])+' 月':''}
-async function bkLatest(){if(BK.last)return BK.last;const j=await bkJP(BKF+'?max-results=3');const m=j&&j.feed.entry&&j.feed.entry.map(e=>/(\d{3})期/.exec(e.title.$t)).find(Boolean);return BK.last=m?+m[1]:391}
+async function bkStatic(){if(BK.st!==undefined)return BK.st;try{const r=await fetch('bong.json',{cache:'no-cache'});BK.st=r.ok?await r.json():null}catch(e){BK.st=null}return BK.st}
+async function bkLatest(){if(BK.last)return BK.last;const st=await bkStatic(),sn=st&&+st.latest||0;
+  const live=async()=>{const j=await bkJP(BKF+'?max-results=3');const m=j&&j.feed.entry&&j.feed.entry.map(e=>/(\d{3})期/.exec(e.title.$t)).find(Boolean);return m?+m[1]:0};
+  if(sn){BK.last=sn;live().then(n=>{if(n>BK.last)BK.last=n}).catch(()=>{});return sn}
+  const n=await live();return BK.last=n||391}
 async function bkMeta(n){
   if(BK.meta[n])return BK.meta[n];
   return BK.meta[n]=(async()=>{
+    const st=await bkStatic(),sm=st&&st.issues&&st.issues[n];if(sm&&sm.cover)return {n,cover:sm.cover,when:sm.when||''};
     const j=await bkJP(BKF+'/-/'+encodeURIComponent(BKN+n+'期')+'?max-results=4');
     const es=((j&&j.feed.entry)||[]).map(bkEnt),toc=es.find(e=>e.t.startsWith(BKN)&&!/ - /.test(e.t));
     return toc?{n,cover:bkCover(toc.h),when:bkWhen(toc.h,toc.t)}:{n,cover:'',when:''};
