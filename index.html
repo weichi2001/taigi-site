@@ -1387,7 +1387,7 @@ const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'
 // 白話字（教會羅馬字，POJ）→ 台羅（TL）：搜尋時兩邊先統一成同一種拼法，所以打哪一種都查得到
 // 差別：chh/ch→tsh/ts、o͘（ou）→oo、oa/oe→ua/ue、eng/ek→ing/ik、ⁿ→nn、ṳ→ir（聲調符號兩套相同，比對時本來就忽略）
 const poj=s=>s.normalize('NFD').replace(/ⁿ/g,'nn').replace(/([aeiouAEIOU])N(?![a-zA-Z])/g,'$1nn')
-  .replace(/([oO])([̀-͗]*)[̇͘·ˑ̨]/g,'$1o$2').replace(/ʰ/g,'h').replace(/([uU])[̣̤]/g,'$1ir')
+  .replace(/([oO])([̀-͗]*)[̇͘·ˑ̨]/g,'$1o$2').replace(/ʰ/g,'h').replace(/[uU][̣̤]/g,'ir')
   .replace(/[̀-ͯ]/g,'').toLowerCase()
   .replace(/chh/g,'tsh').replace(/ch/g,'ts').replace(/ou/g,'oo').replace(/oa/g,'ua').replace(/oe/g,'ue').replace(/eng/g,'ing').replace(/ek/g,'ik');
 const norm=s=>poj(s).replace(/[^\p{L}\p{N}]/gu,'');
