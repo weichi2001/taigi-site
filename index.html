@@ -8,7 +8,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-title" content="街仔路">
-<meta name="build" content="lm11281404">
+<meta name="build" content="lm11281407">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <script>if(navigator.standalone===true)document.documentElement.classList.add('ios-sa')</script>
@@ -1336,6 +1336,7 @@ body[data-r=dictwin] #mini .mgrip{display:none}
  .is-book .bk-bar .bk-mode button{padding:7px 10px;font-size:14px;white-space:nowrap}
 }</style>
 <style>.pjt{display:inline-block;margin-left:6px;padding:1px 9px;border-radius:99px;border:1px solid var(--line);font-size:12.5px;color:var(--ink2);white-space:nowrap;vertical-align:1px}.pjt b{font-weight:600;margin-right:5px;font-size:11px;letter-spacing:.06em;color:var(--accent,#e24403)}</style>
+<style>@media(max-width:899px){.bk-rd.ah{position:relative;left:50%;width:100vw;max-width:none;margin-left:-50vw}.bk-rd.ah .bk-stage{padding:0}.bk-rd.ah .bkb,.bk-rd.ah .bkb *{border-radius:0}}</style>
 </head>
 <body>
 <div id="splash" aria-hidden="true"><div class="sp-in"><div class="sp-logo">街仔<b>路</b></div><small>Ke-á-lōo</small><i class="sp-bar"></i></div></div>
@@ -2222,7 +2223,7 @@ function bkBook(root,is,startPage){
     wide=window.innerWidth>=900;
     const ah=(wide&&matchMedia('(hover:hover)').matches)||matchMedia('(pointer:coarse)').matches;root.classList.toggle('ah',ah);
     if(ah)H=window.innerHeight-28;
-    const h=wide?Math.min(H,(W-120)/2/ratio):Math.min(H,(W-8)/ratio),w=h*ratio;
+    const h=wide?Math.min(H,(W-120)/2/ratio):Math.min(H,(ah?W:W-8)/ratio),w=h*ratio;
     fb.style.setProperty('--pw',w+'px');fb.style.setProperty('--pp',Math.round(w*6)+'px');fb.style.setProperty('--ph',h+'px');fb.classList.toggle('single',!wide);
     cur=wide?Math.ceil(pageNow/2):pageNow;if(cur>maxC())cur=maxC();
     show();
