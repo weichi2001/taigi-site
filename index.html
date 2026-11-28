@@ -8,7 +8,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-title" content="街仔路">
-<meta name="build" content="lm11281419">
+<meta name="build" content="lm11290002">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <script>if(navigator.standalone===true)document.documentElement.classList.add('ios-sa')</script>
@@ -1336,7 +1336,9 @@ body[data-r=dictwin] #mini .mgrip{display:none}
  .is-book .bk-bar .bk-mode button{padding:7px 10px;font-size:14px;white-space:nowrap}
 }</style>
 <style>.pjt{display:inline-block;margin-left:6px;padding:1px 9px;border-radius:99px;border:1px solid var(--line);font-size:12.5px;color:var(--ink2);white-space:nowrap;vertical-align:1px}.pjt b{font-weight:600;margin-right:5px;font-size:11px;letter-spacing:.06em;color:var(--accent,#e24403)}</style>
-<style>@media(max-width:899px){.bk-rd.ah{position:relative;left:50%;width:100vw;max-width:none;margin-left:-50vw}.bk-rd.ah .bk-stage{padding:0}.bk-rd.ah .bkb,.bk-rd.ah .bkb *{border-radius:0}}</style>
+<style>@media(max-width:899px){.bk-rd.ah{position:relative;left:50%;width:100vw;max-width:none;margin-left:-50vw}.bk-rd.ah .bk-stage{padding:0}.bk-rd.ah .bkb,.bk-rd.ah .bkb *{border-radius:0}}/* 本月新 標籤 */
+.newtag{display:inline-block;margin-left:8px;padding:1px 7px;border-radius:999px;background:var(--accent,#e24403);color:#fff;font:700 10px/1.6 system-ui,sans-serif;letter-spacing:.08em;font-style:normal;vertical-align:middle}
+</style>
 </head>
 <body>
 <div id="splash" aria-hidden="true"><div class="sp-in"><div class="sp-logo">街仔<b>路</b></div><small>Ke-á-lōo</small><i class="sp-bar"></i></div></div>
@@ -1866,6 +1868,11 @@ const aniTile=(a,i)=>`<button class="pt" data-act="asheet" data-i="${i}" style="
   ${a.img||a.pimg?`<img src="${a.pimg||IMG+a.img}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`:''}
   ${a.lv==='保護級'?'<span class="bd pro">保護級</span>':a.age?`<span class="bd pro">輔${a.age}</span>`:''}
   <span class="st">${aniSt[a.t]==2?SI.check:aniSt[a.t]==1?SI.heart:''}</span><b>${esc(a.t)}</b><small>${a.sub||a.lv||'台語配音'}</small></button>`;
+// 「本月新」：updates.json 由各抓取工具記錄新增內容；近 30 天內新增的算「本月新」
+let UPD=[];
+const updNew=k=>UPD.filter(u=>u.kind===k&&u.date&&(Date.now()-Date.parse(u.date))<30*864e5&&Date.now()>=Date.parse(u.date)-864e5);
+const UPDP=fetch('updates.json',{cache:'no-cache'}).then(r=>r.ok?r.json():[]).catch(()=>[]).then(d=>{UPD=Array.isArray(d)?d:[];
+  try{if(location.hash==='#anime'&&!S.an.mv&&!S.an.view&&!S.an.sheet)render(true);if(typeof bkNew==='function')bkNew()}catch(e){}});
 // 公視+ 片單由 GitHub Actions 每 8 小時更新 pts.json；載入失敗就用上面內建的備份片單
 fetch('pts.json',{cache:'no-cache'}).then(r=>r.ok?r.json():Promise.reject()).then(d=>{
   if(!d||!d.items||d.items.length<10)return;
@@ -1940,7 +1947,9 @@ function aniBody(){
     return l.length?grid(l):'<p class="sub" style="margin-top:18px">找不到「'+esc(S.an.q.trim())+'」。換個字試試看。</p>';
   }
   const fil=a=>f==='all'||(f==='mine'?aniSt[a.t]:cat(a)===f);
-  if(f==='all')return aniRow('我的片單',`${SI.heart} 想看　${SI.check} 看過了`,mine)+CATS.map(c=>aniRow(c,'',v.filter(a=>cat(a)===c))).join('');
+  const nt=new Set(updNew('video').map(u=>u.title.replace(/（雙語版）$/,'')));
+  const nl=nt.size?v.filter(a=>nt.has(a.t)):[];
+  if(f==='all')return aniRow('本月新片<em class="newtag">NEW</em>','最近 30 天新增',nl)+aniRow('我的片單',`${SI.heart} 想看　${SI.check} 看過了`,mine)+CATS.map(c=>aniRow(c,'',v.filter(a=>cat(a)===c))).join('');
   const l=v.filter(fil);
   return l.length?grid(l):'<p class="sub" style="margin-top:18px">還沒有。打開一部作品，按「想看」就會放進來。</p>';
 }
@@ -2374,6 +2383,7 @@ function pBooks(r){
    return `<a class="back" href="#home">← 街仔路</a>
    <header class="bkt"><small>Tâi-gí Tsheh-pâng</small><h2 class="hd">台語冊房</h2></header>
    <section class="bkf" id="bkh-r"></section>
+   <section class="lib" id="bk-new" hidden></section>
    <div id="bk-res"></div>
    <section class="lib"><div class="lib-h"><h3 class="hd">台灣雲端書庫</h3><span class="eb-hr"><button class="btn eb-lbtn" data-ebl="t" aria-expanded="false">登入帳號</button><a href="#books/ebs">全部 →</a></span></div>
     <p class="lib-s">結合各縣市圖書館的電子書資源，需註冊借閱證並登入，但書籍種類多樣，非常值得一試！</p>
@@ -2441,7 +2451,14 @@ async function bkReader(){
   blocks.forEach(p=>{if(!p.classList.contains('poem')&&p.textContent.trim().length>=24)p.classList.add('ind')});
   window.scrollTo(0,0);
 }
-async function bkCovers(){ebsFill();
+async function bkNew(){const box=document.getElementById('bk-new');if(!box)return;await UPDP;await ebsLoad();
+  const ns=updNew('book'),L=[];
+  ns.forEach(u=>{const m=/^BONG報 第 (\d+) 期$/.exec(u.title);
+    if(m){L.push(`<a class="bk-c" href="#books/${m[1]}"><div class="bk-cv"><i>${m[1]}</i></div><i class="lg"></i><b>第 ${m[1]} 期</b><small>BONG 報</small></a>`);return}
+    const b=(EBS.d||[]).find(x=>x[2]===u.title);if(b)L.push(ebsCard(b,1))});
+  if(!L.length){box.hidden=true;return}
+  box.hidden=false;box.innerHTML=`<div class="lib-h"><h3 class="hd">本月新書<em class="newtag">NEW</em></h3><small style="opacity:.7">最近 30 天新增</small></div><div class="shelf">${L.join('')}</div>`}
+async function bkCovers(){ebsFill();bkNew();
   const last=await bkLatest(),pc=document.getElementById('bk-pc'),bp=document.getElementById('bkp'),lib=document.getElementById('bk-lib'),res=document.getElementById('bk-res'),sv=bkSaved();
   if(res&&sv)res.innerHTML=bkCont(sv);
   if(lib){lib.innerHTML=[0,1,2,3,4,5].map(k=>{const n=last-k;return `<a class="bk-c" href="#books/${n}" data-n="${n}"><div class="bk-cv"><i>${n}</i></div><i class="lg"></i><b>第 ${n} 期</b><small>&nbsp;</small></a>`}).join('')+`<a class="bk-c mo" href="#books/bong"><div class="bk-cv">全部期數</div><i class="lg"></i><b>看更早的</b><small>&nbsp;</small></a>`;
