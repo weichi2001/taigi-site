@@ -8,7 +8,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-title" content="街仔路">
-<meta name="build" content="lm11281342">
+<meta name="build" content="lm11281350">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <script>if(navigator.standalone===true)document.documentElement.classList.add('ios-sa')</script>
@@ -1318,7 +1318,23 @@ html[data-theme=dark] #mini .mgrip i{background:rgba(255,255,255,.3)}
 body[data-r=dictwin] #mini .mgrip{display:none}
 @media(display-mode:standalone) and (max-width:899px){.top{padding-top:calc(30px + env(safe-area-inset-top,0px))}}
 </style>
-<style>.bk-fs,.is-book .bk-tools{display:inline-flex;align-items:center;gap:6px}.bk-fs>button,.is-book .bk-tools>button{display:inline-flex!important;align-items:center;justify-content:center;box-sizing:border-box;height:34px;min-width:44px;margin:0!important;padding:0 12px!important;line-height:1}[data-bk=theme] .si{width:17px;height:17px;margin:0;display:block}</style>
+<style>.bk-fs,.is-book .bk-tools{display:inline-flex;align-items:center;gap:6px}
+.bk-fs>button,.is-book .bk-tools>button{display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;height:34px;min-width:44px;margin:0;padding:0 12px;line-height:1;white-space:nowrap}
+.bk-bar .back,.bk-bt{white-space:nowrap}
+[data-bk=theme] .si{width:17px;height:17px;margin:0;display:block}
+@media(max-width:899px){
+ .bk-bar{gap:8px}.bk-bt{font-size:16px;overflow:hidden;text-overflow:ellipsis}
+ .bk-fs>button{min-width:38px;padding:0 10px}
+ .is-book .bk-bar{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;column-gap:8px;row-gap:10px;align-items:center}
+ .is-book .bk-bar .back{grid-column:1;grid-row:1}
+ .is-book .bk-bar .bk-bt{grid-column:2;grid-row:1}
+ .is-book .bk-bar .bk-tools{display:contents}
+ .is-book .bk-bar .bk-tools>button[data-bk=toc]{grid-column:3;grid-row:1;min-width:52px}
+ .is-book .bk-bar .bk-tools>button[data-bk=theme]{grid-column:4;grid-row:1;min-width:40px;padding:0}
+ .is-book .bk-bar .bk-tools>button[data-bk=fs]{display:none}
+ .is-book .bk-bar .bk-mode{grid-column:1/-1;grid-row:2;display:grid;width:100%;margin:0}
+ .is-book .bk-bar .bk-mode button{padding:7px 10px;font-size:14px;white-space:nowrap}
+}</style>
 <style>.pjt{display:inline-block;margin-left:6px;padding:1px 9px;border-radius:99px;border:1px solid var(--line);font-size:12.5px;color:var(--ink2);white-space:nowrap;vertical-align:1px}.pjt b{font-weight:600;margin-right:5px;font-size:11px;letter-spacing:.06em;color:var(--accent,#e24403)}</style>
 </head>
 <body>
