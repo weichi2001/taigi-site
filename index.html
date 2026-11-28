@@ -8,7 +8,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-title" content="街仔路">
-<meta name="build" content="lm11281319">
+<meta name="build" content="lm11281342">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <script>if(navigator.standalone===true)document.documentElement.classList.add('ios-sa')</script>
@@ -1856,7 +1856,7 @@ fetch('pts.json',{cache:'no-cache'}).then(r=>r.ok?r.json():Promise.reject()).the
   ANI.length=0;keep.forEach(a=>ANI.push(a));
   // 沒有明確「台語版」標示的作品（u:1）預設不顯示；老師確認過有台語配音的，把 pid 加進 CONF 就會出現
   const CONF=new Set([]);
-  d.items.filter(o=>!o.u||CONF.has(o.pid)).forEach(o=>ANI.push({t:o.t.replace(/（雙語版）$/,''),pid:o.pid,sid:o.sid,ss:o.ss,pimg:o.img,u:o.u,s:['pts']}));
+  d.items.filter(o=>!o.u||CONF.has(o.pid)).forEach(o=>ANI.push({t:o.t.replace(/（雙語版）$/,''),pid:o.pid,sid:o.sid,ss:o.ss,pimg:o.img,u:o.u,c:o.c,s:['pts']}));
   if(!S.an.mv&&!S.an.view){S.an.sheet=null;if(location.hash==='#anime')render(true)}
   const pv=document.querySelector('.pst .pv');if(pv)pv.innerHTML=pvHtml();
 }).catch(()=>{});
@@ -1910,6 +1910,7 @@ const aniRow=(title,sub,list)=>list.length?`<div class="rowh"><h3>${title}</h3><
 // 分類（不依片源）：動畫／電影／戲劇／短片／紀錄片／節目
 const CATS=['動畫','電影','戲劇','短片','紀錄片','節目'];
 const cat=a=>{const t=a.tag||'';
+  if(a.c&&CATS.includes(a.c))return a.c;
   if(a.yl)return /動畫/.test(t)?'動畫':/戲劇|穿越劇/.test(t)?'戲劇':/紀實/.test(t)?'紀錄片':'節目';
   if(a.yt)return /短片/.test(t)?'短片':/紀錄片/.test(t)?'紀錄片':/電視劇/.test(t)?'戲劇':'電影';
   return '動畫'};

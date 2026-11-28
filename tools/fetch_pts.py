@@ -4,10 +4,19 @@
 - 單季無標示的片：專輯本身是台語配音策展，仍收錄，標 u:1（待確認）
 - 抓不到/結果異常時不覆蓋舊檔（exit 1）
 """
-import json, sys, time, urllib.request, pathlib, datetime
+import json, sys, time, re, urllib.request, pathlib, datetime
 API='https://www.ptsplus.tv/graphql'
 LABEL='695802cc-c1fe-4071-aea4-5bb21f0cee5a'
 EXCLUDE={'041f4a9b-0d1a-4f7c-ac51-a5d24004d039'}  # 百姓貴族：公視+ 無台語版（教師確認）
+CATF=pathlib.Path(__file__).resolve().parent/'pts_cat.json'
+def classify(name,cats,over):
+    """依公視+ 自己標的 categories（關鍵字）判斷站內分類；老師可在 pts_cat.json 手動覆寫。回傳 (分類, 是否把握)"""
+    for k in (name,name.strip()):
+        if over.get(k): return over[k],True
+    t=' '.join(cats)+' '+name
+    for c,rx in (('動畫',r'動畫|動漫'),('紀錄片',r'紀錄|紀實'),('戲劇',r'影集|戲劇|家庭劇|時代劇|電視劇|人生劇展|迷你劇'),('電影',r'電影|劇情片'),('短片',r'短片')):
+        if re.search(rx,t): return c,True
+    return '節目',False
 OUT=pathlib.Path(__file__).resolve().parent.parent/'pts.json'
 def q(query):
     r=urllib.request.Request(API,json.dumps({'query':query}).encode(),
@@ -33,7 +42,7 @@ try:
             time.sleep(.2)
         off+=20
 except Exception as e: print('homepage labels fail',e)
-items=[]
+items=[];unsure=[]
 for pid,album in progs.items():
     if pid in EXCLUDE: continue
     try: p=q('{ program(id:"%s"){ id name latestCover seasons{ id name cover } } }'%pid)['program']
@@ -43,6 +52,13 @@ for pid,album in progs.items():
     if not album and not tw and not ('台語' in p['name'] and ss):
         time.sleep(.15); continue
     it={'pid':pid,'t':p['name'],'img':p.get('latestCover') or ''}
+    try: cats=q('{ program(id:"%s"){ categories } }'%pid)['program']['categories'] or []
+    except Exception as e: cats=[]
+    over={}
+    try: over={k:v for k,v in json.loads(CATF.read_text(encoding='utf-8')).items() if not k.startswith('_')}
+    except Exception: pass
+    it['c'],sure=classify(p['name'],cats,{**over,**({pid:over[pid]} if pid in over else {})})
+    if not sure: unsure.append(p['name'])
     if tw: s=tw[0]
     elif '台語' in p['name'] and ss: s=ss[-1]
     else:
@@ -73,6 +89,8 @@ print('NEW台語片源:',newp)
 if oldp:
     sys.path.insert(0,str(pathlib.Path(__file__).resolve().parent))
     import updlog
-    for t in newp: updlog.add('video',t,src='公視+')
+    cmap={i['t']:i['c'] for i in items}
+    for t in newp: updlog.add('video',t,src='公視+',cat=cmap.get(t))
 OUT.write_text(json.dumps({'updated':datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M'),'items':items},ensure_ascii=False,indent=1),encoding='utf-8')
+print('分類沒把握（預設放節目，可在 tools/pts_cat.json 指定）:',unsure)
 print('ok',len(items))
