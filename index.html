@@ -8,7 +8,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-title" content="街仔路">
-<meta name="build" content="lm11281210">
+<meta name="build" content="lm11281216">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <script>if(navigator.standalone===true)document.documentElement.classList.add('ios-sa')</script>
@@ -1988,6 +1988,8 @@ function aniSheet(a){
 // ---- 台語冊房：讀《台文通訊BONG報》（資料即時讀取自 tsbp.tgb.org.tw，不複製、不存放） ----
 const BKN='台文通訊BONG報',BKF='https://tsbp.tgb.org.tw/feeds/posts/default',BK={is:{},meta:{},last:0,shown:0};
 let bkSeq=0;
+const bkThemeLb=()=>document.documentElement.dataset.theme==='dark'?'淺色':'深色';
+new MutationObserver(()=>document.querySelectorAll('[data-bk=theme]').forEach(x=>x.textContent=bkThemeLb())).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
 function bkJP(u){return new Promise(res=>{const n='__bk'+(++bkSeq);const s=document.createElement('script');const done=j=>{delete window[n];s.remove();res(j)};window[n]=done;s.onerror=()=>done(null);s.src=u+(u.includes('?')?'&':'?')+'alt=json-in-script&callback='+n;document.head.appendChild(s);setTimeout(()=>{if(window[n])done(null)},15000)})}
 const bkPath=u=>{try{return new URL(u).pathname}catch(e){return u}};
 const bkDoc=h=>new DOMParser().parseFromString(h,'text/html');
@@ -2151,7 +2153,7 @@ function bkBook(root,is,startPage){
   const secs=[];is.arts.forEach((a,k)=>{let s=secs.find(x=>x.s===a.s);if(!s){s={s:a.s,l:[]};secs.push(s)}s.l.push([k,a,P.findIndex(p=>p.a===k)])});
   root.className='bk-rd is-book';root.style.removeProperty('--bkfs');
   root.innerHTML=`<div class="bk-bar"><a class="back" href="${is.local?'#books':'#books/bong'}">← 書架</a><span class="bk-bt">${is.title||'第 '+n+' 期'}</span>
-    <span class="bk-fs bk-tools">${is.local?'':'<span class="bk-mode" data-m="img"><button class="on" data-bk="m-img">電子書</button><button data-bk="m-txt">文字</button></span>'}<button data-bk="toc">目錄</button><button data-bk="fs" aria-label="全螢幕">全螢幕</button></span></div>
+    <span class="bk-fs bk-tools">${is.local?'':'<span class="bk-mode" data-m="img"><button class="on" data-bk="m-img">電子書</button><button data-bk="m-txt">文字</button></span>'}<button data-bk="toc">目錄</button><button data-bk="theme" aria-label="切換深淺色">${bkThemeLb()}</button><button data-bk="fs" aria-label="全螢幕">全螢幕</button></span></div>
    <div class="bk-stage"><button class="bk-arr l" data-bk="prev" aria-label="上一頁">‹</button>
      <div class="bk-zw"><div class="bkb"><div class="fb-p fb-l"></div><div class="fb-p fb-r"></div></div></div>
    <button class="bk-arr r" data-bk="next" aria-label="下一頁">›</button></div>
@@ -2389,6 +2391,7 @@ document.getElementById('app').addEventListener('click',e=>{
   const ebt=e.target.closest('[data-eb]');if(ebt){EBS.tab=ebt.dataset.eb;ebsDraw();return}const lbtn=e.target.closest('[data-lib]');if(lbtn){const sd=lbtn.dataset.lib==='side',r=libOpen(lbtn.dataset.id,sd),m=document.getElementById('lib-msg');if(m)m.textContent=r?'':'視窗被瀏覽器擋住了，請允許彈出視窗後再按一次。';return}
   const b=e.target.closest('[data-bk]');if(!b)return;const k=b.dataset.bk;
   if(k==='more'&&BK.add)BK.add();
+  if(k==='theme'){const t=document.getElementById('themeBtn');if(t)t.click();return}
   if(k==='m-img'||k==='m-txt'){const md=b.closest('.bk-mode'),rt=document.getElementById('bk-rd');if(md){md.dataset.m=k==='m-txt'?'txt':'img';md.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b))}
    const run=()=>{try{localStorage.setItem('tgbkmode',k==='m-txt'?'txt':'img')}catch(x){}const bb=BK.book,inBook=bb&&document.contains(bb.el)&&document.getElementById('bk-rd')===bb.el;if(inBook&&k==='m-txt'){const a=bb.art(),h='#books/'+document.getElementById('bk-rd').dataset.n+'/'+(a>=0?a:0);if(location.hash===h){bkIn();bkReader()}else location.hash=h}else{bkIn();bkReader()}};
    if(rt){rt.dataset.out=1;BK.fade=1;setTimeout(run,md?260:200)}else run()}
