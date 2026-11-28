@@ -8,7 +8,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-title" content="街仔路">
-<meta name="build" content="lm11281304">
+<meta name="build" content="lm11281308">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <script>if(navigator.standalone===true)document.documentElement.classList.add('ios-sa')</script>
@@ -1318,6 +1318,7 @@ body[data-r=dictwin] #mini .mgrip{display:none}
 @media(display-mode:standalone) and (max-width:899px){.top{padding-top:calc(30px + env(safe-area-inset-top,0px))}}
 </style>
 <style>.bk-fs,.is-book .bk-tools{display:inline-flex;align-items:center;gap:6px}.bk-fs>button,.is-book .bk-tools>button{display:inline-flex!important;align-items:center;justify-content:center;box-sizing:border-box;height:34px;min-width:44px;margin:0!important;padding:0 12px!important;line-height:1}[data-bk=theme] .si{width:17px;height:17px;margin:0;display:block}</style>
+<style>.pjt{display:inline-block;margin-left:6px;padding:1px 9px;border-radius:99px;border:1px solid var(--line);font-size:12.5px;color:var(--ink2);white-space:nowrap;vertical-align:1px}.pjt b{font-weight:600;margin-right:5px;font-size:11px;letter-spacing:.06em;color:var(--accent,#e24403)}</style>
 </head>
 <body>
 <div id="splash" aria-hidden="true"><div class="sp-in"><div class="sp-logo">街仔<b>路</b></div><small>Ke-á-lōo</small><i class="sp-bar"></i></div></div>
@@ -1386,10 +1387,21 @@ const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'
 // 白話字（教會羅馬字，POJ）→ 台羅（TL）：搜尋時兩邊先統一成同一種拼法，所以打哪一種都查得到
 // 差別：chh/ch→tsh/ts、o͘（ou）→oo、oa/oe→ua/ue、eng/ek→ing/ik、ⁿ→nn、ṳ→ir（聲調符號兩套相同，比對時本來就忽略）
 const poj=s=>s.normalize('NFD').replace(/ⁿ/g,'nn').replace(/([aeiouAEIOU])N(?![a-zA-Z])/g,'$1nn')
-  .replace(/([oO])([̀-͗]*)[̇͘·ˑ̨]/g,'$1o$2').replace(/ʰ/g,'h').replace(/([uU])̣/g,'$1ir')
+  .replace(/([oO])([̀-͗]*)[̇͘·ˑ̨]/g,'$1o$2').replace(/ʰ/g,'h').replace(/([uU])[̣̤]/g,'$1ir')
   .replace(/[̀-ͯ]/g,'').toLowerCase()
   .replace(/chh/g,'tsh').replace(/ch/g,'ts').replace(/ou/g,'oo').replace(/oa/g,'ua').replace(/oe/g,'ue').replace(/eng/g,'ing').replace(/ek/g,'ik');
 const norm=s=>poj(s).replace(/[^\p{L}\p{N}]/gu,'');
+// 台羅 → 白話字（只用來「顯示」；搜尋仍是兩邊統一後比對）
+const tl2poj=s=>s.normalize('NFD')
+  .replace(/([Tt])[sS]([hH]?)/g,(m,a,h)=>(a==='T'?'C':'c')+'h'+(h?'h':''))
+  .replace(/([iI])([̀-ͯ]*)r/g,(m,a,t)=>(a==='I'?'U':'u')+'̤'+t)
+  .replace(/([oO])([̀-ͯ]*)[oO]/g,'$1$2͘')
+  .replace(/([aeiouAEIOU][̀-ͯ]*)nn/g,'$1ⁿ')
+  .replace(/([uU])([aeAE])/g,(m,a,b)=>(a==='U'?'O':'o')+b)
+  .replace(/([iI])([̀-ͯ]*)(ng|k)(?![a-zA-Z])/g,(m,a,t,c)=>(a==='I'?'E':'e')+t+c)
+  .normalize('NFC');
+const isPoj=s=>{const t=s.normalize('NFD').toLowerCase();return /ch|ou|oa|oe|eng|ek|ⁿ|o[̇͘·ˑ̨]|u[̣̤]/.test(t)||/[aeiou]N(?![a-zA-Z])/.test(s)};
+let PJM=false;
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 D.forEach(o=>{o.k=norm([o.w,o.r,o.v.join(' '),o.h,o.e.join(' '),o.x.join(' ')].join(' '))});
 
@@ -2622,7 +2634,7 @@ function dxRow(e){
   const sn=e.s.map(([p,d,sid])=>`<li data-sid="${sid||''}"><div class="sl">${p?`<span class="pos">${esc(p)}</span>`:''}<span>${esc(d)}</span></div><div class="sx"><div class="sxi"></div></div></li>`);
   const w7=inW700.has(e.hc)||inW700.has(e.h);
   return `<article class="mr" data-id="${e.id}">
-    <div class="mt"><div class="mw"><div class="w hd">${esc(e.hc||e.h)}${w7?'<span class="tag7">700 字</span>':''}</div><div class="r tl">${esc(e.r)}</div></div>
+    <div class="mt"><div class="mw"><div class="w hd">${esc(e.hc||e.h)}${w7?'<span class="tag7">700 字</span>':''}</div><div class="r tl">${esc(e.r)}${PJM?` <span class="pjt"><b>白話字</b>${esc(tl2poj(e.r))}</span>`:''}</div></div>
     ${e.a?`<button class="au" data-au="${e.id}" data-ap="${e.ap}" aria-label="聽發音"><svg viewBox="1.5 0 24 24" width="22" height="22" fill="currentColor"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 8.5a5 5 0 010 7M18.5 6a8.5 8.5 0 010 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>`:''}</div>
     ${e.v.length?`<div class="alt">又唸作　${e.v.map(x=>esc(x[0])+' <span class="tl">'+esc(x[1])+'</span>').join('、')}</div>`:''}
     <ol class="sns">${sn.join('')}</ol>
@@ -2638,6 +2650,7 @@ function miniDraw(){
     mb.innerHTML=`<p class="note">完整辭典暫時載不進來，先用 700 字查：</p>`+r.map(o=>`<div class="mr"><span class="w">${esc(o.w)}</span><span class="tl r">${esc(o.r)}</span><div class="h">${esc(o.h)}</div></div>`).join('')
       +`<div class="acts"><button class="btn" id="dxretry">重新載入完整辭典</button><a class="btn pri" href="${dictUrl(raw)}" target="_blank" rel="noopener" data-act="dict">到教育部辭典查「${esc(raw)}」</a></div>`;return}
   if(hasHan(raw)&&!EXD&&!window.__exAsk){window.__exAsk=1;exLoad(()=>{if(mq.value.trim()===raw)miniDraw()})}
+  PJM=!hasHan(raw)&&isPoj(raw);
   const r=dxFind(raw);
   mb.innerHTML=(r.length?`<p class="cnt">找到 ${r.length} 筆</p>`+r.slice(0,mlim).map(dxRow).join('')+(r.length>mlim?`<div class="acts" style="justify-content:center"><button class="btn" id="mmore">再看更多</button></div>`:'')
     :`<p class="note">辭典裡沒有「${esc(raw)}」。可以換個寫法，或華語換個說法再試。</p>`)
