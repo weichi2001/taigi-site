@@ -8,7 +8,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-title" content="街仔路">
-<meta name="build" content="lm11281313">
+<meta name="build" content="lm11281319">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <script>if(navigator.standalone===true)document.documentElement.classList.add('ios-sa')</script>
@@ -1675,7 +1675,8 @@ function pApps(){
 function filt(){
   const k=norm(S.q);
   const F={all:()=>1,b1:o=>o.b.includes(1),b2:o=>o.b.includes(2),b3:o=>o.b.includes(3),bad:o=>get(o.n)==2,ok:o=>get(o.n)==1,x:o=>o.x.length>0};
-  return D.filter(o=>(!k||o.k.includes(k))&&(F[S.f]||F.all)(o));
+  const MQ=isMix(S.q)?mixQ(S.q):null;
+  return D.filter(o=>(!k||(MQ?mixScore(o.mu||(o.mu=mixUnits(o.w,o.r)),MQ)<9:o.k.includes(k)))&&(F[S.f]||F.all)(o));
 }
 function bodyW700(){
   if(!S.q&&S.f==='all'){
@@ -2588,6 +2589,22 @@ const fab=$('#fab'),mini=$('#mini'),mq=$('#mq'),mb=$('#mb');
 const SU='https://sutian.moe.edu.tw/';
 let DX=null,DXS='idle',EXD=null,mlim=30;
 const hasHan=s=>/\p{Script=Han}/u.test(s), clean=s=>s.replace(/【[^】]*】/g,'');
+// 漢羅混寫搜尋：「niáu鼠」「tsiah飯」這種一半漢字一半拼音也找得到
+// 做法：把詞條的漢字與拼音一音節對一字排好（字數對得上才用），查詢也拆成「字／音節」逐一比對，拼音不分聲調、白話字台羅都可
+const isMix=s=>hasHan(s)&&/[A-Za-zÀ-ɏ̀-ͯⁿ]/.test(s);
+const mixQ=raw=>{const u=[];for(const m of raw.matchAll(/(\p{Script=Han}+)|([^\p{Script=Han}]+)/gu)){
+  if(m[1])[...m[1]].forEach(c=>u.push({c}));
+  else m[2].split(/[\s\-‑·,，、.。]+/).forEach(x=>{const n=norm(x);if(n)u.push({s:n})})}
+  return u};
+const mixUnits=(h,r)=>{const ch=[...String(h||'').replace(/【[^】]*】/g,'')].filter(c=>/\p{Script=Han}/u.test(c));
+  const sy=String(r||'').split('/')[0].split(/[\s\-‑]+/).map(x=>norm(x)).filter(Boolean);
+  return ch.length&&ch.length===sy.length?ch.map((c,i)=>({c,s:sy[i]})):null};
+const mixScore=(units,q)=>{if(!units||!q.length||q.length>units.length)return 9;
+  for(let st=0;st+q.length<=units.length;st++){let ok=true;
+    for(let i=0;i<q.length;i++){const a=q[i],b=units[st+i];
+      if(a.c?a.c!==b.c:!(a.s===b.s||(i===q.length-1&&b.s.startsWith(a.s)))){ok=false;break}}
+    if(ok)return st===0&&q.length===units.length?0:st===0?1:2}
+  return 9};
 function dxLoad(){
   if(DXS==='load'||DXS==='ok')return;DXS='load';
   const get=(u,n)=>{const ac=window.AbortController?new AbortController():null,tm=ac?setTimeout(()=>ac.abort(),30000):0;
@@ -2626,10 +2643,12 @@ function cmap(c){
 }
 function dxFind(raw){
   const k=norm(raw),han=hasHan(raw),out=[];
+  const MQ=isMix(raw)?mixQ(raw):null;
   const tr=han&&raw.length>=2?[...raw].map(cmap).join(''):raw;
   for(const e of DX){
     let sc=9;
-    if(han){
+    if(MQ){sc=mixScore(e.mu||(e.mu=mixUnits(e.hc,e.r)),MQ);if(sc>2&&e.v.length)for(const x of e.v){const t=mixScore(mixUnits(x[0],x[1]),MQ);if(t<sc)sc=t+.5}}
+    else if(han){
       if(e.hc===raw)sc=0;else if(e.hc.startsWith(raw))sc=1;else if(e.hc.includes(raw))sc=2;else if(e.v.some(x=>clean(x[0]).includes(raw)))sc=3;else if(e.d.includes(raw))sc=gl(e,raw);
       if(tr!==raw&&sc>2){if(e.hc===tr)sc=1.6;else if(e.hc.startsWith(tr))sc=1.7;else if(e.hc.includes(tr))sc=1.9}
     }else if(k){
@@ -2662,7 +2681,7 @@ function miniDraw(){
     mb.innerHTML=`<p class="note">完整辭典暫時載不進來，先用 700 字查：</p>`+r.map(o=>`<div class="mr"><span class="w">${esc(o.w)}</span><span class="tl r">${esc(o.r)}</span><div class="h">${esc(o.h)}</div></div>`).join('')
       +`<div class="acts"><button class="btn" id="dxretry">重新載入完整辭典</button><a class="btn pri" href="${dictUrl(raw)}" target="_blank" rel="noopener" data-act="dict">到教育部辭典查「${esc(raw)}」</a></div>`;return}
   if(hasHan(raw)&&!EXD&&!window.__exAsk){window.__exAsk=1;exLoad(()=>{if(mq.value.trim()===raw)miniDraw()})}
-  PJM=!hasHan(raw)&&isPoj(raw);
+  PJM=isPoj(raw.replace(/\p{Script=Han}+/gu,' '));
   const r=dxFind(raw);
   mb.innerHTML=(r.length?`<p class="cnt">找到 ${r.length} 筆</p>`+r.slice(0,mlim).map(dxRow).join('')+(r.length>mlim?`<div class="acts" style="justify-content:center"><button class="btn" id="mmore">再看更多</button></div>`:'')
     :`<p class="note">辭典裡沒有「${esc(raw)}」。可以換個寫法，或華語換個說法再試。</p>`)
