@@ -8,7 +8,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-title" content="街仔路">
-<meta name="build" content="lm11281350">
+<meta name="build" content="lm11281400">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <script>if(navigator.standalone===true)document.documentElement.classList.add('ios-sa')</script>
@@ -1248,7 +1248,7 @@ body[data-r^=books]:has(.is-book) .wrap{max-width:1560px}
 .bk-foot{display:flex;align-items:center;gap:14px;max-width:560px;margin:6px auto 30px}.bk-rg{flex:1;accent-color:var(--accent)}.bk-pg{font-size:14px;color:var(--ink2,#777);min-width:76px;text-align:right}
 .bk-drawer{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,0);display:flex;justify-content:flex-end;visibility:hidden;transition:background .3s ease,visibility 0s .32s}.bk-drawer.open{background:rgba(0,0,0,.45);visibility:visible;transition:background .3s ease,visibility 0s}
 .bk-dw{transform:translateX(100%);transition:transform .34s cubic-bezier(.3,.8,.2,1)}.bk-drawer.open .bk-dw{transform:none}
-.bk-dw{width:min(380px,92vw);height:100%;overflow:auto;background:var(--paper,#fbf8f3);color:var(--ink);padding:18px 20px 40px}
+.bk-dw{width:min(380px,84vw);height:100%;overflow:auto;background:var(--paper,#fbf8f3);color:var(--ink);padding:18px 20px 40px}
 .bk-dw h3{font-size:17px;color:var(--accent);margin:22px 0 4px}.bk-dw button:not(.bk-x),.bk-dw a{display:block;width:100%;text-align:left;font:inherit;font-size:16px;padding:11px 0;border:0;border-bottom:1px solid var(--line);background:none;color:inherit;cursor:pointer;text-decoration:none}.bk-dw small{color:var(--ink2,#777);margin-left:6px}
 .bk-x{font:inherit;font-size:14px;padding:5px 14px;border-radius:99px;border:1px solid var(--line);background:var(--card,#fff);color:var(--ink);cursor:pointer}
 .bk-zw{display:flex;transform-origin:50% 50%;will-change:transform;touch-action:none}
@@ -1336,6 +1336,7 @@ body[data-r=dictwin] #mini .mgrip{display:none}
  .is-book .bk-bar .bk-mode button{padding:7px 10px;font-size:14px;white-space:nowrap}
 }</style>
 <style>.pjt{display:inline-block;margin-left:6px;padding:1px 9px;border-radius:99px;border:1px solid var(--line);font-size:12.5px;color:var(--ink2);white-space:nowrap;vertical-align:1px}.pjt b{font-weight:600;margin-right:5px;font-size:11px;letter-spacing:.06em;color:var(--accent,#e24403)}</style>
+<style>.bk-dw .bk-x{border-radius:0!important;position:sticky;top:-18px;z-index:2;margin:-18px -20px 0;width:calc(100% + 40px)!important;padding:14px 20px!important;text-align:left;background:var(--paper,#fbf8f3);border:0;border-bottom:1px solid var(--line);color:var(--ink2,#777);font:inherit;font-size:14px;cursor:pointer}.bk-dw .bk-x::after{content:'  ›  往右滑或點旁邊也能關閉';opacity:.7}.bk-dw .bk-x{padding-top:calc(14px + env(safe-area-inset-top,0px))!important}</style>
 </head>
 <body>
 <div id="splash" aria-hidden="true"><div class="sp-in"><div class="sp-logo">街仔<b>路</b></div><small>Ke-á-lōo</small><i class="sp-bar"></i></div></div>
@@ -2310,6 +2311,20 @@ function bkBook(root,is,startPage){
   let rt;window.addEventListener('resize',()=>{if(!document.contains(root))return;clearTimeout(rt);rt=setTimeout(layout,120)});
   const im=new Image();im.onload=()=>{if(im.naturalWidth&&im.naturalHeight){ratio=im.naturalWidth/im.naturalHeight;layout()}};
   let uiT=0;const ui=on=>{clearTimeout(uiT);uiT=0;root.classList.toggle('ui-off',!on)};
+  { // 目錄：點旁邊的暗處、或往右滑，就關起來
+    const dr=root.querySelector('.bk-drawer'),dw=root.querySelector('.bk-dw');
+    if(dr&&dw){
+      const shut=()=>dr.classList.remove('open');
+      dr.addEventListener('click',e=>{if(e.target===dr)shut()});
+      let sx=0,sy=0,dx=0,drag=false,lock=false;
+      dw.addEventListener('touchstart',e=>{if(e.touches.length!==1)return;sx=e.touches[0].clientX;sy=e.touches[0].clientY;dx=0;drag=true;lock=false;dw.style.transition='none'},{passive:true});
+      dw.addEventListener('touchmove',e=>{if(!drag)return;const x=e.touches[0].clientX-sx,y=e.touches[0].clientY-sy;
+        if(!lock){if(Math.abs(x)>10&&Math.abs(x)>Math.abs(y)*1.3)lock=true;else if(Math.abs(y)>10){drag=false;dw.style.transition='';return}}
+        if(lock){dx=Math.max(0,x);dw.style.transform='translateX('+dx+'px)'}},{passive:true});
+      const end=()=>{if(!drag&&!lock){dw.style.transition='';return}drag=false;dw.style.transition='';dw.style.transform='';if(lock&&dx>70)shut();lock=false;dx=0};
+      dw.addEventListener('touchend',end);dw.addEventListener('touchcancel',end);
+    }
+  }
   const uiHold=()=>root.querySelector('.bk-drawer.open')||!document.contains(root);
   document.addEventListener('mousemove',e=>{if(!document.contains(root)||!root.classList.contains('ah'))return;
     const near=e.clientY<72||e.clientY>innerHeight-110;
