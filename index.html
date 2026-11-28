@@ -8,7 +8,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-title" content="街仔路">
-<meta name="build" content="lm11281222">
+<meta name="build" content="lm11281304">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <script>if(navigator.standalone===true)document.documentElement.classList.add('ios-sa')</script>
@@ -1355,7 +1355,7 @@ setTimeout(fin,4500)})()</script>
   <div class="mtop"><div class="mtt"><b class="hd">查辭典</b><span>教育部臺灣台語常用詞辭典</span></div>
     <button class="mx-close" id="mclose" aria-label="關閉"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg></button></div>
   <label class="msb"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
-    <input type="search" id="mq" placeholder="輸入漢字、台羅或華語進行搜尋" autocomplete="off" enterkeyhint="search"><button type="button" class="clr" aria-label="清除" tabindex="-1"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg></button></label>
+    <input type="search" id="mq" placeholder="輸入漢字、台羅、白話字或華語進行搜尋" autocomplete="off" enterkeyhint="search"><button type="button" class="clr" aria-label="清除" tabindex="-1"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg></button></label>
   <div class="mb" id="mb"></div>
 </section>
 <noscript><p style="padding:20px">這個網站需要開啟 JavaScript 才能使用。</p></noscript>
@@ -1383,7 +1383,13 @@ function openPop(url){
 }
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const norm=s=>s.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^\p{L}\p{N}]/gu,'');
+// 白話字（教會羅馬字，POJ）→ 台羅（TL）：搜尋時兩邊先統一成同一種拼法，所以打哪一種都查得到
+// 差別：chh/ch→tsh/ts、o͘（ou）→oo、oa/oe→ua/ue、eng/ek→ing/ik、ⁿ→nn、ṳ→ir（聲調符號兩套相同，比對時本來就忽略）
+const poj=s=>s.normalize('NFD').replace(/ⁿ/g,'nn').replace(/([aeiouAEIOU])N(?![a-zA-Z])/g,'$1nn')
+  .replace(/([oO])([̀-͗]*)[̇͘·ˑ̨]/g,'$1o$2').replace(/ʰ/g,'h').replace(/([uU])̣/g,'$1ir')
+  .replace(/[̀-ͯ]/g,'').toLowerCase()
+  .replace(/chh/g,'tsh').replace(/ch/g,'ts').replace(/ou/g,'oo').replace(/oa/g,'ua').replace(/oe/g,'ue').replace(/eng/g,'ing').replace(/ek/g,'ik');
+const norm=s=>poj(s).replace(/[^\p{L}\p{N}]/gu,'');
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 D.forEach(o=>{o.k=norm([o.w,o.r,o.v.join(' '),o.h,o.e.join(' '),o.x.join(' ')].join(' '))});
 
