@@ -8,7 +8,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-title" content="街仔路">
-<meta name="build" content="lm11290002">
+<meta name="build" content="lm11290008">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <script>if(navigator.standalone===true)document.documentElement.classList.add('ios-sa')</script>
@@ -1949,7 +1949,7 @@ function aniBody(){
   const fil=a=>f==='all'||(f==='mine'?aniSt[a.t]:cat(a)===f);
   const nt=new Set(updNew('video').map(u=>u.title.replace(/（雙語版）$/,'')));
   const nl=nt.size?v.filter(a=>nt.has(a.t)):[];
-  if(f==='all')return aniRow('本月新片<em class="newtag">NEW</em>','最近 30 天新增',nl)+aniRow('我的片單',`${SI.heart} 想看　${SI.check} 看過了`,mine)+CATS.map(c=>aniRow(c,'',v.filter(a=>cat(a)===c))).join('');
+  if(f==='all')return aniRow('本月新片<em class="newtag">NEW</em>','',nl)+aniRow('我的片單',`${SI.heart} 想看　${SI.check} 看過了`,mine)+CATS.map(c=>aniRow(c,'',v.filter(a=>cat(a)===c))).join('');
   const l=v.filter(fil);
   return l.length?grid(l):'<p class="sub" style="margin-top:18px">還沒有。打開一部作品，按「想看」就會放進來。</p>';
 }
@@ -2457,7 +2457,7 @@ async function bkNew(){const box=document.getElementById('bk-new');if(!box)retur
     if(m){L.push(`<a class="bk-c" href="#books/${m[1]}"><div class="bk-cv"><i>${m[1]}</i></div><i class="lg"></i><b>第 ${m[1]} 期</b><small>BONG 報</small></a>`);return}
     const b=(EBS.d||[]).find(x=>x[2]===u.title);if(b)L.push(ebsCard(b,1))});
   if(!L.length){box.hidden=true;return}
-  box.hidden=false;box.innerHTML=`<div class="lib-h"><h3 class="hd">本月新書<em class="newtag">NEW</em></h3><small style="opacity:.7">最近 30 天新增</small></div><div class="shelf">${L.join('')}</div>`}
+  box.hidden=false;box.innerHTML=`<div class="lib-h"><h3 class="hd">本月新書<em class="newtag">NEW</em></h3></div><div class="shelf">${L.join('')}</div>`}
 async function bkCovers(){ebsFill();bkNew();
   const last=await bkLatest(),pc=document.getElementById('bk-pc'),bp=document.getElementById('bkp'),lib=document.getElementById('bk-lib'),res=document.getElementById('bk-res'),sv=bkSaved();
   if(res&&sv)res.innerHTML=bkCont(sv);
